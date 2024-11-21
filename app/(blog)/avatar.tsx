@@ -5,7 +5,7 @@ import { urlForImage } from "@/sanity/lib/utils";
 
 interface Props {
   name: string;
-  picture: Exclude<Author["picture"], undefined> | null;
+  picture: Exclude<Author["photo"], undefined> | null;
 }
 
 export default function Avatar({ name, picture }: Props) {
@@ -14,7 +14,7 @@ export default function Avatar({ name, picture }: Props) {
       {picture?.asset?._ref ? (
         <div className="mr-4 h-12 w-12">
           <Image
-            alt={picture?.alt || ""}
+            alt={name || ""}
             className="h-full rounded-full object-cover"
             height={48}
             width={48}
