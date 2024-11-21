@@ -8,7 +8,7 @@ import {
 	keyframes,
 	styled,
 	unresponsive,
-} from "./fresponsive";
+} from "library/styled";
 
 export default function Page() {
 	return (

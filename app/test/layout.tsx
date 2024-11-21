@@ -1,7 +1,7 @@
 import "../globals.css";
 
 import { Inter } from "next/font/google";
-import { fresponsive, styled, css } from "./fresponsive";
+import { fresponsive, styled, css } from "../library/styled";
 
 const inter = Inter({
 	variable: "--font-inter",
