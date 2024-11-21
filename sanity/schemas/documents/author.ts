@@ -1,45 +1,55 @@
-import { UserIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: "author",
-  title: "Author",
-  icon: UserIcon,
-  type: "document",
-  fields: [
-    defineField({
-      name: "name",
-      title: "Name",
-      type: "string",
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: "picture",
-      title: "Picture",
-      type: "image",
-      fields: [
-        {
-          name: "alt",
-          type: "string",
-          title: "Alternative text",
-          description: "Important for SEO and accessiblity.",
-          validation: (rule) => {
-            return rule.custom((alt, context) => {
-              if ((context.document?.picture as any)?.asset?._ref && !alt) {
-                return "Required";
-              }
-              return true;
-            });
-          },
-        },
-      ],
-      options: {
-        hotspot: true,
-        aiAssist: {
-          imageDescriptionField: "alt",
-        },
-      },
-      validation: (rule) => rule.required(),
-    }),
-  ],
+	type: "document",
+	name: "author",
+	title: "Unified Component - Author",
+	description: "",
+	fields: [
+		defineField({
+			name: "fullName",
+			type: "string",
+			title: "Full Name",
+			hidden: false,
+			validation: (Rule) => Rule.required(),
+		}),
+		defineField({
+			name: "slug",
+			type: "slug",
+			title: "Slug",
+			hidden: false,
+			validation: (Rule) => Rule.required(),
+			options: { source: "fullName" },
+		}),
+		defineField({
+			name: "photo",
+			type: "image",
+			title: "Photo",
+			hidden: false,
+		}),
+		defineField({
+			name: "roleAndCompany",
+			type: "string",
+			title: "Role and Company",
+			hidden: false,
+			description: "For example, CEO of MyCompany",
+		}),
+		defineField({
+			name: "biography",
+			type: "text",
+			title: "Biography",
+			hidden: false,
+		}),
+
+		defineField({
+			type: "boolean",
+			description:
+				"If this document was archived on Contentful at the time of export, the document will be in a read-only state.",
+			name: "contentfulArchived",
+			readOnly: true,
+		}),
+	],
+	preview: { select: { title: "fullName" } },
+	readOnly: ({ document }) =>
+		(document == null ? void 0 : document.contentfulArchived) === !0,
 });
