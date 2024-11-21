@@ -1,0 +1,3 @@
+[submodule "app/library"]
+	path = app/library
+	url = https://github.com/reformcollective/library.git
