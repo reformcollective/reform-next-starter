@@ -1,6 +1,7 @@
 import GlobalProviders from "components/Providers"
 import Scroll from "library/Scroll"
-import "styles/reset.css"
+
+import "the-new-css-reset/css/reset.css"
 
 export default function RootLayout({
 	children,

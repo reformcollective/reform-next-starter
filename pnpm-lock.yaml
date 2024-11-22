@@ -98,6 +98,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.14
         version: 3.4.15
+      the-new-css-reset:
+        specifier: 1.11.3
+        version: 1.11.3
       transform-css-to-js:
         specifier: ^0.1.1
         version: 0.1.1
@@ -5751,6 +5754,9 @@ packages:
 
   text-decoder@1.2.1:
     resolution: {integrity: sha512-x9v3H/lTKIJKQQe7RPQkLfKAnc9lUTkWDypIQgTzPJAq+5/GCDHonmshfvlsNSj58yyshbIJJDLmU15qNERrXQ==}
+
+  the-new-css-reset@1.11.3:
+    resolution: {integrity: sha512-61SB81vu9foUyEIqoU1CeqxrdlsVjJojj/CBXoG8BdvlKFsllB0Rza63DblnRqH+3uttPj3FGWo7+c9nu7MT+A==}
 
   thenify-all@1.6.0:
     resolution: {integrity: sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==}
@@ -12801,6 +12807,8 @@ snapshots:
       memoizerific: 1.11.3
 
   text-decoder@1.2.1: {}
+
+  the-new-css-reset@1.11.3: {}
 
   thenify-all@1.6.0:
     dependencies:
