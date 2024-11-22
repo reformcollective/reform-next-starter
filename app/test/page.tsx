@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
 	css,
@@ -8,11 +8,13 @@ import {
 	keyframes,
 	styled,
 	unresponsive,
-} from "library/styled";
+} from "library/styled"
+import useMedia from "library/useMedia"
 
 export default function Page() {
 	return (
 		<div>
+			{useMedia("full", "desktop", "tablet", "mobile")}
 			<Box>Hello world</Box>
 			<ColoredBox boxColor="red">I am a box</ColoredBox>
 			<UnresponsiveBox>I am unresponsive</UnresponsiveBox>
@@ -21,7 +23,7 @@ export default function Page() {
 			<ComponentWithVariants variant="red" />
 			<WithResponsiveSample>asdf</WithResponsiveSample>
 		</div>
-	);
+	)
 }
 
 // standard component
@@ -33,14 +35,14 @@ const Box = styled(
     padding: 10px;
     margin: 10px;
   `),
-);
+)
 
 // extending a component + passing props
 const ColoredBox = styled(Box, ({ boxColor }: { boxColor: string }) =>
 	fresponsive(css`
     background: ${boxColor};
   `),
-);
+)
 
 // mixing responsive and unresponsive CSS
 const UnresponsiveBox = styled(Box, {
@@ -51,7 +53,7 @@ const UnresponsiveBox = styled(Box, {
     color: green;
     border: 10px solid red;
   `),
-});
+})
 
 // animations
 const FadeInKeyframes = keyframes`
@@ -67,14 +69,14 @@ const FadeInKeyframes = keyframes`
   100% {
     background:red;
   }
-`;
+`
 
 const AnimatedBox = styled(
 	Box,
 	fresponsive(css`
     animation: ${FadeInKeyframes} 2s infinite;
   `),
-);
+)
 
 // variants example
 const variants = {
@@ -86,14 +88,14 @@ const variants = {
     background: green;
     color: red;
   `,
-};
+}
 const ComponentWithVariants = styled(
 	"div",
 	({ variant }: { variant: keyof typeof variants }) =>
 		fresponsive(css`
       ${variants[variant]}
     `),
-);
+)
 
 // responsive styles example
 const WithResponsiveSample = styled("div", {
@@ -106,4 +108,4 @@ const WithResponsiveSample = styled("div", {
 	...fmobile(css`
     width: 300px;
   `),
-});
+})

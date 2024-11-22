@@ -29,6 +29,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.15
         version: 0.5.15(tailwindcss@3.4.15)
+      '@total-typescript/tsconfig':
+        specifier: 1.0.4
+        version: 1.0.4
       '@types/node':
         specifier: ^22.7.8
         version: 22.9.1
@@ -95,6 +98,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.14
         version: 3.4.15
+      the-new-css-reset:
+        specifier: 1.11.3
+        version: 1.11.3
       transform-css-to-js:
         specifier: ^0.1.1
         version: 0.1.1
@@ -117,6 +123,9 @@ importers:
       '@contentful/rich-text-types':
         specifier: ^16
         version: 16.8.5
+      '@gsap/react':
+        specifier: 2.1.1
+        version: 2.1.1
       '@react-three/drei':
         specifier: ^9
         version: 9.115.0(@react-three/fiber@8.17.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.170.0))(@types/react@18.3.12)(@types/three@0.168.0)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.170.0)
@@ -1245,6 +1254,9 @@ packages:
 
   '@floating-ui/utils@0.2.8':
     resolution: {integrity: sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==}
+
+  '@gsap/react@2.1.1':
+    resolution: {integrity: sha512-apGPRrmpqxvl1T6Io1KgT8tFU+IuACI6z4zmT7t8+PASserJeLVRFJdSNUFA2Xb/eVkZI1noE8LIrY/w/oJECw==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3795,6 +3807,9 @@ packages:
     resolution: {integrity: sha512-HDsoX4Kwm/af/WUDuq+nw0FLiKxNgocpSflcv0DSiyo52C1EM/Ox/GjPLeDvz47DSA5j5tW8+yZNrO0aefvUSw==}
     engines: {node: '>=18'}
 
+  gsap@3.12.5:
+    resolution: {integrity: sha512-srBfnk4n+Oe/ZnMIOXt3gT605BX9x5+rh/prT2F1SsNJsU1XuMiP0E2aptW481OnonOGACZWBqseH5Z7csHxhQ==}
+
   gsap@file:app/library/gsap-bonus.tgz:
     resolution: {integrity: sha512-Q/GR6Bq13T9ulCSt3bIxHtYu5NbeBZwTi9DykpMFGsF1xUNmG5zNHr/B7TtECURU+N9JSFEPoFj9o77gXfVSRw==, tarball: file:app/library/gsap-bonus.tgz}
     version: 3.12.5
@@ -5740,6 +5755,9 @@ packages:
   text-decoder@1.2.1:
     resolution: {integrity: sha512-x9v3H/lTKIJKQQe7RPQkLfKAnc9lUTkWDypIQgTzPJAq+5/GCDHonmshfvlsNSj58yyshbIJJDLmU15qNERrXQ==}
 
+  the-new-css-reset@1.11.3:
+    resolution: {integrity: sha512-61SB81vu9foUyEIqoU1CeqxrdlsVjJojj/CBXoG8BdvlKFsllB0Rza63DblnRqH+3uttPj3FGWo7+c9nu7MT+A==}
+
   thenify-all@1.6.0:
     resolution: {integrity: sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==}
     engines: {node: '>=0.8'}
@@ -7431,6 +7449,11 @@ snapshots:
       react-dom: 19.0.0-rc.1(react@19.0.0-rc.1)
 
   '@floating-ui/utils@0.2.8': {}
+
+  '@gsap/react@2.1.1':
+    dependencies:
+      gsap: 3.12.5
+      react: 18.3.1
 
   '@humanfs/core@0.19.1': {}
 
@@ -10605,6 +10628,8 @@ snapshots:
 
   groq@3.64.2: {}
 
+  gsap@3.12.5: {}
+
   gsap@file:app/library/gsap-bonus.tgz: {}
 
   gunzip-maybe@1.4.2:
@@ -12782,6 +12807,8 @@ snapshots:
       memoizerific: 1.11.3
 
   text-decoder@1.2.1: {}
+
+  the-new-css-reset@1.11.3: {}
 
   thenify-all@1.6.0:
     dependencies:
