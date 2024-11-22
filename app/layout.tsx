@@ -1,6 +1,6 @@
-"use client"
-
 import GlobalProviders from "components/Providers"
+import Scroll from "library/Scroll"
+import "styles/reset.css"
 
 export default function RootLayout({
 	children,
@@ -10,7 +10,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<GlobalProviders>{children}</GlobalProviders>
+				<GlobalProviders>
+					<Scroll>{children}</Scroll>
+				</GlobalProviders>
 			</body>
 		</html>
 	)

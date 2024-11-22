@@ -1,6 +1,6 @@
 "use client"
 
-import { ScrollSmoother } from "gsap/ScrollSmoother"
+import { ScrollSmoother } from "gsap/all"
 import UniversalLink from "library/Loader/UniversalLink"
 import { useScrollLock } from "library/Scroll"
 import { css, styled, unresponsive } from "library/styled"
