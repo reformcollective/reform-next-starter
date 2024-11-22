@@ -1,29 +1,29 @@
 {
-  "fully responsive": {
-    "prefix": "fresponsive",
-    "body": [
-      "fresponsive(css`",
-      "\t$0",
-      "`)"
-    ],
-    "description": "generate fully responsive desktop query",
-  },
-  "fully responsive tablet": {
-    "prefix": "ftablet",
-    "body": [
-      "ftablet(css`",
-      "\t$0",
-      "`)"
-    ],
-    "description": "generate fully responsive tablet query",
-  },
-  "fully responsive mobile": {
-    "prefix": "fmobile",
-    "body": [
-      "fmobile(css`",
-      "\t$0",
-      "`)"
-    ],
-    "description": "generate fully responsive mobile query",
-  },
+	"fully responsive": {
+		"prefix": "fresponsive",
+		"body": [
+			"fresponsive(css`",
+			"\t$0",
+			"`)"
+		],
+		"description": "generate fully responsive desktop query"
+	},
+	"fully responsive tablet": {
+		"prefix": "ftablet",
+		"body": [
+			"ftablet(css`",
+			"\t$0",
+			"`)"
+		],
+		"description": "generate fully responsive tablet query"
+	},
+	"fully responsive mobile": {
+		"prefix": "fmobile",
+		"body": [
+			"fmobile(css`",
+			"\t$0",
+			"`)"
+		],
+		"description": "generate fully responsive mobile query"
+	}
 }

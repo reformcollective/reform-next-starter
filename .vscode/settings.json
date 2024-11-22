@@ -28,8 +28,9 @@
 		"styled-jsx"
 	],
 	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
-        "^next\/router$",
-		"^gsap\/(?!all$).+","^gsap$"
+		"^next/router$",
+		"^gsap/(?!all$).+",
+		"^gsap$"
 	],
 	"workbench.editor.customLabels.patterns": {
 		"**/index.tsx": "${dirname} / index.tsx",
