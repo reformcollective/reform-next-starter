@@ -1,3 +1,5 @@
+"use client"
+
 import UniversalLink from "library/Loader/UniversalLink"
 import { css, fresponsive, styled } from "library/styled"
 
