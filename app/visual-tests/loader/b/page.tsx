@@ -42,15 +42,15 @@ export default function LoaderB() {
 const Wrapper = styled(
 	"div",
 	fresponsive(css`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 40px;
-	padding: 100px;
-	background: #eff;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 40px;
+		padding: 100px;
+		background: #eff;
 
-	p {
-		opacity: 0.5;
-	}
-`),
+		p {
+			opacity: 0.5;
+		}
+	`),
 )

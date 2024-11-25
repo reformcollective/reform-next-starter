@@ -9,8 +9,8 @@ const Animate = attrs(
 	styled(
 		AutoAnimate,
 		fresponsive(css`
-		outline: 1px solid red;
-	`),
+			outline: 1px solid red;
+		`),
 	),
 	{
 		duration: 3,
@@ -22,9 +22,8 @@ const OpacityAnimate = attrs(
 	styled(
 		AutoAnimate,
 		fresponsive(css`
-	outline: 1px solid green;
-	
-	`),
+			outline: 1px solid green;
+		`),
 	),
 	{
 		duration: 3,
@@ -159,43 +158,43 @@ export default function AutoTests() {
 const RestrictWidth = styled(
 	"div",
 	fresponsive(css`
-	max-width: 500px;
-	border: 1px solid orange;
-`),
+		max-width: 500px;
+		border: 1px solid orange;
+	`),
 )
 
 const Wrapper = styled(
 	"div",
 	fresponsive(css`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 40px;
-	padding: 100px;
-`),
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 40px;
+		padding: 100px;
+	`),
 )
 
 const Row = styled(
 	"div",
 	fresponsive(css`
-	display: flex;
-	min-height: 200px;
-	gap: 40px;
-	align-items: start;
-`),
+		display: flex;
+		min-height: 200px;
+		gap: 40px;
+		align-items: start;
+	`),
 )
 
 const Tall = styled(
 	"div",
 	fresponsive(css`
-	height: 200px;
-	border: 1px solid blue;
-`),
+		height: 200px;
+		border: 1px solid blue;
+	`),
 )
 
 const PurpleBox = styled(
 	"div",
 	fresponsive(css`
-	border: 1px solid purple;
-`),
+		border: 1px solid purple;
+	`),
 )
