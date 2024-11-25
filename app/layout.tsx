@@ -13,6 +13,13 @@ import { colorStyle } from "styles/colors"
 
 import "the-new-css-reset/css/reset.css"
 
+export const metadata = {
+	title: "Reform Starter",
+	twitter: {
+		card: "summary_large_image",
+	},
+}
+
 export default function RootLayout({
 	children,
 }: {
