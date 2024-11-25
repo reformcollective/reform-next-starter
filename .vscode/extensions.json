@@ -1,0 +1,24 @@
+{
+	"recommendations": [
+		"biomejs.biome",
+		"mylesmurphy.prettify-ts",
+		"yoavbls.pretty-ts-errors",
+		"stylelint.vscode-stylelint",
+		"streetsidesoftware.code-spell-checker",
+		"styled-components.vscode-styled-components",
+		"naumovs.color-highlight",
+		"kisstkondoros.csstriggers",
+		"eamodio.gitlens",
+		"wix.vscode-import-cost",
+		"quicktype.quicktype",
+		"meganrogge.template-string-converter",
+		"redhat.vscode-xml",
+		"esbenp.prettier-vscode"
+	],
+	"unwantedRecommendations": [
+		// built into VS Code
+		"formulahendry.auto-rename-tag",
+		// built into VS Code
+		"formulahendry.auto-complete-tag"
+	]
+}
