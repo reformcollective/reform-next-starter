@@ -25,7 +25,7 @@ export default function Loader() {
 	return (
 		<Wrapper>
 			<h1>Loader Tests</h1>
-			<UniversalLink href="/visual-tests/loader/b">
+			<UniversalLink href="/visual-tests/loader/b" transition="slide">
 				Go to Loader B
 			</UniversalLink>
 			<UniversalLink href="/">go home</UniversalLink>
