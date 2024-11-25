@@ -43,6 +43,9 @@
 		"the-new-css-reset": "1.11.3",
 		"typescript": "5.7.2"
 	},
+	"overrides": {
+		"uri-js": "npm:uri-js-replace"
+	},
 	"stylelint": {
 		"extends": "stylelint-config-reform-collective"
 	},
