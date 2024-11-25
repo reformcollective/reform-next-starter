@@ -1,6 +1,6 @@
 import GlobalProviders from "components/Providers"
 import Scroll from "library/Scroll"
-import { styled, unresponsive, css, GlobalStyles } from "library/styled"
+import { GlobalStyles, css, styled, unresponsive } from "library/styled"
 import { colorStyle } from "styles/colors"
 
 import "the-new-css-reset/css/reset.css"
@@ -28,8 +28,8 @@ export default function RootLayout({
 const Main = styled(
 	"main",
 	unresponsive(css`
-	overflow-x: clip;
-`),
+		overflow-x: clip;
+	`),
 )
 
 // TODO: configure a default text color

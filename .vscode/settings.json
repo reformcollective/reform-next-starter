@@ -1,6 +1,12 @@
 {
 	/* formatting */
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
 	"[xml]": {
 		"editor.defaultFormatter": "redhat.vscode-xml"
 	},

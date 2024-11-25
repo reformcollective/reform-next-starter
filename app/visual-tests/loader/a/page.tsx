@@ -80,15 +80,15 @@ export default function Loader() {
 const Wrapper = styled(
 	"div",
 	fresponsive(css`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 40px;
-	padding: 100px;
-	background: #ffe;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 40px;
+		padding: 100px;
+		background: #ffe;
 
-	p {
-		opacity: 0.5;
-	}
-`),
+		p {
+			opacity: 0.5;
+		}
+	`),
 )

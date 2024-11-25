@@ -6,7 +6,8 @@
 		"prebuild": "npm run typegen",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint",
+		"lint": "biome check --write",
+		"format": "prettier --write . && biome format --write",
 		"presetup": "echo 'about to setup env variables, follow the guide here: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#using-the-sanity-cli'",
 		"setup": "npx sanity@latest init --env .env.local",
 		"postsetup": "echo 'create the read token by following the rest of the guide: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#creating-a-read-token'",
@@ -33,6 +34,7 @@
 		"next": "^15.0.0",
 		"next-sanity": "^9.7.0",
 		"postcss": "^8.4.47",
+		"prettier": "3.3.3",
 		"react": "19.0.0-rc.1",
 		"react-dom": "19.0.0-rc.1",
 		"restyle": "^2.4.0",
@@ -47,10 +49,6 @@
 		"the-new-css-reset": "1.11.3",
 		"transform-css-to-js": "^0.1.1",
 		"typescript": "5.6.3"
-	},
-	"devDependencies": {
-		"eslint": "^9.13.0",
-		"eslint-config-next": "^15.0.0"
 	},
 	"packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
 }

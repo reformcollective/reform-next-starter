@@ -2,14 +2,16 @@
 
 import gsap, { ScrollSmoother, ScrollTrigger } from "gsap/all"
 import { useBackButton } from "library/Loader/TransitionUtils"
-import { useTrackPageReady } from "library/pageReady"
 import { ScreenProvider } from "library/ScreenContext"
+import { useTrackPageReady } from "library/pageReady"
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 export default function GlobalProviders({
 	children,
-}: { children: React.ReactNode }) {
+}: {
+	children: React.ReactNode
+}) {
 	useTrackPageReady()
 	useBackButton()
 

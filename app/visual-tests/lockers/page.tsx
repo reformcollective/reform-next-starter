@@ -156,18 +156,18 @@ export default function ScrollLock() {
 const Wrapper = styled(
 	"div",
 	unresponsive(css`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 40px;
-	padding: 100px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 40px;
+		padding: 100px;
 
-	button,
-	a {
-		cursor: pointer;
-		border: 1px solid gray;
-		padding: 10px 20px;
-		border-radius: 5px;
-	}
-`),
+		button,
+		a {
+			cursor: pointer;
+			border: 1px solid gray;
+			padding: 10px 20px;
+			border-radius: 5px;
+		}
+	`),
 )
