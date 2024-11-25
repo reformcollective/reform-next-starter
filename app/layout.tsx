@@ -1,6 +1,14 @@
+import Footer from "components/Footer"
+import Header from "components/Header"
 import GlobalProviders from "components/Providers"
 import Scroll from "library/Scroll"
-import { GlobalStyles, css, styled, unresponsive } from "library/styled"
+import {
+	GlobalStyles,
+	css,
+	fresponsive,
+	styled,
+	unresponsive,
+} from "library/styled"
 import { colorStyle } from "styles/colors"
 
 import "the-new-css-reset/css/reset.css"
@@ -12,12 +20,19 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body>
+			<body
+				// gsap changes with the style attribute, which will cause ssr issues
+				suppressHydrationWarning
+			>
 				<GlobalProviders>
 					<GlobalStyles>{globalCss}</GlobalStyles>
 					<GlobalStyles>{colorStyle}</GlobalStyles>
+					<Header />
 					<Scroll>
+						<Spacer />
+						hello world
 						<Main>{children}</Main>
+						<Footer />
 					</Scroll>
 				</GlobalProviders>
 			</body>
@@ -29,6 +44,13 @@ const Main = styled(
 	"main",
 	unresponsive(css`
 		overflow-x: clip;
+	`),
+)
+
+const Spacer = styled(
+	"div",
+	fresponsive(css`
+		height: 100px;
 	`),
 )
 
