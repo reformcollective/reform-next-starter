@@ -31,6 +31,7 @@
 		"autoprefixer": "^10.4.20",
 		"date-fns": "^4.1.0",
 		"gsap": "file:app/library/gsap-bonus.tgz",
+		"motion": "12.0.0-alpha.2",
 		"next": "^15.0.0",
 		"next-sanity": "^9.7.0",
 		"postcss": "^8.4.47",
