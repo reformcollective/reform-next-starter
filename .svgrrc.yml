@@ -1,0 +1,4 @@
+svgoConfig:
+  multipass: true
+  plugins:
+    - name: preset-default
