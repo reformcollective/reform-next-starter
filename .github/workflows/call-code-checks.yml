@@ -1,0 +1,7 @@
+name: Code Checks
+on: pull_request
+jobs:
+  library:
+    uses: reformcollective/library/.github/workflows/code-checks.yml@main
+    secrets:
+      SECRETS_JSON: ${{ toJSON(secrets) }}
