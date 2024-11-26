@@ -1,30 +1,33 @@
 "use client"
 
-import { css, fresponsive, styled } from "library/styled"
-
-import User from "./user.svg?inline"
+import { keyframes, styled } from "library/styled"
 import Gear from "./gear.svg?inline"
-import GearTwo from "./gear.svg"
-import Image from "next/image"
 
 export default function Page() {
 	return (
 		<div>
-			<StyledUser />
-			<Gear />
-			<Image
-				src={GearTwo}
-				alt="gear"
-				style={{ width: 100, height: 100, border: "1px solid red" }}
-			/>
+			<StyledGear />
+			<ColorAnimation />
+			<SpinAnimation />
 		</div>
 	)
 }
 
-// styled SVG
-const StyledUser = styled(User, {
-	...fresponsive(css`
-    height: 24px;
-    width: 24px;
-  `),
+const ColorAnimation = keyframes`
+	0% { fill: red; }
+	33% { fill: blue; }
+	66% { fill: green; }
+	100% { fill: red; }
+`
+
+const SpinAnimation = keyframes`
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+`
+
+const StyledGear = styled(Gear, {
+	animation: `${ColorAnimation} 5s linear infinite, ${SpinAnimation} 10s linear infinite`,
+	transformOrigin: "center",
+	width: "400px",
+	height: "400px",
 })

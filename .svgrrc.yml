@@ -1,4 +1,33 @@
 svgoConfig:
   multipass: true
   plugins:
-    - name: preset-default
+    # Plugins included in preset-default
+    - removeDoctype
+    - removeXMLProcInst
+    - removeComments
+    - removeMetadata
+    - removeEditorsNSData
+    - cleanupAttrs
+      # minification may cause IDs to clash, so we disable it
+    - name: cleanupIds
+      params:
+        minify: false
+    - removeUselessDefs
+    - cleanupNumericValues
+    - removeUnknownsAndDefaults
+    - removeNonInheritableGroupAttrs
+    - removeUselessStrokeAndFill
+    - removeEmptyText
+    - collapseGroups
+    - removeEmptyAttrs
+    - removeEmptyContainers
+    - removeUnusedNS
+    - mergePaths
+    - sortAttrs
+    - sortDefsChildren
+    - removeDesc
+
+    # Plugins not included in preset-default
+    - convertOneStopGradients
+    - removeRasterImages
+    - removeDimensions
