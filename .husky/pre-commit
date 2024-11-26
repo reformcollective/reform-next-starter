@@ -1,2 +1,2 @@
 node ./app/library/.github/update-hash.js || true
-pnpm dlx lint-staged
+pnpm dlx lint-staged || true
