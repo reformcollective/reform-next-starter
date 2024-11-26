@@ -1,12 +1,14 @@
 import Image from "next/image"
-import styled from "styled-components"
-import { Author, type AuthorInfo } from "./Author"
+import { css, fresponsive, styled } from "library/styled"
 import {
 	internalGroqTypeReferenceTo,
 	type SanityImageCrop,
 	type SanityImageHotspot,
+	type Slug,
 } from "@/sanity.types"
 import Link from "next/link"
+import UniversalLink from "library/Loader/UniversalLink"
+import { urlForImage } from "@/sanity/lib/utils"
 
 type Nullish = null | undefined
 
@@ -35,22 +37,50 @@ export function LargeCard({
 		crop?: SanityImageCrop | undefined
 		_type: "image"
 	} | null
-	author: AuthorInfo
+	author: {
+		fullName: string | null
+		slug: Slug | null
+	} | null
 }) {
+	const imageURL = urlForImage(image)?.url()
+
 	return (
 		<Wrapper href={`/blog/${slug}`}>
-			<Author author={author} />
+			<Author>{author?.fullName}</Author>
 			{published && <DisplayDate>{published}</DisplayDate>}
-			{image && <Image src={image?.asset?._ref ?? ""} alt={title ?? ""} />}
+			{imageURL && <CardImage src={imageURL} alt={title ?? ""} />}
 			<h1>{title}</h1>
 			<p>{preview}</p>
 		</Wrapper>
 	)
 }
 
-const Wrapper = styled(Link)`
-	border: 1px solid orange;
-	display: grid;
-`
+const Wrapper = styled(
+	UniversalLink,
+	fresponsive(css`
+		border: 1px solid orange;
+		display: grid;
+	`),
+)
 
-const DisplayDate = styled.div``
+const DisplayDate = styled(
+	"div",
+	fresponsive(css`
+		position: relative;
+	`),
+)
+
+const CardImage = styled(
+	Image,
+	fresponsive(css`
+		width: 60px;
+		height: 100%;
+	`),
+)
+
+const Author = styled(
+	"div",
+	fresponsive(css`
+		position: relative;
+	`),
+)

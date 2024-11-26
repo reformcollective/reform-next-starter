@@ -1,6 +1,7 @@
 import GlobalProviders from "components/Providers"
 import Scroll from "library/Scroll"
 import { GlobalStyles, css, styled, unresponsive } from "library/styled"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { colorStyle } from "styles/colors"
 
 import "the-new-css-reset/css/reset.css"
@@ -12,15 +13,17 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body>
-				<GlobalProviders>
-					<GlobalStyles>{globalCss}</GlobalStyles>
-					<GlobalStyles>{colorStyle}</GlobalStyles>
-					<Scroll>
-						<Main>{children}</Main>
-					</Scroll>
-				</GlobalProviders>
-			</body>
+			<NuqsAdapter>
+				<body>
+					<GlobalProviders>
+						<GlobalStyles>{globalCss}</GlobalStyles>
+						<GlobalStyles>{colorStyle}</GlobalStyles>
+						<Scroll>
+							<Main>{children}</Main>
+						</Scroll>
+					</GlobalProviders>
+				</body>
+			</NuqsAdapter>
 		</html>
 	)
 }

@@ -119,10 +119,6 @@ importers:
       typescript:
         specifier: 5.7.2
         version: 5.7.2
-    devDependencies:
-      '@types/gsap':
-        specifier: 3.0.0
-        version: 3.0.0
 
   app/library:
     dependencies:
@@ -2137,10 +2133,6 @@ packages:
 
   '@types/glob@7.2.0':
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
-
-  '@types/gsap@3.0.0':
-    resolution: {integrity: sha512-BbWLi4WRHGze4C8NV7U7yRevuBFiPkPZZyGa0rryanvh/9HPUFXTNBXsGQxJZJq7Ix7j4RXMYodP3s+OsqCErg==}
-    deprecated: This is a stub types definition. gsap provides its own type definitions, so you do not need this installed.
 
   '@types/hast@2.3.10':
     resolution: {integrity: sha512-McWspRw8xx8J9HurkVBfYj0xKoE25tOFlHGdx4MJ5xORQrMGZNqJhVQWaIbm6Oyla5kYOXtDiopzKRJzEOkwJw==}
@@ -8013,10 +8005,6 @@ snapshots:
     dependencies:
       '@types/minimatch': 5.1.2
       '@types/node': 22.9.1
-
-  '@types/gsap@3.0.0':
-    dependencies:
-      gsap: 3.12.5
 
   '@types/hast@2.3.10':
     dependencies:

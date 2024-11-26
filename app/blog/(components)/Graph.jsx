@@ -16,7 +16,7 @@ export default function Graph(node) {
 					padding: 48,
 					paddingRight: 48 * 2,
 					height: "100%",
-					width: "100%",
+					width: "100px",
 					backgroundColor: "whitesmoke",
 					gap: 36,
 				}}

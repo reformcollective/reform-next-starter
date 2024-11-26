@@ -19,8 +19,9 @@ export const postFields = `
   slug,
   mainImage,
   author->{
-    _id,
-    name
+   _id,
+		fullName,
+    slug
   },
   categories,
   metadataDescription,
@@ -80,7 +81,8 @@ export const postsQuery = defineQuery(`*[_type == "post"]{
 	mainImage,
 	author->{
 		_id,
-		name
+		fullName,
+    slug
 	},
 	categories,
 	metadataDescription,

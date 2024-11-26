@@ -1,18 +1,19 @@
 "use client"
 
-import { LargeCard } from "components/blog/LargeCard"
-import { SmallCard } from "components/blog/SmallCard"
+import { LargeCard } from "blog/(components)/LargeCard"
+import { SmallCard } from "blog/(components)/SmallCard"
 import { ScrollSmoother } from "gsap/ScrollSmoother"
 import { useSearchResults } from "library/useSearchResults"
 import { useEffect } from "react"
-import styled from "styled-components"
-import type { PostQueryResult } from "@/sanity.types"
+import { css, fresponsive, styled } from "library/styled"
+import type { PostQueryResult, PostsQueryResult } from "@/sanity.types"
 import { useQueryState } from "nuqs"
+import UniversalLink from "library/Loader/UniversalLink"
 
-export default async function TemplateBlogContent({
+export default function TemplateBlogContent({
 	posts,
 }: {
-	posts: PostQueryResult[]
+	posts: PostsQueryResult
 }) {
 	const allCards = posts
 		.filter((post) => post !== null)
@@ -65,7 +66,7 @@ export default async function TemplateBlogContent({
 								slug={card?.slug?.current}
 								title={card?.title}
 								key={card?._id}
-								author={card?.author?.name}
+								author={card?.author}
 							/>
 						))}
 					</Grid>
@@ -82,7 +83,7 @@ export default async function TemplateBlogContent({
 							slug={featuredCard.slug?.current}
 							title={featuredCard.title}
 							key={featuredCard.id}
-							author={featuredCard.author?.name}
+							author={featuredCard.author}
 						/>
 					)}
 					<Grid>
@@ -94,7 +95,7 @@ export default async function TemplateBlogContent({
 								slug={card.slug?.current}
 								title={card.title}
 								key={card.id}
-								author={card.author?.name}
+								author={card.author}
 							/>
 						))}
 					</Grid>
@@ -140,7 +141,7 @@ export default async function TemplateBlogContent({
 									slug={card?.slug?.current}
 									title={card?.title}
 									key={card?._id}
-									author={card?.author?.name}
+									author={card?.author}
 								/>
 							)
 						})}
@@ -151,13 +152,20 @@ export default async function TemplateBlogContent({
 	)
 }
 
-const Wrapper = styled.div`
-	position: relative;
-`
+const Wrapper = styled(
+	"div",
+	fresponsive(css`
+		display: grid;
+		gap: 16px;
+	`),
+)
 
-const Grid = styled.div`
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-`
+const Grid = styled(
+	"div",
+	fresponsive(css`
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	`),
+)
 
-const ShowAll = styled.button``
+const ShowAll = styled(UniversalLink, fresponsive(css``))
