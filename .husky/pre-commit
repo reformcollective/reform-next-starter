@@ -1,3 +1,2 @@
-pnm run lint || true
-pnpm run format || true
 node ./app/library/.github/update-hash.js || true
+pnpm dlx lint-staged
