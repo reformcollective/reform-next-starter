@@ -1,9 +1,10 @@
-"use client"
-
+import { sleep } from "library/functions"
 import UniversalLink from "library/Loader/UniversalLink"
 import { css, fresponsive, styled } from "library/styled"
 
-export default function LoaderB() {
+export default async function LoaderB() {
+	await sleep(1000)
+
 	return (
 		<Wrapper>
 			<h1>Loader Tests B</h1>
