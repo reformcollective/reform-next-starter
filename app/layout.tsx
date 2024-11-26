@@ -2,6 +2,7 @@ import Footer from "components/Footer"
 import Header from "components/Header"
 import GlobalProviders from "components/Providers"
 import Scroll from "library/Scroll"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import {
 	GlobalStyles,
 	css,
@@ -27,22 +28,24 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body
-				// gsap changes with the style attribute, which will cause ssr issues
-				suppressHydrationWarning
-			>
-				<GlobalProviders>
-					<GlobalStyles>{globalCss}</GlobalStyles>
-					<GlobalStyles>{colorStyle}</GlobalStyles>
-					<Header />
-					<Scroll>
-						<Spacer />
-						hello world
-						<Main>{children}</Main>
-						<Footer />
-					</Scroll>
-				</GlobalProviders>
-			</body>
+			<NuqsAdapter>
+				<body
+					// gsap changes with the style attribute, which will cause ssr issues
+					suppressHydrationWarning
+				>
+					<GlobalProviders>
+						<GlobalStyles>{globalCss}</GlobalStyles>
+						<GlobalStyles>{colorStyle}</GlobalStyles>
+						<Header />
+						<Scroll>
+							<Spacer />
+							hello world
+							<Main>{children}</Main>
+							<Footer />
+						</Scroll>
+					</GlobalProviders>
+				</body>
+			</NuqsAdapter>
 		</html>
 	)
 }

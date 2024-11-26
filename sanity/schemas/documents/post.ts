@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity"
 
 /**
  * This file is the schema definition for a post.
@@ -153,4 +153,4 @@ export default defineType({
 	preview: { select: { title: "title" } },
 	readOnly: ({ document }) =>
 		(document == null ? void 0 : document.contentfulArchived) === !0,
-});
+})
