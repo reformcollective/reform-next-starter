@@ -32,7 +32,7 @@ const homeLocation = {
 } satisfies DocumentLocation
 
 export default defineConfig({
-	basePath: "/",
+	basePath: studioUrl,
 	projectId,
 	dataset,
 	schema: {
