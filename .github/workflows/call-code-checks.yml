@@ -2,6 +2,6 @@ name: Code Checks
 on: pull_request
 jobs:
   library:
-    uses: reformcollective/library/.github/workflows/code-checks.yml@604a8e4df84082d3facdbf38b1ac05fdf66558c6
+    uses: reformcollective/library/.github/workflows/code-checks.yml@4f1f7cc98952b57f1502984802519ab08398b515
     secrets:
       SECRETS_JSON: ${{ toJSON(secrets) }}
