@@ -7,8 +7,8 @@
 		"prebuild": "npm run typegen",
 		"build": "next build",
 		"start": "next start",
-		"lint": "biome lint && stylelint .",
-		"format": "prettier --write . && (biome check --write || true) && (stylelint --fix . || true)",
+		"lint": "biome lint --write && stylelint . --fix",
+		"format": "prettier --write . && biome format --write",
 		"typegen": "sanity schema extract && sanity typegen generate"
 	},
 	"dependencies": {
