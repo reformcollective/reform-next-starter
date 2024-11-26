@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
 	css,
@@ -8,11 +8,13 @@ import {
 	keyframes,
 	styled,
 	unresponsive,
-} from "library/styled";
+} from "library/styled"
+import useMedia from "library/useMedia"
 
 export default function Page() {
 	return (
 		<div>
+			{useMedia("full", "desktop", "tablet", "mobile")}
 			<Box>Hello world</Box>
 			<ColoredBox boxColor="red">I am a box</ColoredBox>
 			<UnresponsiveBox>I am unresponsive</UnresponsiveBox>
@@ -21,37 +23,37 @@ export default function Page() {
 			<ComponentWithVariants variant="red" />
 			<WithResponsiveSample>asdf</WithResponsiveSample>
 		</div>
-	);
+	)
 }
 
 // standard component
 const Box = styled(
 	"div",
 	fresponsive(css`
-    background: red;
-    border: 10px solid black;
-    padding: 10px;
-    margin: 10px;
-  `),
-);
+		background: red;
+		border: 10px solid black;
+		padding: 10px;
+		margin: 10px;
+	`),
+)
 
 // extending a component + passing props
 const ColoredBox = styled(Box, ({ boxColor }: { boxColor: string }) =>
 	fresponsive(css`
-    background: ${boxColor};
-  `),
-);
+		background: ${boxColor};
+	`),
+)
 
 // mixing responsive and unresponsive CSS
 const UnresponsiveBox = styled(Box, {
 	...unresponsive(css`
-    width: 150px;
-  `),
+		width: 150px;
+	`),
 	...fresponsive(css`
-    color: green;
-    border: 10px solid red;
-  `),
-});
+		color: green;
+		border: 10px solid red;
+	`),
+})
 
 // animations
 const FadeInKeyframes = keyframes`
@@ -67,43 +69,43 @@ const FadeInKeyframes = keyframes`
   100% {
     background:red;
   }
-`;
+`
 
 const AnimatedBox = styled(
 	Box,
 	fresponsive(css`
-    animation: ${FadeInKeyframes} 2s infinite;
-  `),
-);
+		animation: ${FadeInKeyframes} 2s infinite;
+	`),
+)
 
 // variants example
 const variants = {
 	red: css`
-    background: red;
-    color: green;
-  `,
+		background: red;
+		color: green;
+	`,
 	green: css`
-    background: green;
-    color: red;
-  `,
-};
+		background: green;
+		color: red;
+	`,
+}
 const ComponentWithVariants = styled(
 	"div",
 	({ variant }: { variant: keyof typeof variants }) =>
 		fresponsive(css`
-      ${variants[variant]}
-    `),
-);
+			${variants[variant]}
+		`),
+)
 
 // responsive styles example
 const WithResponsiveSample = styled("div", {
 	...fresponsive(css`
-    width: 1024px;
-  `),
+		width: 1024px;
+	`),
 	...ftablet(css`
-    width: 512px;
-  `),
+		width: 512px;
+	`),
 	...fmobile(css`
-    width: 300px;
-  `),
-});
+		width: 300px;
+	`),
+})

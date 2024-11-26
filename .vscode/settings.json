@@ -1,6 +1,6 @@
 {
 	/* formatting */
-	"editor.defaultFormatter": "biomejs.biome",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"[jsonc]": {
 		"editor.defaultFormatter": "biomejs.biome"
 	},
@@ -26,6 +26,11 @@
 		"restyle",
 		"styled-components",
 		"styled-jsx"
+	],
+	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
+		"^next/router$",
+		"^gsap/(?!all$).+",
+		"^gsap$"
 	],
 	"workbench.editor.customLabels.patterns": {
 		"**/index.tsx": "${dirname} / index.tsx",
