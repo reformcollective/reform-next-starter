@@ -17,13 +17,14 @@ export default function Page() {
 			{useMedia("full", "desktop", "tablet", "mobile")}
 			<Box>Hello world</Box>
 			<ColoredBox boxColor="red">I am a box</ColoredBox>
-			<UnresponsiveBox>I am unresponsive</UnresponsiveBox>
+			<UnresponsiveBox>I am partially unresponsive</UnresponsiveBox>
 			<AnimatedBox>I am animated</AnimatedBox>
 			<FadeInKeyframes />
 			<ComponentWithVariants variant="red" />
 			<WithResponsiveSample>
 				test with some <code>code</code>
 			</WithResponsiveSample>
+			<FullyScaled>I am fully scaled</FullyScaled>
 		</div>
 	)
 }
@@ -49,11 +50,12 @@ const ColoredBox = styled(Box, ({ boxColor }: { boxColor: string }) =>
 // mixing responsive and unresponsive CSS
 const UnresponsiveBox = styled(Box, {
 	...unresponsive(css`
-		width: 150px;
+		width: 200px;
+		background-color: blue;
 	`),
 	...fresponsive(css`
-		color: green;
-		border: 10px solid red;
+		color: white;
+		padding: 20px;
 	`),
 })
 
@@ -100,8 +102,7 @@ const ComponentWithVariants = styled(
 )
 
 // responsive styles example
-
-const styles = {
+const WithResponsiveSample = styled("div", {
 	...fresponsive(css`
 		border: 10px solid black;
 		margin: 10px;
@@ -127,7 +128,20 @@ const styles = {
 		background-color: green;
 		color: orange;
 	`),
-}
+})
 
-const WithResponsiveSample = styled("div", styles)
-console.log(styles)
+// fully scaled example
+const FullyScaled = styled(
+	"div",
+	fresponsive(
+		css`
+			background: red;
+			border: 10px solid black;
+			padding: 10px;
+			margin: 10px;
+		`,
+		{
+			scaleFully: true,
+		},
+	),
+)
