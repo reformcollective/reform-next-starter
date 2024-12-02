@@ -21,7 +21,9 @@ export default function Page() {
 			<AnimatedBox>I am animated</AnimatedBox>
 			<FadeInKeyframes />
 			<ComponentWithVariants variant="red" />
-			<WithResponsiveSample>asdf</WithResponsiveSample>
+			<WithResponsiveSample>
+				test with some <code>code</code>
+			</WithResponsiveSample>
 		</div>
 	)
 }
@@ -98,14 +100,34 @@ const ComponentWithVariants = styled(
 )
 
 // responsive styles example
-const WithResponsiveSample = styled("div", {
+
+const styles = {
 	...fresponsive(css`
-		width: 1024px;
+		border: 10px solid black;
+		margin: 10px;
+		padding: 10px;
+		color: purple;
+
+		code {
+			font-family: monospace;
+			color: #00d5ff;
+		}
 	`),
 	...ftablet(css`
 		width: 512px;
+		background: dodgerblue;
+		color: red;
+
+		code {
+			color: blue;
+		}
 	`),
 	...fmobile(css`
 		width: 300px;
+		background-color: green;
+		color: orange;
 	`),
-})
+}
+
+const WithResponsiveSample = styled("div", styles)
+console.log(styles)
