@@ -1,8 +1,8 @@
 "use client"
 
+import { useEventListener } from "ahooks"
 import { css, fmobile, fresponsive, ftablet, styled } from "library/styled"
 import { useMemo, useState } from "react"
-import { useEventListener } from "ahooks"
 
 export default function Playground() {
 	const [responsive, setResponsive] = useState("color: red; margin: 10px;")
