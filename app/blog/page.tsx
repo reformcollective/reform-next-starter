@@ -1,10 +1,11 @@
+import type { PostsQueryResult } from "@/sanity.types"
 import { Categories } from "blog/(components)/Categories"
 import { SearchBar } from "blog/(components)/SearchBar"
-import TemplateBlogContent from "./blog-layout"
 import { css, fresponsive, styled } from "library/styled"
-import { postsQuery } from "sanity/lib/queries"
+import { Suspense } from "react"
 import { sanityFetch } from "sanity/lib/fetch"
-import type { PostsQueryResult } from "@/sanity.types"
+import { postsQuery } from "sanity/lib/queries"
+import TemplateBlogContent from "./blog-layout"
 
 export default async function TemplateBlogPage() {
 	const data: PostsQueryResult = await sanityFetch({ query: postsQuery })
@@ -12,9 +13,11 @@ export default async function TemplateBlogPage() {
 	return (
 		<Wrapper>
 			<div>pre blog content! anything can go here! make a component!</div>
-			<SearchBar />
-			<Categories data={data} />
-			<TemplateBlogContent posts={data} />
+			<Suspense>
+				<SearchBar />
+				<Categories data={data} />
+				<TemplateBlogContent posts={data} />
+			</Suspense>
 		</Wrapper>
 	)
 }
