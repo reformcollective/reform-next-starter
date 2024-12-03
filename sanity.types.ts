@@ -56,14 +56,8 @@ export type Break = {
 }
 
 export type Youtube = {
-	_id: string
 	_type: "youtube"
-	_createdAt: string
-	_updatedAt: string
-	_rev: string
-	title?: string
-	youtubeLink?: string
-	contentfulArchived?: boolean
+	url?: string
 }
 
 export type CtaSchema = {
@@ -123,7 +117,15 @@ export type Post = {
 					_type: "span"
 					_key: string
 				}>
-				style?: "normal" | "h1" | "h2"
+				style?:
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
+					| "blockquote"
 				listItem?: "bullet" | "number"
 				markDefs?: Array<{
 					href?: string
@@ -134,24 +136,6 @@ export type Post = {
 				level?: number
 				_type: "block"
 				_key: string
-		  }
-		| {
-				_ref: string
-				_type: "reference"
-				_weak?: boolean
-				[internalGroqTypeReferenceTo]?: "ctaSchema"
-		  }
-		| {
-				_ref: string
-				_type: "reference"
-				_weak?: boolean
-				[internalGroqTypeReferenceTo]?: "card"
-		  }
-		| {
-				_ref: string
-				_type: "reference"
-				_weak?: boolean
-				[internalGroqTypeReferenceTo]?: "youtube"
 		  }
 		| {
 				asset?: {
@@ -180,6 +164,9 @@ export type Post = {
 				_type: "break"
 				_key: string
 		  }
+		| ({
+				_key: string
+		  } & Youtube)
 	>
 	featuredArticle?: boolean
 	publishDate?: string
@@ -607,34 +594,21 @@ export type HeroQueryResult = {
 	metadataDescription: string | null
 	articleText: Array<
 		| {
-				_ref: string
-				_type: "card"
-				_weak?: boolean
-				_id: string
-				title: null
-		  }
-		| {
-				_ref: string
-				_type: "ctaSchema"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
-		| {
-				_ref: string
-				_type: "youtube"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
-		| {
 				children?: Array<{
 					marks?: Array<string>
 					text?: string
 					_type: "span"
 					_key: string
 				}>
-				style?: "h1" | "h2" | "normal"
+				style?:
+					| "blockquote"
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
 				listItem?: "bullet" | "number"
 				markDefs?: Array<{
 					href?: string
@@ -672,6 +646,11 @@ export type HeroQueryResult = {
 				crop?: SanityImageCrop
 				_type: "image"
 				_key: string
+		  }
+		| {
+				_key: string
+				_type: "youtube"
+				url?: string
 		  }
 	> | null
 	featuredArticle: boolean | null
@@ -723,34 +702,21 @@ export type PostQueryResult = {
 	metadataDescription: string | null
 	articleText: Array<
 		| {
-				_ref: string
-				_type: "card"
-				_weak?: boolean
-				_id: string
-				title: null
-		  }
-		| {
-				_ref: string
-				_type: "ctaSchema"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
-		| {
-				_ref: string
-				_type: "youtube"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
-		| {
 				children?: Array<{
 					marks?: Array<string>
 					text?: string
 					_type: "span"
 					_key: string
 				}>
-				style?: "h1" | "h2" | "normal"
+				style?:
+					| "blockquote"
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
 				listItem?: "bullet" | "number"
 				markDefs?: Array<{
 					href?: string
@@ -788,6 +754,11 @@ export type PostQueryResult = {
 				crop?: SanityImageCrop
 				_type: "image"
 				_key: string
+		  }
+		| {
+				_key: string
+				_type: "youtube"
+				url?: string
 		  }
 	> | null
 	featuredArticle: boolean | null
@@ -838,37 +809,21 @@ export type PostsQueryResult = Array<{
 	metadataDescription: string | null
 	articleText: Array<
 		| {
-				_ref: string
-				_type: "card"
-				_weak?: boolean
-				markDefs: null
-				_id: string
-				title: null
-		  }
-		| {
-				_ref: string
-				_type: "ctaSchema"
-				_weak?: boolean
-				markDefs: null
-				_id: string
-				title: string | null
-		  }
-		| {
-				_ref: string
-				_type: "youtube"
-				_weak?: boolean
-				markDefs: null
-				_id: string
-				title: string | null
-		  }
-		| {
 				children?: Array<{
 					marks?: Array<string>
 					text?: string
 					_type: "span"
 					_key: string
 				}>
-				style?: "h1" | "h2" | "normal"
+				style?:
+					| "blockquote"
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
 				listItem?: "bullet" | "number"
 				markDefs: Array<{
 					href: string | null
@@ -908,6 +863,12 @@ export type PostsQueryResult = Array<{
 				crop?: SanityImageCrop
 				_type: "image"
 				_key: string
+				markDefs: null
+		  }
+		| {
+				_key: string
+				_type: "youtube"
+				url?: string
 				markDefs: null
 		  }
 	> | null

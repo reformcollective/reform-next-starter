@@ -53,7 +53,7 @@ export default defineConfig({
 			resolve: {
 				mainDocuments: defineDocuments([
 					{
-						route: "/posts/:slug",
+						route: "/blog/:slug",
 						filter: `_type == "post" && slug.current == $slug`,
 					},
 				]),
@@ -82,7 +82,12 @@ export default defineConfig({
 			},
 			previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
 		}),
-		structureTool({ structure: pageStructure([settings]) }),
+		structureTool({
+			structure: pageStructure([settings]),
+			defaultDocumentNode: (S) => {
+				return S.document().views([S.view.form()])
+			},
+		}),
 		// Configures the global "new document" button, and document actions, to suit the Settings document singleton
 		singletonPlugin([settings.name]),
 		// Add an image asset source for Unsplash

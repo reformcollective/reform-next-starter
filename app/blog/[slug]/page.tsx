@@ -70,15 +70,6 @@ export default async function PostPage({ params }: Props) {
 
 		const related = allPosts
 
-		// Todo - add better implementation of this when updating Portable Text
-		const articleText =
-			post.articleText?.map((block: any) => {
-				return {
-					...block,
-					children: block.children ?? [],
-				}
-			}) || []
-
 		const mainImageURL = urlForImage(post.mainImage)?.url()
 
 		return (
@@ -102,8 +93,8 @@ export default async function PostPage({ params }: Props) {
 						</UniversalLink>
 					))}
 				</Categories>
-				{typeof articleText !== undefined && articleText && (
-					<PortableText value={articleText} />
+				{typeof post.articleText !== "undefined" && post.articleText && (
+					<PortableText value={post.articleText} />
 				)}
 
 				<Related>
