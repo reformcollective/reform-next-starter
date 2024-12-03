@@ -12,7 +12,8 @@ export function YoutubeEmbed({ url }: { url: string }) {
 const Embed = styled(
 	ReactPlayer,
 	fresponsive(css`
-		border: 1px solid orange;
 		display: grid;
+		width: 600px;
+		height: 400px;
 	`),
 )

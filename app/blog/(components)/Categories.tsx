@@ -3,7 +3,7 @@
 import UniversalLink from "library/Loader/UniversalLink"
 import { useQueryState } from "nuqs"
 import { css, fresponsive, styled } from "library/styled"
-import type { PostQueryResult, PostsQueryResult } from "@/sanity.types"
+import type { PostsQueryResult } from "@/sanity.types"
 
 export function Categories({ data }: { data: PostsQueryResult }) {
 	const [, setCategory] = useQueryState("category")
@@ -39,7 +39,6 @@ const Button = styled(
 	fresponsive(css`
 		max-width: 1024px;
 		margin: 0 auto;
-		border: 1px solid red;
 		background: 1px solid orange;
 	`),
 )

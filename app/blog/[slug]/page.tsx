@@ -1,4 +1,4 @@
-import { defineQuery } from "next-sanity"
+import { defineQuery, type PortableTextBlock } from "next-sanity"
 import type { Metadata, ResolvingMetadata } from "next"
 import { notFound } from "next/navigation"
 import PortableText from "blog/portable-text"
@@ -69,6 +69,7 @@ export default async function PostPage({ params }: Props) {
 		if (!post) return null
 
 		const related = allPosts
+		const { articleText } = post
 
 		const mainImageURL = urlForImage(post.mainImage)?.url()
 
@@ -93,8 +94,9 @@ export default async function PostPage({ params }: Props) {
 						</UniversalLink>
 					))}
 				</Categories>
-				{typeof post.articleText !== "undefined" && post.articleText && (
-					<PortableText value={post.articleText} />
+				{typeof articleText !== "undefined" && articleText && (
+					// Bad but not sure how else to do this
+					<PortableText value={articleText as PortableTextBlock[]} />
 				)}
 
 				<Related>
@@ -133,7 +135,6 @@ const Categories = styled(
 	"div",
 
 	fresponsive(css`
-		border: 1px solid green;
 		display: flex;
 		gap: 8px;
 	`),
@@ -156,9 +157,4 @@ const MainImage = styled(
 	`),
 )
 
-const Author = styled(
-	"div",
-	fresponsive(css`
-		border: 1px solid red;
-	`),
-)
+const Author = styled("div", fresponsive(css``))

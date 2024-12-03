@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity"
 
 export default defineType({
 	name: "break",
@@ -9,11 +9,8 @@ export default defineType({
 			name: "style",
 			type: "string",
 			options: {
-				list: [
-					{ title: "Line break", value: "lineBreak" },
-					{ title: "Read more", value: "readMore" },
-				],
+				list: [{ title: "Line break", value: "lineBreak" }],
 			},
 		}),
 	],
-});
+})

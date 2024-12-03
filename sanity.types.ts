@@ -60,17 +60,6 @@ export type Youtube = {
 	url?: string
 }
 
-export type CtaSchema = {
-	_id: string
-	_type: "ctaSchema"
-	_createdAt: string
-	_updatedAt: string
-	_rev: string
-	title?: string
-	paragraphText?: string
-	contentfulArchived?: boolean
-}
-
 export type Card = {
 	_id: string
 	_type: "card"
@@ -482,7 +471,6 @@ export type AllSanitySchemaTypes =
 	| Geopoint
 	| Break
 	| Youtube
-	| CtaSchema
 	| Card
 	| Post
 	| SanityFileAsset

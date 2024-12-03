@@ -6,7 +6,7 @@ import { ScrollSmoother } from "gsap/ScrollSmoother"
 import { useSearchResults } from "library/useSearchResults"
 import { useEffect } from "react"
 import { css, fresponsive, styled } from "library/styled"
-import type { PostQueryResult, PostsQueryResult } from "@/sanity.types"
+import type { PostsQueryResult } from "@/sanity.types"
 import { useQueryState } from "nuqs"
 import UniversalLink from "library/Loader/UniversalLink"
 

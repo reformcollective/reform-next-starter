@@ -19,7 +19,6 @@ import { assistWithPresets } from "@/sanity/plugins/assist"
 import author from "@/sanity/schemas/documents/author"
 import post from "@/sanity/schemas/documents/post"
 import card from "@/sanity/schemas/documents/card"
-import cta from "@/sanity/schemas/documents/ctaSchema"
 import youtube from "@/sanity/schemas/documents/youtube"
 import breakSchema from "@/sanity/schemas/documents/break"
 
@@ -43,7 +42,6 @@ export default defineConfig({
 			author,
 			post,
 			card,
-			cta,
 			youtube,
 			breakSchema,
 		],

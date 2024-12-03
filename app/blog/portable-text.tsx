@@ -1,3 +1,5 @@
+"use client"
+
 /**
  * This component uses Portable Text to render a post body.
  *
@@ -17,7 +19,6 @@ import {
 } from "next-sanity"
 import { Image } from "next-sanity/image"
 import textStyles from "styles/text"
-import { SmallCard } from "./(components)/SmallCard"
 import { urlForImage } from "@/sanity/lib/utils"
 import { YoutubeEmbed } from "./(components)/YoutubeEmbed"
 
@@ -43,11 +44,7 @@ export default function CustomPortableText({
 			// Normal paragraph
 			normal: ({ children }) => <p className="mb-4">{children}</p>,
 			// Blockquote
-			blockquote: ({ children }) => (
-				<BlockQuote className="pl-4 border-l-4 border-gray-200 italic">
-					{children}
-				</BlockQuote>
-			),
+			blockquote: ({ children }) => <BlockQuote>{children}</BlockQuote>,
 		},
 
 		// List styles
@@ -70,32 +67,27 @@ export default function CustomPortableText({
 		marks: {
 			// Links
 			link: ({ children, value }) => {
+				console.log(value, "href")
 				const href = value?.href || ""
-				const target = href.startsWith("http") ? "_blank" : undefined
-				const rel = target === "_blank" ? "noopener noreferrer" : undefined
 
-				return (
-					<UniversalLink href={href} target={target} rel={rel}>
-						{children}
-					</UniversalLink>
-				)
+				return <StyledUniversalLink href={href}>{children}</StyledUniversalLink>
 			},
 			// Bold
 			strong: ({ children }) => (
-				<strong className="font-bold">{children}</strong>
+				<Strong className="font-bold">{children}</Strong>
 			),
 			// Italic
-			em: ({ children }) => <em className="italic">{children}</em>,
+			em: ({ children }) => <EM className="italic">{children}</EM>,
 			// Code
 			code: ({ children }) => <Code>{children}</Code>,
 			// Underline
-			underline: ({ children }) => (
-				<span className="underline">{children}</span>
-			),
+			underline: ({ children }) => <Underline>{children}</Underline>,
 			// Strike-through
-			strike: ({ children }) => (
-				<span className="line-through">{children}</span>
+			"strike-through": ({ children }) => (
+				<Strikethrough>{children}</Strikethrough>
 			),
+			super: ({ children }) => <SuperScript>{children}</SuperScript>,
+			sub: ({ children }) => <SubScript>{children}</SubScript>,
 		},
 
 		// Custom types
@@ -113,34 +105,16 @@ export default function CustomPortableText({
 						alt={value.alt || ""}
 						width={1242}
 						height={746}
-						className="inline-image"
 					/>
 				)
 			},
 			// YouTube embed
 			youtube: ({ value }) => {
-				if (!value?._id) {
-					return null
-				}
-
 				return <YoutubeEmbed url={value.url} />
 			},
-			// Call to Action
-			// ctaSchema: ({ value }) => {
-			// 	if (!value?._id) {
-			// 		return null
-			// 	}
-
-			// 	return <CallToAction id={value._id} title={value.title} />
-			// },
-			// Card
-			// card: ({ value }) => {
-			// 	if (!value?._id) {
-			// 		return null
-			// 	return <SmallCard title={value.title} />
-
-			// 	return <SmallCard  title={} />
-			// },
+			break: () => {
+				return <Hr />
+			},
 		},
 	}
 
@@ -212,7 +186,6 @@ const UnorderedList = styled(
 	"ul",
 
 	fresponsive(css`
-		// add unordered list styles here
 		list-style-type: disc;
 	`),
 )
@@ -220,7 +193,6 @@ const UnorderedList = styled(
 const OrderedList = styled(
 	"ol",
 	fresponsive(css`
-		// add ordered list styles here
 		list-style-type: decimal;
 	`),
 )
@@ -246,7 +218,6 @@ const BulletListItem = styled(
 				& > li > ul {
 					li {
 						list-style-type: disc;
-
 						margin-left: 1.5em;
 					}
 				}
@@ -260,6 +231,7 @@ const NumberListItem = styled(
 	fresponsive(css`
 		list-style-type: decimal;
 		margin-left: 1.5em;
+
 		& > ol {
 			li {
 				list-style-type: lower-alpha;
@@ -296,10 +268,61 @@ const Code = styled(
 	`),
 )
 
-const YouTubeEmbed = styled(
-	"iframe",
+const Strong = styled(
+	"strong",
 	fresponsive(css`
-		width: 100%;
-		height: auto;
+		font-weight: bold;
+	`),
+)
+
+const EM = styled(
+	"em",
+	fresponsive(css`
+		font-style: italic;
+	`),
+)
+
+const Underline = styled(
+	"span",
+	fresponsive(css`
+		text-decoration: underline;
+	`),
+)
+
+const Strikethrough = styled(
+	"s",
+	fresponsive(css`
+		text-decoration: line-through;
+	`),
+)
+
+const SuperScript = styled(
+	"sup",
+	fresponsive(css`
+		vertical-align: super;
+	`),
+)
+
+const SubScript = styled(
+	"sub",
+	fresponsive(css`
+		vertical-align: sub;
+	`),
+)
+
+const StyledUniversalLink = styled(UniversalLink, {
+	color: "red",
+	textDecoration: "underline",
+	cursor: "pointer",
+})
+
+const Hr = styled(
+	"hr",
+
+	fresponsive(css`
+		height: 1px;
+		width: 80%;
+		margin: 40px auto;
+		background-color: grey;
 	`),
 )
