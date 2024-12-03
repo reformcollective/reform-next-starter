@@ -1,9 +1,9 @@
 "use client"
 
+import { AnimatedPaths } from "library/AnimatedPaths"
 import { keyframes, styled } from "library/styled"
 import Gear from "./gear.svg?inline"
 import Wave from "./wave.svg?inline"
-import { AnimatedPaths } from "library/AnimatedPaths"
 
 export default function Page() {
 	return (
@@ -12,7 +12,9 @@ export default function Page() {
 			{Array.from({ length: 12 }).map((_, index) => (
 				<SmallGear key={`small-gear-${index + 1}`} />
 			))}
-			<AnimatedPaths><Wave /></AnimatedPaths>
+			<AnimatedPaths>
+				<Wave />
+			</AnimatedPaths>
 			<ColorAnimation />
 			<SpinAnimation />
 		</div>

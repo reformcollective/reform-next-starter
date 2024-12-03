@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity"
 
 export default defineType({
 	type: "document",
@@ -52,4 +52,4 @@ export default defineType({
 	preview: { select: { title: "fullName" } },
 	readOnly: ({ document }) =>
 		(document == null ? void 0 : document.contentfulArchived) === !0,
-});
+})
