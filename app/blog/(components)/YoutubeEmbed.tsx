@@ -1,12 +1,15 @@
 "use-client"
 
+import ClientOnly from "library/ClientOnly"
 import { css, fresponsive, styled } from "library/styled"
 import ReactPlayer from "react-player"
 
-type Nullish = null | undefined
-
 export function YoutubeEmbed({ url }: { url: string }) {
-	return <Embed url={url} />
+	return (
+		<ClientOnly>
+			<Embed url={url} />
+		</ClientOnly>
+	)
 }
 
 const Embed = styled(

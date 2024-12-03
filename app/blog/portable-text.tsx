@@ -29,8 +29,6 @@ export default function CustomPortableText({
 	className?: string
 	value: PortableTextBlock[]
 }) {
-	console.log("CustomPortableText", value)
-
 	const portableTextComponents: PortableTextComponents = {
 		// Block styles
 		block: {

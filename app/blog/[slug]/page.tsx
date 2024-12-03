@@ -42,7 +42,9 @@ export async function generateMetadata(
 		stega: false,
 	})
 	const previousImages = (await parent).openGraph?.images || []
-	const ogImage = resolveOpenGraphImage(post?.mainImage)
+	const ogImage = post?.mainImage
+		? resolveOpenGraphImage(post.mainImage)
+		: undefined
 
 	return {
 		authors: post?.author?.fullName ? [{ name: post?.author?.fullName }] : [],

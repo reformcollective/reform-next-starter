@@ -1,7 +1,5 @@
 import { CogIcon } from "@sanity/icons"
-import { defineArrayMember, defineField, defineType } from "sanity"
-
-import * as demo from "../../lib/demo"
+import { defineField, defineType } from "sanity"
 
 export default defineType({
 	name: "settings",
@@ -9,75 +7,6 @@ export default defineType({
 	type: "document",
 	icon: CogIcon,
 	fields: [
-		defineField({
-			name: "title",
-			description: "This field is the title of your blog.",
-			title: "Title",
-			type: "string",
-			initialValue: demo.title,
-			validation: (rule) => rule.required(),
-		}),
-		defineField({
-			name: "description",
-			description:
-				"Used both for the <meta> description tag for SEO, and the blog subheader.",
-			title: "Description",
-			type: "array",
-			initialValue: demo.description,
-			of: [
-				defineArrayMember({
-					type: "block",
-					options: {},
-					styles: [],
-					lists: [],
-					marks: {
-						decorators: [],
-						annotations: [
-							defineField({
-								type: "object",
-								name: "link",
-								fields: [
-									{
-										type: "string",
-										name: "href",
-										title: "URL",
-										validation: (rule) => rule.required(),
-									},
-								],
-							}),
-						],
-					},
-				}),
-			],
-		}),
-		defineField({
-			name: "footer",
-			description:
-				"This is a block of text that will be displayed at the bottom of the page.",
-			title: "Footer Info",
-			type: "array",
-			of: [
-				defineArrayMember({
-					type: "block",
-					marks: {
-						annotations: [
-							{
-								name: "link",
-								type: "object",
-								title: "Link",
-								fields: [
-									{
-										name: "href",
-										type: "url",
-										title: "Url",
-									},
-								],
-							},
-						],
-					},
-				}),
-			],
-		}),
 		defineField({
 			name: "ogImage",
 			title: "Open Graph Image",
