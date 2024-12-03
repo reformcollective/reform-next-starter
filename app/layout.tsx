@@ -11,6 +11,7 @@ import {
 } from "library/styled"
 import { VisualEditing } from "next-sanity"
 import { colorStyle } from "styles/colors"
+import textStyles from "styles/text"
 
 import "the-new-css-reset/css/reset.css"
 
@@ -64,13 +65,13 @@ const Spacer = styled(
 )
 
 // TODO: configure a default text color
-const globalCss = unresponsive(css`
+const globalCss = fresponsive(css`
 	/* default text styles */
 	html {
 		/* if your project uses a dark color for most text, set that here */
 		color: black;
 		font-family: sans-serif;
-		// TODO textStyles.body
+		${textStyles.body}
 	}
 
 	* {
