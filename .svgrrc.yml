@@ -22,7 +22,7 @@ svgoConfig:
     - sortAttrs
     - sortDefsChildren
     - removeDesc
-    # Since we may use class when animating SVGs, we don't want to prefix them
+    # Since we might use class when animating SVGs, we don't want to prefix them
     # Class is preferred over id for animations
     - name: prefixIds
       params:
