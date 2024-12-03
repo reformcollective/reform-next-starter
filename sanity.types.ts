@@ -52,7 +52,7 @@ export type Break = {
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
-	style?: "lineBreak" | "readMore"
+	style?: "lineBreak"
 }
 
 export type Youtube = {
@@ -149,7 +149,7 @@ export type Post = {
 				_key: string
 		  }
 		| {
-				style?: "lineBreak" | "readMore"
+				style?: "lineBreak"
 				_type: "break"
 				_key: string
 		  }
@@ -220,43 +220,6 @@ export type Settings = {
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
-	title?: string
-	description?: Array<{
-		children?: Array<{
-			marks?: Array<string>
-			text?: string
-			_type: "span"
-			_key: string
-		}>
-		style?: "normal"
-		listItem?: never
-		markDefs?: Array<{
-			href?: string
-			_type: "link"
-			_key: string
-		}>
-		level?: number
-		_type: "block"
-		_key: string
-	}>
-	footer?: Array<{
-		children?: Array<{
-			marks?: Array<string>
-			text?: string
-			_type: "span"
-			_key: string
-		}>
-		style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote"
-		listItem?: "bullet" | "number"
-		markDefs?: Array<{
-			href?: string
-			_type: "link"
-			_key: string
-		}>
-		level?: number
-		_type: "block"
-		_key: string
-	}>
 	ogImage?: {
 		asset?: {
 			_ref: string
@@ -504,43 +467,6 @@ export type SettingsQueryResult = {
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
-	title?: string
-	description?: Array<{
-		children?: Array<{
-			marks?: Array<string>
-			text?: string
-			_type: "span"
-			_key: string
-		}>
-		style?: "normal"
-		listItem?: never
-		markDefs?: Array<{
-			href?: string
-			_type: "link"
-			_key: string
-		}>
-		level?: number
-		_type: "block"
-		_key: string
-	}>
-	footer?: Array<{
-		children?: Array<{
-			marks?: Array<string>
-			text?: string
-			_type: "span"
-			_key: string
-		}>
-		style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal"
-		listItem?: "bullet" | "number"
-		markDefs?: Array<{
-			href?: string
-			_type: "link"
-			_key: string
-		}>
-		level?: number
-		_type: "block"
-		_key: string
-	}>
 	ogImage?: {
 		asset?: {
 			_ref: string
@@ -609,7 +535,7 @@ export type HeroQueryResult = {
 				_key: string
 		  }
 		| {
-				style?: "lineBreak" | "readMore"
+				style?: "lineBreak"
 				_type: "break"
 				_key: string
 		  }
@@ -717,7 +643,7 @@ export type PostQueryResult = {
 				_key: string
 		  }
 		| {
-				style?: "lineBreak" | "readMore"
+				style?: "lineBreak"
 				_type: "break"
 				_key: string
 		  }
@@ -824,7 +750,7 @@ export type PostsQueryResult = Array<{
 				_key: string
 		  }
 		| {
-				style?: "lineBreak" | "readMore"
+				style?: "lineBreak"
 				_type: "break"
 				_key: string
 				markDefs: null
