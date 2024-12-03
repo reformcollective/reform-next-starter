@@ -7,4 +7,4 @@ on:
   workflow_dispatch:
 jobs:
   library:
-    uses: reformcollective/library/.github/workflows/check-updates.yml@290bea5df7c4ad8399463d305903d115a8f68574
+    uses: reformcollective/library/.github/workflows/check-updates.yml@20227228920f1051afdb7a5a43cc517dbfff8136
