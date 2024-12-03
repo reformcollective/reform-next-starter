@@ -8,10 +8,7 @@ svgoConfig:
     - removeMetadata
     - removeEditorsNSData
     - cleanupAttrs
-      # minification may cause IDs to clash, so we disable it
-    - name: cleanupIds
-      params:
-        minify: false
+    - cleanupIds
     - removeUselessDefs
     - cleanupNumericValues
     - removeUnknownsAndDefaults
@@ -22,10 +19,16 @@ svgoConfig:
     - removeEmptyAttrs
     - removeEmptyContainers
     - removeUnusedNS
+    # mergePaths may break animated lines, let's find out...
     - mergePaths
     - sortAttrs
     - sortDefsChildren
     - removeDesc
+    # Since we may use class when animating SVGs, we don't want to prefix them
+    # Class is preferred over id for animations
+    - name: prefixIds
+      params:
+        prefixClassNames: false
 
     # Plugins not included in preset-default
     - convertOneStopGradients
