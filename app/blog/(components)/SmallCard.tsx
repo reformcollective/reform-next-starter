@@ -1,6 +1,5 @@
 import { DisplayDate } from "library/DisplayDate"
 import { css, fresponsive, styled } from "library/styled"
-import { Author, type AuthorInfo } from "./Author"
 import {
 	internalGroqTypeReferenceTo,
 	type SanityImageCrop,
@@ -61,7 +60,6 @@ export function SmallCard({
 const Wrapper = styled(
 	Link,
 	fresponsive(css`
-		border: 1px solid orange;
 		display: grid;
 	`),
 )

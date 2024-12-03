@@ -6,7 +6,6 @@ import {
 	type SanityImageHotspot,
 	type Slug,
 } from "@/sanity.types"
-import Link from "next/link"
 import UniversalLink from "library/Loader/UniversalLink"
 import { urlForImage } from "@/sanity/lib/utils"
 
@@ -58,7 +57,6 @@ export function LargeCard({
 const Wrapper = styled(
 	UniversalLink,
 	fresponsive(css`
-		border: 1px solid orange;
 		display: grid;
 	`),
 )

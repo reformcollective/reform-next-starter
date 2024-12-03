@@ -1,0 +1,34 @@
+svgoConfig:
+  multipass: true
+  plugins:
+    # Plugins included in preset-default
+    - removeDoctype
+    - removeXMLProcInst
+    - removeComments
+    - removeMetadata
+    - removeEditorsNSData
+    - cleanupAttrs
+    - cleanupIds
+    - removeUselessDefs
+    - cleanupNumericValues
+    - removeUnknownsAndDefaults
+    - removeNonInheritableGroupAttrs
+    - removeUselessStrokeAndFill
+    - removeEmptyText
+    - collapseGroups
+    - removeEmptyAttrs
+    - removeEmptyContainers
+    - removeUnusedNS
+    - sortAttrs
+    - sortDefsChildren
+    - removeDesc
+    # Since we might use class when animating SVGs, we don't want to prefix them
+    # Class is preferred over id for animations
+    - name: prefixIds
+      params:
+        prefixClassNames: false
+
+    # Plugins not included in preset-default
+    - convertOneStopGradients
+    - removeRasterImages
+    - removeDimensions
