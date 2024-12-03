@@ -7,13 +7,7 @@
 		"baseUrl": "./app",
 		"paths": {
 			"@/*": ["../*"],
-			"library/*": ["./library/*"],
-			"components/*": ["./components/*"],
-			"styles/*": ["./styles/*"],
-			"types/*": ["./types/*"],
-			"utils/*": ["./utils/*"],
-			"sanity/*": ["../sanity/*"],
-			"blog/*": ["./blog/*"]
+			"sanity/*": ["../sanity/*"]
 		}
 	},
 	"include": [

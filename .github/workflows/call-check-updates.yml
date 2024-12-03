@@ -1,0 +1,10 @@
+name: Check For Updates
+# run daily at noon MST
+on:
+  # TODO enable this when ready
+  # schedule:
+  #   - cron: "0 19 * * *"
+  workflow_dispatch:
+jobs:
+  library:
+    uses: reformcollective/library/.github/workflows/check-updates.yml@20227228920f1051afdb7a5a43cc517dbfff8136

@@ -7,9 +7,10 @@
 		"prebuild": "npm run typegen",
 		"build": "next build",
 		"start": "next start",
-		"lint": "biome check --write && stylelint --fix .",
+		"lint": "biome lint --write && stylelint . --fix",
 		"format": "prettier --write . && biome format --write",
-		"typegen": "sanity schema extract && sanity typegen generate"
+		"typegen": "sanity schema extract && sanity typegen generate",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@biomejs/biome": "1.9.4",
@@ -50,8 +51,10 @@
 		"the-new-css-reset": "1.11.3",
 		"typescript": "5.7.2"
 	},
-	"overrides": {
-		"uri-js": "npm:uri-js-replace"
+	"pnpm": {
+		"overrides": {
+			"uri-js": "npm:uri-js-replace"
+		}
 	},
 	"stylelint": {
 		"extends": "stylelint-config-reform-collective"
@@ -64,5 +67,15 @@
 		"last 99 firefox versions and last 1 year",
 		"last 99 FirefoxAndroid versions and last 1 year"
 	],
-	"packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
+	"packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387",
+	"devDependencies": {
+		"husky": "9.1.7"
+	},
+	"lint-staged": {
+		"*": [
+			"stylelint --fix",
+			"prettier --write --ignore-unknown",
+			"biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+		]
+	}
 }
