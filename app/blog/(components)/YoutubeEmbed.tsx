@@ -1,5 +1,3 @@
-"use-client"
-
 import ClientOnly from "library/ClientOnly"
 import { css, fresponsive, styled } from "library/styled"
 import ReactPlayer from "react-player"
