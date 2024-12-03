@@ -4,6 +4,7 @@ import gsap, { ScrollSmoother, ScrollTrigger } from "gsap/all"
 import { useTriggerPreloader } from "library/Loader/PreloaderUtils"
 import { useBackButton } from "library/Loader/TransitionUtils"
 import { ScreenProvider } from "library/ScreenContext"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
@@ -15,7 +16,11 @@ export default function GlobalProviders({
 	useBackButton()
 	useTriggerPreloader()
 
-	children = <ScreenProvider>{children}</ScreenProvider>
+	children = (
+		<ScreenProvider>
+			<NuqsAdapter>{children}</NuqsAdapter>
+		</ScreenProvider>
+	)
 
 	return children
 }

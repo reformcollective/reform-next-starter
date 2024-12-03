@@ -9,6 +9,7 @@ import {
 	styled,
 	unresponsive,
 } from "library/styled"
+import { VisualEditing } from "next-sanity"
 import { colorStyle } from "styles/colors"
 
 import "the-new-css-reset/css/reset.css"
@@ -29,11 +30,12 @@ export default function RootLayout({
 		<html lang="en">
 			<body
 				// gsap changes with the style attribute, which will cause ssr issues
-				suppressHydrationWarning
+				suppressHydrationWarning={true}
 			>
 				<GlobalProviders>
 					<GlobalStyles>{globalCss}</GlobalStyles>
 					<GlobalStyles>{colorStyle}</GlobalStyles>
+					<VisualEditing />
 					<Header />
 					<Scroll>
 						<Spacer />

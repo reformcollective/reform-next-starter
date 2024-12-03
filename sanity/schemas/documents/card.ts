@@ -1,4 +1,4 @@
-import { defineField, defineType, type SchemaTypeDefinition } from "sanity";
+import { defineField, defineType } from "sanity"
 
 export default defineType({
 	type: "document",
@@ -30,4 +30,4 @@ export default defineType({
 	preview: { select: { title: "quotation" } },
 	readOnly: ({ document }) =>
 		(document == null ? void 0 : document.contentfulArchived) === !0,
-});
+})

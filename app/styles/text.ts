@@ -22,7 +22,9 @@ export const clampText = (lines: number) => css`
 const textStyles = {
 	// don't wrap these in a fresponsive or unresponsive call!
 	// that should happen at the component level
-	h1: css``,
+	h1: css`
+		font-size: 50px;
+	`,
 	h2: css``,
 	h3: css``,
 	body: css``,

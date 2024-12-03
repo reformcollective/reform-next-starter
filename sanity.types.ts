@@ -52,29 +52,12 @@ export type Break = {
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
-	style?: "lineBreak" | "readMore"
+	style?: "lineBreak"
 }
 
 export type Youtube = {
-	_id: string
 	_type: "youtube"
-	_createdAt: string
-	_updatedAt: string
-	_rev: string
-	title?: string
-	youtubeLink?: string
-	contentfulArchived?: boolean
-}
-
-export type CtaSchema = {
-	_id: string
-	_type: "ctaSchema"
-	_createdAt: string
-	_updatedAt: string
-	_rev: string
-	title?: string
-	paragraphText?: string
-	contentfulArchived?: boolean
+	url?: string
 }
 
 export type Card = {
@@ -123,7 +106,15 @@ export type Post = {
 					_type: "span"
 					_key: string
 				}>
-				style?: "normal" | "h1" | "h2"
+				style?:
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
+					| "blockquote"
 				listItem?: "bullet" | "number"
 				markDefs?: Array<{
 					href?: string
@@ -134,24 +125,6 @@ export type Post = {
 				level?: number
 				_type: "block"
 				_key: string
-		  }
-		| {
-				_ref: string
-				_type: "reference"
-				_weak?: boolean
-				[internalGroqTypeReferenceTo]?: "ctaSchema"
-		  }
-		| {
-				_ref: string
-				_type: "reference"
-				_weak?: boolean
-				[internalGroqTypeReferenceTo]?: "card"
-		  }
-		| {
-				_ref: string
-				_type: "reference"
-				_weak?: boolean
-				[internalGroqTypeReferenceTo]?: "youtube"
 		  }
 		| {
 				asset?: {
@@ -176,10 +149,13 @@ export type Post = {
 				_key: string
 		  }
 		| {
-				style?: "lineBreak" | "readMore"
+				style?: "lineBreak"
 				_type: "break"
 				_key: string
 		  }
+		| ({
+				_key: string
+		  } & Youtube)
 	>
 	featuredArticle?: boolean
 	publishDate?: string
@@ -244,43 +220,6 @@ export type Settings = {
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
-	title?: string
-	description?: Array<{
-		children?: Array<{
-			marks?: Array<string>
-			text?: string
-			_type: "span"
-			_key: string
-		}>
-		style?: "normal"
-		listItem?: never
-		markDefs?: Array<{
-			href?: string
-			_type: "link"
-			_key: string
-		}>
-		level?: number
-		_type: "block"
-		_key: string
-	}>
-	footer?: Array<{
-		children?: Array<{
-			marks?: Array<string>
-			text?: string
-			_type: "span"
-			_key: string
-		}>
-		style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote"
-		listItem?: "bullet" | "number"
-		markDefs?: Array<{
-			href?: string
-			_type: "link"
-			_key: string
-		}>
-		level?: number
-		_type: "block"
-		_key: string
-	}>
 	ogImage?: {
 		asset?: {
 			_ref: string
@@ -495,7 +434,6 @@ export type AllSanitySchemaTypes =
 	| Geopoint
 	| Break
 	| Youtube
-	| CtaSchema
 	| Card
 	| Post
 	| SanityFileAsset
@@ -529,43 +467,6 @@ export type SettingsQueryResult = {
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
-	title?: string
-	description?: Array<{
-		children?: Array<{
-			marks?: Array<string>
-			text?: string
-			_type: "span"
-			_key: string
-		}>
-		style?: "normal"
-		listItem?: never
-		markDefs?: Array<{
-			href?: string
-			_type: "link"
-			_key: string
-		}>
-		level?: number
-		_type: "block"
-		_key: string
-	}>
-	footer?: Array<{
-		children?: Array<{
-			marks?: Array<string>
-			text?: string
-			_type: "span"
-			_key: string
-		}>
-		style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal"
-		listItem?: "bullet" | "number"
-		markDefs?: Array<{
-			href?: string
-			_type: "link"
-			_key: string
-		}>
-		level?: number
-		_type: "block"
-		_key: string
-	}>
 	ogImage?: {
 		asset?: {
 			_ref: string
@@ -581,7 +482,7 @@ export type SettingsQueryResult = {
 	}
 } | null
 // Variable: heroQuery
-// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {    content,      _id,  title,  slug,  mainImage,  author->{    _id,    name  },  categories,  metadataDescription,  articleText[]{    ...,    _type == "reference" => @->{      _id,      _type,      title    }  },  featuredArticle,  publishDate,  contentfulArchived  }
+// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {    content,      _id,  title,  slug,  mainImage,  author->{   _id,		fullName,    slug  },  categories,  metadataDescription,  articleText[]{    ...,    _type == "reference" => @->{      _id,      _type,      title    }  },  featuredArticle,  publishDate,  contentfulArchived  }
 export type HeroQueryResult = {
 	content: null
 	_id: string
@@ -600,32 +501,12 @@ export type HeroQueryResult = {
 	} | null
 	author: {
 		_id: string
-		name: null
+		fullName: string | null
+		slug: Slug | null
 	} | null
 	categories: Array<string> | null
 	metadataDescription: string | null
 	articleText: Array<
-		| {
-				_ref: string
-				_type: "card"
-				_weak?: boolean
-				_id: string
-				title: null
-		  }
-		| {
-				_ref: string
-				_type: "ctaSchema"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
-		| {
-				_ref: string
-				_type: "youtube"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
 		| {
 				children?: Array<{
 					marks?: Array<string>
@@ -633,7 +514,15 @@ export type HeroQueryResult = {
 					_type: "span"
 					_key: string
 				}>
-				style?: "h1" | "h2" | "normal"
+				style?:
+					| "blockquote"
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
 				listItem?: "bullet" | "number"
 				markDefs?: Array<{
 					href?: string
@@ -646,7 +535,7 @@ export type HeroQueryResult = {
 				_key: string
 		  }
 		| {
-				style?: "lineBreak" | "readMore"
+				style?: "lineBreak"
 				_type: "break"
 				_key: string
 		  }
@@ -672,13 +561,18 @@ export type HeroQueryResult = {
 				_type: "image"
 				_key: string
 		  }
+		| {
+				_key: string
+				_type: "youtube"
+				url?: string
+		  }
 	> | null
 	featuredArticle: boolean | null
 	publishDate: string | null
 	contentfulArchived: boolean | null
 } | null
 // Variable: moreStoriesQuery
-// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  title,  slug,  mainImage,  author->{    _id,    name  },  categories,  metadataDescription,  articleText[]{    ...,    _type == "reference" => @->{      _id,      _type,      title    }  },  featuredArticle,  publishDate,  contentfulArchived  }
+// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  title,  slug,  mainImage,    }
 export type MoreStoriesQueryResult = Array<{
 	_id: string
 	title: string | null
@@ -694,87 +588,9 @@ export type MoreStoriesQueryResult = Array<{
 		crop?: SanityImageCrop
 		_type: "image"
 	} | null
-	author: {
-		_id: string
-		name: null
-	} | null
-	categories: Array<string> | null
-	metadataDescription: string | null
-	articleText: Array<
-		| {
-				_ref: string
-				_type: "card"
-				_weak?: boolean
-				_id: string
-				title: null
-		  }
-		| {
-				_ref: string
-				_type: "ctaSchema"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
-		| {
-				_ref: string
-				_type: "youtube"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
-		| {
-				children?: Array<{
-					marks?: Array<string>
-					text?: string
-					_type: "span"
-					_key: string
-				}>
-				style?: "h1" | "h2" | "normal"
-				listItem?: "bullet" | "number"
-				markDefs?: Array<{
-					href?: string
-					target?: "_blank" | "_parent"
-					_type: "link"
-					_key: string
-				}>
-				level?: number
-				_type: "block"
-				_key: string
-		  }
-		| {
-				style?: "lineBreak" | "readMore"
-				_type: "break"
-				_key: string
-		  }
-		| {
-				asset?: {
-					_ref: string
-					_type: "reference"
-					_weak?: boolean
-					[internalGroqTypeReferenceTo]?: "sanity.fileAsset"
-				}
-				_type: "file"
-				_key: string
-		  }
-		| {
-				asset?: {
-					_ref: string
-					_type: "reference"
-					_weak?: boolean
-					[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-				}
-				hotspot?: SanityImageHotspot
-				crop?: SanityImageCrop
-				_type: "image"
-				_key: string
-		  }
-	> | null
-	featuredArticle: boolean | null
-	publishDate: string | null
-	contentfulArchived: boolean | null
 }>
 // Variable: postQuery
-// Query: *[_type == "post" && slug.current == $slug] [0] {    content,      _id,  title,  slug,  mainImage,  author->{    _id,    name  },  categories,  metadataDescription,  articleText[]{    ...,    _type == "reference" => @->{      _id,      _type,      title    }  },  featuredArticle,  publishDate,  contentfulArchived  }
+// Query: *[_type == "post" && slug.current == $slug] [0] {    content,      _id,  title,  slug,  mainImage,  author->{   _id,		fullName,    slug  },  categories,  metadataDescription,  articleText[]{    ...,    _type == "reference" => @->{      _id,      _type,      title    }  },  featuredArticle,  publishDate,  contentfulArchived  }
 export type PostQueryResult = {
 	content: null
 	_id: string
@@ -793,32 +609,12 @@ export type PostQueryResult = {
 	} | null
 	author: {
 		_id: string
-		name: null
+		fullName: string | null
+		slug: Slug | null
 	} | null
 	categories: Array<string> | null
 	metadataDescription: string | null
 	articleText: Array<
-		| {
-				_ref: string
-				_type: "card"
-				_weak?: boolean
-				_id: string
-				title: null
-		  }
-		| {
-				_ref: string
-				_type: "ctaSchema"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
-		| {
-				_ref: string
-				_type: "youtube"
-				_weak?: boolean
-				_id: string
-				title: string | null
-		  }
 		| {
 				children?: Array<{
 					marks?: Array<string>
@@ -826,7 +622,15 @@ export type PostQueryResult = {
 					_type: "span"
 					_key: string
 				}>
-				style?: "h1" | "h2" | "normal"
+				style?:
+					| "blockquote"
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
 				listItem?: "bullet" | "number"
 				markDefs?: Array<{
 					href?: string
@@ -839,7 +643,7 @@ export type PostQueryResult = {
 				_key: string
 		  }
 		| {
-				style?: "lineBreak" | "readMore"
+				style?: "lineBreak"
 				_type: "break"
 				_key: string
 		  }
@@ -865,13 +669,134 @@ export type PostQueryResult = {
 				_type: "image"
 				_key: string
 		  }
+		| {
+				_key: string
+				_type: "youtube"
+				url?: string
+		  }
 	> | null
 	featuredArticle: boolean | null
 	publishDate: string | null
 	contentfulArchived: boolean | null
 } | null
+// Variable: authorQuery
+// Query: *[_type == "author" && slug.current == $slug] [0] {    fullName,    roleAndCompany,    photo,    slug  }
+export type AuthorQueryResult = {
+	fullName: string | null
+	roleAndCompany: string | null
+	photo: {
+		asset?: {
+			_ref: string
+			_type: "reference"
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+		}
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		_type: "image"
+	} | null
+	slug: Slug | null
+} | null
+// Variable: postsQuery
+// Query: *[_type == "post"]{	_id,	title,	slug,	mainImage,	author->{		_id,		fullName,    slug	},	categories,	metadataDescription,	articleText[]{		...,		markDefs[]{			...,			_type == "link" => {				"href": @.href,				"target": @.target			}		},		_type == "reference" => @->{			_type,			_id,			title		}	},	featuredArticle,	publishDate,	contentfulArchived}
+export type PostsQueryResult = Array<{
+	_id: string
+	title: string | null
+	slug: Slug | null
+	mainImage: {
+		asset?: {
+			_ref: string
+			_type: "reference"
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+		}
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		_type: "image"
+	} | null
+	author: {
+		_id: string
+		fullName: string | null
+		slug: Slug | null
+	} | null
+	categories: Array<string> | null
+	metadataDescription: string | null
+	articleText: Array<
+		| {
+				children?: Array<{
+					marks?: Array<string>
+					text?: string
+					_type: "span"
+					_key: string
+				}>
+				style?:
+					| "blockquote"
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
+				listItem?: "bullet" | "number"
+				markDefs: Array<{
+					href: string | null
+					target: "_blank" | "_parent" | null
+					_type: "link"
+					_key: string
+				}> | null
+				level?: number
+				_type: "block"
+				_key: string
+		  }
+		| {
+				style?: "lineBreak"
+				_type: "break"
+				_key: string
+				markDefs: null
+		  }
+		| {
+				asset?: {
+					_ref: string
+					_type: "reference"
+					_weak?: boolean
+					[internalGroqTypeReferenceTo]?: "sanity.fileAsset"
+				}
+				_type: "file"
+				_key: string
+				markDefs: null
+		  }
+		| {
+				asset?: {
+					_ref: string
+					_type: "reference"
+					_weak?: boolean
+					[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+				}
+				hotspot?: SanityImageHotspot
+				crop?: SanityImageCrop
+				_type: "image"
+				_key: string
+				markDefs: null
+		  }
+		| {
+				_key: string
+				_type: "youtube"
+				url?: string
+				markDefs: null
+		  }
+	> | null
+	featuredArticle: boolean | null
+	publishDate: string | null
+	contentfulArchived: boolean | null
+}>
+// Variable: categoryQuery
+// Query: *[_type == "post"] {		"categories": categories[]->title	}
+export type CategoryQueryResult = Array<{
+	categories: Array<null> | null
+}>
 
-// Source: ./app/(blog)/posts/[slug]/page.tsx
+// Source: ./app/blog/[slug]/page.tsx
 // Variable: postSlugs
 // Query: *[_type == "post" && defined(slug.current)]{"slug": slug.current}
 export type PostSlugsResult = Array<{
@@ -883,9 +808,12 @@ import "@sanity/client"
 declare module "@sanity/client" {
 	interface SanityQueries {
 		'*[_type == "settings"][0]': SettingsQueryResult
-		'\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  title,\n  slug,\n  mainImage,\n  author->{\n    _id,\n    name\n  },\n  categories,\n  metadataDescription,\n  articleText[]{\n    ...,\n    _type == "reference" => @->{\n      _id,\n      _type,\n      title\n    }\n  },\n  featuredArticle,\n  publishDate,\n  contentfulArchived\n\n  }\n': HeroQueryResult
-		'\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  slug,\n  mainImage,\n  author->{\n    _id,\n    name\n  },\n  categories,\n  metadataDescription,\n  articleText[]{\n    ...,\n    _type == "reference" => @->{\n      _id,\n      _type,\n      title\n    }\n  },\n  featuredArticle,\n  publishDate,\n  contentfulArchived\n\n  }\n': MoreStoriesQueryResult
-		'\n  *[_type == "post" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  title,\n  slug,\n  mainImage,\n  author->{\n    _id,\n    name\n  },\n  categories,\n  metadataDescription,\n  articleText[]{\n    ...,\n    _type == "reference" => @->{\n      _id,\n      _type,\n      title\n    }\n  },\n  featuredArticle,\n  publishDate,\n  contentfulArchived\n\n  }\n': PostQueryResult
+		'\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  title,\n  slug,\n  mainImage,\n  author->{\n   _id,\n\t\tfullName,\n    slug\n  },\n  categories,\n  metadataDescription,\n  articleText[]{\n    ...,\n    _type == "reference" => @->{\n      _id,\n      _type,\n      title\n    }\n  },\n  featuredArticle,\n  publishDate,\n  contentfulArchived\n\n  }\n': HeroQueryResult
+		'\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  slug,\n  mainImage,\n  \n  }\n': MoreStoriesQueryResult
+		'\n  *[_type == "post" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  title,\n  slug,\n  mainImage,\n  author->{\n   _id,\n\t\tfullName,\n    slug\n  },\n  categories,\n  metadataDescription,\n  articleText[]{\n    ...,\n    _type == "reference" => @->{\n      _id,\n      _type,\n      title\n    }\n  },\n  featuredArticle,\n  publishDate,\n  contentfulArchived\n\n  }\n': PostQueryResult
+		'\n  *[_type == "author" && slug.current == $slug] [0] {\n    fullName,\n    roleAndCompany,\n    photo,\n    slug\n  }\n': AuthorQueryResult
+		'*[_type == "post"]{\n\t_id,\n\ttitle,\n\tslug,\n\tmainImage,\n\tauthor->{\n\t\t_id,\n\t\tfullName,\n    slug\n\t},\n\tcategories,\n\tmetadataDescription,\n\tarticleText[]{\n\t\t...,\n\t\tmarkDefs[]{\n\t\t\t...,\n\t\t\t_type == "link" => {\n\t\t\t\t"href": @.href,\n\t\t\t\t"target": @.target\n\t\t\t}\n\t\t},\n\t\t_type == "reference" => @->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle\n\t\t}\n\t},\n\tfeaturedArticle,\n\tpublishDate,\n\tcontentfulArchived\n}': PostsQueryResult
+		'\n\t*[_type == "post"] {\n\t\t"categories": categories[]->title\n\t}\n': CategoryQueryResult
 		'*[_type == "post" && defined(slug.current)]{"slug": slug.current}': PostSlugsResult
 	}
 }

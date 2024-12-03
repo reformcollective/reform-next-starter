@@ -1,35 +1,34 @@
-"use client";
+"use client"
 /**
  * This config is used to set up Sanity Studio that's mounted on the `app/(sanity)/studio/[[...tool]]/page.tsx` route
  */
-import { visionTool } from "@sanity/vision";
-import { type PluginOptions, defineConfig } from "sanity";
-import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
+import { visionTool } from "@sanity/vision"
+import { type PluginOptions, defineConfig } from "sanity"
+import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
 import {
 	presentationTool,
 	defineDocuments,
 	defineLocations,
 	type DocumentLocation,
-} from "sanity/presentation";
-import { structureTool } from "sanity/structure";
+} from "sanity/presentation"
+import { structureTool } from "sanity/structure"
 
-import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api";
-import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings";
-import { assistWithPresets } from "@/sanity/plugins/assist";
-import author from "@/sanity/schemas/documents/author";
-import post from "@/sanity/schemas/documents/post";
-import card from "@/sanity/schemas/documents/card";
-import cta from "@/sanity/schemas/documents/ctaSchema";
-import youtube from "@/sanity/schemas/documents/youtube";
-import breakSchema from "@/sanity/schemas/documents/break";
+import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api"
+import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings"
+import { assistWithPresets } from "@/sanity/plugins/assist"
+import author from "@/sanity/schemas/documents/author"
+import post from "@/sanity/schemas/documents/post"
+import card from "@/sanity/schemas/documents/card"
+import youtube from "@/sanity/schemas/documents/youtube"
+import breakSchema from "@/sanity/schemas/documents/break"
 
-import settings from "@/sanity/schemas/singletons/settings";
-import { resolveHref } from "@/sanity/lib/utils";
+import settings from "@/sanity/schemas/singletons/settings"
+import { resolveHref } from "@/sanity/lib/utils"
 
 const homeLocation = {
 	title: "Home",
 	href: "/",
-} satisfies DocumentLocation;
+} satisfies DocumentLocation
 
 export default defineConfig({
 	basePath: studioUrl,
@@ -43,7 +42,6 @@ export default defineConfig({
 			author,
 			post,
 			card,
-			cta,
 			youtube,
 			breakSchema,
 		],
@@ -53,7 +51,7 @@ export default defineConfig({
 			resolve: {
 				mainDocuments: defineDocuments([
 					{
-						route: "/posts/:slug",
+						route: "/blog/:slug",
 						filter: `_type == "post" && slug.current == $slug`,
 					},
 				]),
@@ -82,7 +80,12 @@ export default defineConfig({
 			},
 			previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
 		}),
-		structureTool({ structure: pageStructure([settings]) }),
+		structureTool({
+			structure: pageStructure([settings]),
+			defaultDocumentNode: (S) => {
+				return S.document().views([S.view.form()])
+			},
+		}),
 		// Configures the global "new document" button, and document actions, to suit the Settings document singleton
 		singletonPlugin([settings.name]),
 		// Add an image asset source for Unsplash
@@ -95,4 +98,4 @@ export default defineConfig({
 		process.env.NODE_ENV === "development" &&
 			visionTool({ defaultApiVersion: apiVersion }),
 	].filter(Boolean) as PluginOptions[],
-});
+})
