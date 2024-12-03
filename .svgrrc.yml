@@ -19,8 +19,6 @@ svgoConfig:
     - removeEmptyAttrs
     - removeEmptyContainers
     - removeUnusedNS
-    # mergePaths may break animated lines, let's find out...
-    - mergePaths
     - sortAttrs
     - sortDefsChildren
     - removeDesc
