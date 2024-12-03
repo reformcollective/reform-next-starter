@@ -1,16 +1,11 @@
 import { defineField, defineType } from "sanity"
-
-/**
- * This file is the schema definition for a post.
- *
- * Here you'll be able to edit the different fields that appear when you 
- * create or edit a post in the studio.
- * 
- * Here you can see the different schema types that are available:
-
-  https://www.sanity.io/docs/schema-types
-
- */
+import {
+	BlockquoteIcon,
+	DoubleChevronDownIcon,
+	DoubleChevronUpIcon,
+	ImageIcon,
+	DocumentIcon,
+} from "@sanity/icons"
 
 export default defineType({
 	type: "document",
@@ -71,17 +66,31 @@ export default defineType({
 					styles: [
 						{ title: "Heading 1", value: "h1" },
 						{ title: "Heading 2", value: "h2" },
+						{ title: "Heading 3", value: "h3" },
+						{ title: "Heading 4", value: "h4" },
+						{ title: "Heading 5", value: "h5" },
+						{ title: "Heading 6", value: "h6" },
+						{ title: "Normal", value: "normal" },
+						{
+							title: "Blockquote",
+							value: "blockquote",
+							icon: BlockquoteIcon,
+						},
 					],
 					lists: [
 						{ title: "Bullet", value: "bullet" },
 						{ title: "Numbered", value: "number" },
 					],
+
 					marks: {
 						decorators: [
 							{ title: "Strong", value: "strong" },
 							{ title: "Emphasis", value: "em" },
 							{ title: "Code", value: "code" },
 							{ title: "Underline", value: "underline" },
+							{ title: "Strike", value: "strike-through" },
+							{ title: "Super", value: "super", icon: DoubleChevronUpIcon },
+							{ title: "Sub", value: "sub", icon: DoubleChevronDownIcon },
 						],
 						annotations: [
 							{
@@ -111,14 +120,10 @@ export default defineType({
 						],
 					},
 				},
-				{
-					type: "reference",
-					title: "Reference",
-					to: [{ type: "ctaSchema" }, { type: "card" }, { type: "youtube" }],
-				},
-				{ type: "image" },
-				{ type: "file" },
+				{ type: "image", icon: ImageIcon },
+				{ type: "file", icon: DocumentIcon },
 				{ type: "break" },
+				{ type: "youtube" },
 			],
 			title: "Article Text",
 			hidden: false,

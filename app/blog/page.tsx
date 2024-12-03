@@ -24,7 +24,5 @@ const Wrapper = styled(
 	fresponsive(css`
 		max-width: 1024px;
 		margin: 0 auto;
-		border: 1px solid red;
-		background: 1px solid orange;
 	`),
 )

@@ -1,4 +1,4 @@
-import { defineQuery } from "next-sanity"
+import { defineQuery, type PortableTextBlock } from "next-sanity"
 import type { Metadata, ResolvingMetadata } from "next"
 import { notFound } from "next/navigation"
 import PortableText from "blog/portable-text"
@@ -42,7 +42,9 @@ export async function generateMetadata(
 		stega: false,
 	})
 	const previousImages = (await parent).openGraph?.images || []
-	const ogImage = resolveOpenGraphImage(post?.mainImage)
+	const ogImage = post?.mainImage
+		? resolveOpenGraphImage(post.mainImage)
+		: undefined
 
 	return {
 		authors: post?.author?.fullName ? [{ name: post?.author?.fullName }] : [],
@@ -69,15 +71,7 @@ export default async function PostPage({ params }: Props) {
 		if (!post) return null
 
 		const related = allPosts
-
-		// Todo - add better implementation of this when updating Portable Text
-		const articleText =
-			post.articleText?.map((block: any) => {
-				return {
-					...block,
-					children: block.children ?? [],
-				}
-			}) || []
+		const { articleText } = post
 
 		const mainImageURL = urlForImage(post.mainImage)?.url()
 
@@ -102,8 +96,9 @@ export default async function PostPage({ params }: Props) {
 						</UniversalLink>
 					))}
 				</Categories>
-				{typeof articleText !== undefined && articleText && (
-					<PortableText value={articleText} />
+				{typeof articleText !== "undefined" && articleText && (
+					// Bad but not sure how else to do this
+					<PortableText value={articleText as PortableTextBlock[]} />
 				)}
 
 				<Related>
@@ -142,7 +137,6 @@ const Categories = styled(
 	"div",
 
 	fresponsive(css`
-		border: 1px solid green;
 		display: flex;
 		gap: 8px;
 	`),
@@ -165,9 +159,4 @@ const MainImage = styled(
 	`),
 )
 
-const Author = styled(
-	"div",
-	fresponsive(css`
-		border: 1px solid red;
-	`),
-)
+const Author = styled("div", fresponsive(css``))
