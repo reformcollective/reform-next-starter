@@ -1,0 +1,7 @@
+body > *:not(.studio-wrapper) {
+	display: none !important;
+}
+
+html {
+	background: #13141b;
+}

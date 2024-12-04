@@ -1,6 +1,7 @@
 # Reform Gatsby Starter
 
 Setup!
+Remove each item from the list as you complete it.
 
 1. Clone using the template in GitHub
 1. Update all existing packages with `pnpm dlx npm-check-updates --deep -u` (feel free to update the starter repository as well)
@@ -15,6 +16,7 @@ Setup!
 1. Set up a Netlify build and link to sanity if available/part of project
 1. Add .env variables to Netlify, Notion, and Github
 1. Delete _summary_ commit checks from netlify notifications. do not delete the _state_ commit checks.
+1. If this project will be using a CMS, set up a new project in Sanity and enable studio access for `https://localhost:3000/studio`
 
 <!-- Repository Cover -->
 <img src="https://picsum.photos/1600/900" alt="Project Name Website Repository" width="100%" style="border-radius: 50px">
