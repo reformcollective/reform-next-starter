@@ -10,6 +10,9 @@ export default function Playground() {
 	const [mobile, setMobile] = useState("color: green; margin: 30px;")
 
 	const result = useMemo(() => {
+		// reset the spacing
+		styled("div")
+
 		return {
 			...fresponsive(responsive),
 			...ftablet(tablet),

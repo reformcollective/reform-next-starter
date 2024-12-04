@@ -13,7 +13,8 @@
 		"quicktype.quicktype",
 		"meganrogge.template-string-converter",
 		"redhat.vscode-xml",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"sanity-io.vscode-sanity"
 	],
 	"unwantedRecommendations": [
 		// built into VS Code
