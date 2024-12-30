@@ -42,8 +42,7 @@ export default function Header({ headerText }: NonNullable<HeaderQueryResult>) {
 
 	return (
 		<Wrapper ref={wrapperRef}>
-			<h1 ref={text}>Header</h1>
-			<p>{headerText}</p>
+			<h1 ref={text}>{headerText}</h1>
 		</Wrapper>
 	)
 }

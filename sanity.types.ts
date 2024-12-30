@@ -680,9 +680,9 @@ export type PageQueryResult = {
 		_key: string
 	}>
 } | null
-// Variable: pagesSlugs
+// Variable: pageSlugs
 // Query: *[_type == "page" && defined(slug.current)]	{"slug": slug.current}
-export type PagesSlugsResult = Array<{
+export type PageSlugsResult = Array<{
 	slug: string | null
 }>
 
@@ -1075,7 +1075,7 @@ declare module "@sanity/client" {
 		'*[_type == "footer"][0]': FooterQueryResult
 		'\n\t*[_type == "page" && defined(slug.current)]\n\t{"slug": slug.current}\n':
 			| SitemapPageQueryResult
-			| PagesSlugsResult
+			| PageSlugsResult
 		'\n    *[_type == "post" && defined(slug.current)]{"slug": slug.current}\n':
 			| SitemapBlogQueryResult
 			| PostSlugsResult

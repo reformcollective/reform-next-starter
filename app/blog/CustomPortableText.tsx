@@ -10,16 +10,16 @@
  *
  */
 
+import { YoutubeEmbed } from "components/YoutubeEmbed"
 import UniversalLink from "library/Loader/UniversalLink"
 import { css, fresponsive, styled } from "library/styled"
+import UniversalImage from "library/UniversalImage"
 import {
 	PortableText,
-	type PortableTextComponents,
 	type PortableTextBlock,
+	type PortableTextComponents,
 } from "next-sanity"
 import textStyles from "styles/text"
-import { YoutubeEmbed } from "./components/YoutubeEmbed"
-import UniversalImage from "library/UniversalImage"
 
 export default function CustomPortableText({
 	className,
@@ -106,7 +106,7 @@ export default function CustomPortableText({
 			},
 			// YouTube embed
 			youtube: ({ value }) => {
-				return <YoutubeEmbed url={value.url} />
+				return <YoutubeEmbed video={value} />
 			},
 			break: () => {
 				return <Hr />
