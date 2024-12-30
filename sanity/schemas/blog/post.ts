@@ -1,12 +1,6 @@
-import { defineField, defineType } from "sanity"
-import {
-	BlockquoteIcon,
-	DoubleChevronDownIcon,
-	DoubleChevronUpIcon,
-	ImageIcon,
-	DocumentIcon,
-} from "@sanity/icons"
+import { ImageIcon } from "@sanity/icons"
 import { imageWithAlt } from "library/sanity/reusables"
+import { defineField, defineType } from "sanity"
 
 export default defineType({
 	type: "document",
@@ -55,78 +49,6 @@ export default defineType({
 			type: "image",
 			title: "Open Graph Image",
 		}),
-		// TODO portable text utilities
-		defineField({
-			name: "articleText",
-			type: "array",
-			of: [
-				{
-					type: "block",
-					styles: [
-						{ title: "Heading 1", value: "h1" },
-						{ title: "Heading 2", value: "h2" },
-						{ title: "Heading 3", value: "h3" },
-						{ title: "Heading 4", value: "h4" },
-						{ title: "Heading 5", value: "h5" },
-						{ title: "Heading 6", value: "h6" },
-						{ title: "Normal", value: "normal" },
-						{
-							title: "Blockquote",
-							value: "blockquote",
-							icon: BlockquoteIcon,
-						},
-					],
-					lists: [
-						{ title: "Bullet", value: "bullet" },
-						{ title: "Numbered", value: "number" },
-					],
-
-					marks: {
-						decorators: [
-							{ title: "Strong", value: "strong" },
-							{ title: "Emphasis", value: "em" },
-							{ title: "Code", value: "code" },
-							{ title: "Underline", value: "underline" },
-							{ title: "Strike", value: "strike-through" },
-							{ title: "Super", value: "super", icon: DoubleChevronUpIcon },
-							{ title: "Sub", value: "sub", icon: DoubleChevronDownIcon },
-						],
-						annotations: [
-							{
-								type: "object",
-								name: "link",
-								title: "url",
-								fields: [
-									defineField({
-										type: "string",
-										name: "href",
-										title: "URL",
-										validation: (Rule) => Rule.required(),
-									}),
-									defineField({
-										type: "string",
-										name: "target",
-										title: "Target",
-										options: {
-											list: [
-												{ value: "_blank", title: "Blank" },
-												{ value: "_parent", title: "Parent" },
-											],
-										},
-									}),
-								],
-							},
-						],
-					},
-				},
-				{ type: "image", icon: ImageIcon },
-				{ type: "file", icon: DocumentIcon },
-				{ type: "youtube" },
-			],
-			title: "Article Text",
-			hidden: false,
-			validation: (Rule) => Rule.required(),
-		}),
 		defineField({
 			name: "isFeatured",
 			type: "boolean",
@@ -142,6 +64,20 @@ export default defineType({
 			description:
 				"If this post was initially published in the past, you can set that here",
 			options: { timeFormat: "H:mmZ" },
+		}),
+		defineField({
+			name: "articleText",
+			type: "array",
+			of: [
+				{ type: "block" },
+				imageWithAlt({
+					name: "image",
+					icon: ImageIcon,
+				}),
+				{ type: "youtube" },
+			],
+			title: "Article Text",
+			validation: (Rule) => Rule.required(),
 		}),
 	],
 })

@@ -1,4 +1,4 @@
-import { createSectionPreview, portableText } from "library/sanity/reusables"
+import { createSectionPreview } from "library/sanity/reusables"
 import { defineArrayMember, defineField } from "sanity"
 
 export const sample = defineArrayMember({
@@ -16,10 +16,6 @@ export const sample = defineArrayMember({
 			type: "string",
 			name: "text",
 			title: "Section Text",
-		}),
-		portableText({
-			name: "portableText",
-			title: "Portable Text",
 		}),
 	],
 })

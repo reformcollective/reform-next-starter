@@ -7,7 +7,7 @@ export function YoutubeEmbed({
 	video,
 }: {
 	className?: string
-	video: { url: string | null | undefined }
+	video: { url?: string | null | undefined }
 }) {
 	if (!video.url) return null
 
