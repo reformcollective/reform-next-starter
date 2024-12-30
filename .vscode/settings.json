@@ -24,6 +24,21 @@
 	"template-string-converter.addBracketsToProps": true,
 	"template-string-converter.autoRemoveTemplateString": true,
 	"stylelint.validate": ["css", "scss", "typescript", "typescriptreact"],
+	"run-it.globalDebug": true,
+	"run-it.commands": [
+		{
+			"delay": 5000,
+			"commands": ["typescript.restartTsServer"],
+			"files": ["**/tsconfig.json", "**/sanity.types.ts"]
+		},
+		{
+			"delay": 5000,
+			"commands": ["workbench.action.tasks.build"],
+			"files": ["**/sanity/**/*.ts", "**/sanity/**/*.tsx"]
+		}
+	],
+	"cSpell.enabled": true,
+	"cSpell.diagnosticLevel": "Hint",
 
 	/* workbench settings */
 	"typescript.tsdk": "./node_modules/typescript/lib",
@@ -45,6 +60,7 @@
 		"**/layout.ts": "${dirname} / layout.ts"
 	},
 	"editor.linkedEditing": true,
+	"editor.codeActionsOnSave": { "source.organizeImports": "always" },
 
 	/* unsorted settings */
 	"": ""

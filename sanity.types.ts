@@ -46,29 +46,90 @@ export type Geopoint = {
 	alt?: number
 }
 
-export type Break = {
+export type Link = {
+	_type: "link"
+	linkText?: string
+	url?: string
+}
+
+export type Page = {
 	_id: string
-	_type: "break"
+	_type: "page"
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
-	style?: "lineBreak"
+	title?: string
+	slug?: Slug
+	description?: string
+	ogImage?: {
+		asset?: {
+			_ref: string
+			_type: "reference"
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+		}
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		_type: "image"
+	}
+	sections?: Array<{
+		title?: string
+		text?: string
+		portableText?: Array<
+			| {
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: "span"
+						_key: string
+					}>
+					style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote"
+					listItem?: "bullet" | "number"
+					markDefs?: Array<{
+						href?: string
+						target?: "_blank" | "_parent"
+						_type: "link"
+						_key: string
+					}>
+					level?: number
+					_type: "block"
+					_key: string
+			  }
+			| {
+					asset?: {
+						_ref: string
+						_type: "reference"
+						_weak?: boolean
+						[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+					}
+					hotspot?: SanityImageHotspot
+					crop?: SanityImageCrop
+					_type: "image"
+					_key: string
+			  }
+			| {
+					asset?: {
+						_ref: string
+						_type: "reference"
+						_weak?: boolean
+						[internalGroqTypeReferenceTo]?: "sanity.fileAsset"
+					}
+					_type: "file"
+					_key: string
+			  }
+			| ({
+					_key: string
+			  } & Youtube)
+		>
+		_type: "sample"
+		_key: string
+	}>
 }
 
 export type Youtube = {
 	_type: "youtube"
 	url?: string
-}
-
-export type Card = {
-	_id: string
-	_type: "card"
-	_createdAt: string
-	_updatedAt: string
-	_rev: string
-	quotation?: string
-	attribution?: string
-	contentfulArchived?: boolean
 }
 
 export type Post = {
@@ -88,6 +149,7 @@ export type Post = {
 		}
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
+		alt?: string
 		_type: "image"
 	}
 	author?: {
@@ -98,6 +160,17 @@ export type Post = {
 	}
 	categories?: Array<string>
 	metadataDescription?: string
+	ogImage?: {
+		asset?: {
+			_ref: string
+			_type: "reference"
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+		}
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		_type: "image"
+	}
 	articleText?: Array<
 		| {
 				children?: Array<{
@@ -148,18 +221,12 @@ export type Post = {
 				_type: "file"
 				_key: string
 		  }
-		| {
-				style?: "lineBreak"
-				_type: "break"
-				_key: string
-		  }
 		| ({
 				_key: string
 		  } & Youtube)
 	>
-	featuredArticle?: boolean
+	isFeatured?: boolean
 	publishDate?: string
-	contentfulArchived?: boolean
 }
 
 export type SanityFileAsset = {
@@ -201,11 +268,11 @@ export type Author = {
 		}
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
+		alt?: string
 		_type: "image"
 	}
 	roleAndCompany?: string
 	biography?: string
-	contentfulArchived?: boolean
 }
 
 export type Slug = {
@@ -214,12 +281,32 @@ export type Slug = {
 	source?: string
 }
 
+export type Footer = {
+	_id: string
+	_type: "footer"
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	footerText?: string
+}
+
+export type Header = {
+	_id: string
+	_type: "header"
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	headerText?: string
+}
+
 export type Settings = {
 	_id: string
 	_type: "settings"
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
+	defaultTitle?: string
+	defaultDescription?: string
 	ogImage?: {
 		asset?: {
 			_ref: string
@@ -230,7 +317,6 @@ export type Settings = {
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		alt?: string
-		metadataBase?: string
 		_type: "image"
 	}
 }
@@ -432,13 +518,15 @@ export type AllSanitySchemaTypes =
 	| SanityImagePalette
 	| SanityImageDimensions
 	| Geopoint
-	| Break
+	| Link
+	| Page
 	| Youtube
-	| Card
 	| Post
 	| SanityFileAsset
 	| Author
 	| Slug
+	| Footer
+	| Header
 	| Settings
 	| SanityImageCrop
 	| SanityImageHotspot
@@ -458,7 +546,7 @@ export type AllSanitySchemaTypes =
 	| SanityAssistInstruction
 	| SanityAssistSchemaTypeField
 export declare const internalGroqTypeReferenceTo: unique symbol
-// Source: ./sanity/lib/queries.ts
+// Source: ./app/layout.tsx
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0]
 export type SettingsQueryResult = {
@@ -467,6 +555,8 @@ export type SettingsQueryResult = {
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
+	defaultTitle?: string
+	defaultDescription?: string
 	ogImage?: {
 		asset?: {
 			_ref: string
@@ -477,126 +567,55 @@ export type SettingsQueryResult = {
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		alt?: string
-		metadataBase?: string
 		_type: "image"
 	}
 } | null
-// Variable: heroQuery
-// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {    content,      _id,  title,  slug,  mainImage,  author->{   _id,		fullName,    slug  },  categories,  metadataDescription,  articleText[]{    ...,    _type == "reference" => @->{      _id,      _type,      title    }  },  featuredArticle,  publishDate,  contentfulArchived  }
-export type HeroQueryResult = {
-	content: null
+// Variable: headerQuery
+// Query: *[_type == "header"][0]
+export type HeaderQueryResult = {
 	_id: string
-	title: string | null
-	slug: Slug | null
-	mainImage: {
-		asset?: {
-			_ref: string
-			_type: "reference"
-			_weak?: boolean
-			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-		}
-		hotspot?: SanityImageHotspot
-		crop?: SanityImageCrop
-		_type: "image"
-	} | null
-	author: {
-		_id: string
-		fullName: string | null
-		slug: Slug | null
-	} | null
-	categories: Array<string> | null
-	metadataDescription: string | null
-	articleText: Array<
-		| {
-				children?: Array<{
-					marks?: Array<string>
-					text?: string
-					_type: "span"
-					_key: string
-				}>
-				style?:
-					| "blockquote"
-					| "h1"
-					| "h2"
-					| "h3"
-					| "h4"
-					| "h5"
-					| "h6"
-					| "normal"
-				listItem?: "bullet" | "number"
-				markDefs?: Array<{
-					href?: string
-					target?: "_blank" | "_parent"
-					_type: "link"
-					_key: string
-				}>
-				level?: number
-				_type: "block"
-				_key: string
-		  }
-		| {
-				style?: "lineBreak"
-				_type: "break"
-				_key: string
-		  }
-		| {
-				asset?: {
-					_ref: string
-					_type: "reference"
-					_weak?: boolean
-					[internalGroqTypeReferenceTo]?: "sanity.fileAsset"
-				}
-				_type: "file"
-				_key: string
-		  }
-		| {
-				asset?: {
-					_ref: string
-					_type: "reference"
-					_weak?: boolean
-					[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-				}
-				hotspot?: SanityImageHotspot
-				crop?: SanityImageCrop
-				_type: "image"
-				_key: string
-		  }
-		| {
-				_key: string
-				_type: "youtube"
-				url?: string
-		  }
-	> | null
-	featuredArticle: boolean | null
-	publishDate: string | null
-	contentfulArchived: boolean | null
+	_type: "header"
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	headerText?: string
 } | null
-// Variable: moreStoriesQuery
-// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  title,  slug,  mainImage,    }
-export type MoreStoriesQueryResult = Array<{
+// Variable: footerQuery
+// Query: *[_type == "footer"][0]
+export type FooterQueryResult = {
 	_id: string
-	title: string | null
-	slug: Slug | null
-	mainImage: {
-		asset?: {
-			_ref: string
-			_type: "reference"
-			_weak?: boolean
-			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-		}
-		hotspot?: SanityImageHotspot
-		crop?: SanityImageCrop
-		_type: "image"
-	} | null
+	_type: "footer"
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	footerText?: string
+} | null
+
+// Source: ./app/sitemap.ts
+// Variable: sitemapPageQuery
+// Query: *[_type == "page" && defined(slug.current)]	{"slug": slug.current}
+export type SitemapPageQueryResult = Array<{
+	slug: string | null
 }>
-// Variable: postQuery
-// Query: *[_type == "post" && slug.current == $slug] [0] {    content,      _id,  title,  slug,  mainImage,  author->{   _id,		fullName,    slug  },  categories,  metadataDescription,  articleText[]{    ...,    _type == "reference" => @->{      _id,      _type,      title    }  },  featuredArticle,  publishDate,  contentfulArchived  }
-export type PostQueryResult = {
-	content: null
+// Variable: sitemapBlogQuery
+// Query: *[_type == "post" && defined(slug.current)]{"slug": slug.current}
+export type SitemapBlogQueryResult = Array<{
+	slug: string | null
+}>
+
+// Source: ./app/[slug]/page.tsx
+// Variable: pageQuery
+// Query: *[_type == "page" && slug.current == $slug][0]
+export type PageQueryResult = {
 	_id: string
-	title: string | null
-	slug: Slug | null
-	mainImage: {
+	_type: "page"
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	title?: string
+	slug?: Slug
+	description?: string
+	ogImage?: {
 		asset?: {
 			_ref: string
 			_type: "reference"
@@ -605,105 +624,117 @@ export type PostQueryResult = {
 		}
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
+		alt?: string
 		_type: "image"
-	} | null
-	author: {
-		_id: string
-		fullName: string | null
-		slug: Slug | null
-	} | null
-	categories: Array<string> | null
-	metadataDescription: string | null
-	articleText: Array<
-		| {
-				children?: Array<{
-					marks?: Array<string>
-					text?: string
-					_type: "span"
+	}
+	sections?: Array<{
+		title?: string
+		text?: string
+		portableText?: Array<
+			| ({
 					_key: string
-				}>
-				style?:
-					| "blockquote"
-					| "h1"
-					| "h2"
-					| "h3"
-					| "h4"
-					| "h5"
-					| "h6"
-					| "normal"
-				listItem?: "bullet" | "number"
-				markDefs?: Array<{
-					href?: string
-					target?: "_blank" | "_parent"
-					_type: "link"
+			  } & Youtube)
+			| {
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: "span"
+						_key: string
+					}>
+					style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal"
+					listItem?: "bullet" | "number"
+					markDefs?: Array<{
+						href?: string
+						target?: "_blank" | "_parent"
+						_type: "link"
+						_key: string
+					}>
+					level?: number
+					_type: "block"
 					_key: string
-				}>
-				level?: number
-				_type: "block"
-				_key: string
-		  }
-		| {
-				style?: "lineBreak"
-				_type: "break"
-				_key: string
-		  }
-		| {
-				asset?: {
-					_ref: string
-					_type: "reference"
-					_weak?: boolean
-					[internalGroqTypeReferenceTo]?: "sanity.fileAsset"
-				}
-				_type: "file"
-				_key: string
-		  }
-		| {
-				asset?: {
-					_ref: string
-					_type: "reference"
-					_weak?: boolean
-					[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-				}
-				hotspot?: SanityImageHotspot
-				crop?: SanityImageCrop
-				_type: "image"
-				_key: string
-		  }
-		| {
-				_key: string
-				_type: "youtube"
-				url?: string
-		  }
-	> | null
-	featuredArticle: boolean | null
-	publishDate: string | null
-	contentfulArchived: boolean | null
+			  }
+			| {
+					asset?: {
+						_ref: string
+						_type: "reference"
+						_weak?: boolean
+						[internalGroqTypeReferenceTo]?: "sanity.fileAsset"
+					}
+					_type: "file"
+					_key: string
+			  }
+			| {
+					asset?: {
+						_ref: string
+						_type: "reference"
+						_weak?: boolean
+						[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+					}
+					hotspot?: SanityImageHotspot
+					crop?: SanityImageCrop
+					_type: "image"
+					_key: string
+			  }
+		>
+		_type: "sample"
+		_key: string
+	}>
 } | null
-// Variable: authorQuery
-// Query: *[_type == "author" && slug.current == $slug] [0] {    fullName,    roleAndCompany,    photo,    slug  }
-export type AuthorQueryResult = {
-	fullName: string | null
-	roleAndCompany: string | null
-	photo: {
-		asset?: {
-			_ref: string
-			_type: "reference"
-			_weak?: boolean
-			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-		}
-		hotspot?: SanityImageHotspot
-		crop?: SanityImageCrop
-		_type: "image"
-	} | null
-	slug: Slug | null
-} | null
+// Variable: pagesSlugs
+// Query: *[_type == "page" && defined(slug.current)]	{"slug": slug.current}
+export type PagesSlugsResult = Array<{
+	slug: string | null
+}>
+
+// Source: ./app/blog/page.tsx
 // Variable: postsQuery
-// Query: *[_type == "post"]{	_id,	title,	slug,	mainImage,	author->{		_id,		fullName,    slug	},	categories,	metadataDescription,	articleText[]{		...,		markDefs[]{			...,			_type == "link" => {				"href": @.href,				"target": @.target			}		},		_type == "reference" => @->{			_type,			_id,			title		}	},	featuredArticle,	publishDate,	contentfulArchived}
+// Query: *[_type == "post"]{		...,		author->	}
 export type PostsQueryResult = Array<{
 	_id: string
-	title: string | null
-	slug: Slug | null
-	mainImage: {
+	_type: "post"
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	title?: string
+	slug?: Slug
+	mainImage?: {
+		asset?: {
+			_ref: string
+			_type: "reference"
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+		}
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		_type: "image"
+	}
+	author: {
+		_id: string
+		_type: "author"
+		_createdAt: string
+		_updatedAt: string
+		_rev: string
+		fullName?: string
+		slug?: Slug
+		photo?: {
+			asset?: {
+				_ref: string
+				_type: "reference"
+				_weak?: boolean
+				[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+			}
+			hotspot?: SanityImageHotspot
+			crop?: SanityImageCrop
+			alt?: string
+			_type: "image"
+		}
+		roleAndCompany?: string
+		biography?: string
+	} | null
+	categories?: Array<string>
+	metadataDescription?: string
+	ogImage?: {
 		asset?: {
 			_ref: string
 			_type: "reference"
@@ -713,15 +744,11 @@ export type PostsQueryResult = Array<{
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		_type: "image"
-	} | null
-	author: {
-		_id: string
-		fullName: string | null
-		slug: Slug | null
-	} | null
-	categories: Array<string> | null
-	metadataDescription: string | null
-	articleText: Array<
+	}
+	articleText?: Array<
+		| ({
+				_key: string
+		  } & Youtube)
 		| {
 				children?: Array<{
 					marks?: Array<string>
@@ -739,21 +766,15 @@ export type PostsQueryResult = Array<{
 					| "h6"
 					| "normal"
 				listItem?: "bullet" | "number"
-				markDefs: Array<{
-					href: string | null
-					target: "_blank" | "_parent" | null
+				markDefs?: Array<{
+					href?: string
+					target?: "_blank" | "_parent"
 					_type: "link"
 					_key: string
-				}> | null
+				}>
 				level?: number
 				_type: "block"
 				_key: string
-		  }
-		| {
-				style?: "lineBreak"
-				_type: "break"
-				_key: string
-				markDefs: null
 		  }
 		| {
 				asset?: {
@@ -764,7 +785,6 @@ export type PostsQueryResult = Array<{
 				}
 				_type: "file"
 				_key: string
-				markDefs: null
 		  }
 		| {
 				asset?: {
@@ -777,43 +797,292 @@ export type PostsQueryResult = Array<{
 				crop?: SanityImageCrop
 				_type: "image"
 				_key: string
-				markDefs: null
 		  }
-		| {
-				_key: string
-				_type: "youtube"
-				url?: string
-				markDefs: null
-		  }
-	> | null
-	featuredArticle: boolean | null
-	publishDate: string | null
-	contentfulArchived: boolean | null
-}>
-// Variable: categoryQuery
-// Query: *[_type == "post"] {		"categories": categories[]->title	}
-export type CategoryQueryResult = Array<{
-	categories: Array<null> | null
+	>
+	isFeatured?: boolean
+	publishDate?: string
 }>
 
 // Source: ./app/blog/[slug]/page.tsx
+// Variable: postQuery
+// Query: *[_type == "post" && slug.current == $slug][0]{		...,		author->	}
+export type PostQueryResult = {
+	_id: string
+	_type: "post"
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	title?: string
+	slug?: Slug
+	mainImage?: {
+		asset?: {
+			_ref: string
+			_type: "reference"
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+		}
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		_type: "image"
+	}
+	author: {
+		_id: string
+		_type: "author"
+		_createdAt: string
+		_updatedAt: string
+		_rev: string
+		fullName?: string
+		slug?: Slug
+		photo?: {
+			asset?: {
+				_ref: string
+				_type: "reference"
+				_weak?: boolean
+				[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+			}
+			hotspot?: SanityImageHotspot
+			crop?: SanityImageCrop
+			alt?: string
+			_type: "image"
+		}
+		roleAndCompany?: string
+		biography?: string
+	} | null
+	categories?: Array<string>
+	metadataDescription?: string
+	ogImage?: {
+		asset?: {
+			_ref: string
+			_type: "reference"
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+		}
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		_type: "image"
+	}
+	articleText?: Array<
+		| ({
+				_key: string
+		  } & Youtube)
+		| {
+				children?: Array<{
+					marks?: Array<string>
+					text?: string
+					_type: "span"
+					_key: string
+				}>
+				style?:
+					| "blockquote"
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
+				listItem?: "bullet" | "number"
+				markDefs?: Array<{
+					href?: string
+					target?: "_blank" | "_parent"
+					_type: "link"
+					_key: string
+				}>
+				level?: number
+				_type: "block"
+				_key: string
+		  }
+		| {
+				asset?: {
+					_ref: string
+					_type: "reference"
+					_weak?: boolean
+					[internalGroqTypeReferenceTo]?: "sanity.fileAsset"
+				}
+				_type: "file"
+				_key: string
+		  }
+		| {
+				asset?: {
+					_ref: string
+					_type: "reference"
+					_weak?: boolean
+					[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+				}
+				hotspot?: SanityImageHotspot
+				crop?: SanityImageCrop
+				_type: "image"
+				_key: string
+		  }
+	>
+	isFeatured?: boolean
+	publishDate?: string
+} | null
+// Variable: relatedPostsQuery
+// Query: *[_type == "post" && slug.current != $slug][0...3]{		...,		author->	}
+export type RelatedPostsQueryResult = Array<{
+	_id: string
+	_type: "post"
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	title?: string
+	slug?: Slug
+	mainImage?: {
+		asset?: {
+			_ref: string
+			_type: "reference"
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+		}
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		_type: "image"
+	}
+	author: {
+		_id: string
+		_type: "author"
+		_createdAt: string
+		_updatedAt: string
+		_rev: string
+		fullName?: string
+		slug?: Slug
+		photo?: {
+			asset?: {
+				_ref: string
+				_type: "reference"
+				_weak?: boolean
+				[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+			}
+			hotspot?: SanityImageHotspot
+			crop?: SanityImageCrop
+			alt?: string
+			_type: "image"
+		}
+		roleAndCompany?: string
+		biography?: string
+	} | null
+	categories?: Array<string>
+	metadataDescription?: string
+	ogImage?: {
+		asset?: {
+			_ref: string
+			_type: "reference"
+			_weak?: boolean
+			[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+		}
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		_type: "image"
+	}
+	articleText?: Array<
+		| ({
+				_key: string
+		  } & Youtube)
+		| {
+				children?: Array<{
+					marks?: Array<string>
+					text?: string
+					_type: "span"
+					_key: string
+				}>
+				style?:
+					| "blockquote"
+					| "h1"
+					| "h2"
+					| "h3"
+					| "h4"
+					| "h5"
+					| "h6"
+					| "normal"
+				listItem?: "bullet" | "number"
+				markDefs?: Array<{
+					href?: string
+					target?: "_blank" | "_parent"
+					_type: "link"
+					_key: string
+				}>
+				level?: number
+				_type: "block"
+				_key: string
+		  }
+		| {
+				asset?: {
+					_ref: string
+					_type: "reference"
+					_weak?: boolean
+					[internalGroqTypeReferenceTo]?: "sanity.fileAsset"
+				}
+				_type: "file"
+				_key: string
+		  }
+		| {
+				asset?: {
+					_ref: string
+					_type: "reference"
+					_weak?: boolean
+					[internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+				}
+				hotspot?: SanityImageHotspot
+				crop?: SanityImageCrop
+				_type: "image"
+				_key: string
+		  }
+	>
+	isFeatured?: boolean
+	publishDate?: string
+}>
 // Variable: postSlugs
 // Query: *[_type == "post" && defined(slug.current)]{"slug": slug.current}
 export type PostSlugsResult = Array<{
 	slug: string | null
 }>
 
+// Source: ./app/library/sanity/imageMetadata.ts
+// Variable: imageQuery
+// Query: *[_id == $asset && _type == "sanity.imageAsset"][0]
+export type ImageQueryResult = {
+	_id: string
+	_type: "sanity.imageAsset"
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	originalFilename?: string
+	label?: string
+	title?: string
+	description?: string
+	altText?: string
+	sha1hash?: string
+	extension?: string
+	mimeType?: string
+	size?: number
+	assetId?: string
+	uploadId?: string
+	path?: string
+	url?: string
+	metadata?: SanityImageMetadata
+	source?: SanityAssetSourceData
+} | null
+
 // Query TypeMap
 import "@sanity/client"
 declare module "@sanity/client" {
 	interface SanityQueries {
 		'*[_type == "settings"][0]': SettingsQueryResult
-		'\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  title,\n  slug,\n  mainImage,\n  author->{\n   _id,\n\t\tfullName,\n    slug\n  },\n  categories,\n  metadataDescription,\n  articleText[]{\n    ...,\n    _type == "reference" => @->{\n      _id,\n      _type,\n      title\n    }\n  },\n  featuredArticle,\n  publishDate,\n  contentfulArchived\n\n  }\n': HeroQueryResult
-		'\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  title,\n  slug,\n  mainImage,\n  \n  }\n': MoreStoriesQueryResult
-		'\n  *[_type == "post" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  title,\n  slug,\n  mainImage,\n  author->{\n   _id,\n\t\tfullName,\n    slug\n  },\n  categories,\n  metadataDescription,\n  articleText[]{\n    ...,\n    _type == "reference" => @->{\n      _id,\n      _type,\n      title\n    }\n  },\n  featuredArticle,\n  publishDate,\n  contentfulArchived\n\n  }\n': PostQueryResult
-		'\n  *[_type == "author" && slug.current == $slug] [0] {\n    fullName,\n    roleAndCompany,\n    photo,\n    slug\n  }\n': AuthorQueryResult
-		'*[_type == "post"]{\n\t_id,\n\ttitle,\n\tslug,\n\tmainImage,\n\tauthor->{\n\t\t_id,\n\t\tfullName,\n    slug\n\t},\n\tcategories,\n\tmetadataDescription,\n\tarticleText[]{\n\t\t...,\n\t\tmarkDefs[]{\n\t\t\t...,\n\t\t\t_type == "link" => {\n\t\t\t\t"href": @.href,\n\t\t\t\t"target": @.target\n\t\t\t}\n\t\t},\n\t\t_type == "reference" => @->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle\n\t\t}\n\t},\n\tfeaturedArticle,\n\tpublishDate,\n\tcontentfulArchived\n}': PostsQueryResult
-		'\n\t*[_type == "post"] {\n\t\t"categories": categories[]->title\n\t}\n': CategoryQueryResult
-		'*[_type == "post" && defined(slug.current)]{"slug": slug.current}': PostSlugsResult
+		'*[_type == "header"][0]': HeaderQueryResult
+		'*[_type == "footer"][0]': FooterQueryResult
+		'\n\t*[_type == "page" && defined(slug.current)]\n\t{"slug": slug.current}\n':
+			| SitemapPageQueryResult
+			| PagesSlugsResult
+		'\n    *[_type == "post" && defined(slug.current)]{"slug": slug.current}\n':
+			| SitemapBlogQueryResult
+			| PostSlugsResult
+		'\n\t*[_type == "page" && slug.current == $slug][0]\n': PageQueryResult
+		'\n\t*[_type == "post"]{\n\t\t...,\n\t\tauthor->\n\t}\n': PostsQueryResult
+		'\n\t*[_type == "post" && slug.current == $slug][0]{\n\t\t...,\n\t\tauthor->\n\t}\n': PostQueryResult
+		'\n\t*[_type == "post" && slug.current != $slug][0...3]{\n\t\t...,\n\t\tauthor->\n\t}\n': RelatedPostsQueryResult
+		'\n\t*[_id == $asset && _type == "sanity.imageAsset"][0]\n': ImageQueryResult
 	}
 }

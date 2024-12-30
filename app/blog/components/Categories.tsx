@@ -39,6 +39,6 @@ const Button = styled(
 	fresponsive(css`
 		max-width: 1024px;
 		margin: 0 auto;
-		background: 1px solid orange;
+		border: 1px solid orange;
 	`),
 )

@@ -6,39 +6,34 @@ import {
 	ImageIcon,
 	DocumentIcon,
 } from "@sanity/icons"
+import { imageWithAlt } from "library/sanity/reusables"
 
 export default defineType({
 	type: "document",
 	name: "post",
 	title: "Template - Blog Post",
-	description: "",
 	fields: [
 		defineField({
 			name: "title",
 			type: "string",
-			title: "Title",
-			hidden: false,
+			title: "Post Title",
 			validation: (Rule) => Rule.required(),
 		}),
 		defineField({
 			name: "slug",
 			type: "slug",
-			title: "Slug",
-			hidden: false,
+			title: "Post Slug",
 			validation: (Rule) => Rule.required(),
 			options: { source: "title" },
 		}),
-		defineField({
+		imageWithAlt({
 			name: "mainImage",
-			type: "image",
 			title: "Main Image",
-			hidden: false,
 		}),
 		defineField({
 			name: "author",
 			type: "reference",
 			title: "Author",
-			hidden: false,
 			to: [{ type: "author" }],
 		}),
 		defineField({
@@ -46,17 +41,21 @@ export default defineType({
 			type: "array",
 			of: [{ type: "string" }],
 			title: "Categories",
-			hidden: false,
 			options: { layout: "tags" },
 		}),
 		defineField({
 			name: "metadataDescription",
 			type: "text",
 			title: "Metadata Description",
-			hidden: false,
 			description:
-				"used when shared via social media, and by some search engines",
+				"used as a synopsis. also used when shared via social media, and by some search engines",
 		}),
+		defineField({
+			name: "ogImage",
+			type: "image",
+			title: "Open Graph Image",
+		}),
+		// TODO portable text utilities
 		defineField({
 			name: "articleText",
 			type: "array",
@@ -122,7 +121,6 @@ export default defineType({
 				},
 				{ type: "image", icon: ImageIcon },
 				{ type: "file", icon: DocumentIcon },
-				{ type: "break" },
 				{ type: "youtube" },
 			],
 			title: "Article Text",
@@ -130,10 +128,9 @@ export default defineType({
 			validation: (Rule) => Rule.required(),
 		}),
 		defineField({
-			name: "featuredArticle",
+			name: "isFeatured",
 			type: "boolean",
-			title: "Featured Article",
-			hidden: false,
+			title: "Is Featured Article",
 			description:
 				"if multiple articles are marked as featured, the most recent one will display",
 			initialValue: false,
@@ -142,20 +139,9 @@ export default defineType({
 			name: "publishDate",
 			type: "datetime",
 			title: "Publish Date",
-			hidden: false,
 			description:
 				"If this post was initially published in the past, you can set that here",
 			options: { timeFormat: "H:mmZ" },
 		}),
-		defineField({
-			type: "boolean",
-			description:
-				"If this document was archived on Contentful at the time of export, the document will be in a read-only state.",
-			name: "contentfulArchived",
-			readOnly: true,
-		}),
 	],
-	preview: { select: { title: "title" } },
-	readOnly: ({ document }) =>
-		(document == null ? void 0 : document.contentfulArchived) === !0,
 })

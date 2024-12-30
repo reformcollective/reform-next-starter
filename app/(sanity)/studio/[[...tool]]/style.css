@@ -1,7 +1,13 @@
-body > *:not(.studio-wrapper) {
+.root-layout {
 	display: none !important;
 }
 
 html {
 	background: #13141b;
+}
+
+/* temp visual fix for the URL bar */
+div:has(> button[aria-label="Refresh preview"]),
+div:has(> a[aria-label="Open preview"]) {
+	display: flex !important;
 }

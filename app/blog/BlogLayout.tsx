@@ -1,7 +1,7 @@
 "use client"
 
-import { LargeCard } from "blog/(components)/LargeCard"
-import { SmallCard } from "blog/(components)/SmallCard"
+import { LargeCard } from "blog/components/LargeCard"
+import { SmallCard } from "blog/components/SmallCard"
 import { ScrollSmoother } from "gsap/ScrollSmoother"
 import { useSearchResults } from "library/useSearchResults"
 import { useEffect } from "react"
@@ -10,10 +10,10 @@ import type { PostsQueryResult } from "@/sanity.types"
 import { useQueryState } from "nuqs"
 import UniversalLink from "library/Loader/UniversalLink"
 
-export default function TemplateBlogContent({
+export default function BlogLayout({
 	posts,
 }: {
-	posts: PostsQueryResult
+	posts: NonNullable<PostsQueryResult>
 }) {
 	const allCards = posts
 		.filter((post) => post !== null)
@@ -21,7 +21,7 @@ export default function TemplateBlogContent({
 	if (!allCards) return null
 
 	// first card with featuredArticle
-	const featuredCard = allCards.find((x) => x?.featuredArticle)
+	const featuredCard = allCards.find((x) => x?.isFeatured)
 	const allUnfeaturedCards = allCards.filter(
 		(card) => card?._id !== featuredCard?._id,
 	)
@@ -59,15 +59,7 @@ export default function TemplateBlogContent({
 					<h1>all cards</h1>
 					<Grid>
 						{allCards.map((card) => (
-							<SmallCard
-								image={card?.mainImage}
-								preview={card?.metadataDescription}
-								published={card?.publishDate}
-								slug={card?.slug?.current}
-								title={card?.title}
-								key={card?._id}
-								author={card?.author}
-							/>
+							<SmallCard key={card._id} post={card} />
 						))}
 					</Grid>
 				</>
@@ -75,28 +67,10 @@ export default function TemplateBlogContent({
 			{view === "firstPage" && (
 				<>
 					<h1>normal blog display</h1>
-					{featuredCard && (
-						<LargeCard
-							image={featuredCard.mainImage}
-							preview={featuredCard.metadataDescription}
-							published={featuredCard.publishDate}
-							slug={featuredCard.slug?.current}
-							title={featuredCard.title}
-							key={featuredCard.id}
-							author={featuredCard.author}
-						/>
-					)}
+					{featuredCard && <LargeCard post={featuredCard} />}
 					<Grid>
 						{firstPageCards.map((card) => (
-							<SmallCard
-								image={card.mainImage}
-								preview={card.metadataDescription}
-								published={card.publishDate}
-								slug={card.slug?.current}
-								title={card.title}
-								key={card.id}
-								author={card.author}
-							/>
+							<SmallCard key={card._id} post={card} />
 						))}
 					</Grid>
 					{hasMoreThanOnePage && (
@@ -133,17 +107,7 @@ export default function TemplateBlogContent({
 					<Grid>
 						{searchedAndCategorizedCards.map((card) => {
 							if (!card) return null
-							return (
-								<SmallCard
-									image={card.mainImage}
-									preview={card?.metadataDescription}
-									published={card?.publishDate}
-									slug={card?.slug?.current}
-									title={card?.title}
-									key={card?._id}
-									author={card?.author}
-								/>
-							)
+							return <SmallCard post={card} key={card._id} />
 						})}
 					</Grid>
 				</>

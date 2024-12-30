@@ -7,4 +7,5 @@ on:
   workflow_dispatch:
 jobs:
   library:
-    uses: reformcollective/library/.github/workflows/check-updates.yml@69fc8c0873f6478a1189350f7bf37add4020aef2
+    # this hash is updated automatically, so if you're resolving a merge conflict, either hash is fine
+    uses: reformcollective/library/.github/workflows/check-updates.yml@83ffe87dc6eefa6442f84a140bfd6c3408c0d9d1

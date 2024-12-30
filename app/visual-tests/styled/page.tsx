@@ -9,7 +9,7 @@ import {
 	styled,
 	unresponsive,
 } from "library/styled"
-import useMedia from "library/useMedia"
+import { useMedia } from "library/useMedia"
 
 export default function Page() {
 	return (

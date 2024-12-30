@@ -17,10 +17,9 @@ import {
 	type PortableTextComponents,
 	type PortableTextBlock,
 } from "next-sanity"
-import { Image } from "next-sanity/image"
 import textStyles from "styles/text"
-import { urlForImage } from "@/sanity/lib/utils"
-import { YoutubeEmbed } from "./(components)/YoutubeEmbed"
+import { YoutubeEmbed } from "./components/YoutubeEmbed"
+import UniversalImage from "library/UniversalImage"
 
 export default function CustomPortableText({
 	className,
@@ -96,10 +95,9 @@ export default function CustomPortableText({
 					return null
 				}
 
-				const imageURL = urlForImage(value)?.url()
 				return (
 					<ArticleImage
-						src={imageURL ?? ""}
+						src={value}
 						alt={value.alt || ""}
 						width={1242}
 						height={746}
@@ -172,7 +170,7 @@ const BlockQuote = styled("blockquote", {
 })
 
 const ArticleImage = styled(
-	Image,
+	UniversalImage,
 	fresponsive(css`
 		object-fit: cover;
 		width: 100%;
