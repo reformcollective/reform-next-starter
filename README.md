@@ -1,4 +1,4 @@
-# Reform Gatsby Starter
+# Reform Next Starter
 
 Setup!
 Remove each item from the list as you complete it.
@@ -24,7 +24,7 @@ Remove each item from the list as you complete it.
 
 # Project Name
 
-Built with Gatsby. Install with `pnpm install` and run with `pnpm start`
+Built with Next. Install with `pnpm install` and run with `pnpm dev`
 
 ## Setup
 
@@ -34,5 +34,5 @@ Built with Gatsby. Install with `pnpm install` and run with `pnpm start`
    The preferred way to install node is with nvm. After installing nvm, run `nvm install` in this project to download and use the correct version of node for this project.
 
 1. Install PNPM
-   The preferred way to install pnpm is with corepack. After you've installed node, you install pnpm with `corepack enable`. You should now be able to run `pnpm install` and `pnpm start`.
+   The preferred way to install pnpm is with corepack. After you've installed node, you install pnpm with `corepack enable`. You should now be able to run `pnpm install` and `pnpm dev`.
    Note that if you installed node from homebrew, you may need to install corepack separately.
