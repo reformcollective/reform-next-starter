@@ -1,16 +1,16 @@
 "use client"
 
-import { NextStudio } from "next-sanity/studio"
-import * as Portal from "@radix-ui/react-portal"
-
 import config from "@/sanity.config"
+import * as Portal from "@radix-ui/react-portal"
 import { css, fresponsive, styled } from "library/styled"
+import { NextStudio } from "next-sanity/studio"
+import "./style.css"
 
 export const dynamic = "force-static"
 
 export default function StudioPage() {
 	return (
-		<Wrapper>
+		<Wrapper className="studio-wrapper">
 			<NextStudio config={config} />
 		</Wrapper>
 	)
