@@ -8,6 +8,10 @@ import { useSmoothScroll } from "library/Scroll"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 gsap.registerPlugin(ScrollTrigger)
+ScrollTrigger.defaults({
+	// pinSpacing is bad for page loading, false is a better default
+	pinSpacing: false,
+})
 
 /**
  * its possible hooks will need values from our providers

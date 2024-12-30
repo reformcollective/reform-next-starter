@@ -1,7 +1,7 @@
 import { globby } from "globby"
-import { sanityFetch } from "sanity/lib/live"
 import type { MetadataRoute } from "next"
 import { defineQuery } from "next-sanity"
+import { sanityFetch } from "sanity/lib/live"
 
 export const siteURL =
 	// netlify branch URL
