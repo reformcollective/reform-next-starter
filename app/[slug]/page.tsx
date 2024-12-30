@@ -105,7 +105,7 @@ export default async function TemplatePage({
 
 				return (
 					<Wrapper key={section._key}>
-						{/* @ts-expect-error not possible to narrow the type here */}
+						{/* @ts-ignore not possible to narrow the type here */}
 						<Component {...section} />
 					</Wrapper>
 				)

@@ -1,13 +1,13 @@
+import BlogRich from "blog/BlogRich"
 import { SmallCard } from "blog/components/SmallCard"
-import PortableText from "blog/CustomPortableText"
 import UniversalLink from "library/Loader/UniversalLink"
-import { sanityFetch } from "sanity/lib/live"
 import { resolveOpenGraphImage } from "library/sanity/utils"
 import { css, fresponsive, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 import type { Metadata } from "next"
-import { defineQuery, type PortableTextBlock } from "next-sanity"
+import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
+import { sanityFetch } from "sanity/lib/live"
 
 type PageProps = {
 	params: Promise<{ slug: string }>
@@ -100,11 +100,7 @@ export default async function PostPage({ params }: PageProps) {
 					</UniversalLink>
 				))}
 			</Categories>
-			{typeof articleText !== "undefined" && articleText && (
-				// Bad but not sure how else to do this
-				<PortableText value={articleText as PortableTextBlock[]} />
-			)}
-
+			<BlogRich value={articleText} />
 			<Related>
 				related articles:
 				{relatedPosts &&

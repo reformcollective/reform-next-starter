@@ -1,4 +1,3 @@
-import type { Youtube } from "@/sanity.types"
 import ClientOnly from "library/ClientOnly"
 import { css, fresponsive, styled } from "library/styled"
 import ReactPlayer from "react-player"
@@ -8,8 +7,10 @@ export function YoutubeEmbed({
 	video,
 }: {
 	className?: string
-	video: Youtube
+	video: { url: string | null | undefined }
 }) {
+	if (!video.url) return null
+
 	return (
 		<ClientOnly>
 			<Embed url={video.url} className={className} />
