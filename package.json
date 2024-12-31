@@ -2,12 +2,12 @@
 	"private": true,
 	"author": "Reform Collective",
 	"scripts": {
-		"dev": "npm run typegen && next",
-		"build": "npm run typegen && next build",
+		"dev": "pnpm typegen && next",
+		"build": "pnpm typegen && next build",
 		"serve": "next start",
 		"lint": "biome lint --write && stylelint . --fix",
 		"format": "prettier --write . && biome format --write",
-		"typegen": "sanity schema extract && sanity typegen generate",
+		"typegen": "sanity schema extract && sanity typegen generate && sanity manifest extract --path public/static",
 		"prepare": "husky",
 		"preinstall": "npx only-allow pnpm"
 	},
@@ -18,9 +18,10 @@
 		"@sanity/client": "6.24.1",
 		"@sanity/icons": "^3.5.6",
 		"@sanity/image-url": "1.1.0",
-		"@sanity/ui": "2.10.12",
+		"@sanity/ui": "2.10.14",
 		"@sanity/vision": "^3.68.3",
 		"@svgr/webpack": "8.1.0",
+		"@t3-oss/env-nextjs": "0.11.1",
 		"@total-typescript/ts-reset": "0.6.1",
 		"@total-typescript/tsconfig": "1.0.4",
 		"@types/react": "^19.0.2",
@@ -46,7 +47,8 @@
 		"stylelint-config-reform-collective": "github:reformcollective/stylelint-config-reform",
 		"svgo": "3.3.2",
 		"the-new-css-reset": "1.11.3",
-		"typescript": "5.7.2"
+		"typescript": "5.7.2",
+		"zod": "^3.24.1"
 	},
 	"stylelint": {
 		"extends": "stylelint-config-reform-collective"

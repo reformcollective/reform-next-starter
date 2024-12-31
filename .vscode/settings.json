@@ -60,7 +60,6 @@
 		"**/layout.ts": "${dirname} / layout.ts"
 	},
 	"editor.linkedEditing": true,
-	"editor.codeActionsOnSave": { "source.organizeImports": "always" },
 	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
 
 	/* unsorted settings */

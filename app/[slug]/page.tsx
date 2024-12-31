@@ -8,6 +8,7 @@ import { notFound } from "next/navigation"
 import { Fragment, type ReactNode } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import SampleSection from "sections/Sample"
+import { DynamicPageOrder } from "./client"
 
 export type SectionTypes = NonNullable<
 	NonNullable<PageQueryResult>["sections"]
@@ -95,21 +96,31 @@ export default async function TemplatePage({
 	})
 
 	if (!relevantPage) notFound()
+	if (!relevantPage.sections) notFound()
 
 	return (
-		<>
-			{relevantPage.sections?.map((section, index) => {
+		<DynamicPageOrder
+			documentId={relevantPage._id}
+			documentType={relevantPage._type}
+			sections={relevantPage.sections.map((section, index) => {
 				const Component = components[section._type]
-				if (!Component) return "Component not found"
+				if (!Component)
+					return {
+						key: Math.random().toString(),
+						content: "Component not found",
+					}
 				const Wrapper = index === 0 ? EagerImages : Fragment
 
-				return (
-					<Wrapper key={section._key}>
-						{/* @ts-ignore not possible to narrow the type here */}
-						<Component {...section} />
-					</Wrapper>
-				)
+				return {
+					key: section._key,
+					content: (
+						<Wrapper>
+							{/* @ts-ignore not possible to narrow the type here */}
+							<Component {...section} />
+						</Wrapper>
+					),
+				}
 			})}
-		</>
+		/>
 	)
 }

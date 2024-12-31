@@ -15,7 +15,6 @@ export default defineType({
 			name: "url",
 			type: "string",
 			title: "URL",
-			initialValue: "/",
 			validation: (Rule) => Rule.required(),
 		}),
 	],

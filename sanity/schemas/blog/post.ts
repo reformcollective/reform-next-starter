@@ -5,7 +5,7 @@ import { defineField, defineType } from "sanity"
 export default defineType({
 	type: "document",
 	name: "post",
-	title: "Template - Blog Post",
+	title: "Blog Post",
 	fields: [
 		defineField({
 			name: "title",
@@ -55,7 +55,6 @@ export default defineType({
 			title: "Is Featured Article",
 			description:
 				"if multiple articles are marked as featured, the most recent one will display",
-			initialValue: false,
 		}),
 		defineField({
 			name: "publishDate",

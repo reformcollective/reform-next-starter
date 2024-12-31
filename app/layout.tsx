@@ -12,7 +12,7 @@ import {
 import type { Metadata } from "next"
 import { defineQuery } from "next-sanity"
 import { sanityFetch, SanityLive } from "sanity/lib/live"
-import { siteURL } from "sitemap"
+import { siteURL } from "utils/site-url"
 import textStyles from "styles/text"
 
 import "the-new-css-reset/css/reset.css"

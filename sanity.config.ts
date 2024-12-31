@@ -3,12 +3,12 @@
  */
 
 import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api"
-import { assist } from "@sanity/assist"
 import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings"
-import youtube from "@/sanity/schemas/youtube"
-import header from "@/sanity/schemas/singletons/header"
 import footer from "@/sanity/schemas/singletons/footer"
+import header from "@/sanity/schemas/singletons/header"
 import settings from "@/sanity/schemas/singletons/settings"
+import youtube from "@/sanity/schemas/youtube"
+import { assist } from "@sanity/assist"
 import { visionTool } from "@sanity/vision"
 import { type PluginOptions, defineConfig } from "sanity"
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
@@ -18,11 +18,11 @@ import {
 	defineLocations,
 	presentationTool,
 } from "sanity/presentation"
+import link from "sanity/schemas/link"
 import { structureTool } from "sanity/structure"
-import page from "./sanity/schemas/sanityPage"
 import author from "./sanity/schemas/blog/author"
 import post from "./sanity/schemas/blog/post"
-import link from "sanity/schemas/link"
+import page from "./sanity/schemas/sanityPage"
 
 const homeLocation = {
 	title: "Home",
