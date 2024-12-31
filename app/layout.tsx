@@ -56,31 +56,35 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				// gsap changes with the style attribute, which will cause ssr issues
-				suppressHydrationWarning={true}
+				// gsap messes with the style attribute, which will cause ssr issues
+				suppressHydrationWarning
 			>
-				<PageRoot className="root-layout">
-					<GlobalProviders>
-						<SanityLive />
-						<GlobalStyles>{globalCss}</GlobalStyles>
+				<GlobalProviders>
+					<SanityLive />
+					<GlobalStyles>{globalCss}</GlobalStyles>
+					<PageRoot className="root-layout">
 						{headerData && <Header {...headerData} />}
 						<Main>{children}</Main>
 						{footerData && <Footer {...footerData} />}
-					</GlobalProviders>
-				</PageRoot>
+					</PageRoot>
+				</GlobalProviders>
 			</body>
 		</html>
 	)
 }
 
-const PageRoot = styled("div", {
-	// ensure modals, portals, etc. don't appear behind the page
-	isolation: "isolate",
-	// ensure page content fills the view
-	minHeight: "100lvh",
-	display: "grid",
-	gridTemplateRows: "max-content 1fr auto",
-})
+const PageRoot = styled(
+	"div",
+	unresponsive(css`
+		/*  ensure modals, portals, etc. don't appear behind the page */
+		isolation: isolate;
+
+		/* ensure page content fills the view */
+		min-height: 100lvh;
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+	`),
+)
 
 const Main = styled(
 	"main",

@@ -9,7 +9,6 @@ export default function VisualTestsPage() {
 	const box = useRef<HTMLDivElement>(null)
 
 	useAnimation(() => {
-		console.log("animation started")
 		gsap.from(box.current, {
 			background: "red",
 			duration: 5,
