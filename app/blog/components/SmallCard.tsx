@@ -15,8 +15,7 @@ export function SmallCard({
 		| undefined
 }) {
 	if (!post) return null
-	const { author, slug, publishDate, mainImage, title, metadataDescription } =
-		post
+	const { author, slug, publishDate, mainImage, title, preview } = post
 
 	const publishedAt = publishDate ? publishDate : undefined
 
@@ -31,7 +30,7 @@ export function SmallCard({
 				alt={mainImage?.alt}
 			/>
 			<h1>{title}</h1>
-			<p>{metadataDescription}</p>
+			<p>{preview}</p>
 		</Wrapper>
 	)
 }

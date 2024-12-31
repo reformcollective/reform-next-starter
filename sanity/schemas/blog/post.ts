@@ -38,13 +38,6 @@ export default defineType({
 			options: { layout: "tags" },
 		}),
 		defineField({
-			name: "metadataDescription",
-			type: "text",
-			title: "Metadata Description",
-			description:
-				"used as a synopsis. also used when shared via social media, and by some search engines",
-		}),
-		defineField({
 			name: "ogImage",
 			type: "image",
 			title: "Open Graph Image",
@@ -63,6 +56,13 @@ export default defineType({
 			description:
 				"If this post was initially published in the past, you can set that here",
 			options: { timeFormat: "H:mmZ" },
+		}),
+		defineField({
+			name: "preview",
+			type: "text",
+			title: "Article Synopsis",
+			description:
+				"used as post preview. also used when shared via social media, and by some search engines",
 		}),
 		defineField({
 			name: "articleText",

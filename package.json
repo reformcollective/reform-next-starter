@@ -41,6 +41,7 @@
 		"sanity": "^3.68.3",
 		"sanity-image": "0.2.0",
 		"sanity-plugin-asset-source-unsplash": "^3.0.2",
+		"sanity-plugin-media": "2.3.2",
 		"server-only": "^0.0.1",
 		"styled-components": "^6.1.13",
 		"stylelint": "16.12.0",
@@ -48,6 +49,7 @@
 		"svgo": "3.3.2",
 		"the-new-css-reset": "1.11.3",
 		"typescript": "5.7.2",
+		"unlighthouse": "0.14.1",
 		"zod": "^3.24.1"
 	},
 	"stylelint": {

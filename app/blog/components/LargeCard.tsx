@@ -14,8 +14,7 @@ export function LargeCard({
 		| undefined
 }) {
 	if (!post) return null
-	const { slug, author, publishDate, mainImage, title, metadataDescription } =
-		post
+	const { slug, author, publishDate, mainImage, title, preview } = post
 
 	return (
 		<Wrapper href={`/blog/${slug?.current}`}>
@@ -23,7 +22,7 @@ export function LargeCard({
 			{publishDate && <DisplayDate>{publishDate}</DisplayDate>}
 			<CardImage src={mainImage} alt={title ?? ""} />
 			<h1>{title}</h1>
-			<p>{metadataDescription}</p>
+			<p>{preview}</p>
 		</Wrapper>
 	)
 }

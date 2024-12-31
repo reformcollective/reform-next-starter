@@ -23,6 +23,7 @@ import { structureTool } from "sanity/structure"
 import author from "./sanity/schemas/blog/author"
 import post from "./sanity/schemas/blog/post"
 import page from "./sanity/schemas/sanityPage"
+import { media } from "sanity-plugin-media"
 
 const homeLocation = {
 	title: "Home",
@@ -114,6 +115,8 @@ export default defineConfig({
 		singletonPlugin(singletons.map((singleton) => singleton.name)),
 		// Add an image asset source for Unsplash
 		unsplashImageAsset(),
+		// View all images in the Studio
+		media(),
 		// Sets up AI Assist with preset prompts
 		// https://www.sanity.io/docs/ai-assist
 		assist(),

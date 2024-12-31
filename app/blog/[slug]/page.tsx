@@ -55,7 +55,7 @@ export async function generateMetadata({
 	return {
 		authors: post?.author?.fullName ? [{ name: post?.author?.fullName }] : [],
 		title: post?.title,
-		description: post?.metadataDescription,
+		description: post?.preview,
 		twitter: {
 			card: "summary_large_image",
 			images: newImage,

@@ -53,13 +53,26 @@ export const pageStructure = (
 		})
 
 		// The default root list items (except custom ones)
-		const defaultListItems = S.documentTypeListItems().filter(
-			(listItem) =>
-				!typeDefArray.find((singleton) => singleton.name === listItem.getId()),
-		)
+		const [media, context, ...defaultListItems] =
+			S.documentTypeListItems().filter(
+				(listItem) =>
+					!typeDefArray.find(
+						(singleton) => singleton.name === listItem.getId(),
+					),
+			)
+
+		if (!media || !context)
+			throw new Error("media and context not found in list")
 
 		return S.list()
 			.title("Content")
-			.items([...singletonItems, S.divider(), ...defaultListItems])
+			.items([
+				...singletonItems,
+				S.divider(),
+				media,
+				context,
+				S.divider(),
+				...defaultListItems,
+			])
 	}
 }
