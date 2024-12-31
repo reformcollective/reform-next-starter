@@ -1,8 +1,14 @@
 name: Lighthouse
 on: pull_request
+
+permissions:
+  pull-requests: write
+
 jobs:
   library:
+    permissions:
+      pull-requests: write
     # this hash is updated automatically, so if you're resolving a merge conflict, either hash is fine
-    uses: reformcollective/library/.github/workflows/lighthouse.yml@8af5543283527f8f64730569bd556d286127ac1e
+    uses: reformcollective/library/.github/workflows/lighthouse.yml@e0256236116c8b04dd220dfe9bafac750739cbe5
     secrets:
       SECRETS_JSON: ${{ toJSON(secrets) }}
