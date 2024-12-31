@@ -2,7 +2,6 @@
 import { defineConfig } from "unlighthouse"
 
 export default defineConfig({
-	routerPrefix: ".",
 	ci: {
 		budget: {
 			performance: 100,
