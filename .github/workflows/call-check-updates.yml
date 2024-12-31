@@ -8,4 +8,4 @@ on:
 jobs:
   library:
     # this hash is updated automatically, so if you're resolving a merge conflict, either hash is fine
-    uses: reformcollective/library/.github/workflows/check-updates.yml@4b85b54b49ebcee72da30dfcd975db8aa9dbc949
+    uses: reformcollective/library/.github/workflows/check-updates.yml@59b2d7da4a6b4150b51727a318aa635fe796318e
