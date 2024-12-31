@@ -1,9 +1,16 @@
 name: Lighthouse
-on: pull_request
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
 
 jobs:
   library:
     # this hash is updated automatically, so if you're resolving a merge conflict, either hash is fine
-    uses: reformcollective/library/.github/workflows/lighthouse.yml@24af6897977a68ec5c14fbc30d884c175a8ae518
+    uses: reformcollective/library/.github/workflows/lighthouse.yml@9fe300c37cc200f1201a4d82fd8ef405be99f80f
     secrets:
       SECRETS_JSON: ${{ toJSON(secrets) }}
