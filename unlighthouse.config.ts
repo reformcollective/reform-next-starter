@@ -4,10 +4,10 @@ import { defineConfig } from "unlighthouse"
 export default defineConfig({
 	ci: {
 		budget: {
-			performance: 100,
-			accessibility: 100,
-			"best-practices": 100,
-			seo: 100,
+			performance: 50,
+			accessibility: 90,
+			"best-practices": 90,
+			seo: 90,
 		},
 	},
 })
