@@ -1,9 +1,6 @@
 name: Lighthouse
 on: pull_request
 
-permissions:
-  pull-requests: write
-
 jobs:
   library:
     # this hash is updated automatically, so if you're resolving a merge conflict, either hash is fine
