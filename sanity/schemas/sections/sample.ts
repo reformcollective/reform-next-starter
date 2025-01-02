@@ -2,6 +2,7 @@ import { createSectionPreview } from "library/sanity/reusables"
 import { defineArrayMember, defineField } from "sanity"
 
 export const sample = defineArrayMember({
+	groups: [{ name: "Designed for SamplePage" }],
 	type: "object",
 	name: "sample",
 	title: "Sample Section",

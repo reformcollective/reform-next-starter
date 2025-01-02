@@ -1,5 +1,21 @@
 import type { NextConfig } from "next"
 
+const siteURL =
+	// netlify branch URL
+	process.env.DEPLOY_PRIME_URL ??
+	// netlify production URL
+	process.env.URL ??
+	// vercel URL
+	process.env.VERCEL_URL ??
+	// localhost fallback
+	"http://localhost:3000"
+
+if (process.env.NODE_ENV === "production" && siteURL.includes("localhost")) {
+	console.warn(
+		"sitemap depends on NETLIFY or VERCEL environment variables, which are not present.",
+	)
+}
+
 const nextConfig: NextConfig = {
 	// use the homepage as a CMS page by rewriting the slug
 	rewrites: async () => [{ source: "/", destination: "/home" }],
@@ -13,6 +29,7 @@ const nextConfig: NextConfig = {
 	env: {
 		// Matches the behavior of `sanity dev` which sets styled-components to use the fastest way of inserting CSS rules in both dev and production. It's default behavior is to disable it in dev mode.
 		SC_DISABLE_SPEEDY: "false",
+		NEXT_PUBLIC_DEPLOY_URL: siteURL,
 	},
 	webpack(config) {
 		// biome-ignore lint/suspicious/noExplicitAny: webpack moment

@@ -1,8 +1,8 @@
+import { env } from "env"
 import { globby } from "globby"
 import type { MetadataRoute } from "next"
 import { defineQuery } from "next-sanity"
 import { sanityFetch } from "sanity/lib/live"
-import { siteURL } from "utils/site-url"
 
 const sitemapPageQuery = defineQuery(`
 	*[_type == "page" && defined(slug.current)]
@@ -34,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		...blogArticles.map((item) => `blog/${item.slug}`),
 	]
 		.filter((page) => typeof page === "string")
-		.map((page) => `${siteURL}/${page}`)
+		.map((page) => `${env.NEXT_PUBLIC_DEPLOY_URL}/${page}`)
 
 	return sitemap.map((page) => ({
 		url: page,

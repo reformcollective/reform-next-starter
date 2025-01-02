@@ -1,6 +1,7 @@
 import Footer from "components/Footer"
 import Header from "components/Header"
 import GlobalProviders from "components/Providers"
+import { env } from "env"
 import { resolveOpenGraphImage } from "library/sanity/utils"
 import {
 	css,
@@ -12,7 +13,6 @@ import {
 import type { Metadata } from "next"
 import { defineQuery } from "next-sanity"
 import { sanityFetch, SanityLive } from "sanity/lib/live"
-import { siteURL } from "utils/site-url"
 import textStyles from "styles/text"
 
 import "the-new-css-reset/css/reset.css"
@@ -31,7 +31,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 	return {
 		title: settings?.defaultTitle || "ElectronX",
 		description: settings?.defaultDescription,
-		metadataBase: new URL(siteURL),
+		metadataBase: new URL(env.NEXT_PUBLIC_DEPLOY_URL),
 		twitter: {
 			card: "summary_large_image",
 			images: newImage,
