@@ -3,6 +3,8 @@ import { defineConfig } from "unlighthouse"
 
 export default defineConfig({
 	ci: {
+		buildStatic: true,
+		reporter: "jsonSimple",
 		budget: {
 			performance: 50,
 			accessibility: 90,

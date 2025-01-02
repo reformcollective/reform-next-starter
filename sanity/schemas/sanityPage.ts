@@ -1,13 +1,22 @@
-import {
-	defineArrayMember,
-	defineField,
-	defineType,
-	// type ObjectItemProps,
-} from "sanity"
-// import { Card } from "@sanity/ui"
+import { defineField, defineType } from "sanity"
 import { DesktopIcon } from "@sanity/icons"
 
 import * as sections from "./sections"
+
+const allSections = Object.values(sections)
+const groupNames = new Set(
+	allSections
+		.flatMap((section) => section.groups?.map((group) => group.name))
+		.filter((group) => group !== undefined),
+)
+
+const groups = Array.from(groupNames).map((name) => ({
+	name,
+	of: allSections
+		.filter((section) => section.groups?.some((group) => group.name === name))
+		.map((section) => section.name)
+		.filter((section) => section !== undefined),
+}))
 
 export default defineType({
 	icon: DesktopIcon,
@@ -28,7 +37,6 @@ export default defineType({
 			options: {
 				source: "title",
 			},
-			description: "'home' is an alias to the root of the site: '/'",
 		}),
 		defineField({
 			name: "description",
@@ -73,33 +81,13 @@ export default defineType({
 		defineField({
 			type: "array",
 			name: "sections",
-			of: [...Object.values(sections)].map((section) =>
-				defineArrayMember({
-					...section,
-					// components: {
-					// 	item: (props: ObjectItemProps) => {
-					// 		const { inputProps, ...restProps } = props
-					// 		const { renderPreview, ...restInputProps } = inputProps
-
-					// 		return (
-					// 			<Card>
-					// 				{restProps.renderDefault({
-					// 					...restProps,
-					// 					inputProps: {
-					// 						...restInputProps,
-					// 						renderPreview: (previewProps) => (
-					// 							<Card>{props.children}</Card>
-					// 						),
-					// 					},
-					// 					open: false,
-					// 				})}
-					// 			</Card>
-					// 		)
-					// 	},
-					// },
-				}),
-			),
-			options: { layout: "list" },
+			of: allSections,
+			options: {
+				insertMenu: {
+					groups: groups,
+					views: [{ name: "list" }, { name: "grid" }],
+				},
+			},
 		}),
 	],
 })
