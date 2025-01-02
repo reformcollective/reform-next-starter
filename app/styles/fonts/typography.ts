@@ -2,7 +2,6 @@ import localFont from "next/font/local"
 
 export const roboto = localFont({
 	adjustFontFallback: "Arial",
-	variable: "--font-roboto",
 	display: "swap",
 	src: [
 		{
@@ -27,15 +26,3 @@ export const roboto = localFont({
 		},
 	],
 })
-
-/*
-
-using the font would look something like:
-
-add it to your layout:
-<body class={roboto.variable}>
-
-and use it in your css:
-font-family: var(--font-roboto);
-
-*/

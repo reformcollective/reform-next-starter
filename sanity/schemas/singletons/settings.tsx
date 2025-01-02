@@ -8,8 +8,20 @@ export default defineType({
 	icon: CogIcon,
 	fields: [
 		defineField({
+			name: "defaultTitle",
+			title: "Default Page Title",
+			type: "string",
+		}),
+		defineField({
+			name: "defaultDescription",
+			title: "Default Page Description",
+			type: "string",
+			description:
+				"This will be used when shared on socials, and by some search engines.",
+		}),
+		defineField({
 			name: "ogImage",
-			title: "Open Graph Image",
+			title: "Default Open Graph Image",
 			type: "image",
 			description: "Displayed on social cards and search engine results.",
 			options: {
@@ -36,18 +48,6 @@ export default defineType({
 							return true
 						})
 					},
-				}),
-				defineField({
-					name: "metadataBase",
-					type: "url",
-					description: (
-						<a
-							href="https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase"
-							rel="noreferrer noopener"
-						>
-							More information
-						</a>
-					),
 				}),
 			],
 		}),

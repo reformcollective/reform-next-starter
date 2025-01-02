@@ -1,66 +1,96 @@
 import Footer from "components/Footer"
 import Header from "components/Header"
 import GlobalProviders from "components/Providers"
-import Scroll from "library/Scroll"
+import { resolveOpenGraphImage } from "library/sanity/utils"
 import {
-	GlobalStyles,
 	css,
 	fresponsive,
+	GlobalStyles,
 	styled,
 	unresponsive,
 } from "library/styled"
-import { VisualEditing } from "next-sanity"
-import { colorStyle } from "styles/colors"
+import type { Metadata } from "next"
+import { defineQuery } from "next-sanity"
+import { sanityFetch, SanityLive } from "sanity/lib/live"
+import { siteURL } from "utils/site-url"
 import textStyles from "styles/text"
 
 import "the-new-css-reset/css/reset.css"
 
-export const metadata = {
-	title: "Reform Starter",
-	twitter: {
-		card: "summary_large_image",
-	},
+const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
+
+export const generateMetadata = async (): Promise<Metadata> => {
+	const { data: settings } = await sanityFetch({
+		query: settingsQuery,
+	})
+
+	const imageData =
+		settings?.ogImage && resolveOpenGraphImage(settings?.ogImage)
+	const newImage = imageData ? [imageData] : undefined
+
+	return {
+		title: settings?.defaultTitle || "ElectronX",
+		description: settings?.defaultDescription,
+		metadataBase: new URL(siteURL),
+		twitter: {
+			card: "summary_large_image",
+			images: newImage,
+		},
+		openGraph: {
+			images: newImage,
+		},
+	}
 }
 
-export default function RootLayout({
+const headerQuery = defineQuery(`*[_type == "header"][0]`)
+const footerQuery = defineQuery(`*[_type == "footer"][0]`)
+
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode
 }) {
+	const { data: headerData } = await sanityFetch({ query: headerQuery })
+	const { data: footerData } = await sanityFetch({ query: footerQuery })
+
 	return (
 		<html lang="en">
 			<body
-				// gsap changes with the style attribute, which will cause ssr issues
-				suppressHydrationWarning={true}
+				// gsap messes with the style attribute, which will cause ssr issues
+				suppressHydrationWarning
 			>
 				<GlobalProviders>
+					<SanityLive />
 					<GlobalStyles>{globalCss}</GlobalStyles>
-					<GlobalStyles>{colorStyle}</GlobalStyles>
-					<VisualEditing />
-					<Header />
-					<Scroll>
-						<Spacer />
-						hello world
+					<PageRoot className="root-layout">
+						{headerData && <Header {...headerData} />}
 						<Main>{children}</Main>
-						<Footer />
-					</Scroll>
+						{footerData && <Footer {...footerData} />}
+					</PageRoot>
 				</GlobalProviders>
 			</body>
 		</html>
 	)
 }
 
+const PageRoot = styled(
+	"div",
+	unresponsive(css`
+		/*  ensure modals, portals, etc. don't appear behind the page */
+		isolation: isolate;
+
+		/* ensure page content fills the view */
+		min-height: 100lvh;
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+	`),
+)
+
 const Main = styled(
 	"main",
 	unresponsive(css`
 		overflow-x: clip;
-	`),
-)
-
-const Spacer = styled(
-	"div",
-	fresponsive(css`
-		height: 100px;
+		isolation: isolate;
 	`),
 )
 

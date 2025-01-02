@@ -2,6 +2,7 @@ name: Code Checks
 on: pull_request
 jobs:
   library:
-    uses: reformcollective/library/.github/workflows/code-checks.yml@f5978392cedfc48e79094aa158b860ea37590288
+    # this hash is updated automatically, so if you're resolving a merge conflict, either hash is fine
+    uses: reformcollective/library/.github/workflows/code-checks.yml@a1d1cc52d5b61136fd86b4037e4652d35fa71ec5
     secrets:
       SECRETS_JSON: ${{ toJSON(secrets) }}

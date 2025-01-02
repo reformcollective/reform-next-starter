@@ -1,6 +1,12 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
+	// use the homepage as a CMS page by rewriting the slug
+	rewrites: async () => [{ source: "/", destination: "/home" }],
+	redirects: async () => [
+		{ source: "/home", destination: "/", permanent: false },
+	],
+
 	experimental: {
 		reactCompiler: true,
 	},

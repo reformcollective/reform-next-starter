@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Regenerate Sanity Types",
+			"type": "shell",
+			"command": "pnpm install --frozen-lockfile && pnpm exec sanity schema extract && pnpm exec sanity typegen generate",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "silent",
+				"clear": true,
+				"close": true
+			},
+			"options": {
+				"statusbar": {
+					"label": "$(refresh) Regenerate Sanity Types"
+				}
+			},
+			"runOptions": {
+				"instanceLimit": 10
+			}
+		}
+	]
+}

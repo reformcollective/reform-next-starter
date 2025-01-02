@@ -1,14 +1,23 @@
-import type { PostsQueryResult } from "@/sanity.types"
-import { Categories } from "blog/(components)/Categories"
-import { SearchBar } from "blog/(components)/SearchBar"
+import { Categories } from "blog/components/Categories"
+import { SearchBar } from "blog/components/SearchBar"
+import { sanityFetch } from "sanity/lib/live"
 import { css, fresponsive, styled } from "library/styled"
+import { defineQuery } from "next-sanity"
+import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { sanityFetch } from "sanity/lib/fetch"
-import { postsQuery } from "sanity/lib/queries"
-import TemplateBlogContent from "./blog-layout"
+import TemplateBlogContent from "./BlogLayout"
+
+const postsQuery = defineQuery(`
+	*[_type == "post"]{
+		...,
+		author->
+	}
+`)
 
 export default async function TemplateBlogPage() {
-	const data: PostsQueryResult = await sanityFetch({ query: postsQuery })
+	const { data } = await sanityFetch({ query: postsQuery })
+
+	if (!data) notFound()
 
 	return (
 		<Wrapper>

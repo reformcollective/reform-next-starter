@@ -1,14 +1,18 @@
+import type { FooterQueryResult } from "@/sanity.types"
 import UniversalLink from "library/Loader/UniversalLink"
 import { css, fresponsive, styled } from "library/styled"
 
-export default function Footer() {
+export default function Footer({ footerText }: NonNullable<FooterQueryResult>) {
 	return (
 		<Wrapper data-header-hide>
 			<Content>
 				<h1>Footer</h1>
 				<p>The header is hidden while the Footer is in view</p>
+				<p>{footerText}</p>
+				<UniversalLink href="/" style={{ textDecoration: "underline" }}>
+					Go to Home
+				</UniversalLink>
 			</Content>
-			<UniversalLink href="/">Home</UniversalLink>
 		</Wrapper>
 	)
 }

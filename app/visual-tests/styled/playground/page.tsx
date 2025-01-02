@@ -1,7 +1,14 @@
 "use client"
 
 import { useEventListener } from "ahooks"
-import { css, fmobile, fresponsive, ftablet, styled } from "library/styled"
+import {
+	css,
+	fmobile,
+	fresponsive,
+	ftablet,
+	mergeStyles,
+	styled,
+} from "library/styled"
 import { useMemo, useState } from "react"
 
 export default function Playground() {
@@ -13,11 +20,11 @@ export default function Playground() {
 		// reset the spacing
 		styled("div")
 
-		return {
+		return mergeStyles({
 			...fresponsive(responsive),
 			...ftablet(tablet),
 			...fmobile(mobile),
-		}
+		})
 	}, [responsive, tablet, mobile])
 
 	/**
