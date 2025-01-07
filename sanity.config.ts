@@ -24,6 +24,7 @@ import author from "./sanity/schemas/blog/author"
 import post from "./sanity/schemas/blog/post"
 import page from "./sanity/schemas/sanityPage"
 import { media } from "sanity-plugin-media"
+import { env } from "env"
 
 const homeLocation = {
 	title: "Home",
@@ -122,7 +123,7 @@ export default defineConfig({
 		assist(),
 		// Vision lets you query your content with GROQ in the studio
 		// https://www.sanity.io/docs/the-vision-plugin
-		process.env.NODE_ENV === "development" &&
+		env.NODE_ENV === "development" &&
 			visionTool({ defaultApiVersion: apiVersion }),
 	].filter(Boolean) as PluginOptions[],
 })

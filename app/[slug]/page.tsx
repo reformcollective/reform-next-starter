@@ -104,11 +104,13 @@ export default async function TemplatePage({
 			documentType={relevantPage._type}
 			sections={relevantPage.sections.map((section, index) => {
 				const Component = components[section._type]
-				if (!Component)
+				if (!Component) {
+					console.warn(`Unknown section type "${section._type}"`)
 					return {
 						key: Math.random().toString(),
-						content: "Component not found",
+						content: null,
 					}
+				}
 				const Wrapper = index === 0 ? EagerImages : Fragment
 
 				return {
