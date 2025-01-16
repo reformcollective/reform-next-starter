@@ -40,6 +40,7 @@ If this project could be using a CMS, set up a new project in Sanity. If we're n
 1. add `app/library/sanity` and `app/library/UniversalImage.tsx` to the `exclude` array in `tsconfig.json` (you'll be using StaticImage instead)
 1. remove any sanity-related packages from `package.json`
 1. run `npx tsc` and clean up any type errors or missed sanity files
+1. if no env variables remain, you can also remove the `checkEnv` script from `package.json`
 
 ### Setting up Sanity
 
