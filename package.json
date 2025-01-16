@@ -84,6 +84,6 @@
 			"@types/react": "19",
 			"@types/react-dom": "19"
 		},
-		"onlyBuiltDependencies": ["@biomejs/biome"]
+		"onlyBuiltDependencies": ["@biomejs/biome", "puppeteer"]
 	}
 }
