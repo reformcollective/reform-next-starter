@@ -29,7 +29,7 @@ Remove each item from the list as you complete it.
 
 ## Sanity Setup or Removal
 
-If this project could be using a CMS, set up a new project in Sanity. If we're not sure, just leave it using the starter's project until we know (it's easy to remove if unneeded, but a pain to add back in)
+If this project is using a CMS, set up a new project in Sanity. If we're not sure, just leave it using the starter's project until we know (it's easy to remove if unneeded, but a pain to add back in)
 
 ### Removing Sanity
 
