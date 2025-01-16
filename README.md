@@ -25,6 +25,7 @@ Remove each item from the list as you complete it.
 1. Add any text styles to `app/styles/text.ts`
 1. Configure the library config according to this project's needs. for example, you should remove the default transitions.
 1. Update the `app/manifest.webmanifest` to include colors and metadata
+1. If they exist, export the fullmark, logomark, and wordmark from figma and add them to `app/images`
 
 ## Sanity Setup or Removal
 
