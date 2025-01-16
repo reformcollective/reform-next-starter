@@ -1,4 +1,5 @@
 import { css } from "library/styled"
+import { createStyleString } from "@capsizecss/core"
 
 export const transparentText = css`
 	/* stylelint-disable-next-line property-no-vendor-prefix  */
@@ -19,6 +20,20 @@ export const clampText = (lines: number) => css`
 	-webkit-line-clamp: ${lines};
 `
 
+const sampleMetrics = {
+	capHeight: 682,
+	ascent: 1006,
+	descent: -194,
+	lineGap: 286,
+	unitsPerEm: 1000,
+}
+
+/**
+ * if text height is capped to baseline, use this utility to set text size
+ */
+const makeStyleString = (options: Parameters<typeof createStyleString>[1]) =>
+	createStyleString("&", options).replaceAll(".&", "&")
+
 const textStyles = {
 	/**
 	 * if you need to add one-off styles, do that here!
@@ -27,7 +42,19 @@ const textStyles = {
 	// don't wrap these in a fresponsive or unresponsive call!
 	// that should happen at the component level
 	h1: css`
-		font-size: 50px;
+		font-family: ${
+				/* myFontFromTypography.style.fontFamily */
+				// ^ use the font from the typography file
+				""
+			},
+			sans-serif;
+		${makeStyleString({
+			fontSize: 50,
+			leading: 50 * 1.2, // same as line height 120%
+			fontMetrics: sampleMetrics,
+		})};
+		font-style: normal;
+		font-weight: 300;
 	`,
 	h2: css``,
 	h3: css``,
