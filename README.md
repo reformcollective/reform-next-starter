@@ -39,6 +39,7 @@ If this project is using a CMS, set up a new project in Sanity. If we're not sur
 1. remove `SanityLive`, `SanityFetch`, and `defineQuery`, as well as any dependent code, from `app/layout.tsx`, `app/components/Header.tsx`, `app/components/Footer.tsx`, and `app/sitemap.ts`
 1. add `app/library/sanity` and `app/library/UniversalImage.tsx` to the `exclude` array in `tsconfig.json` (you'll be using StaticImage instead)
 1. remove any sanity-related packages from `package.json`
+1. update isSanity to false in `.github/workflows/call-code-checks.yml`
 1. run `npx tsc` and clean up any type errors or missed sanity files
 1. if no env variables remain, you can also remove the `checkEnv` script from `package.json`
 

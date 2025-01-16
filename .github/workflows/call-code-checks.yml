@@ -6,3 +6,5 @@ jobs:
     uses: reformcollective/library/.github/workflows/code-checks.yml@c564d93444c5ec1ab072155f45a581becdf97616
     secrets:
       SECRETS_JSON: ${{ toJSON(secrets) }}
+    with:
+      isSanity: true
