@@ -32,8 +32,13 @@ If this project could be using a CMS, set up a new project in Sanity. If we're n
 
 ### Removing Sanity
 
-1. in `package.json`, delete `scripts` and rename `scriptsNoSanity` to `scripts`
-1. TODO more docs to come
+1. in `package.json`, delete the `typegen` and `postinstall` scripts
+1. delete `app/(sanity)`, `app/blog`, `app/[slug]`, and `sanity` folders
+1. delete `sanity.config.ts`, `sanity.types.ts`, and `sanity.cli.ts`, and any other sanity-related files in the root of the project
+1. remove `SanityLive`, `SanityFetch`, and `defineQuery`, as well as any dependent code, from `app/layout.tsx`, `app/components/Header.tsx`, `app/components/Footer.tsx`, and `app/sitemap.ts`
+1. add `app/library/sanity` and `app/library/UniversalImage.tsx` to the `exclude` array in `tsconfig.json` (you'll be using StaticImage instead)
+1. remove any sanity-related packages from `package.json`
+1. run `npx tsc` and clean up any type errors or missed sanity files
 
 ### Setting up Sanity
 
