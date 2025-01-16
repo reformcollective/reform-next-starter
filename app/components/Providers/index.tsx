@@ -9,7 +9,6 @@ import { ScreenProvider } from "library/ScreenContext"
 import { useSmoothScroll } from "library/Scroll"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { ColorStyle } from "styles/colors"
-import "library/pride"
 
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.defaults({

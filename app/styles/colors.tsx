@@ -24,15 +24,19 @@ export const ColorStyle = () => (
 		{unresponsive(css`
 			:root {
 				@supports (not (color: color(display-p3 0 0 0))) {
-					${colorEntries.map(([key, [hex]]) => {
-						return `--${key}: ${hex};`
-					})}
+					${colorEntries
+						.map(([key, [hex]]) => {
+							return `--${key}: ${hex};`
+						})
+						.join("\n")}
 				}
 
 				@supports (color: color(display-p3 0 0 0)) {
-					${colorEntries.map(([key, [hex, p3]]) => {
-						return `--${key}: ${p3 ?? hex};`
-					})}
+					${colorEntries
+						.map(([key, [hex, p3]]) => {
+							return `--${key}: ${p3 ?? hex};`
+						})
+						.join("\n")}
 				}
 			}
 		`)}
