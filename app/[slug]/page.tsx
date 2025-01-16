@@ -15,7 +15,12 @@ export type SectionTypes = NonNullable<
 >[number]["_type"]
 export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
 	NonNullable<NonNullable<PageQueryResult>["sections"]>[number] & { _type: T }
->
+> & {
+	// extra properties for creating data sanity attributes
+	documentId: string
+	documentType: string
+	path: string
+}
 
 type AsyncFC<P = Record<string, unknown>> = (
 	props: P,
@@ -122,7 +127,12 @@ export default async function TemplatePage({
 					content: (
 						<Wrapper>
 							{/* @ts-ignore not possible to narrow the type here */}
-							<Component {...section} />
+							<Component
+								documentId={relevantPage._id}
+								documentType={relevantPage._type}
+								path={`sections[_key=="${section._key}"]`}
+								{...section}
+							/>
 						</Wrapper>
 					),
 				}
