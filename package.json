@@ -8,7 +8,7 @@
 		"lint": "biome lint --write && stylelint . --fix",
 		"format": "prettier --write . && biome format --write",
 		"pnpm:devPreinstall": "npx only-allow pnpm && npm run checkEnv && npm run submodule",
-		"checkEnv": "ls .env || echo 'You are missing a .env file'",
+		"checkEnv": "ls .env || (echo 'You are missing a .env file' && exit 1)",
 		"submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0",
 		"postinstall": "npm run typegen",
 		"typegen": "sanity schema extract && sanity typegen generate && sanity manifest extract --path public/studio/static",
