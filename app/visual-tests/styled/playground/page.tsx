@@ -18,7 +18,7 @@ export default function Playground() {
 
 	const result = useMemo(() => {
 		// reset the spacing
-		styled("div")
+		styled("div", {})
 
 		return mergeStyles({
 			...fresponsive(responsive),

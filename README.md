@@ -25,10 +25,19 @@ Remove each item from the list as you complete it.
 1. Add any typography to `app/styles/fonts/typography.ts`, and configure a default text color/style in `app/layout.tsx`
 1. Add any text styles to `app/styles/text.ts`
 1. Configure the library config according to this project's needs. for example, remove the default transitions.
+1. Update the `app/manifest.webmanifest` to include colors and metadata
 
-## Sanity Setup
+## Sanity Setup or Removal
 
 1. If this project could be using a CMS, set up a new project in Sanity. If we're not sure, just leave it using the starter's project until we know (it's easy to remove if unneeded, but a pain to add back in)
+
+### Removing Sanity
+
+1. in `package.json`, delete `scripts` and rename `scriptsNoSanity` to `scripts`
+1. TODO more docs to come
+
+### Setting up Sanity
+
 1. Enable studio access for `https://localhost:3000/studio` under the `Studios` tab
 1. Ensure CORS access is enabled under the `API` tab (Sanity should do this for you when you add the studio)
 1. You'll need the following variables in your `.env` file:

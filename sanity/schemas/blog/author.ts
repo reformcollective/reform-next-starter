@@ -1,4 +1,4 @@
-import { imageWithAlt } from "library/sanity/reusables"
+import { universalImage } from "library/sanity/reusables"
 import { defineField, defineType } from "sanity"
 
 export default defineType({
@@ -19,9 +19,10 @@ export default defineType({
 			validation: (Rule) => Rule.required(),
 			options: { source: "fullName" },
 		}),
-		imageWithAlt({
+		universalImage({
 			name: "photo",
 			title: "Photo",
+			cropType: "sanity",
 		}),
 		defineField({
 			name: "roleAndCompany",

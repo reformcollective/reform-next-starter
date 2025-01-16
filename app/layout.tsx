@@ -13,7 +13,6 @@ import {
 import type { Metadata } from "next"
 import { defineQuery } from "next-sanity"
 import { sanityFetch, SanityLive } from "sanity/lib/live"
-import textStyles from "styles/text"
 
 import "the-new-css-reset/css/reset.css"
 
@@ -94,14 +93,17 @@ const Main = styled(
 	`),
 )
 
-// TODO: configure a default text color
+// TODO: configure a default text color and background
 const globalCss = fresponsive(css`
 	/* default text styles */
 	html {
 		/* if your project uses a dark color for most text, set that here */
-		color: black;
-		font-family: sans-serif;
-		${textStyles.body}
+		background: #151515;
+		color: #f9f9fb;
+	}
+
+	body {
+		overflow-x: hidden;
 	}
 
 	* {
@@ -113,5 +115,26 @@ const globalCss = fresponsive(css`
 	/** restore default focus states for elements that need them */
 	*:focus-visible {
 		outline: 2px solid #00f8;
+	}
+
+	/**
+	 * this is a workaround for lvh being calculated incorrectly
+	 * - on iOS safari
+	 * - AND only in the webview
+	 * - AND only before the page has resized (sometimes)
+	 *
+	 * this will only be visible if lvh is calculated incorrectly
+	 * safari is such a good browser with no problems
+	 */
+	body::before {
+		content: "";
+		pointer-events: none;
+		position: fixed;
+		top: 100lvh;
+		left: 0;
+		width: 100vw;
+		height: 100lvh;
+		background: currentcolor;
+		z-index: 999;
 	}
 `)

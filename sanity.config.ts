@@ -25,6 +25,10 @@ import post from "./sanity/schemas/blog/post"
 import page from "./sanity/schemas/sanityPage"
 import { media } from "sanity-plugin-media"
 import { env } from "env"
+import gsap from "gsap/all"
+
+// if GSAP tries to run during manifest generation it might fail in prod
+gsap.ticker.sleep()
 
 const homeLocation = {
 	title: "Home",

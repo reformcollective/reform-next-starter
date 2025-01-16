@@ -1,7 +1,7 @@
 import type { PageQueryResult } from "@/sanity.types"
-import type { DeepImageMeta } from "library/sanity/imageMetadata"
+import { EagerImages } from "library/StaticImage"
+import type { DeepAssetMeta } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/utils"
-import { EagerImages } from "library/UniversalImage"
 import type { Metadata, ResolvingMetadata } from "next"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
@@ -13,7 +13,7 @@ import { DynamicPageOrder } from "./client"
 export type SectionTypes = NonNullable<
 	NonNullable<PageQueryResult>["sections"]
 >[number]["_type"]
-export type GetSectionType<T extends SectionTypes> = DeepImageMeta<
+export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
 	NonNullable<NonNullable<PageQueryResult>["sections"]>[number] & { _type: T }
 >
 
@@ -41,6 +41,10 @@ const pageSlugs = defineQuery(`
 	*[_type == "page" && defined(slug.current)]
 	{"slug": slug.current}
 `)
+
+// Next.js will invalidate the cache when a
+// request comes in, at most once every 60 seconds.
+export const revalidate = 60
 
 export async function generateStaticParams() {
 	const { data } = await sanityFetch({

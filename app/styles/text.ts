@@ -20,6 +20,10 @@ export const clampText = (lines: number) => css`
 `
 
 const textStyles = {
+	/**
+	 * if you need to add one-off styles, do that here!
+	 */
+	custom: {},
 	// don't wrap these in a fresponsive or unresponsive call!
 	// that should happen at the component level
 	h1: css`

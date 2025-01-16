@@ -1,0 +1,10 @@
+{
+	"name": "Reform Next Starter",
+	"description": "A reform collective starter template for building websites",
+	"start_url": "/",
+	"display": "browser",
+	"background_color": "#ff0000",
+	"theme_color": "#0070f3",
+	"lang": "en",
+	"dir": "ltr"
+}

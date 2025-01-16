@@ -1,4 +1,4 @@
-import { css, unresponsive } from "library/styled"
+import { css, GlobalStyles, unresponsive } from "library/styled"
 
 /**
  * place all your colors here! the format is:
@@ -19,21 +19,25 @@ const colorEntries: [string, [string, string] | [string]][] =
  * sets the values of CSS variables globally
  * include this in layout
  */
-export const colorStyle = unresponsive(css`
-	:root {
-		@supports (not (color: color(display-p3 0 0 0))) {
-			${colorEntries.map(([key, [hex]]) => {
-				return `--${key}: ${hex};`
-			})}
-		}
+export const ColorStyle = () => (
+	<GlobalStyles>
+		{unresponsive(css`
+			:root {
+				@supports (not (color: color(display-p3 0 0 0))) {
+					${colorEntries.map(([key, [hex]]) => {
+						return `--${key}: ${hex};`
+					})}
+				}
 
-		@supports (color: color(display-p3 0 0 0)) {
-			${colorEntries.map(([key, [hex, p3]]) => {
-				return `--${key}: ${p3 ?? hex};`
-			})}
-		}
-	}
-`)
+				@supports (color: color(display-p3 0 0 0)) {
+					${colorEntries.map(([key, [hex, p3]]) => {
+						return `--${key}: ${p3 ?? hex};`
+					})}
+				}
+			}
+		`)}
+	</GlobalStyles>
+)
 
 /**
  * convert the raw colors to an object with the correct color for the current browser
