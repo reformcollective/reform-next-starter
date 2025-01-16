@@ -7,7 +7,7 @@
 		"serve": "next start",
 		"lint": "biome lint --write && stylelint . --fix",
 		"format": "prettier --write . && biome format --write",
-		"preinstall": "npx only-allow pnpm && npm run submodule",
+		"pnpm:devPreinstall": "npx only-allow pnpm && npm run submodule",
 		"submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0",
 		"postinstall": "npm run typegen",
 		"typegen": "sanity schema extract && sanity typegen generate && sanity manifest extract --path public/studio/static",
