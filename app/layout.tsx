@@ -1,8 +1,8 @@
 import Footer from "components/Footer"
 import Header from "components/Header"
 import GlobalProviders from "components/Providers"
-import { env } from "env"
 import { resolveOpenGraphImage } from "library/sanity/utils"
+import { siteURL } from "library/siteURL"
 import {
 	css,
 	fresponsive,
@@ -28,9 +28,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
 	const newImage = imageData ? [imageData] : undefined
 
 	return {
-		title: settings?.defaultTitle || "ElectronX",
+		metadataBase: new URL(siteURL),
+		title: settings?.defaultTitle,
 		description: settings?.defaultDescription,
-		metadataBase: new URL(env.NEXT_PUBLIC_DEPLOY_URL),
 		twitter: {
 			card: "summary_large_image",
 			images: newImage,

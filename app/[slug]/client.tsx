@@ -2,6 +2,7 @@
 import type { Page } from "@/sanity.types"
 import { studioUrl } from "@/sanity/lib/api"
 import { env } from "env"
+import { siteURL } from "library/siteURL"
 import { css, fresponsive, keyframes, styled } from "library/styled"
 import { createDataAttribute, type SanityDocument } from "next-sanity"
 import { useOptimistic } from "next-sanity/hooks"
@@ -10,7 +11,7 @@ import type { ReactNode } from "react"
 const config = {
 	projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
 	dataset: env.NEXT_PUBLIC_SANITY_DATASET,
-	baseUrl: env.NEXT_PUBLIC_DEPLOY_URL + studioUrl,
+	baseUrl: `${siteURL}${studioUrl}`,
 }
 
 export const DynamicPageOrder = ({

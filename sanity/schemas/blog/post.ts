@@ -37,10 +37,11 @@ export default defineType({
 			title: "Categories",
 			options: { layout: "tags" },
 		}),
-		defineField({
+		universalImage({
 			name: "ogImage",
-			type: "image",
-			title: "Open Graph Image",
+			title: "Default Open Graph Image",
+			cropType: "sanity",
+			withAlt: false,
 		}),
 		defineField({
 			name: "isFeatured",

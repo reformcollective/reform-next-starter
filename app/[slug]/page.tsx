@@ -83,11 +83,12 @@ export async function generateMetadata(
 	return {
 		title,
 		description,
+		twitter: {
+			card: "summary_large_image",
+			images: twitter,
+		},
 		openGraph: {
 			images: opengraph,
-		},
-		twitter: {
-			images: twitter,
 		},
 	}
 }
@@ -108,35 +109,35 @@ export default async function TemplatePage({
 	if (!relevantPage.sections) notFound()
 
 	return (
-		<DynamicPageOrder
-			documentId={relevantPage._id}
-			documentType={relevantPage._type}
-			sections={relevantPage.sections.map((section, index) => {
-				const Component = components[section._type]
-				if (!Component) {
-					console.warn(`Unknown section type "${section._type}"`)
-					return {
-						key: Math.random().toString(),
-						content: null,
+		<>
+			{relevantPage.noIndex ? (
+				<meta name="robots" content="noindex, nofollow" />
+			) : null}
+			<DynamicPageOrder
+				documentId={relevantPage._id}
+				documentType={relevantPage._type}
+				sections={relevantPage.sections.map((section, index) => {
+					const Component = components[section._type]
+					if (!Component) {
+						console.warn(`Unknown section type "${section._type}"`)
+						return {
+							key: Math.random().toString(),
+							content: null,
+						}
 					}
-				}
-				const Wrapper = index === 0 ? EagerImages : Fragment
+					const Wrapper = index === 0 ? EagerImages : Fragment
 
-				return {
-					key: section._key,
-					content: (
-						<Wrapper>
-							{/* @ts-ignore not possible to narrow the type here */}
-							<Component
-								documentId={relevantPage._id}
-								documentType={relevantPage._type}
-								path={`sections[_key=="${section._key}"]`}
-								{...section}
-							/>
-						</Wrapper>
-					),
-				}
-			})}
-		/>
+					return {
+						key: section._key,
+						content: (
+							<Wrapper>
+								{/* @ts-ignore not possible to narrow the type here */}
+								<Component {...section} />
+							</Wrapper>
+						),
+					}
+				})}
+			/>
+		</>
 	)
 }

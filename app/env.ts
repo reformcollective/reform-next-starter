@@ -28,12 +28,6 @@ export const env = createEnv({
 	client: {
 		NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1),
 		NEXT_PUBLIC_SANITY_DATASET: z.string().min(1),
-		NEXT_PUBLIC_DEPLOY_URL: z
-			.string()
-			.min(1)
-			// because this is provided by next config, it will be undefined during typegen
-			.optional()
-			.transform((url) => url ?? "http://localhost:3000"),
 	},
 
 	/**
@@ -46,7 +40,6 @@ export const env = createEnv({
 		NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
 		NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
 		SANITY_AUTH_TOKEN: process.env.SANITY_AUTH_TOKEN,
-		NEXT_PUBLIC_DEPLOY_URL: process.env.NEXT_PUBLIC_DEPLOY_URL,
 		NODE_ENV: process.env.NODE_ENV,
 	},
 })

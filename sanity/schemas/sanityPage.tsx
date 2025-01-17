@@ -2,6 +2,7 @@ import { defineField, defineType } from "sanity"
 import { DesktopIcon } from "@sanity/icons"
 
 import * as sections from "./sections"
+import { universalImage } from "library/sanity/reusables"
 
 const allSections = Object.values(sections)
 const groupNames = new Set(
@@ -45,38 +46,25 @@ export default defineType({
 			description:
 				"Leave blank to reuse the default, defined in Settings. This will be used when shared on socials, and by some search engines.",
 		}),
-		defineField({
+		universalImage({
 			name: "ogImage",
 			title: "Default Open Graph Image",
-			type: "image",
 			description:
 				"Leave blank to reuse the default, defined in Settings. Displayed on social cards and search engine results.",
-			options: {
-				hotspot: true,
-				aiAssist: {
-					imageDescriptionField: "alt",
-				},
-			},
-			fields: [
-				defineField({
-					name: "alt",
-					description: "Important for accessibility and SEO.",
-					title: "Alternative text",
-					type: "string",
-					validation: (rule) => {
-						return rule.custom((alt, context) => {
-							if (
-								(context.document?.ogImage as { asset?: { _ref?: string } })
-									?.asset?._ref &&
-								!alt
-							) {
-								return "Required"
-							}
-							return true
-						})
-					},
-				}),
-			],
+			cropType: "sanity",
+			withAlt: false,
+		}),
+		defineField({
+			name: "noIndex",
+			type: "boolean",
+			title: "Hide from Search Engines",
+			description: (
+				<>
+					Enable this to hide the page from search engines like Google. Note
+					that once a page has been detected by a search engine, disabling this
+					will not immediately remove the page from search engines.
+				</>
+			),
 		}),
 		defineField({
 			type: "array",

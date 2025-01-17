@@ -41,6 +41,7 @@ export default defineConfig({
 	basePath: studioUrl,
 	projectId,
 	dataset,
+	title: "TODO - give the studio a name",
 	schema: {
 		types: [
 			// Singletons
