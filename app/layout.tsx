@@ -1,6 +1,7 @@
 import Footer from "components/Footer"
 import Header from "components/Header"
 import GlobalProviders from "components/Providers"
+import { ResetStyles } from "library/reset"
 import { resolveOpenGraphImage } from "library/sanity/utils"
 import { siteURL } from "library/siteURL"
 import {
@@ -13,8 +14,6 @@ import {
 import type { Metadata } from "next"
 import { defineQuery } from "next-sanity"
 import { sanityFetch, SanityLive } from "sanity/lib/live"
-
-import "the-new-css-reset/css/reset.css"
 
 const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
@@ -58,6 +57,7 @@ export default async function RootLayout({
 				// gsap messes with the style attribute, which will cause ssr issues
 				suppressHydrationWarning
 			>
+				<ResetStyles />
 				<GlobalProviders>
 					<SanityLive />
 					<GlobalStyles>{globalCss}</GlobalStyles>

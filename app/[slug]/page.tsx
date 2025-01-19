@@ -71,8 +71,8 @@ export async function generateMetadata(
 		},
 	})
 
-	const title = relevantPage?.title
-	const description = relevantPage?.description
+	const title = relevantPage?.title || (await parent).title
+	const description = relevantPage?.description || (await parent).description
 	const imageData =
 		relevantPage?.ogImage && resolveOpenGraphImage(relevantPage?.ogImage)
 	const newImage = imageData ? [imageData] : undefined

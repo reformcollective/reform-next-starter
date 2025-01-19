@@ -1,4 +1,5 @@
 "use client"
+
 import type { Page } from "@/sanity.types"
 import { studioUrl } from "@/sanity/lib/api"
 import { env } from "env"

@@ -6,7 +6,7 @@ import { isBrowser, isSafari } from "library/deviceDetection"
 import { useTriggerPreloader } from "library/Loader/PreloaderUtils"
 import { useBackButton } from "library/Loader/TransitionUtils"
 import { ScreenProvider } from "library/ScreenContext"
-import { useSmoothScroll } from "library/Scroll"
+import { SmoothScrollStyle } from "library/Scroll"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { ColorStyle } from "styles/colors"
 
@@ -29,7 +29,6 @@ if (isBrowser && window.location.href.includes("netlify"))
 const NestedHooks = () => {
 	useBackButton()
 	useTriggerPreloader()
-	useSmoothScroll()
 	return null
 }
 
@@ -40,6 +39,7 @@ export default function GlobalProviders({
 }) {
 	children = (
 		<>
+			<SmoothScrollStyle />
 			<ColorStyle />
 			<NestedHooks />
 			{children}
