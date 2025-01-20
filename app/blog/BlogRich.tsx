@@ -11,7 +11,7 @@ export default function BlogRich({
 	value,
 }: {
 	className?: string
-	value: DeepAssetMeta<Post["articleText"]>
+	value: DeepAssetMeta<Post["content"]>
 }) {
 	if (!value) return null
 	return (

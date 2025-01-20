@@ -1,6 +1,7 @@
-import { css, fresponsive, styled } from "library/styled"
-import type { Post, Author as AuthorType } from "@/sanity.types"
+import type { Author as AuthorType, Post } from "@/sanity.types"
+import { DisplayDate } from "library/DisplayDate"
 import UniversalLink from "library/Loader/UniversalLink"
+import { css, fresponsive, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 
 export function LargeCard({
@@ -14,13 +15,29 @@ export function LargeCard({
 		| undefined
 }) {
 	if (!post) return null
-	const { slug, author, publishDate, mainImage, title, preview } = post
+	const {
+		slug,
+		author,
+		publishOverride,
+		mainImage,
+		title,
+		preview,
+		_createdAt,
+	} = post
 
+	const published = publishOverride ?? _createdAt
+
+	if (!slug?.current) return null
 	return (
-		<Wrapper href={`/blog/${slug?.current}`}>
-			<Author>{author?.fullName}</Author>
-			{publishDate && <DisplayDate>{publishDate}</DisplayDate>}
-			<CardImage src={mainImage} alt={title ?? ""} />
+		<Wrapper
+			href={{
+				pathname: "/blog/post/[slug]",
+				query: { slug: slug.current },
+			}}
+		>
+			<div>{author?.fullName}</div>
+			{published && <DisplayDate date={published} />}
+			<UniversalImage width={400} height={230} src={mainImage} alt={title} />
 			<h1>{title}</h1>
 			<p>{preview}</p>
 		</Wrapper>
@@ -30,28 +47,8 @@ export function LargeCard({
 const Wrapper = styled(
 	UniversalLink,
 	fresponsive(css`
-		display: grid;
-	`),
-)
-
-const DisplayDate = styled(
-	"div",
-	fresponsive(css`
-		position: relative;
-	`),
-)
-
-const CardImage = styled(
-	UniversalImage,
-	fresponsive(css`
-		width: 60px;
-		height: 100%;
-	`),
-)
-
-const Author = styled(
-	"div",
-	fresponsive(css`
-		position: relative;
+		display: block;
+		border: 1px solid green;
+		padding: 10px;
 	`),
 )

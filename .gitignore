@@ -44,3 +44,4 @@ schema.json
 sanity.types.ts
 .unlighthouse
 public/studio
+nextjs-routes.d.ts

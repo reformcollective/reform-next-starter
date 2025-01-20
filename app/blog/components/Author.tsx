@@ -13,9 +13,8 @@ export function AuthorLink({ author }: { author: Author | null | undefined }) {
 				src={author.photo}
 				alt={author?.photo?.alt}
 			/>
-			{author?.fullName}
-			<br />
-			{author?.roleAndCompany}
+			<div>{author?.fullName}</div>
+			<div>{author?.roleAndCompany}</div>
 		</div>
 	)
 }

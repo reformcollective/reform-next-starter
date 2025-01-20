@@ -1,15 +1,17 @@
 "use client"
 
 import UniversalLink from "library/Loader/UniversalLink"
-import { useQueryState } from "nuqs"
 import { css, fresponsive, styled } from "library/styled"
-import type { PostsQueryResult } from "@/sanity.types"
+import { useParams } from "next/navigation"
 
-export function Categories({ data }: { data: PostsQueryResult }) {
-	const [, setCategory] = useQueryState("category")
-
+export function Categories({
+	items,
+}: {
+	items: { categories?: string[] | undefined }[]
+}) {
+	const { category } = useParams<"/blog/category/[category]">()
 	const uniqueCategories = Array.from(
-		new Set(data.flatMap((item) => item?.categories ?? [])),
+		new Set(items.flatMap((item) => item?.categories ?? [])),
 	)
 
 	return (
@@ -17,11 +19,21 @@ export function Categories({ data }: { data: PostsQueryResult }) {
 			<h1>Categories</h1>
 			{uniqueCategories.map((item) => {
 				return (
-					<Button type="button" key={item} onClick={() => setCategory(item)}>
+					<Button
+						key={item}
+						href={{
+							pathname: "/blog/category/[category]",
+							query: { category: item },
+						}}
+						isActive={category === item}
+					>
 						{item}
 					</Button>
 				)
 			})}
+			{category && (
+				<UniversalLink href={{ pathname: "/blog" }}>clear</UniversalLink>
+			)}
 		</Wrapper>
 	)
 }
@@ -34,11 +46,10 @@ const Wrapper = styled(
 	`),
 )
 
-const Button = styled(
-	UniversalLink,
+const Button = styled(UniversalLink, ({ isActive }: { isActive: boolean }) =>
 	fresponsive(css`
-		max-width: 1024px;
-		margin: 0 auto;
 		border: 1px solid orange;
+		padding: 10px;
+		text-decoration: ${isActive ? "underline" : "none"};
 	`),
 )

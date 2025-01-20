@@ -15,13 +15,14 @@ export default defineType({
 		defineField({
 			name: "slug",
 			type: "slug",
-			title: "Slug",
+			title: "Author Slug",
+			description: "Used in the URL to refer to this author",
 			validation: (Rule) => Rule.required(),
 			options: { source: "fullName" },
 		}),
 		universalImage({
 			name: "photo",
-			title: "Photo",
+			title: "Author Photo",
 			cropType: "sanity",
 		}),
 		defineField({
@@ -32,8 +33,9 @@ export default defineType({
 		}),
 		defineField({
 			name: "biography",
-			type: "text",
 			title: "Biography",
+			type: "array",
+			of: [{ type: "block" }],
 		}),
 	],
 })

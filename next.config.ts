@@ -1,4 +1,8 @@
 import type { NextConfig } from "next"
+import nextRoutes from "nextjs-routes/config"
+const withRoutes = nextRoutes({
+	outDir: "app/types",
+})
 
 const netlifyURL =
 	// netlify branch URL
@@ -57,4 +61,4 @@ const nextConfig: NextConfig = {
 	},
 }
 
-export default nextConfig
+export default withRoutes(nextConfig)
