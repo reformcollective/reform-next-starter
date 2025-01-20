@@ -37,6 +37,7 @@
 		"husky": "9.1.7",
 		"next": "15.1.5",
 		"next-sanity": "9.8.38",
+		"nextjs-routes": "2.2.5",
 		"nuqs": "2.3.1",
 		"prettier": "3.4.2",
 		"react": "19.0.0",

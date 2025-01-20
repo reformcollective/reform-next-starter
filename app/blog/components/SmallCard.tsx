@@ -15,15 +15,26 @@ export function SmallCard({
 		| undefined
 }) {
 	if (!post) return null
-	const { author, slug, publishDate, mainImage, title, preview } = post
+	const {
+		author,
+		slug,
+		publishOverride,
+		mainImage,
+		title,
+		preview,
+		_createdAt,
+	} = post
 
-	const publishedAt = publishDate ? publishDate : undefined
+	const published = publishOverride ?? _createdAt
 
+	if (!slug?.current) return null
 	return (
-		<Wrapper href={`/blog/${slug?.current}`}>
+		<Wrapper
+			href={{ pathname: "/blog/post/[slug]", query: { slug: slug.current } }}
+		>
 			<h2>{author?.fullName}</h2>
-			{publishedAt && <DisplayDate date={publishedAt} />}
-			<CardImage
+			{published && <DisplayDate date={published} />}
+			<UniversalImage
 				width={400}
 				height={230}
 				src={mainImage}
@@ -38,13 +49,9 @@ export function SmallCard({
 const Wrapper = styled(
 	UniversalLink,
 	fresponsive(css`
-		display: grid;
-	`),
-)
-
-const CardImage = styled(
-	UniversalImage,
-	fresponsive(css`
+		display: block;
+		border: 1px solid dodgerblue;
+		padding: 10px;
 		width: 400px;
 	`),
 )

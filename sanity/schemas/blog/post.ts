@@ -1,4 +1,4 @@
-import { ImageIcon } from "@sanity/icons"
+import { ImageIcon, DocumentVideoIcon } from "@sanity/icons"
 import { universalImage } from "library/sanity/reusables"
 import { defineField, defineType } from "sanity"
 
@@ -10,19 +10,20 @@ export default defineType({
 		defineField({
 			name: "title",
 			type: "string",
-			title: "Post Title",
+			title: "Title",
 			validation: (Rule) => Rule.required(),
 		}),
 		defineField({
 			name: "slug",
 			type: "slug",
-			title: "Post Slug",
+			title: "Slug",
 			validation: (Rule) => Rule.required(),
 			options: { source: "title" },
 		}),
 		universalImage({
 			name: "mainImage",
 			title: "Main Image",
+			cropType: "sanity",
 		}),
 		defineField({
 			name: "author",
@@ -37,36 +38,30 @@ export default defineType({
 			title: "Categories",
 			options: { layout: "tags" },
 		}),
-		universalImage({
-			name: "ogImage",
-			title: "Default Open Graph Image",
-			cropType: "sanity",
-			withAlt: false,
-		}),
 		defineField({
 			name: "isFeatured",
 			type: "boolean",
-			title: "Is Featured Article",
+			title: "Is Featured",
 			description:
-				"if multiple articles are marked as featured, the most recent one will display",
+				"if multiple posts are marked as featured, the most recent one will display",
 		}),
 		defineField({
-			name: "publishDate",
+			name: "publishOverride",
 			type: "datetime",
-			title: "Publish Date",
+			title: "Publish Date Override",
 			description:
-				"If this post was initially published in the past, you can set that here",
+				"Set if you want to override the visible publish date (for example, if this was originally published in the past)",
 			options: { timeFormat: "H:mmZ" },
 		}),
 		defineField({
 			name: "preview",
 			type: "text",
-			title: "Article Synopsis",
+			title: "Synopsis",
 			description:
 				"used as post preview. also used when shared via social media, and by some search engines",
 		}),
 		defineField({
-			name: "articleText",
+			name: "content",
 			type: "array",
 			of: [
 				{ type: "block" },
@@ -75,9 +70,9 @@ export default defineType({
 					icon: ImageIcon,
 					cropType: "uncropped",
 				}),
-				{ type: "youtube" },
+				{ type: "youtube", icon: DocumentVideoIcon },
 			],
-			title: "Article Text",
+			title: "Text",
 			validation: (Rule) => Rule.required(),
 		}),
 	],

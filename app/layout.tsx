@@ -95,11 +95,11 @@ const Main = styled(
 
 // TODO: configure a default text color and background
 const globalCss = fresponsive(css`
-	/* default text styles */
 	html {
 		/* if your project uses a dark color for most text, set that here */
 		background: #151515;
 		color: #f9f9fb;
+		font-family: sans-serif;
 	}
 
 	body {
