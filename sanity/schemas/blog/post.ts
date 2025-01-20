@@ -1,5 +1,5 @@
 import { ImageIcon } from "@sanity/icons"
-import { imageWithAlt } from "library/sanity/reusables"
+import { universalImage } from "library/sanity/reusables"
 import { defineField, defineType } from "sanity"
 
 export default defineType({
@@ -20,7 +20,7 @@ export default defineType({
 			validation: (Rule) => Rule.required(),
 			options: { source: "title" },
 		}),
-		imageWithAlt({
+		universalImage({
 			name: "mainImage",
 			title: "Main Image",
 		}),
@@ -37,10 +37,11 @@ export default defineType({
 			title: "Categories",
 			options: { layout: "tags" },
 		}),
-		defineField({
+		universalImage({
 			name: "ogImage",
-			type: "image",
-			title: "Open Graph Image",
+			title: "Default Open Graph Image",
+			cropType: "sanity",
+			withAlt: false,
 		}),
 		defineField({
 			name: "isFeatured",
@@ -69,9 +70,10 @@ export default defineType({
 			type: "array",
 			of: [
 				{ type: "block" },
-				imageWithAlt({
+				universalImage({
 					name: "image",
 					icon: ImageIcon,
+					cropType: "uncropped",
 				}),
 				{ type: "youtube" },
 			],

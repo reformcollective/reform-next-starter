@@ -1,5 +1,7 @@
 import localFont from "next/font/local"
 
+// after setup, verify the font & font spacing looks the same across all browsers (and windows/mac/linux if you can)
+
 export const roboto = localFont({
 	adjustFontFallback: "Arial",
 	display: "swap",

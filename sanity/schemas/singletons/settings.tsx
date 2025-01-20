@@ -1,4 +1,5 @@
 import { CogIcon } from "@sanity/icons"
+import { universalImage } from "library/sanity/reusables"
 import { defineField, defineType } from "sanity"
 
 export default defineType({
@@ -19,37 +20,12 @@ export default defineType({
 			description:
 				"This will be used when shared on socials, and by some search engines.",
 		}),
-		defineField({
+		universalImage({
 			name: "ogImage",
 			title: "Default Open Graph Image",
-			type: "image",
 			description: "Displayed on social cards and search engine results.",
-			options: {
-				hotspot: true,
-				aiAssist: {
-					imageDescriptionField: "alt",
-				},
-			},
-			fields: [
-				defineField({
-					name: "alt",
-					description: "Important for accessibility and SEO.",
-					title: "Alternative text",
-					type: "string",
-					validation: (rule) => {
-						return rule.custom((alt, context) => {
-							if (
-								(context.document?.ogImage as { asset?: { _ref?: string } })
-									?.asset?._ref &&
-								!alt
-							) {
-								return "Required"
-							}
-							return true
-						})
-					},
-				}),
-			],
+			cropType: "sanity",
+			withAlt: false,
 		}),
 	],
 	preview: {

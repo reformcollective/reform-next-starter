@@ -4,7 +4,7 @@
 		{
 			"label": "Regenerate Sanity Types",
 			"type": "shell",
-			"command": "pnpm install --frozen-lockfile && pnpm exec sanity schema extract && pnpm exec sanity typegen generate",
+			"command": "pnpm typegen",
 			"group": {
 				"kind": "build",
 				"isDefault": true

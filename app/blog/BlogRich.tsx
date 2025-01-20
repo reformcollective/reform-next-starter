@@ -2,9 +2,8 @@
 
 import type { Post } from "@/sanity.types"
 import { YoutubeEmbed } from "components/YoutubeEmbed"
-import type { DeepImageMeta } from "library/sanity/imageMetadata"
+import type { DeepAssetMeta } from "library/sanity/assetMetadata"
 import { TypedPortableText } from "library/sanity/PortableText"
-import { css, fresponsive, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 
 export default function BlogRich({
@@ -12,7 +11,7 @@ export default function BlogRich({
 	value,
 }: {
 	className?: string
-	value: DeepImageMeta<Post["articleText"]>
+	value: DeepAssetMeta<Post["articleText"]>
 }) {
 	if (!value) return null
 	return (
@@ -22,14 +21,7 @@ export default function BlogRich({
 				components={{
 					types: {
 						image: ({ value }) => {
-							return (
-								<ArticleImage
-									src={value}
-									alt={value.alt}
-									width={1242}
-									height={746}
-								/>
-							)
+							return <UniversalImage src={value} alt={value.alt} />
 						},
 						youtube: ({ value }) => {
 							return <YoutubeEmbed video={value} />
@@ -40,12 +32,3 @@ export default function BlogRich({
 		</div>
 	)
 }
-
-const ArticleImage = styled(
-	UniversalImage,
-	fresponsive(css`
-		object-fit: cover;
-		width: 100%;
-		height: auto;
-	`),
-)

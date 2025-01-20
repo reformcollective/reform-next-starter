@@ -1,12 +1,17 @@
 import type { NextConfig } from "next"
 
-const siteURL =
+const netlifyURL =
 	// netlify branch URL
 	process.env.DEPLOY_PRIME_URL ??
 	// netlify production URL
-	process.env.URL ??
-	// vercel URL
-	process.env.VERCEL_URL ??
+	process.env.URL
+const vercelURL = process.env.VERCEL_URL
+	? `https://${process.env.VERCEL_URL}`
+	: undefined
+
+const siteURL =
+	netlifyURL ||
+	vercelURL ||
 	// localhost fallback
 	"http://localhost:3000"
 
