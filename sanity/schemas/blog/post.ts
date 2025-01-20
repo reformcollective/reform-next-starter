@@ -1,4 +1,4 @@
-import { ImageIcon, DocumentVideoIcon } from "@sanity/icons"
+import { ImageIcon, PlayIcon } from "@sanity/icons"
 import { universalImage } from "library/sanity/reusables"
 import { defineField, defineType } from "sanity"
 
@@ -70,7 +70,7 @@ export default defineType({
 					icon: ImageIcon,
 					cropType: "uncropped",
 				}),
-				{ type: "youtube", icon: DocumentVideoIcon },
+				{ type: "youtube", icon: PlayIcon },
 			],
 			title: "Text",
 			validation: (Rule) => Rule.required(),

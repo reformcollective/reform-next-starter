@@ -4,7 +4,7 @@ import { defineField, defineType } from "sanity"
 export default defineType({
 	name: "youtube",
 	type: "object",
-	title: "YouTube Embed",
+	title: "YouTube",
 	icon: PlayIcon,
 	fields: [
 		defineField({

@@ -1,23 +1,29 @@
 import BlogRich from "blog/BlogRich"
 import { PostList } from "blog/components/PostList"
-import { allPostsQuery, relatedPostsQuery, singlePostQuery } from "blog/queries"
+import { relatedPostsQuery, singlePostQuery } from "blog/queries"
 import UniversalLink from "library/Loader/UniversalLink"
 import { resolveOpenGraphImage } from "library/sanity/utils"
 import { css, fresponsive, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 import type { Metadata, ResolvingMetadata } from "next"
+import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
 import { sanityFetch } from "sanity/lib/live"
+
+const postSlugsQuery = defineQuery(`
+	*[_type == "post" && defined(slug.current)]{"slug": slug.current}
+`)
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 60 seconds.
 export const revalidate = 60
 export async function generateStaticParams() {
 	const { data } = await sanityFetch({
-		query: allPostsQuery,
+		query: postSlugsQuery,
+		perspective: "published",
 		stega: false,
 	})
-	return data.map((post) => ({ slug: post.slug?.current }))
+	return data
 }
 
 export async function generateMetadata(
