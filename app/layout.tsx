@@ -13,6 +13,7 @@ import {
 } from "library/styled"
 import type { Metadata } from "next"
 import { defineQuery } from "next-sanity"
+import { Suspense } from "react"
 import { sanityFetch, SanityLive } from "sanity/lib/live"
 
 const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
@@ -62,9 +63,11 @@ export default async function RootLayout({
 					<SanityLive />
 					<GlobalStyles>{globalCss}</GlobalStyles>
 					<PageRoot className="root-layout">
-						{headerData && <Header {...headerData} />}
-						<Main>{children}</Main>
-						{footerData && <Footer {...footerData} />}
+						<Suspense>
+							{headerData && <Header {...headerData} />}
+							<Main>{children}</Main>
+							{footerData && <Footer {...footerData} />}
+						</Suspense>
 					</PageRoot>
 				</GlobalProviders>
 			</body>
@@ -95,11 +98,11 @@ const Main = styled(
 
 // TODO: configure a default text color and background
 const globalCss = fresponsive(css`
-	/* default text styles */
 	html {
 		/* if your project uses a dark color for most text, set that here */
 		background: #151515;
 		color: #f9f9fb;
+		font-family: sans-serif;
 	}
 
 	body {
