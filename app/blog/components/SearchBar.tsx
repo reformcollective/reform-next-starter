@@ -13,8 +13,12 @@ export function SearchBar() {
 	return (
 		<Wrapper>
 			search
-			<Label>
-				<Input value={query} onChange={(e) => setQuery(e.target.value)} />
+			<Label htmlFor="search">
+				<Input
+					id="search"
+					value={query}
+					onChange={(e) => setQuery(e.target.value)}
+				/>
 			</Label>
 			{query && (
 				<UniversalLink type="button" onClick={() => setQuery("")}>
