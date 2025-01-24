@@ -10,7 +10,7 @@ export default function VisualTestsPage() {
 
 	useAnimation(() => {
 		gsap.from(box.current, {
-			background: "red",
+			background: "purple",
 			duration: 5,
 		})
 	})
@@ -46,7 +46,7 @@ const Test = styled("div", {
 
 const Box = styled("div", {
 	border: "1px solid black",
-	background: "dodgerblue",
+	background: "black",
 	borderRadius: "5px",
 	padding: "10px",
 	width: "100px",

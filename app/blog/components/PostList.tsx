@@ -4,7 +4,7 @@ import type { Author, Post } from "@/sanity.types"
 import { useSearchResults } from "library/useSearchResults"
 import { useBlogQuery } from "./SearchBar"
 import { SmallCard } from "./SmallCard"
-import { css, fresponsive, styled } from "library/styled"
+import { css, fmobile, fresponsive, styled } from "library/styled"
 
 export function PostList({
 	posts,
@@ -36,10 +36,13 @@ export function PostList({
 	)
 }
 
-const Wrapper = styled(
-	"div",
-	fresponsive(css`
+const Wrapper = styled("div", {
+	...fresponsive(css`
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 	`),
-)
+	...fmobile(css`
+		grid-template-columns: 1fr;
+		gap: 10px;
+	`),
+})

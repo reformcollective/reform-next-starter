@@ -1,7 +1,7 @@
 import type { Author as AuthorType, Post } from "@/sanity.types"
 import { DisplayDate } from "library/DisplayDate"
 import UniversalLink from "library/Loader/UniversalLink"
-import { css, fresponsive, styled } from "library/styled"
+import { css, fmobile, fresponsive, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 
 export function LargeCard({
@@ -44,11 +44,13 @@ export function LargeCard({
 	)
 }
 
-const Wrapper = styled(
-	UniversalLink,
-	fresponsive(css`
+const Wrapper = styled(UniversalLink, {
+	...fresponsive(css`
 		display: block;
 		border: 1px solid green;
 		padding: 10px;
 	`),
-)
+	...fmobile(css`
+		width: 100%;
+	`),
+})
