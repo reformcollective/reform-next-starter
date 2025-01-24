@@ -51,15 +51,30 @@ export default function Playground() {
 	return (
 		<Wrapper>
 			<Texts>
-				fresponsive
-				<TextArea
-					value={responsive}
-					onChange={(e) => setResponsive(e.target.value)}
-				/>
-				ftablet
-				<TextArea value={tablet} onChange={(e) => setTablet(e.target.value)} />
-				fmobile
-				<TextArea value={mobile} onChange={(e) => setMobile(e.target.value)} />
+				<Label htmlFor="fresponsive">
+					fresponsive
+					<TextArea
+						id="fresponsive"
+						value={responsive}
+						onChange={(e) => setResponsive(e.target.value)}
+					/>
+				</Label>
+				<Label htmlFor="ftablet">
+					ftablet
+					<TextArea
+						id="ftablet"
+						value={tablet}
+						onChange={(e) => setTablet(e.target.value)}
+					/>
+				</Label>
+				<Label htmlFor="fmobile">
+					fmobile
+					<TextArea
+						id="fmobile"
+						value={mobile}
+						onChange={(e) => setMobile(e.target.value)}
+					/>
+				</Label>
 			</Texts>
 			<Result>{JSON.stringify(result, null, 2)}</Result>
 		</Wrapper>
@@ -80,8 +95,16 @@ const Texts = styled(
 	"div",
 	fresponsive(css`
 		display: grid;
-		grid-auto-rows: auto 1fr;
+		grid-template-rows: repeat(3, 1fr);
 		gap: 10px;
+	`),
+)
+
+const Label = styled(
+	"label",
+	fresponsive(css`
+		display: grid;
+		grid-auto-rows: auto 1fr;
 	`),
 )
 
