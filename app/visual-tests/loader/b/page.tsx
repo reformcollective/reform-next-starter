@@ -50,9 +50,5 @@ const Wrapper = styled(
 		padding: 100px;
 		background: #eff;
 		color: black;
-
-		p {
-			color: #60320b;
-		}
 	`),
 )

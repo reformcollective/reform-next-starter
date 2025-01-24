@@ -87,9 +87,5 @@ const Wrapper = styled(
 		padding: 100px;
 		background: #ffe;
 		color: black;
-
-		p {
-			color: #60320b;
-		}
 	`),
 )
