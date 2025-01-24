@@ -49,6 +49,7 @@ const Wrapper = styled(
 		gap: 40px;
 		padding: 100px;
 		background: #eff;
+		color: black;
 
 		p {
 			opacity: 0.5;

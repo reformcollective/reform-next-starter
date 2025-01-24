@@ -16,7 +16,7 @@ export default function Page() {
 		<div>
 			{useMedia("full", "desktop", "tablet", "mobile")}
 			<Box>Hello world</Box>
-			<ColoredBox boxColor="red">I am a box</ColoredBox>
+			<ColoredBox boxColor="purple">I am a box</ColoredBox>
 			<UnresponsiveBox>I am partially unresponsive</UnresponsiveBox>
 			<AnimatedBox>I am animated</AnimatedBox>
 			<FadeInKeyframes />
@@ -33,7 +33,7 @@ export default function Page() {
 const Box = styled(
 	"div",
 	fresponsive(css`
-		background: red;
+		background: purple;
 		border: 10px solid black;
 		padding: 10px;
 		margin: 10px;
@@ -51,7 +51,7 @@ const ColoredBox = styled(Box, ({ boxColor }: { boxColor: string }) =>
 const UnresponsiveBox = styled(Box, {
 	...unresponsive(css`
 		width: 200px;
-		background-color: blue;
+		background-color: navy;
 	`),
 	...fresponsive(css`
 		color: white;
@@ -62,16 +62,16 @@ const UnresponsiveBox = styled(Box, {
 // animations
 const FadeInKeyframes = keyframes`
   0% {
-    background:red;
+    background: purple;
   }
   33% {
-    background:yellow;
+    background: #613E00;
   }
   66% {
-    background:blue;
+    background: navy;
   }
   100% {
-    background:red;
+    background: purple;
   }
 `
 
@@ -85,12 +85,12 @@ const AnimatedBox = styled(
 // variants example
 const variants = {
 	red: css`
-		background: red;
-		color: green;
+		background: purple;
+		color: #374611;
 	`,
 	green: css`
-		background: green;
-		color: red;
+		background: #374611;
+		color: purple;
 	`,
 }
 const ComponentWithVariants = styled(
@@ -107,26 +107,31 @@ const WithResponsiveSample = styled("div", {
 		border: 10px solid black;
 		margin: 10px;
 		padding: 10px;
-		color: purple;
+		color: black;
+		background-color: white;
 
 		code {
 			font-family: monospace;
-			color: #00d5ff;
+			color: #9f1e1e;
 		}
 	`),
 	...ftablet(css`
 		width: 512px;
-		background: dodgerblue;
-		color: red;
+		background: navy;
+		color: greenyellow;
 
 		code {
-			color: blue;
+			color: white;
 		}
 	`),
 	...fmobile(css`
 		width: 300px;
-		background-color: green;
-		color: orange;
+		background-color: navy;
+		color: powderblue;
+
+		code {
+			color: silver;
+		}
 	`),
 })
 
@@ -135,7 +140,7 @@ const FullyScaled = styled(
 	"div",
 	fresponsive(
 		css`
-			background: red;
+			background: purple;
 			border: 10px solid black;
 			padding: 10px;
 			margin: 10px;
