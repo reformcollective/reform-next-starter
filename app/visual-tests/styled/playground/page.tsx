@@ -12,9 +12,9 @@ import {
 import { useMemo, useState } from "react"
 
 export default function Playground() {
-	const [responsive, setResponsive] = useState("color: red; margin: 10px;")
-	const [tablet, setTablet] = useState("color: orange; margin: 20px;")
-	const [mobile, setMobile] = useState("color: green; margin: 30px;")
+	const [responsive, setResponsive] = useState("color: #9f1e1e; margin: 10px;")
+	const [tablet, setTablet] = useState("color: purple; margin: 20px;")
+	const [mobile, setMobile] = useState("color: #374611; margin: 30px;")
 
 	const result = useMemo(() => {
 		// reset the spacing
@@ -124,5 +124,6 @@ const Result = styled(
 		margin: 10px;
 		padding: 10px;
 		background: whitesmoke;
+		color: black;
 	`),
 )

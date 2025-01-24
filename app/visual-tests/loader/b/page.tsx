@@ -52,7 +52,7 @@ const Wrapper = styled(
 		color: black;
 
 		p {
-			opacity: 0.5;
+			color: #60320b;
 		}
 	`),
 )
