@@ -129,15 +129,17 @@ const globalCss = fresponsive(css`
 	 * this will only be visible if lvh is calculated incorrectly
 	 * safari is such a good browser with no problems
 	 */
-	body::before {
-		content: "";
-		pointer-events: none;
-		position: fixed;
-		top: 100lvh;
-		left: 0;
-		width: 100vw;
-		height: 100lvh;
-		background: currentcolor;
-		z-index: 999;
+	@supports not (cursor: cell) {
+		body::before {
+			content: "";
+			pointer-events: none;
+			position: fixed;
+			top: 100lvh;
+			left: 0;
+			width: 100vw;
+			height: 100lvh;
+			background: red;
+			z-index: 999;
+		}
 	}
 `)

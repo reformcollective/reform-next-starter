@@ -13,19 +13,20 @@ import { useMemo, useState } from "react"
 
 export default function Playground() {
 	const [responsive, setResponsive] = useState("color: red; margin: 10px;")
-	const [tablet, setTablet] = useState("color: orange; margin: 20px;")
+	const [tablet, setTablet] = useState("color: purple; margin: 20px;")
 	const [mobile, setMobile] = useState("color: green; margin: 30px;")
 
 	const result = useMemo(() => {
-		// reset the spacing
-		styled("div", {})
-
 		return mergeStyles({
 			...fresponsive(responsive),
 			...ftablet(tablet),
 			...fmobile(mobile),
 		})
 	}, [responsive, tablet, mobile])
+
+	const stringifiedResult = useMemo(() => {
+		return JSON.stringify(result, null, 2)
+	}, [result])
 
 	/**
 	 * when tab is pressed and a textarea is focused, insert space at cursor position
@@ -51,17 +52,32 @@ export default function Playground() {
 	return (
 		<Wrapper>
 			<Texts>
-				fresponsive
-				<TextArea
-					value={responsive}
-					onChange={(e) => setResponsive(e.target.value)}
-				/>
-				ftablet
-				<TextArea value={tablet} onChange={(e) => setTablet(e.target.value)} />
-				fmobile
-				<TextArea value={mobile} onChange={(e) => setMobile(e.target.value)} />
+				<Label htmlFor="fresponsive">
+					fresponsive
+					<TextArea
+						id="fresponsive"
+						value={responsive}
+						onChange={(e) => setResponsive(e.target.value)}
+					/>
+				</Label>
+				<Label htmlFor="ftablet">
+					ftablet
+					<TextArea
+						id="ftablet"
+						value={tablet}
+						onChange={(e) => setTablet(e.target.value)}
+					/>
+				</Label>
+				<Label htmlFor="fmobile">
+					fmobile
+					<TextArea
+						id="fmobile"
+						value={mobile}
+						onChange={(e) => setMobile(e.target.value)}
+					/>
+				</Label>
 			</Texts>
-			<Result>{JSON.stringify(result, null, 2)}</Result>
+			<Result>{stringifiedResult}</Result>
 		</Wrapper>
 	)
 }
@@ -80,8 +96,16 @@ const Texts = styled(
 	"div",
 	fresponsive(css`
 		display: grid;
-		grid-auto-rows: auto 1fr;
+		grid-template-rows: repeat(3, 1fr);
 		gap: 10px;
+	`),
+)
+
+const Label = styled(
+	"label",
+	fresponsive(css`
+		display: grid;
+		grid-auto-rows: auto 1fr;
 	`),
 )
 
@@ -101,5 +125,6 @@ const Result = styled(
 		margin: 10px;
 		padding: 10px;
 		background: whitesmoke;
+		color: black;
 	`),
 )
