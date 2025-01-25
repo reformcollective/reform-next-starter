@@ -12,20 +12,21 @@ import {
 import { useMemo, useState } from "react"
 
 export default function Playground() {
-	const [responsive, setResponsive] = useState("color: #9f1e1e; margin: 10px;")
+	const [responsive, setResponsive] = useState("color: red; margin: 10px;")
 	const [tablet, setTablet] = useState("color: purple; margin: 20px;")
-	const [mobile, setMobile] = useState("color: #374611; margin: 30px;")
+	const [mobile, setMobile] = useState("color: green; margin: 30px;")
 
 	const result = useMemo(() => {
-		// reset the spacing
-		styled("div", {})
-
 		return mergeStyles({
 			...fresponsive(responsive),
 			...ftablet(tablet),
 			...fmobile(mobile),
 		})
 	}, [responsive, tablet, mobile])
+
+	const stringifiedResult = useMemo(() => {
+		return JSON.stringify(result, null, 2)
+	}, [result])
 
 	/**
 	 * when tab is pressed and a textarea is focused, insert space at cursor position
@@ -76,7 +77,7 @@ export default function Playground() {
 					/>
 				</Label>
 			</Texts>
-			<Result>{JSON.stringify(result, null, 2)}</Result>
+			<Result>{stringifiedResult}</Result>
 		</Wrapper>
 	)
 }
