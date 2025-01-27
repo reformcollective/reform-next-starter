@@ -65,7 +65,7 @@ const Wrapper = styled(
 		height: 100%;
 		top: 0;
 		left: 0;
-		background-color: dodgerblue;
+		background-color: navy;
 		z-index: 100;
 		pointer-events: none;
 		display: grid;

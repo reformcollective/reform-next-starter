@@ -1,6 +1,7 @@
 import { PostList } from "blog/components/PostList"
 import { allPostsQuery } from "blog/queries"
 import { sanityFetch } from "library/sanity/reusableFetch"
+import type { SinglePostQueryResult } from "@/sanity.types"
 
 export default async function BlogCategories({
 	params,
@@ -10,8 +11,8 @@ export default async function BlogCategories({
 	const { data: allPosts } = await sanityFetch({ query: allPostsQuery })
 	const category = (await params).category
 
-	const thisCategory = allPosts.filter(async (post) =>
-		post.categories?.includes(category),
+	const thisCategory = allPosts.filter(async (post: SinglePostQueryResult) =>
+		post?.categories?.includes(category),
 	)
 
 	return (

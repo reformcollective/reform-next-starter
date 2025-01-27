@@ -12,10 +12,20 @@ export function SearchBar() {
 
 	return (
 		<Wrapper>
-			search
-			<Label>
-				<Input value={query} onChange={(e) => setQuery(e.target.value)} />
-			</Label>
+			<label
+				htmlFor="search"
+				aria-label="search the blog"
+				style={{ display: "grid" }}
+			>
+				search
+				<input
+					id="search"
+					type="search"
+					value={query}
+					onChange={(e) => setQuery(e.target.value)}
+					style={{ border: "1px solid red", padding: "10px" }}
+				/>
+			</label>
 			{query && (
 				<UniversalLink type="button" onClick={() => setQuery("")}>
 					clear
@@ -31,20 +41,5 @@ const Wrapper = styled(
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		gap: 10px;
-	`),
-)
-
-const Label = styled(
-	"label",
-	fresponsive(css`
-		display: grid;
-	`),
-)
-
-const Input = styled(
-	"input",
-	fresponsive(css`
-		border: 1px solid red;
-		padding: 10px;
 	`),
 )

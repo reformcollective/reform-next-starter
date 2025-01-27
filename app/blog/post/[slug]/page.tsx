@@ -92,7 +92,7 @@ export default async function PostPage({
 
 			<Categories>
 				post categories:
-				{post.categories?.map((category) => (
+				{post.categories?.map((category: string) => (
 					<UniversalLink
 						href={{
 							pathname: "/blog/category/[category]",
