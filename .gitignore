@@ -39,6 +39,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# bad lock files
+package-lock.json
+yarn.lock
+bun.lockb
+bun.lock
+
 # generated files
 schema.json
 sanity.types.ts
