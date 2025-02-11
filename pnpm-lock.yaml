@@ -121,7 +121,7 @@ importers:
         version: 16.14.1(typescript@5.7.3)
       stylelint-config-reform-collective:
         specifier: github:reformcollective/stylelint-config-reform
-        version: https://codeload.github.com/reformcollective/stylelint-config-reform/tar.gz/a9b55c3519f0030ae0581b54911117492dcbe830
+        version: https://codeload.github.com/reformcollective/stylelint-config-reform/tar.gz/712e5a25bb3b6344f7e6914b1dc0bc3fd8be41ea
       svgo:
         specifier: 3.3.2
         version: 3.3.2
@@ -3263,9 +3263,6 @@ packages:
   camelize@1.0.1:
     resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
 
-  caniuse-lite@1.0.30001695:
-    resolution: {integrity: sha512-vHyLade6wTgI2u1ec3WQBxv+2BrTERV28UXQu9LO6lZ9pYeMk34vjXFLOxo1A4UBA8XTL4njRQZdno/yYaSmWw==}
-
   caniuse-lite@1.0.30001696:
     resolution: {integrity: sha512-pDCPkvzfa39ehJtJ+OwGT/2yvT2SbjfHhiIW2LWOAcMQ7BzwxT/XuyUp4OTOd0XFWA6BKw0JalnBHgSi5DGJBQ==}
 
@@ -5742,8 +5739,8 @@ packages:
     resolution: {integrity: sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.5.1:
-    resolution: {integrity: sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==}
+  postcss@8.5.2:
+    resolution: {integrity: sha512-MjOadfU3Ys9KYoX0AdkBlFEF1Vx37uCCeN4ZHnmwm9FfpbsGWMZeBLMmmpY+6Ocqod7mkdZ0DT31OlbsFrLlkA==}
     engines: {node: ^10 || ^12 || >=14}
 
   prettier@3.5.0:
@@ -6652,8 +6649,8 @@ packages:
     peerDependencies:
       stylelint: ^16.13.0
 
-  stylelint-config-reform-collective@https://codeload.github.com/reformcollective/stylelint-config-reform/tar.gz/a9b55c3519f0030ae0581b54911117492dcbe830:
-    resolution: {tarball: https://codeload.github.com/reformcollective/stylelint-config-reform/tar.gz/a9b55c3519f0030ae0581b54911117492dcbe830}
+  stylelint-config-reform-collective@https://codeload.github.com/reformcollective/stylelint-config-reform/tar.gz/712e5a25bb3b6344f7e6914b1dc0bc3fd8be41ea:
+    resolution: {tarball: https://codeload.github.com/reformcollective/stylelint-config-reform/tar.gz/712e5a25bb3b6344f7e6914b1dc0bc3fd8be41ea}
     version: 1.3.0
 
   stylelint-config-standard@37.0.0:
@@ -10474,7 +10471,7 @@ snapshots:
       '@vue/shared': 3.5.13
       estree-walker: 2.0.2
       magic-string: 0.30.17
-      postcss: 8.5.1
+      postcss: 8.5.2
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.13':
@@ -10795,7 +10792,7 @@ snapshots:
 
   browserslist@4.24.4:
     dependencies:
-      caniuse-lite: 1.0.30001695
+      caniuse-lite: 1.0.30001696
       electron-to-chromium: 1.5.83
       node-releases: 2.0.19
       update-browserslist-db: 1.1.2(browserslist@4.24.4)
@@ -10887,8 +10884,6 @@ snapshots:
   camelcase@6.3.0: {}
 
   camelize@1.0.1: {}
-
-  caniuse-lite@1.0.30001695: {}
 
   caniuse-lite@1.0.30001696: {}
 
@@ -11421,11 +11416,11 @@ snapshots:
   doiuse@6.0.5:
     dependencies:
       browserslist: 4.24.4
-      caniuse-lite: 1.0.30001695
+      caniuse-lite: 1.0.30001696
       css-tokenize: 1.0.1
       duplexify: 4.1.3
       multimatch: 5.0.0
-      postcss: 8.5.1
+      postcss: 8.5.2
       source-map: 0.7.4
       yargs: 17.7.2
 
@@ -13596,18 +13591,18 @@ snapshots:
 
   postcss-resolve-nested-selector@0.1.6: {}
 
-  postcss-safe-parser@7.0.1(postcss@8.5.1):
+  postcss-safe-parser@7.0.1(postcss@8.5.2):
     dependencies:
-      postcss: 8.5.1
+      postcss: 8.5.2
 
   postcss-selector-parser@7.0.0:
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
-  postcss-styled-syntax@0.7.1(postcss@8.5.1):
+  postcss-styled-syntax@0.7.1(postcss@8.5.2):
     dependencies:
-      postcss: 8.5.1
+      postcss: 8.5.2
       typescript: 5.7.3
 
   postcss-value-parser@4.2.0: {}
@@ -13624,7 +13619,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postcss@8.5.1:
+  postcss@8.5.2:
     dependencies:
       nanoid: 3.3.8
       picocolors: 1.1.1
@@ -14847,12 +14842,11 @@ snapshots:
     dependencies:
       stylelint: 16.14.1(typescript@5.7.3)
 
-  stylelint-config-reform-collective@https://codeload.github.com/reformcollective/stylelint-config-reform/tar.gz/a9b55c3519f0030ae0581b54911117492dcbe830:
+  stylelint-config-reform-collective@https://codeload.github.com/reformcollective/stylelint-config-reform/tar.gz/712e5a25bb3b6344f7e6914b1dc0bc3fd8be41ea:
     dependencies:
-      caniuse-lite: 1.0.30001695
       doiuse: 6.0.5
-      postcss: 8.5.1
-      postcss-styled-syntax: 0.7.1(postcss@8.5.1)
+      postcss: 8.5.2
+      postcss-styled-syntax: 0.7.1(postcss@8.5.2)
       stylelint: 16.14.1(typescript@5.7.3)
       stylelint-config-standard: 37.0.0(stylelint@16.14.1(typescript@5.7.3))
       stylelint-no-unsupported-browser-features: 8.0.4(stylelint@16.14.1(typescript@5.7.3))
@@ -14868,7 +14862,7 @@ snapshots:
   stylelint-no-unsupported-browser-features@8.0.4(stylelint@16.14.1(typescript@5.7.3)):
     dependencies:
       doiuse: 6.0.5
-      postcss: 8.5.1
+      postcss: 8.5.2
       stylelint: 16.14.1(typescript@5.7.3)
 
   stylelint@16.14.1(typescript@5.7.3):
@@ -14900,9 +14894,9 @@ snapshots:
       micromatch: 4.0.8
       normalize-path: 3.0.0
       picocolors: 1.1.1
-      postcss: 8.5.1
+      postcss: 8.5.2
       postcss-resolve-nested-selector: 0.1.6
-      postcss-safe-parser: 7.0.1(postcss@8.5.1)
+      postcss-safe-parser: 7.0.1(postcss@8.5.2)
       postcss-selector-parser: 7.0.0
       postcss-value-parser: 4.2.0
       resolve-from: 5.0.0
@@ -15429,7 +15423,7 @@ snapshots:
   vite@6.0.11(@types/node@22.13.1)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0):
     dependencies:
       esbuild: 0.24.2
-      postcss: 8.5.1
+      postcss: 8.5.2
       rollup: 4.32.1
     optionalDependencies:
       '@types/node': 22.13.1
