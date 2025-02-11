@@ -42,7 +42,8 @@ const textStyles = {
 	// don't wrap these in a fresponsive or unresponsive call!
 	// that should happen at the component level
 	h1: css`
-		font-family: ${
+		font-family:
+			${
 				/* myFontFromTypography.style.fontFamily */
 				// ^ use the font from the typography file
 				""
