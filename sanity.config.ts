@@ -3,7 +3,7 @@
  */
 
 import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api"
-import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings"
+import { pageStructure, singletonPlugin } from "@/sanity/plugins/singletons"
 import footer from "@/sanity/schemas/singletons/footer"
 import header from "@/sanity/schemas/singletons/header"
 import settings from "@/sanity/schemas/singletons/settings"

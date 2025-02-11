@@ -36,7 +36,7 @@
 		"globby": "14.1.0",
 		"gsap": "file:app/library/gsap-bonus.tgz",
 		"husky": "9.1.7",
-		"next": "15.1.6",
+		"next": "15.1.7",
 		"next-sanity": "9.8.55",
 		"nextjs-routes": "2.2.5",
 		"nuqs": "2.3.2",
@@ -68,7 +68,7 @@
 		"last 99 firefox versions and last 1 year",
 		"last 99 FirefoxAndroid versions and last 1 year"
 	],
-	"packageManager": "pnpm@10.2.1",
+	"packageManager": "pnpm@10.3.0",
 	"engines": {
 		"node": "22.x"
 	},
