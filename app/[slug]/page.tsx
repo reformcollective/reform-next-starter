@@ -5,10 +5,11 @@ import { resolveOpenGraphImage } from "library/sanity/utils"
 import type { Metadata, ResolvingMetadata } from "next"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
-import { Fragment, type ReactNode } from "react"
+import { Fragment, lazy, type ComponentType } from "react"
 import { sanityFetch } from "sanity/lib/live"
-import SampleSection from "sections/Sample"
 import { DynamicPageOrder } from "./client"
+
+const SampleSection = lazy(() => import("sections/Sample"))
 
 export type SectionTypes = NonNullable<
 	NonNullable<PageQueryResult>["sections"]
@@ -22,10 +23,6 @@ export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
 	path: string
 }
 
-type AsyncFC<P = Record<string, unknown>> = (
-	props: P,
-) => ReactNode | Promise<ReactNode>
-
 /**
  * When adding new sections:
  * - add them to the page schema by exporting the section's schema from `schemas/documents/sections/index.ts`
@@ -33,7 +30,7 @@ type AsyncFC<P = Record<string, unknown>> = (
  * - then update this object to include the new section's component
  */
 const components: {
-	[sectionType in SectionTypes]: AsyncFC<GetSectionType<sectionType>>
+	[sectionType in SectionTypes]: ComponentType<GetSectionType<sectionType>>
 } = {
 	sample: SampleSection,
 }
