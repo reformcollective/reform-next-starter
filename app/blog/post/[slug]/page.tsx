@@ -14,9 +14,6 @@ const postSlugsQuery = defineQuery(`
 	*[_type == "post" && defined(slug.current)]{"slug": slug.current}
 `)
 
-// Next.js will invalidate the cache when a
-// request comes in, at most once every 60 seconds.
-export const revalidate = 60
 export async function generateStaticParams() {
 	const { data } = await sanityFetch({
 		query: postSlugsQuery,
