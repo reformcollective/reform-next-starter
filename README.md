@@ -54,7 +54,7 @@ If this project is using a CMS, set up a new project in Sanity. If we're not sur
 
 <!-- Repository Cover -->
 <!-- you can get a nice image by modifying the figma cover, or using the opengraph image -->
-<img src="https://picsum.photos/1600/900" alt="Project Name Website Repository" width="100%" style="border-radius: 50px">
+<img src="./app/opengraph-image.jpg" alt="Project Name Website Repository" width="100%" style="border-radius: 50px">
 <br><br>
 
 # Project Name
@@ -69,4 +69,4 @@ Built with Next. Install and run with `pnpm dev`
 
 1. Install PNPM
    The preferred way to install pnpm is with corepack. After you've installed node, install pnpm with `corepack enable`. You should now be able to run `pnpm dev`.
-   Note that if you installed node from homebrew, you may need to install corepack separately.
+   Note that if you installed node from homebrew, you may need to install corepack separately: `npm i -g corepack@latest`
