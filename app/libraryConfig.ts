@@ -1,7 +1,6 @@
-import { type Config, defaultConfig } from "library/defaultConfig"
+import { defineLibraryConfig } from "library/defaultConfig"
 
-const config: Config<"slide"> = {
-	...defaultConfig,
+export default defineLibraryConfig({
 	viewTransitions: {
 		slide: function slideInOut() {
 			document.documentElement.animate(
@@ -32,6 +31,4 @@ const config: Config<"slide"> = {
 		},
 	},
 	defaultViewTransition: "default",
-}
-
-export default config
+})
