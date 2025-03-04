@@ -34,7 +34,11 @@
 		{
 			"delay": 5000,
 			"commands": ["workbench.action.tasks.build"],
-			"files": ["sanity/**/*.ts", "sanity/**/*.tsx"]
+			"files": [
+				"**/sanity/schemas/**/*.ts",
+				"**/sanity/schemas/**/*.tsx",
+				"**/sanity.config.ts"
+			]
 		}
 	],
 	"cSpell.enabled": true,
@@ -51,7 +55,8 @@
 	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
 		"^next/router$",
 		"^gsap/(?!all$).+",
-		"^gsap$"
+		"^gsap$",
+		"^gsap-trial"
 	],
 	"workbench.editor.customLabels.patterns": {
 		"**/index.tsx": "${dirname} / index.tsx",

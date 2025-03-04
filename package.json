@@ -9,10 +9,10 @@
 		"lint": "biome lint --write && stylelint . --fix",
 		"format": "prettier --write . && biome format --write",
 		"preinstall": "npx only-allow pnpm",
-		"pnpm:devPreinstall": "npm run checkEnv && npm run submodule",
+		"pnpm:devPreinstall": "pnpm run checkEnv && pnpm run submodule",
 		"checkEnv": "if [ -n \"$CI\" ]; then exit 0; else ls .env || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
 		"submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0",
-		"postinstall": "npm run typegen || exit 0",
+		"postinstall": "pnpm run typegen || exit 0",
 		"typegen": "sanity schema extract && sanity typegen generate",
 		"prepare": "husky"
 	},
@@ -30,8 +30,8 @@
 		"@t3-oss/env-nextjs": "0.12.0",
 		"@total-typescript/ts-reset": "0.6.1",
 		"@total-typescript/tsconfig": "1.0.4",
-		"@types/react": "^19.0.8",
-		"@types/react-dom": "^19.0.3",
+		"@types/react": "^19.0.10",
+		"@types/react-dom": "^19.0.4",
 		"@userback/widget": "0.3.7",
 		"ahooks": "3.8.4",
 		"babel-plugin-react-compiler": "19.0.0-beta-e552027-20250112",
@@ -50,6 +50,7 @@
 		"sanity": "3.78.0",
 		"sanity-image": "1.0.0",
 		"sanity-plugin-asset-source-unsplash": "3.0.3",
+		"sanity-plugin-link-field": "^1",
 		"sanity-plugin-media": "2.3.2",
 		"server-only": "0.0.1",
 		"styled-components": "6.1.15",
@@ -87,7 +88,8 @@
 			"react": "$react",
 			"react-dom": "$react-dom",
 			"@types/react": "19",
-			"@types/react-dom": "19"
+			"@types/react-dom": "19",
+			"gsap": "$gsap"
 		},
 		"onlyBuiltDependencies": [
 			"@biomejs/biome",

@@ -10,22 +10,22 @@ import settings from "@/sanity/schemas/singletons/settings"
 import youtube from "@/sanity/schemas/youtube"
 import { assist } from "@sanity/assist"
 import { visionTool } from "@sanity/vision"
+import { env } from "env"
+import gsap from "gsap/all"
 import { type PluginOptions, defineConfig } from "sanity"
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
+import { linkField } from "sanity-plugin-link-field"
+import { media } from "sanity-plugin-media"
 import {
 	type DocumentLocation,
 	defineDocuments,
 	defineLocations,
 	presentationTool,
 } from "sanity/presentation"
-import link from "sanity/schemas/link"
 import { structureTool } from "sanity/structure"
 import author from "./sanity/schemas/blog/author"
 import post from "./sanity/schemas/blog/post"
 import page from "./sanity/schemas/sanityPage"
-import { media } from "sanity-plugin-media"
-import { env } from "env"
-import gsap from "gsap/all"
 
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
@@ -52,7 +52,6 @@ export default defineConfig({
 			// Other Schemas
 			youtube,
 			page,
-			link,
 		],
 	},
 	plugins: [
@@ -116,6 +115,9 @@ export default defineConfig({
 			defaultDocumentNode: (S) => {
 				return S.document().views([S.view.form()])
 			},
+		}),
+		linkField({
+			linkableSchemaTypes: ["page"],
 		}),
 		// Configures the global "new document" button, and document actions, to suit the Settings document singleton
 		singletonPlugin(singletons.map((singleton) => singleton.name)),
