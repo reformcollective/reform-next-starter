@@ -4,7 +4,7 @@ import type { AllPostsQueryResult } from "@/sanity.types"
 import { PostList } from "blog/components/PostList"
 import { LargeCard } from "blog/components/LargeCard"
 import { useBlogQuery } from "blog/components/SearchBar"
-import UniversalLink from "library/Loader/UniversalLink"
+import UniversalLink from "library/link"
 
 export function BlogHomeClient({
 	allCards,

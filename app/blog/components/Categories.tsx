@@ -1,6 +1,6 @@
 "use client"
 
-import UniversalLink from "library/Loader/UniversalLink"
+import UniversalLink from "library/link"
 import { css, fresponsive, styled } from "library/styled"
 import { useParams } from "next/navigation"
 

@@ -1,7 +1,7 @@
 import BlogRich from "blog/BlogRich"
 import { PostList } from "blog/components/PostList"
 import { relatedPostsQuery, singlePostQuery } from "blog/queries"
-import UniversalLink from "library/Loader/UniversalLink"
+import UniversalLink from "library/link"
 import { resolveOpenGraphImage } from "library/sanity/utils"
 import { css, fresponsive, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"

@@ -13,7 +13,7 @@ export default function VisualTestsPage() {
 			background: "red",
 			duration: 5,
 		})
-	})
+	}, [])
 
 	return (
 		<div>

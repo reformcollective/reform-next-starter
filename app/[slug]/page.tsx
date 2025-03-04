@@ -5,11 +5,9 @@ import { resolveOpenGraphImage } from "library/sanity/utils"
 import type { Metadata, ResolvingMetadata } from "next"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
-import { Fragment, lazy, type ComponentType } from "react"
+import { Fragment, type ComponentType } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import { DynamicPageOrder } from "./client"
-
-const SampleSection = lazy(() => import("sections/Sample"))
 
 export type SectionTypes = NonNullable<
 	NonNullable<PageQueryResult>["sections"]
@@ -30,9 +28,11 @@ export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
  * - then update this object to include the new section's component
  */
 const components: {
-	[sectionType in SectionTypes]: ComponentType<GetSectionType<sectionType>>
+	[sectionType in SectionTypes]: {
+		default: ComponentType<GetSectionType<sectionType>>
+	}
 } = {
-	sample: SampleSection,
+	sample: await import("sections/Sample"),
 }
 
 const pageQuery = defineQuery(`
@@ -86,6 +86,8 @@ export async function generateMetadata(
 	}
 }
 
+export const dynamic = "force-static"
+
 export default async function TemplatePage({
 	params,
 }: {
@@ -110,7 +112,7 @@ export default async function TemplatePage({
 				documentId={relevantPage._id}
 				documentType={relevantPage._type}
 				sections={relevantPage.sections.map((section, index) => {
-					const Component = components[section._type]
+					const Component = components[section._type].default
 					if (!Component) {
 						console.warn(`Unknown section type "${section._type}"`)
 						return {
@@ -119,7 +121,6 @@ export default async function TemplatePage({
 						}
 					}
 					const Wrapper = index === 0 ? EagerImages : Fragment
-
 					return {
 						key: section._key,
 						content: (

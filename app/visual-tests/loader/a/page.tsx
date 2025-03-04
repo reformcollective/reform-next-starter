@@ -1,7 +1,7 @@
 "use client"
 
-import { loader } from "library/Loader"
-import UniversalLink from "library/Loader/UniversalLink"
+import { loader } from "library/link/loader"
+import UniversalLink from "library/link"
 import { css, fresponsive, styled } from "library/styled"
 import { useEffect, useState } from "react"
 
@@ -25,7 +25,7 @@ export default function Loader() {
 	return (
 		<Wrapper>
 			<h1>Loader Tests</h1>
-			<UniversalLink href="/visual-tests/loader/b" transition="slide">
+			<UniversalLink href="/visual-tests/loader/b">
 				Go to Loader B
 			</UniversalLink>
 			<UniversalLink href="/">go home</UniversalLink>
@@ -38,16 +38,16 @@ export default function Loader() {
 			<UniversalLink href="#content-21">
 				scroll to content 21 (bare hash)
 			</UniversalLink>
-			<p>content 1</p>
-			<p>content 2</p>
-			<p>content 3</p>
-			<p>content 4</p>
-			<p>content 5</p>
-			<p>content 6</p>
-			<p>content 7</p>
-			<p>content 8</p>
-			<p>content 9</p>
-			<p>content 10</p>
+			<p style={{ viewTransitionName: "thing-1" }}>content 1</p>
+			<p style={{ viewTransitionName: "thing-2" }}>content 2</p>
+			<p style={{ viewTransitionName: "thing-3" }}>content 3</p>
+			<p style={{ viewTransitionName: "thing-4" }}>content 4</p>
+			<p style={{ viewTransitionName: "thing-5" }}>content 5</p>
+			<p style={{ viewTransitionName: "thing-6" }}>content 6</p>
+			<p style={{ viewTransitionName: "thing-7" }}>content 7</p>
+			<p style={{ viewTransitionName: "thing-8" }}>content 8</p>
+			<p style={{ viewTransitionName: "thing-9" }}>content 9</p>
+			<p style={{ viewTransitionName: "thing-10" }}>content 10</p>
 			<UniversalLink href="/visual-tests/loader/b">go to b</UniversalLink>
 			<p>content 11</p>
 			<p>content 12</p>
@@ -86,6 +86,7 @@ const Wrapper = styled(
 		gap: 40px;
 		padding: 100px;
 		background: #ffe;
+		color: black;
 
 		p {
 			opacity: 0.5;

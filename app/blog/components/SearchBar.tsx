@@ -1,6 +1,6 @@
 "use client"
 
-import UniversalLink from "library/Loader/UniversalLink"
+import UniversalLink from "library/link"
 import { styled, fresponsive, css } from "library/styled"
 import { useQueryState, parseAsString } from "nuqs"
 

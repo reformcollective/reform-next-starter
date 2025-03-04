@@ -1,7 +1,6 @@
 /// <reference types="unlighthouse" />
-import { defineConfig } from "unlighthouse"
 
-export default defineConfig({
+export default defineUnlighthouseConfig({
 	ci: {
 		buildStatic: true,
 		reporter: "jsonSimple",

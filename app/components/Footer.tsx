@@ -1,5 +1,5 @@
 import type { FooterQueryResult } from "@/sanity.types"
-import UniversalLink from "library/Loader/UniversalLink"
+import UniversalLink from "library/link"
 import { css, fresponsive, styled } from "library/styled"
 
 export default function Footer({ footerText }: NonNullable<FooterQueryResult>) {
@@ -25,6 +25,7 @@ const Wrapper = styled(
 		display: grid;
 		place-items: center;
 		height: 300px;
+		view-transition-name: footer;
 	`),
 )
 
