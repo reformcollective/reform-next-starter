@@ -15,6 +15,8 @@ import type { Metadata } from "next"
 import { defineQuery } from "next-sanity"
 import { Suspense } from "react"
 import { sanityFetch, SanityLive } from "sanity/lib/live"
+import { ViewTransitions } from "next-view-transitions"
+import { eases } from "library/eases"
 
 const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
@@ -53,25 +55,27 @@ export default async function RootLayout({
 	const { data: footerData } = await sanityFetch({ query: footerQuery })
 
 	return (
-		<html lang="en">
-			<body
-				// gsap messes with the style attribute, which will cause ssr issues
-				suppressHydrationWarning
-			>
-				<ResetStyles />
-				<GlobalProviders>
-					<SanityLive />
-					<GlobalStyles>{globalCss}</GlobalStyles>
-					<PageRoot className="root-layout">
-						<Suspense>
-							{headerData && <Header {...headerData} />}
-							<Main>{children}</Main>
-							{footerData && <Footer {...footerData} />}
-						</Suspense>
-					</PageRoot>
-				</GlobalProviders>
-			</body>
-		</html>
+		<ViewTransitions>
+			<html lang="en">
+				<body
+					// gsap messes with the style attribute, which will cause ssr issues
+					suppressHydrationWarning
+				>
+					<ResetStyles />
+					<GlobalProviders>
+						<SanityLive />
+						<GlobalStyles>{globalCss}</GlobalStyles>
+						<PageRoot className="root-layout">
+							<Suspense>
+								{headerData && <Header {...headerData} />}
+								<Main>{children}</Main>
+								{footerData && <Footer {...footerData} />}
+							</Suspense>
+						</PageRoot>
+					</GlobalProviders>
+				</body>
+			</html>
+		</ViewTransitions>
 	)
 }
 
@@ -118,6 +122,12 @@ const globalCss = fresponsive(css`
 	/** restore default focus states for elements that need them */
 	*:focus-visible {
 		outline: 2px solid #00f8;
+	}
+
+	/* set page transition duration */
+	::view-transition-group(*) {
+		animation-duration: 1s;
+		animation-timing-function: ${eases.cubic.inOut};
 	}
 
 	/**

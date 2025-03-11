@@ -1,7 +1,7 @@
 "use client"
 
 import AutoAnimate from "library/AutoAnimate"
-import UniversalLink from "library/Loader/UniversalLink"
+import UniversalLink from "library/link"
 import { attrs, css, fresponsive, styled } from "library/styled"
 import { Fragment, useEffect, useState } from "react"
 

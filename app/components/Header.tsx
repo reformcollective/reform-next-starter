@@ -29,5 +29,6 @@ const Wrapper = styled(
 		height: 100px;
 		background-color: rebeccapurple;
 		color: white;
+		view-transition-name: header;
 	`),
 )

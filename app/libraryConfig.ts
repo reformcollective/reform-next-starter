@@ -1,14 +1,34 @@
-import { type Config, defaultConfig } from "library/defaultConfig"
+import { defineLibraryConfig } from "library/defaultConfig"
 
-/**
- * The transition names that can be used in the page transition
- * set this to never if there is no transition
- */
-export type TransitionNames = "fade" | "slide"
+export default defineLibraryConfig({
+	viewTransitions: {
+		slide: function slideInOut() {
+			document.documentElement.animate(
+				[
+					{ opacity: 1, transform: "translate(0, 0)" },
+					{ opacity: 0, transform: "translate(-100px, 0)" },
+				],
+				{
+					duration: 400,
+					easing: "ease",
+					fill: "forwards",
+					pseudoElement: "::view-transition-old(root)",
+				},
+			)
 
-const config: Config = {
-	...defaultConfig,
-	defaultTransition: "fade",
-}
-
-export default config
+			document.documentElement.animate(
+				[
+					{ opacity: 0, transform: "translate(100px, 0)" },
+					{ opacity: 1, transform: "translate(0, 0)" },
+				],
+				{
+					duration: 400,
+					easing: "ease",
+					fill: "forwards",
+					pseudoElement: "::view-transition-new(root)",
+				},
+			)
+		},
+	},
+	defaultViewTransition: "default",
+})

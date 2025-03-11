@@ -3,8 +3,6 @@
 import Userback from "@userback/widget"
 import gsap, { ScrollTrigger } from "gsap/all"
 import { isBrowser, isSafari } from "library/deviceDetection"
-import { useTriggerPreloader } from "library/Loader/PreloaderUtils"
-import { useBackButton } from "library/Loader/TransitionUtils"
 import { ScreenProvider } from "library/ScreenContext"
 import { SmoothScrollStyle } from "library/Scroll"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
@@ -27,8 +25,6 @@ if (isBrowser && window.location.href.includes("netlify"))
  * so we nest them
  */
 const NestedHooks = () => {
-	useBackButton()
-	useTriggerPreloader()
 	return null
 }
 

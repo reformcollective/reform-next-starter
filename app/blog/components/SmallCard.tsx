@@ -2,7 +2,7 @@ import { DisplayDate } from "library/DisplayDate"
 import { css, fresponsive, styled } from "library/styled"
 import type { Author, Post } from "@/sanity.types"
 import UniversalImage from "library/UniversalImage"
-import UniversalLink from "library/Loader/UniversalLink"
+import UniversalLink from "library/link"
 
 export function SmallCard({
 	post,

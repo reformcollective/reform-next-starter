@@ -1,7 +1,11 @@
 import type { NextConfig } from "next"
 import nextRoutes from "nextjs-routes/config"
+import bundleAnalyzer from "@next/bundle-analyzer"
 const withRoutes = nextRoutes({
 	outDir: "app/types",
+})
+const withBundleAnalyzer = bundleAnalyzer({
+	enabled: process.env.ANALYZE === "true",
 })
 
 const nextConfig: NextConfig = {
@@ -13,6 +17,19 @@ const nextConfig: NextConfig = {
 
 	experimental: {
 		reactCompiler: true,
+		turbo: {
+			rules: {
+				"*.svg": {
+					loaders: [
+						{
+							loader: require.resolve("./app/library/svg.js"),
+							options: {},
+						},
+					],
+					as: "*.js",
+				},
+			},
+		},
 	},
 	env: {
 		// Matches the behavior of `sanity dev` which sets styled-components to use the fastest way of inserting CSS rules in both dev and production. It's default behavior is to disable it in dev mode.
@@ -39,4 +56,4 @@ const nextConfig: NextConfig = {
 	},
 }
 
-export default withRoutes(nextConfig)
+export default withBundleAnalyzer(withRoutes(nextConfig))

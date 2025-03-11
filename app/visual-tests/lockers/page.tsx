@@ -1,7 +1,7 @@
 "use client"
 
 import { ScrollSmoother } from "gsap/all"
-import UniversalLink from "library/Loader/UniversalLink"
+import UniversalLink from "library/link"
 import { useScrollLock } from "library/Scroll"
 import { css, styled, unresponsive } from "library/styled"
 import { useState } from "react"
