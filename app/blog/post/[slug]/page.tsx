@@ -1,13 +1,14 @@
 import BlogRich from "blog/BlogRich"
 import { PostList } from "blog/components/PostList"
 import { relatedPostsQuery, singlePostQuery } from "blog/queries"
+import UniversalImage from "library/UniversalImage"
 import UniversalLink from "library/link"
 import { resolveOpenGraphImage } from "library/sanity/utils"
 import { css, fresponsive, styled } from "library/styled"
-import UniversalImage from "library/UniversalImage"
 import type { Metadata, ResolvingMetadata } from "next"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
+import { Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
 
 const postSlugsQuery = defineQuery(`
@@ -96,7 +97,9 @@ export default async function PostPage({
 			{relatedPosts && relatedPosts.length > 0 && (
 				<>
 					related posts:
-					<PostList posts={relatedPosts} />
+					<Suspense fallback={<div>Loading related posts...</div>}>
+						<PostList posts={relatedPosts} />
+					</Suspense>
 				</>
 			)}
 		</Wrapper>
