@@ -21,6 +21,7 @@ export const useBlogQuery = () => {
 }
 
 export function SearchBar() {
+	"use no memo"
 	const [query, setQuery] = useBlogQuery()
 
 	return (
