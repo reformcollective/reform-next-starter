@@ -1,11 +1,23 @@
 "use client"
 
 import UniversalLink from "library/link"
-import { styled, fresponsive, css } from "library/styled"
-import { useQueryState, parseAsString } from "nuqs"
+import { css, fresponsive, styled } from "library/styled"
+import { parseAsString, useQueryState } from "nuqs"
+import { useEffect, useState } from "react"
 
-export const useBlogQuery = () =>
-	useQueryState("query", parseAsString.withDefault(""))
+export const useBlogQuery = () => {
+	const [isClient, setIsClient] = useState(false)
+
+	useEffect(() => {
+		setIsClient(true)
+	}, [])
+
+	if (!isClient) {
+		return ["", () => {}] as const
+	}
+
+	return useQueryState("query", parseAsString.withDefault(""))
+}
 
 export function SearchBar() {
 	const [query, setQuery] = useBlogQuery()
