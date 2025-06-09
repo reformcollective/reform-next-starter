@@ -12,6 +12,8 @@ import {
 import { useMemo, useState } from "react"
 
 export default function Playground() {
+	// React Compiler error quick fix. TODO: make a better fix
+	"use no memo"
 	const [responsive, setResponsive] = useState("color: red; margin: 10px;")
 	const [tablet, setTablet] = useState("color: orange; margin: 20px;")
 	const [mobile, setMobile] = useState("color: green; margin: 30px;")
