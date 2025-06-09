@@ -2,8 +2,9 @@
 	"private": true,
 	"author": "Reform Collective",
 	"scripts": {
-		"dev": "next dev",
+		"dev": "next dev --turbo",
 		"build": "next build",
+		"postbuild": "mkdir -p public/studio && sanity manifest extract --path public/studio/static",
 		"analyze": "ANALYZE=true next build",
 		"serve": "next start",
 		"lint": "biome lint --write && stylelint . --fix",
@@ -14,7 +15,7 @@
 		"submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0",
 		"postinstall": "pnpm run typegen || exit 0",
 		"typegen": "sanity schema extract && sanity typegen generate",
-		"prepare": "husky"
+		"prepare": "git lfs install && lefthook install"
 	},
 	"dependencies": {
 		"@biomejs/biome": "1.9.4",
@@ -24,10 +25,10 @@
 		"@sanity/assist": "4.2.0",
 		"@sanity/client": "7.4.0",
 		"@sanity/icons": "3.7.0",
-		"@sanity/mutate": "0.12.4",
-		"@sanity/visual-editing": "2.13.21",
 		"@sanity/image-url": "1.1.0",
+		"@sanity/mutate": "0.12.4",
 		"@sanity/vision": "3.90.0",
+		"@sanity/visual-editing": "2.13.21",
 		"@svgr/webpack": "8.1.0",
 		"@t3-oss/env-nextjs": "0.13.6",
 		"@total-typescript/ts-reset": "0.6.1",
@@ -39,7 +40,7 @@
 		"babel-plugin-react-compiler": "19.1.0-rc.2",
 		"globby": "14.1.0",
 		"gsap": "3.13.0",
-		"husky": "9.1.7",
+		"lefthook": "1.11.12",
 		"next": "15.3.3",
 		"next-sanity": "9.12.0",
 		"nextjs-routes": "2.2.5",
@@ -101,6 +102,7 @@
 			"puppeteer",
 			"scrollmirror",
 			"sharp"
-		]
+		],
+		"ignoredBuiltDependencies": ["lefthook"]
 	}
 }
