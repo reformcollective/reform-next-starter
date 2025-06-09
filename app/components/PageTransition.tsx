@@ -26,7 +26,7 @@ export default function PageTransition() {
 
 	return (
 		<Wrapper ref={wrapper} style={{ opacity: isAnimating ? 1 : 0 }}>
-			<Text ref={text}>Page Transition</Text>
+			<Text ref={text}>Page Transition Text</Text>
 		</Wrapper>
 	)
 }
