@@ -19,7 +19,7 @@ export default async function BlogCategories({
 		<>
 			<h1>category: {category}</h1>
 
-			<Suspense fallback={<p>Loading...</p>}>
+			<Suspense fallback={<p>Loading Posts...</p>}>
 				<PostList posts={allPosts} />
 			</Suspense>
 		</>
