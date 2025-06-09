@@ -6,6 +6,7 @@ import { parseAsString, useQueryState } from "nuqs"
 import { useEffect, useState } from "react"
 
 export const useBlogQuery = () => {
+	"use no memo"
 	const [isClient, setIsClient] = useState(false)
 
 	useEffect(() => {
