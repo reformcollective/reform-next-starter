@@ -1,39 +1,43 @@
-import type { NextConfig } from "next"
-import nextRoutes from "nextjs-routes/config"
 import bundleAnalyzer from "@next/bundle-analyzer"
-const withRoutes = nextRoutes({
-	outDir: "app/types",
-})
+import type { NextConfig } from "next"
+import { serverSiteURL } from "./app/library/siteURL/determine"
 const withBundleAnalyzer = bundleAnalyzer({
 	enabled: process.env.ANALYZE === "true",
 })
 
 const nextConfig: NextConfig = {
-	// use the homepage as a CMS page by rewriting the slug
-	rewrites: async () => [{ source: "/", destination: "/home" }],
 	redirects: async () => [
 		{ source: "/home", destination: "/", permanent: false },
 	],
 
 	experimental: {
-		reactCompiler: true,
-		turbo: {
-			rules: {
-				"*.svg": {
-					loaders: [
-						{
-							loader: require.resolve("./app/library/svg.js"),
-							options: {},
-						},
-					],
-					as: "*.js",
-				},
-			},
+		reactCompiler: {
+			panicThreshold: "ALL_ERRORS",
 		},
+		viewTransition: true,
 	},
 	env: {
 		// Matches the behavior of `sanity dev` which sets styled-components to use the fastest way of inserting CSS rules in both dev and production. It's default behavior is to disable it in dev mode.
 		SC_DISABLE_SPEEDY: "false",
+		NEXT_PUBLIC_DEPLOY_URL: serverSiteURL,
+	},
+
+	turbopack: {
+		rules: {
+			"*.inline.svg": {
+				loaders: ["@svgr/webpack"],
+				as: "*.js",
+			},
+			"*.svg": {
+				loaders: [
+					{
+						loader: require.resolve("./app/library/svg.js"),
+						options: {},
+					},
+				],
+				as: "*.js",
+			},
+		},
 	},
 	webpack(config) {
 		// biome-ignore lint/suspicious/noExplicitAny: webpack moment
@@ -46,8 +50,13 @@ const nextConfig: NextConfig = {
 			resourceQuery: /inline/,
 		})
 		config.module.rules.push({
+			test: /\.inline\.svg$/,
+			use: ["@svgr/webpack"],
+		})
+		config.module.rules.push({
 			test: /\.svg$/,
 			resourceQuery: { not: [/inline/] },
+			exclude: /\.inline\.svg$/,
 			loader: "next-image-loader",
 			options: loaderOptions,
 		})
@@ -56,4 +65,4 @@ const nextConfig: NextConfig = {
 	},
 }
 
-export default withBundleAnalyzer(withRoutes(nextConfig))
+export default withBundleAnalyzer(nextConfig)

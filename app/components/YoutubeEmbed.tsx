@@ -13,16 +13,23 @@ export function YoutubeEmbed({
 
 	return (
 		<ClientOnly>
-			<Embed url={video.url} className={className} />
+			<Embed className={className}>
+				<ReactPlayer url={video.url} width="100%" height="100%" />
+			</Embed>
 		</ClientOnly>
 	)
 }
 
 const Embed = styled(
-	ReactPlayer,
+	"div",
 	fresponsive(css`
 		display: grid;
 		width: 600px;
 		height: 400px;
+
+		> div {
+			width: 100% !important;
+			height: 100% !important;
+		}
 	`),
 )

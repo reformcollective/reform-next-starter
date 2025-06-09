@@ -21,7 +21,7 @@ export default function BlogRich({
 				components={{
 					types: {
 						image: ({ value }) => {
-							return <UniversalImage src={value} alt={value.alt} />
+							return <UniversalImage src={value} />
 						},
 						youtube: ({ value }) => {
 							return <YoutubeEmbed video={value} />

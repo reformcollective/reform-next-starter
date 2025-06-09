@@ -2,9 +2,10 @@
 
 import Userback from "@userback/widget"
 import gsap, { ScrollTrigger } from "gsap/all"
-import { isBrowser, isSafari } from "library/deviceDetection"
 import { ScreenProvider } from "library/ScreenContext"
 import { SmoothScrollStyle } from "library/Scroll"
+import { browserData, isBrowser } from "library/deviceDetection"
+import { PageTransitionProvider } from "library/link/usePageTransition"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { ColorStyle } from "styles/colors"
 
@@ -15,37 +16,31 @@ ScrollTrigger.defaults({
 })
 
 /**
- * userback, only if the URL includes 'netlify'
+ * userback, only if the URL includes 'netlify' or 'vercel'
  */
-if (isBrowser && window.location.href.includes("netlify"))
+if (
+	isBrowser &&
+	(window.location.href.includes("netlify") ||
+		window.location.href.includes("vercel"))
+)
 	Userback("A-v0IzZWe1Wp6WdUZsgSwl1T41O")
-
-/**
- * its possible hooks will need values from our providers
- * so we nest them
- */
-const NestedHooks = () => {
-	return null
-}
 
 export default function GlobalProviders({
 	children,
 }: {
 	children: React.ReactNode
 }) {
-	children = (
-		<>
-			<SmoothScrollStyle />
-			<ColorStyle />
-			<NestedHooks />
-			{children}
-		</>
+	return (
+		<NuqsAdapter>
+			<ScreenProvider>
+				<PageTransitionProvider>
+					<SmoothScrollStyle />
+					<ColorStyle />
+					{children}
+				</PageTransitionProvider>
+			</ScreenProvider>
+		</NuqsAdapter>
 	)
-
-	children = <ScreenProvider>{children}</ScreenProvider>
-	children = <NuqsAdapter>{children}</NuqsAdapter>
-
-	return children
 }
 
 /**
@@ -60,7 +55,7 @@ if (isBrowser)
 	console.info(
 		d(logo),
 		`font-family:monospace;display:inline-block;background:black;color:#eee;${
-			isSafari()
+			browserData.isSafari
 				? "font-size:5px"
 				: "font-size:3px;padding:20px;border-radius:20px;margin:10px"
 		}`,

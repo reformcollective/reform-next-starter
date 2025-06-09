@@ -27,6 +27,21 @@ export default defineType({
 			cropType: "sanity",
 			withAlt: false,
 		}),
+		defineField({
+			name: "tags",
+			title: "Tag Manager",
+			description: "include the entire tag, including <script>",
+			type: "array",
+			of: [
+				{
+					type: "object",
+					fields: [
+						defineField({ name: "label", type: "string" }),
+						defineField({ name: "embed", type: "text" }),
+					],
+				},
+			],
+		}),
 	],
 	preview: {
 		prepare() {

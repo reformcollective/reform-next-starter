@@ -81,7 +81,7 @@ export default function ScrollLock() {
 			<UniversalLink href="/visual-tests/lockers#test">
 				go to anchor
 			</UniversalLink>
-			<UniversalLink href="/" transition="instant">
+			<UniversalLink href="/">
 				go home (lockers will remove on unmount)
 			</UniversalLink>
 			<br />

@@ -29,15 +29,10 @@ export function LargeCard({
 
 	if (!slug?.current) return null
 	return (
-		<Wrapper
-			href={{
-				pathname: "/blog/post/[slug]",
-				query: { slug: slug.current },
-			}}
-		>
+		<Wrapper href={`/blog/post/${slug.current}`}>
 			<div>{author?.fullName}</div>
 			{published && <DisplayDate date={published} />}
-			<UniversalImage width={400} height={230} src={mainImage} alt={title} />
+			<UniversalImage width={400} height={230} src={mainImage} />
 			<h1>{title}</h1>
 			<p>{preview}</p>
 		</Wrapper>

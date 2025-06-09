@@ -76,27 +76,16 @@ export default async function PostPage({
 
 	return (
 		<Wrapper>
-			<UniversalLink href={{ pathname: "/blog" }}>back to blog</UniversalLink>
+			<UniversalLink href={"/blog"}>back to blog</UniversalLink>
 
 			<h1>{post.title}</h1>
-			<UniversalImage
-				width={1440}
-				height={600}
-				src={post.mainImage}
-				alt={post.mainImage?.alt}
-			/>
+			<UniversalImage width={1440} height={600} src={post.mainImage} />
 			<div>{post.author?.fullName}</div>
 
 			<Categories>
 				post categories:
 				{post.categories?.map((category) => (
-					<UniversalLink
-						href={{
-							pathname: "/blog/category/[category]",
-							query: { category },
-						}}
-						key={category}
-					>
+					<UniversalLink href={"/blog/category/[category]"} key={category}>
 						{category}
 					</UniversalLink>
 				))}

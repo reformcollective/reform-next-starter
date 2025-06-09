@@ -28,11 +28,9 @@ export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
  * - then update this object to include the new section's component
  */
 const components: {
-	[sectionType in SectionTypes]: {
-		default: ComponentType<GetSectionType<sectionType>>
-	}
+	[sectionType in SectionTypes]: ComponentType<GetSectionType<sectionType>>
 } = {
-	sample: await import("sections/Sample"),
+	sample: (await import("sections/Sample")).default,
 }
 
 const pageQuery = defineQuery(`
@@ -50,18 +48,25 @@ export async function generateStaticParams() {
 		perspective: "published",
 		stega: false,
 	})
+
 	return data
+		.filter((page): page is { slug: string } => page.slug !== null)
+		.map((page) => ({
+			slug: page.slug === "home" ? undefined : page.slug?.split("/"),
+		}))
 }
 
 export async function generateMetadata(
-	{ params }: { params: Promise<{ slug: string }> },
+	{ params }: { params: Promise<{ slug: string[] | undefined }> },
 	parent: ResolvingMetadata,
 ): Promise<Metadata> {
+	const resolvedParams = await params
+	// Convert array back to string for Sanity query, use "home" for root
+	const slug = resolvedParams.slug?.join("/") || "home"
+
 	const { data: relevantPage } = await sanityFetch({
 		query: pageQuery,
-		params: {
-			slug: (await params).slug,
-		},
+		params: { slug },
 	})
 
 	const title = relevantPage?.title || (await parent).title
@@ -91,13 +96,15 @@ export const dynamic = "force-static"
 export default async function TemplatePage({
 	params,
 }: {
-	params: Promise<{ slug: string }>
+	params: Promise<{ slug: string[] | undefined }>
 }) {
+	const resolvedParams = await params
+	// Convert array back to string for Sanity query, use "home" for root
+	const slug = resolvedParams.slug?.join("/") || "home"
+
 	const { data: relevantPage } = await sanityFetch({
 		query: pageQuery,
-		params: {
-			slug: (await params).slug,
-		},
+		params: { slug },
 	})
 
 	if (!relevantPage) notFound()
@@ -112,7 +119,7 @@ export default async function TemplatePage({
 				documentId={relevantPage._id}
 				documentType={relevantPage._type}
 				sections={relevantPage.sections.map((section, index) => {
-					const Component = components[section._type].default
+					const Component = components[section._type]
 					if (!Component) {
 						console.warn(`Unknown section type "${section._type}"`)
 						return {

@@ -21,6 +21,7 @@ const Wrapper = styled(
 	"header",
 	fresponsive(css`
 		display: grid;
+		grid-column: fullbleed;
 		place-items: center;
 		position: sticky;
 		z-index: 1;

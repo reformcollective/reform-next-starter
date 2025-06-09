@@ -1,13 +1,15 @@
 {
 	"extends": "@total-typescript/tsconfig/bundler/dom",
 	"compilerOptions": {
+		"lib": ["ES2024", "DOM", "DOM.Iterable"],
 		"jsx": "preserve",
 		"incremental": true,
 		"plugins": [{ "name": "next" }],
 		"baseUrl": "./app",
 		"paths": {
 			"@/*": ["../*"],
-			"sanity/*": ["../sanity/*"]
+			"sanity/*": ["../sanity/*"],
+			"page": ["./[[...slug]]/page"]
 		}
 	},
 	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

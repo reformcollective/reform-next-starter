@@ -5,7 +5,7 @@ import { studioUrl } from "@/sanity/lib/api"
 import { env } from "env"
 import { siteURL } from "library/siteURL"
 import { css, fresponsive, keyframes, styled } from "library/styled"
-import { createDataAttribute, type SanityDocument } from "next-sanity"
+import { type SanityDocument, createDataAttribute } from "next-sanity"
 import { useOptimistic } from "next-sanity/hooks"
 import type { ReactNode } from "react"
 
@@ -52,11 +52,11 @@ export const DynamicPageOrder = ({
 	)
 
 	return order
-		.map((key) => sections.find((section) => section.key === key))
-		.map((section) =>
-			section ? (
-				<div
-					key={section?.key ?? Math.random()}
+		.map((key) => sections.find((section) => section.key === key) ?? key)
+		.map((section, index) =>
+			typeof section === "object" ? (
+				<Section
+					key={section?.key}
 					data-sanity={createDataAttribute({
 						...config,
 						id: documentId,
@@ -65,9 +65,9 @@ export const DynamicPageOrder = ({
 					}).toString()}
 				>
 					{section.content}
-				</div>
+				</Section>
 			) : (
-				<Fallback key={Math.random()}>
+				<Fallback key={section}>
 					<Shimmer />
 					Loading section data...
 				</Fallback>
@@ -82,6 +82,13 @@ const Shimmer = keyframes`
 		background-position: -100% 0;
 	}
 `
+
+const Section = styled("div", {
+	gridColumn: "fullbleed",
+	display: "grid",
+	gridTemplateColumns: "subgrid",
+	maxWidth: "100vw",
+})
 
 const Fallback = styled("div", {
 	...fresponsive(css`

@@ -1,4 +1,4 @@
-import { css, GlobalStyles, unresponsive } from "library/styled"
+import { GlobalStyles } from "library/styled"
 
 /**
  * place all your colors here! the format is:
@@ -7,8 +7,9 @@ import { css, GlobalStyles, unresponsive } from "library/styled"
  * if you provide a p3 color, it will be used where supported
  */
 const rawColors = {
-	white: ["white"],
-	red: ["red", "color(display-p3 1 0 0)"],
+	white: ["#FFF", "color(display-p3 1 1 1)"],
+	red: ["#FE3712"],
+	black: ["#000", "color(display-p3 0 0 0)"],
 } as const satisfies Record<string, [string, string] | [string]>
 
 /** widen the type a bit for processing */
@@ -21,25 +22,20 @@ const colorEntries: [string, [string, string] | [string]][] =
  */
 export const ColorStyle = () => (
 	<GlobalStyles>
-		{unresponsive(css`
-			:root {
-				@supports (not (color: color(display-p3 0 0 0))) {
-					${colorEntries
-						.map(([key, [hex]]) => {
-							return `--${key}: ${hex};`
-						})
-						.join("\n")}
-				}
-
-				@supports (color: color(display-p3 0 0 0)) {
-					${colorEntries
-						.map(([key, [hex, p3]]) => {
-							return `--${key}: ${p3 ?? hex};`
-						})
-						.join("\n")}
-				}
-			}
-		`)}
+		{{
+			":root": {
+				"@supports (not (color: color(display-p3 0 0 0)))": Object.fromEntries(
+					colorEntries.map(([key, [hex]]) => {
+						return [`--${key.toLowerCase()}`, hex]
+					}),
+				),
+				"@supports (color: color(display-p3 0 0 0))": Object.fromEntries(
+					colorEntries.map(([key, [hex, p3]]) => {
+						return [`--${key.toLowerCase()}`, p3 ?? hex]
+					}),
+				),
+			},
+		}}
 	</GlobalStyles>
 )
 
@@ -48,24 +44,10 @@ export const ColorStyle = () => (
  */
 const CSSColors = Object.fromEntries(
 	colorEntries.map(([key]) => {
-		return [key, `var(--${key})`]
+		return [key, `var(--${key.toLowerCase()})`]
 	}),
 ) as {
 	[key in keyof typeof rawColors]: `var(--${key})`
 }
 
-/**
- * gsap can't animate variables, so we need to use the hex always
- */
-const jsColors = Object.fromEntries(
-	colorEntries.map(([key, [color]]) => {
-		return [key, color]
-	}),
-) as {
-	[key in keyof typeof rawColors]: (typeof rawColors)[key][0]
-}
-
-export default {
-	...CSSColors,
-	js: jsColors,
-}
+export default CSSColors

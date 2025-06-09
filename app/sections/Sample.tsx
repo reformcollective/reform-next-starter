@@ -1,4 +1,4 @@
-import type { GetSectionType } from "[slug]/page"
+import type { GetSectionType } from "[[...slug]]/page"
 import { sleep } from "library/functions"
 import { css, fresponsive, styled } from "library/styled"
 

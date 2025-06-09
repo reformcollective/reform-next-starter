@@ -1,5 +1,4 @@
 "use client"
-
 import UniversalLink from "library/link"
 import { css, fresponsive, styled } from "library/styled"
 import { useParams } from "next/navigation"
@@ -9,7 +8,9 @@ export function Categories({
 }: {
 	items: { categories?: string[] | undefined }[]
 }) {
-	const { category } = useParams<"/blog/category/[category]">()
+	const params = useParams()
+	const category = params.category as string | undefined
+
 	const uniqueCategories = Array.from(
 		new Set(items.flatMap((item) => item?.categories ?? [])),
 	)
@@ -21,19 +22,14 @@ export function Categories({
 				return (
 					<Button
 						key={item}
-						href={{
-							pathname: "/blog/category/[category]",
-							query: { category: item },
-						}}
+						href={`/blog/category/${item}`}
 						isActive={category === item}
 					>
 						{item}
 					</Button>
 				)
 			})}
-			{category && (
-				<UniversalLink href={{ pathname: "/blog" }}>clear</UniversalLink>
-			)}
+			{category && <UniversalLink href="/blog">clear</UniversalLink>}
 		</Wrapper>
 	)
 }

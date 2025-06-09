@@ -72,7 +72,7 @@ export default function DesignPage() {
 					/>
 				</AnimateNoClip>
 			</Row>
-			<Link href={{ pathname: "/visual-tests/auto-animate" }}>
+			<Link href={"/visual-tests/auto-animate"}>
 				See more AutoAnimate examples
 			</Link>
 			<h2>Custom Text Overflow</h2>

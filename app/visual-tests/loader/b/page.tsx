@@ -11,25 +11,16 @@ export default async function LoaderB() {
 			<UniversalLink href="/visual-tests/loader/a">
 				Go to Loader A
 			</UniversalLink>
-			<UniversalLink href="/visual-tests/loader/a" transition="slide">
+			<UniversalLink href="/visual-tests/loader/a">
 				Slide to Loader A
 			</UniversalLink>
-			<UniversalLink
-				transition="instant"
-				href="/visual-tests/loader/a#content-21"
-			>
+			<UniversalLink href="/visual-tests/loader/a#content-21">
 				instant to content 21
 			</UniversalLink>
-			<UniversalLink
-				transition="default"
-				href="/visual-tests/loader/a#content-21"
-			>
+			<UniversalLink href="/visual-tests/loader/a#content-21">
 				fade to content 21
 			</UniversalLink>
-			<UniversalLink
-				transition="default"
-				href="/visual-tests/loader/a?query=true#content-21"
-			>
+			<UniversalLink href="/visual-tests/loader/a?query=true#content-21">
 				with query parameter
 			</UniversalLink>
 			<p style={{ viewTransitionName: "thing-1" }}>content 1</p>
