@@ -16,6 +16,7 @@ import { type PluginOptions, defineConfig } from "sanity"
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
 import { linkField } from "sanity-plugin-link-field"
 import { media } from "sanity-plugin-media"
+import { muxInput } from "sanity-plugin-mux-input"
 import {
 	type DocumentLocation,
 	defineDocuments,
@@ -59,8 +60,12 @@ export default defineConfig({
 			resolve: {
 				mainDocuments: defineDocuments([
 					{
-						route: "/blog/:slug",
-						filter: `_type == "post" && slug.current == $slug`,
+						route: "/blog/:category/:slug", // multi-slug example
+						filter: `_type == "post" && slug.current == $slug && category.slug.current == $category`,
+					},
+					{
+						route: "/pages/*",
+						filter: `_type == "page"`,
 					},
 				]),
 				locations: {
@@ -116,15 +121,17 @@ export default defineConfig({
 				return S.document().views([S.view.form()])
 			},
 		}),
-		linkField({
-			linkableSchemaTypes: ["page"],
-		}),
+		linkField(),
 		// Configures the global "new document" button, and document actions, to suit the Settings document singleton
 		singletonPlugin(singletons.map((singleton) => singleton.name)),
 		// Add an image asset source for Unsplash
 		unsplashImageAsset(),
 		// View all images in the Studio
 		media(),
+		// Videos with MUX
+		muxInput({
+			max_resolution_tier: "2160p",
+		}),
 		// Sets up AI Assist with preset prompts
 		// https://www.sanity.io/docs/ai-assist
 		assist(),

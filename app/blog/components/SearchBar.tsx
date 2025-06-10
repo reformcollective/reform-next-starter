@@ -1,14 +1,18 @@
 "use client"
 
 import UniversalLink from "library/link"
-import { styled, fresponsive, css } from "library/styled"
-import { useQueryState, parseAsString } from "nuqs"
+import { css, fresponsive, styled } from "library/styled"
+import { parseAsString, useQueryState } from "nuqs"
 
-export const useBlogQuery = () =>
-	useQueryState("query", parseAsString.withDefault(""))
+export const useBlogQuery = () => {
+	return useQueryState("query", parseAsString.withDefault(""))
+}
 
 export function SearchBar() {
-	const [query, setQuery] = useBlogQuery()
+	const [query, setQuery] = useQueryState(
+		"query",
+		parseAsString.withDefault(""),
+	)
 
 	return (
 		<Wrapper>

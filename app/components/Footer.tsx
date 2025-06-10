@@ -23,8 +23,10 @@ const Wrapper = styled(
 		background-color: rebeccapurple;
 		color: white;
 		display: grid;
+		grid-column: fullbleed;
 		place-items: center;
 		height: 300px;
+		width: 100%;
 		view-transition-name: footer;
 	`),
 )

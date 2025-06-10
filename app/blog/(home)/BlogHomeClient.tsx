@@ -30,7 +30,7 @@ export function BlogHomeClient({
 				</>
 			)}
 			<PostList posts={firstPageCards} />
-			<UniversalLink href={{ pathname: "/blog/all" }}>show all</UniversalLink>
+			<UniversalLink href="/blog/all">show all</UniversalLink>
 		</>
 	)
 }

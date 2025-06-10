@@ -29,17 +29,10 @@ export function SmallCard({
 
 	if (!slug?.current) return null
 	return (
-		<Wrapper
-			href={{ pathname: "/blog/post/[slug]", query: { slug: slug.current } }}
-		>
+		<Wrapper href={`/blog/post/${slug.current}`}>
 			<h2>{author?.fullName}</h2>
 			{published && <DisplayDate date={published} />}
-			<UniversalImage
-				width={400}
-				height={230}
-				src={mainImage}
-				alt={mainImage?.alt}
-			/>
+			<UniversalImage width={400} height={230} src={mainImage} />
 			<h1>{title}</h1>
 			<p>{preview}</p>
 		</Wrapper>

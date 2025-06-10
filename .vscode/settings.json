@@ -21,7 +21,6 @@
 	},
 
 	/* recommended extension config */
-	"template-string-converter.addBracketsToProps": true,
 	"template-string-converter.autoRemoveTemplateString": true,
 	"stylelint.validate": ["css", "scss", "typescript", "typescriptreact"],
 	"run-it.globalDebug": true,

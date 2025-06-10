@@ -1,38 +1,33 @@
-import type { PageQueryResult } from "@/sanity.types"
+import type { Page } from "@/sanity.types"
 import { EagerImages } from "library/StaticImage"
 import type { DeepAssetMeta } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/utils"
-import type { Metadata, ResolvingMetadata } from "next"
+import { siteURL } from "library/siteURL"
+import type { Metadata } from "next"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
-import { Fragment, type ComponentType } from "react"
+import { type ComponentType, Fragment } from "react"
 import { sanityFetch } from "sanity/lib/live"
+import SectionSample from "sections/Sample"
 import { DynamicPageOrder } from "./client"
 
 export type SectionTypes = NonNullable<
-	NonNullable<PageQueryResult>["sections"]
+	DeepAssetMeta<Page>["sections"]
 >[number]["_type"]
 export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
-	NonNullable<NonNullable<PageQueryResult>["sections"]>[number] & { _type: T }
+	NonNullable<DeepAssetMeta<Page>["sections"]>[number] & { _type: T }
 > & {
-	// extra properties for creating data sanity attributes
 	documentId: string
 	documentType: string
 	path: string
 }
 
-/**
- * When adding new sections:
- * - add them to the page schema by exporting the section's schema from `schemas/documents/sections/index.ts`
- * - section schemas muse not be default exports. They must be named exports
- * - then update this object to include the new section's component
- */
+export const dynamic = "force-static"
+
 const components: {
-	[sectionType in SectionTypes]: {
-		default: ComponentType<GetSectionType<sectionType>>
-	}
+	[sectionType in SectionTypes]: ComponentType<GetSectionType<sectionType>>
 } = {
-	sample: await import("sections/Sample"),
+	sample: SectionSample,
 }
 
 const pageQuery = defineQuery(`
@@ -44,63 +39,71 @@ const pageSlugs = defineQuery(`
 	{"slug": slug.current}
 `)
 
+const pageSettingsQuery = defineQuery(`*[_type == "settings"][0]`)
+
 export async function generateStaticParams() {
 	const { data } = await sanityFetch({
 		query: pageSlugs,
 		perspective: "published",
 		stega: false,
 	})
-	return data
+	return data.map((page: { slug: string | null }) => ({
+		slug: page.slug === "home" ? undefined : page.slug?.split("/"),
+	}))
 }
 
-export async function generateMetadata(
-	{ params }: { params: Promise<{ slug: string }> },
-	parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ slug: string[] | undefined }>
+}): Promise<Metadata> {
 	const { data: relevantPage } = await sanityFetch({
 		query: pageQuery,
 		params: {
-			slug: (await params).slug,
+			slug: (await params).slug?.join("/") || "home",
 		},
 	})
+	const { data: settings } = await sanityFetch({
+		query: pageSettingsQuery,
+	})
 
-	const title = relevantPage?.title || (await parent).title
-	const description = relevantPage?.description || (await parent).description
-	const imageData =
-		relevantPage?.ogImage && resolveOpenGraphImage(relevantPage?.ogImage)
-	const newImage = imageData ? [imageData] : undefined
-
-	const opengraph = newImage ?? (await parent).openGraph?.images
-	const twitter = newImage ?? (await parent).twitter?.images
+	const title = relevantPage?.title ?? settings?.defaultTitle
+	const description = relevantPage?.description ?? settings?.defaultDescription
+	const image = relevantPage?.ogImage
+		? resolveOpenGraphImage(relevantPage?.ogImage)
+		: settings?.ogImage
+			? resolveOpenGraphImage(settings?.ogImage)
+			: undefined
+	const imageData = image ? [image] : undefined
 
 	return {
 		title,
 		description,
 		twitter: {
 			card: "summary_large_image",
-			images: twitter,
+			images: imageData,
 		},
 		openGraph: {
-			images: opengraph,
+			images: imageData,
 		},
+		metadataBase: new URL(siteURL),
 	}
 }
-
-export const dynamic = "force-static"
 
 export default async function TemplatePage({
 	params,
 }: {
-	params: Promise<{ slug: string }>
+	params: Promise<{ slug: string[] | undefined }>
 }) {
 	const { data: relevantPage } = await sanityFetch({
 		query: pageQuery,
 		params: {
-			slug: (await params).slug,
+			slug: (await params).slug?.join("/") || "home",
 		},
 	})
 
 	if (!relevantPage) notFound()
+
 	if (!relevantPage.sections) notFound()
 
 	return (
@@ -112,7 +115,7 @@ export default async function TemplatePage({
 				documentId={relevantPage._id}
 				documentType={relevantPage._type}
 				sections={relevantPage.sections.map((section, index) => {
-					const Component = components[section._type].default
+					const Component = components[section._type]
 					if (!Component) {
 						console.warn(`Unknown section type "${section._type}"`)
 						return {

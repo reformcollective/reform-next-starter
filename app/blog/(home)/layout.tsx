@@ -3,7 +3,7 @@ import { SearchBar } from "blog/components/SearchBar"
 import { allPostsQuery } from "blog/queries"
 import { sanityFetch } from "library/sanity/reusableFetch"
 import { css, fresponsive, styled } from "library/styled"
-import type { ReactNode } from "react"
+import { type ReactNode, Suspense } from "react"
 
 export default async function BlogLayout({
 	children,
@@ -15,10 +15,17 @@ export default async function BlogLayout({
 	return (
 		<Wrapper>
 			<div>pre blog content! anything can go here! make a component!</div>
-			<SearchBar />
-			<Categories items={allCards} />
+			<Suspense fallback={<div>Loading search...</div>}>
+				<SearchBar />
+			</Suspense>
 
-			{children}
+			<Suspense fallback={<div>Loading categories...</div>}>
+				<Categories items={allCards} />
+			</Suspense>
+
+			<Suspense fallback={<div>Loading blog content...</div>}>
+				{children}
+			</Suspense>
 		</Wrapper>
 	)
 }

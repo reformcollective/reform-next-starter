@@ -1,6 +1,7 @@
 import { PostList } from "blog/components/PostList"
 import { allPostsQuery } from "blog/queries"
 import { sanityFetch } from "library/sanity/reusableFetch"
+import { Suspense } from "react"
 
 export default async function BlogCategories({
 	params,
@@ -17,7 +18,10 @@ export default async function BlogCategories({
 	return (
 		<>
 			<h1>category: {category}</h1>
-			<PostList posts={thisCategory} />
+
+			<Suspense fallback={<p>Loading Posts...</p>}>
+				<PostList posts={allPosts} />
+			</Suspense>
 		</>
 	)
 }

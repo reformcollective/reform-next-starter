@@ -1,50 +1,24 @@
 import Footer from "components/Footer"
 import Header from "components/Header"
+import { Preloader } from "components/Preloader"
 import GlobalProviders from "components/Providers"
-import { ResetStyles } from "library/reset"
-import { resolveOpenGraphImage } from "library/sanity/utils"
-import { siteURL } from "library/siteURL"
-import {
-	css,
-	fresponsive,
-	GlobalStyles,
-	styled,
-	unresponsive,
-} from "library/styled"
-import type { Metadata } from "next"
-import { defineQuery } from "next-sanity"
-import { Suspense } from "react"
-import { sanityFetch, SanityLive } from "sanity/lib/live"
-import { ViewTransitions } from "next-view-transitions"
 import { eases } from "library/eases"
+import { makeResponsiveGrid } from "library/layoutGridBuilder"
+import { ResetStyles } from "library/reset"
+import { sanityFetch } from "library/sanity/reusableFetch"
+import { GlobalStyles, css, fmobile, fresponsive, styled } from "library/styled"
+import { defineQuery, stegaClean } from "next-sanity"
+import { Suspense, lazy } from "react"
+import colors from "styles/colors"
 
-const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
-
-export const generateMetadata = async (): Promise<Metadata> => {
-	const { data: settings } = await sanityFetch({
-		query: settingsQuery,
-	})
-
-	const imageData =
-		settings?.ogImage && resolveOpenGraphImage(settings?.ogImage)
-	const newImage = imageData ? [imageData] : undefined
-
-	return {
-		metadataBase: new URL(siteURL),
-		title: settings?.defaultTitle,
-		description: settings?.defaultDescription,
-		twitter: {
-			card: "summary_large_image",
-			images: newImage,
-		},
-		openGraph: {
-			images: newImage,
-		},
-	}
-}
+const SanityLive = lazy(() => import("sanity/lib/live"))
+const PageTransition = lazy(() => import("components/PageTransition"))
 
 const headerQuery = defineQuery(`*[_type == "header"][0]`)
+
 const footerQuery = defineQuery(`*[_type == "footer"][0]`)
+
+const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
 export default async function RootLayout({
 	children,
@@ -53,60 +27,93 @@ export default async function RootLayout({
 }) {
 	const { data: headerData } = await sanityFetch({ query: headerQuery })
 	const { data: footerData } = await sanityFetch({ query: footerQuery })
+	const { data: settings } = await sanityFetch({ query: settingsQuery })
 
 	return (
-		<ViewTransitions>
-			<html lang="en">
-				<body
-					// gsap messes with the style attribute, which will cause ssr issues
-					suppressHydrationWarning
-				>
-					<ResetStyles />
-					<GlobalProviders>
+		<html lang="en">
+			<body>
+				<GlobalProviders>
+					<Suspense>
 						<SanityLive />
-						<GlobalStyles>{globalCss}</GlobalStyles>
-						<PageRoot className="root-layout">
-							<Suspense>
-								{headerData && <Header {...headerData} />}
-								<Main>{children}</Main>
-								{footerData && <Footer {...footerData} />}
-							</Suspense>
-						</PageRoot>
-					</GlobalProviders>
-				</body>
-			</html>
-		</ViewTransitions>
+					</Suspense>
+					<GlobalStyles>{globalCss}</GlobalStyles>
+					<ResetStyles />
+					<PageRoot className="root-layout">
+						<Preloader />
+						<Suspense>
+							<PageTransition />
+						</Suspense>
+						{headerData && <Header {...headerData} />}
+						{children}
+						{footerData && <Footer {...footerData} />}
+					</PageRoot>
+				</GlobalProviders>
+				{settings?.tags?.map(
+					(tag, i) =>
+						tag.embed && (
+							<div
+								key={tag._key}
+								// biome-ignore lint/security/noDangerouslySetInnerHtml: embeds and scripts
+								dangerouslySetInnerHTML={{ __html: stegaClean(tag.embed) }}
+							/>
+						),
+				)}
+			</body>
+		</html>
 	)
 }
 
-const PageRoot = styled(
-	"div",
-	unresponsive(css`
+const PageRoot = styled("div", {
+	...fresponsive(css`
 		/*  ensure modals, portals, etc. don't appear behind the page */
 		isolation: isolate;
 
-		/* ensure page content fills the view */
+		/* ensure page content fills the view vertically */
 		min-height: 100lvh;
-		display: grid;
-		grid-template-rows: auto 1fr auto;
-	`),
-)
+		grid-template-rows: auto auto auto 1fr;
 
-const Main = styled(
-	"main",
-	unresponsive(css`
-		overflow-x: clip;
-		isolation: isolate;
+		/* design grid system */
+		display: grid;
+		grid-template-columns: var(--subgrid-columns);
+		--subgrid-columns: ${makeResponsiveGrid({
+			columnCount: 8,
+			gutter: "20px",
+			margin: "30px",
+			scaleFully: true,
+		})};
+
+		/* reset colors */
+		background: ${colors.red};
+		color: ${colors.white};
+
+		main {
+			background: ${colors.white};
+			color: ${colors.red};
+		}
 	`),
-)
+	...fmobile(css`
+		--subgrid-columns: ${makeResponsiveGrid({
+			columnCount: 4,
+			gutter: "10px",
+			margin: "20px",
+		})};
+	`),
+})
 
 // TODO: configure a default text color and background
 const globalCss = fresponsive(css`
 	html {
-		/* if your project uses a dark color for most text, set that here */
-		background: #151515;
-		color: #f9f9fb;
+		background: ${colors.white};
+		color: ${colors.red};
 		font-family: sans-serif;
+
+		/* hide scrollbars */
+		/* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+		scrollbar-width: none;
+
+		body::-webkit-scrollbar {
+			display: none;
+		}
 	}
 
 	body {
@@ -124,10 +131,12 @@ const globalCss = fresponsive(css`
 		outline: 2px solid #00f8;
 	}
 
-	/* set page transition duration */
 	::view-transition-group(*) {
-		animation-duration: 1s;
 		animation-timing-function: ${eases.cubic.inOut};
+	}
+
+	::view-transition-group(form-progress) {
+		animation: none;
 	}
 
 	/**

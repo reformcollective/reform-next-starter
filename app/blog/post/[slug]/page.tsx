@@ -1,13 +1,14 @@
 import BlogRich from "blog/BlogRich"
 import { PostList } from "blog/components/PostList"
 import { relatedPostsQuery, singlePostQuery } from "blog/queries"
+import UniversalImage from "library/UniversalImage"
 import UniversalLink from "library/link"
 import { resolveOpenGraphImage } from "library/sanity/utils"
 import { css, fresponsive, styled } from "library/styled"
-import UniversalImage from "library/UniversalImage"
 import type { Metadata, ResolvingMetadata } from "next"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
+import { Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
 
 const postSlugsQuery = defineQuery(`
@@ -76,27 +77,16 @@ export default async function PostPage({
 
 	return (
 		<Wrapper>
-			<UniversalLink href={{ pathname: "/blog" }}>back to blog</UniversalLink>
+			<UniversalLink href={"/blog"}>back to blog</UniversalLink>
 
 			<h1>{post.title}</h1>
-			<UniversalImage
-				width={1440}
-				height={600}
-				src={post.mainImage}
-				alt={post.mainImage?.alt}
-			/>
+			<UniversalImage width={1440} height={600} src={post.mainImage} />
 			<div>{post.author?.fullName}</div>
 
 			<Categories>
 				post categories:
 				{post.categories?.map((category) => (
-					<UniversalLink
-						href={{
-							pathname: "/blog/category/[category]",
-							query: { category },
-						}}
-						key={category}
-					>
+					<UniversalLink href={"/blog/category/[category]"} key={category}>
 						{category}
 					</UniversalLink>
 				))}
@@ -107,7 +97,9 @@ export default async function PostPage({
 			{relatedPosts && relatedPosts.length > 0 && (
 				<>
 					related posts:
-					<PostList posts={relatedPosts} />
+					<Suspense fallback={<div>Loading related posts...</div>}>
+						<PostList posts={relatedPosts} />
+					</Suspense>
 				</>
 			)}
 		</Wrapper>

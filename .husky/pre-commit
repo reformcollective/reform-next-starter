@@ -1,3 +1,0 @@
-node ./app/library/.github/update-hash.js || true
-git add ./.github/workflows
-pnpm dlx lint-staged || true
