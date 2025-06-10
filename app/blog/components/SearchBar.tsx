@@ -3,26 +3,16 @@
 import UniversalLink from "library/link"
 import { css, fresponsive, styled } from "library/styled"
 import { parseAsString, useQueryState } from "nuqs"
-import { useEffect, useState } from "react"
 
 export const useBlogQuery = () => {
-	"use no memo"
-	const [isClient, setIsClient] = useState(false)
-
-	useEffect(() => {
-		setIsClient(true)
-	}, [])
-
-	if (!isClient) {
-		return ["", () => {}] as const
-	}
-
 	return useQueryState("query", parseAsString.withDefault(""))
 }
 
 export function SearchBar() {
-	"use no memo"
-	const [query, setQuery] = useBlogQuery()
+	const [query, setQuery] = useQueryState(
+		"query",
+		parseAsString.withDefault(""),
+	)
 
 	return (
 		<Wrapper>

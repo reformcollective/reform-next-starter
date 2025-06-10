@@ -18,9 +18,6 @@ export const env = createEnv({
 	 */
 	server: {
 		SANITY_AUTH_TOKEN: v.string(),
-		// NOTION_TOKEN: v.string(),
-		// NOTION_CONTACT_DATABASE_ID: v.string(),
-		// NOTION_NOVA_DATABASE_ID: v.string(),
 	},
 
 	/**

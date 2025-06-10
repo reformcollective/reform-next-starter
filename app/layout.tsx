@@ -131,11 +131,10 @@ const globalCss = fresponsive(css`
 		outline: 2px solid #00f8;
 	}
 
-	/* stylelint-disable-next-line plugin/use-baseline */
 	::view-transition-group(*) {
 		animation-timing-function: ${eases.cubic.inOut};
 	}
-	/* stylelint-disable-next-line plugin/use-baseline */
+
 	::view-transition-group(form-progress) {
 		animation: none;
 	}

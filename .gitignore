@@ -51,3 +51,7 @@ sanity.types.ts
 .unlighthouse
 public/studio
 nextjs-routes.d.ts
+
+
+# anything in the husky folder
+.husky/*

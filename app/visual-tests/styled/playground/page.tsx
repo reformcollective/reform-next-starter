@@ -9,25 +9,18 @@ import {
 	mergeStyles,
 	styled,
 } from "library/styled"
-import { useMemo, useState } from "react"
+import { useState } from "react"
 
 export default function Playground() {
-	// React Compiler error quick fix. TODO: make a better fix
-	"use no memo"
 	const [responsive, setResponsive] = useState("color: red; margin: 10px;")
 	const [tablet, setTablet] = useState("color: orange; margin: 20px;")
 	const [mobile, setMobile] = useState("color: green; margin: 30px;")
 
-	const result = useMemo(() => {
-		// reset the spacing
-		styled("div", {})
-
-		return mergeStyles({
-			...fresponsive(responsive),
-			...ftablet(tablet),
-			...fmobile(mobile),
-		})
-	}, [responsive, tablet, mobile])
+	const result = mergeStyles({
+		...fresponsive(responsive),
+		...ftablet(tablet),
+		...fmobile(mobile),
+	})
 
 	/**
 	 * when tab is pressed and a textarea is focused, insert space at cursor position

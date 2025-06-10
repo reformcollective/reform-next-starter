@@ -1,15 +1,14 @@
 "use client"
 import UniversalLink from "library/link"
 import { css, fresponsive, styled } from "library/styled"
-import { useParams } from "next/navigation"
+import { useQueryState } from "nuqs"
 
 export function Categories({
 	items,
 }: {
 	items: { categories?: string[] | undefined }[]
 }) {
-	const params = useParams()
-	const category = params.category as string | undefined
+	const [category, setCategory] = useQueryState("category")
 
 	const uniqueCategories = Array.from(
 		new Set(items.flatMap((item) => item?.categories ?? [])),
@@ -21,15 +20,29 @@ export function Categories({
 			{uniqueCategories.map((item) => {
 				return (
 					<Button
+						type="button"
 						key={item}
-						href={`/blog/category/${item}`}
+						onClick={(e) => {
+							e.preventDefault()
+							setCategory(item)
+						}}
 						isActive={category === item}
 					>
 						{item}
 					</Button>
 				)
 			})}
-			{category && <UniversalLink href="/blog">clear</UniversalLink>}
+			{category && (
+				<UniversalLink
+					type="button"
+					onClick={(e) => {
+						e.preventDefault()
+						setCategory(null)
+					}}
+				>
+					clear
+				</UniversalLink>
+			)}
 		</Wrapper>
 	)
 }

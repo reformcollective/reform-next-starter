@@ -18,9 +18,14 @@ export default async function BlogLayout({
 			<Suspense fallback={<div>Loading search...</div>}>
 				<SearchBar />
 			</Suspense>
-			<Categories items={allCards} />
 
-			{children}
+			<Suspense fallback={<div>Loading categories...</div>}>
+				<Categories items={allCards} />
+			</Suspense>
+
+			<Suspense fallback={<div>Loading blog content...</div>}>
+				{children}
+			</Suspense>
 		</Wrapper>
 	)
 }
