@@ -1,9 +1,8 @@
 "use client"
 
+import { eases } from "library/eases"
 import { usePreloader } from "library/link/usePreloader"
 import { css, f, styled } from "library/styled"
-
-import { eases } from "library/eases"
 import { useRef } from "react"
 import colors from "styles/colors"
 

@@ -1,9 +1,9 @@
 "use client"
 
-import type { HeaderQueryResult } from "@/sanity.types"
 import { css, fresponsive, styled } from "library/styled"
 import useAutoHideHeader from "library/useAutoHideHeader"
 import { useRef } from "react"
+import type { HeaderQueryResult } from "@/sanity.types"
 
 export default function Header({ headerText }: NonNullable<HeaderQueryResult>) {
 	const text = useRef<HTMLDivElement>(null)

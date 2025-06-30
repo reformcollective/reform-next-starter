@@ -2,10 +2,10 @@
 
 import Userback from "@userback/widget"
 import gsap, { ScrollTrigger } from "gsap/all"
-import { ScreenProvider } from "library/ScreenContext"
-import { SmoothScrollStyle } from "library/Scroll"
 import { browserData, isBrowser } from "library/deviceDetection"
 import { PageTransitionProvider } from "library/link/usePageTransition"
+import { ScreenProvider } from "library/ScreenContext"
+import { SmoothScrollStyle } from "library/Scroll"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { ColorStyle } from "styles/colors"
 

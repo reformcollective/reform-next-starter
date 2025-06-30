@@ -1,7 +1,7 @@
 "use client"
 
-import { loader } from "library/link/loader"
 import UniversalLink from "library/link"
+import { loader } from "library/link/loader"
 import { css, fresponsive, styled } from "library/styled"
 import { useEffect, useState } from "react"
 

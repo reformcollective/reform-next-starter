@@ -1,13 +1,13 @@
 "use client"
 
-import type { Page } from "@/sanity.types"
-import { studioUrl } from "@/sanity/lib/api"
 import { env } from "env"
 import { siteURL } from "library/siteURL"
 import { css, fresponsive, keyframes, styled } from "library/styled"
-import { type SanityDocument, createDataAttribute } from "next-sanity"
+import { createDataAttribute, type SanityDocument } from "next-sanity"
 import { useOptimistic } from "next-sanity/hooks"
 import type { ReactNode } from "react"
+import { studioUrl } from "@/sanity/lib/api"
+import type { Page } from "@/sanity.types"
 
 const config = {
 	projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -53,7 +53,7 @@ export const DynamicPageOrder = ({
 
 	return order
 		.map((key) => sections.find((section) => section.key === key) ?? key)
-		.map((section, index) =>
+		.map((section) =>
 			typeof section === "object" ? (
 				<Section
 					key={section?.key}

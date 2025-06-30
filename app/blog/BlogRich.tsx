@@ -1,10 +1,10 @@
 "use client"
 
-import type { Post } from "@/sanity.types"
 import { YoutubeEmbed } from "components/YoutubeEmbed"
 import type { DeepAssetMeta } from "library/sanity/assetMetadata"
 import { TypedPortableText } from "library/sanity/PortableText"
 import UniversalImage from "library/UniversalImage"
+import type { Post } from "@/sanity.types"
 
 export default function BlogRich({
 	className,

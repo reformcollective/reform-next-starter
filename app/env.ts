@@ -1,5 +1,5 @@
 import { createEnv } from "@t3-oss/env-nextjs"
-import * as v from "valibot"
+import * as z from "zod/v4"
 
 export const env = createEnv({
 	skipValidation: false,
@@ -9,7 +9,7 @@ export const env = createEnv({
 	 * Unprefixed variables provided by the system
 	 */
 	shared: {
-		NODE_ENV: v.optional(v.picklist(["development", "production", "test"])),
+		NODE_ENV: z.enum(["development", "production", "test"]).optional(),
 	},
 
 	/**
@@ -17,7 +17,7 @@ export const env = createEnv({
 	 * Will throw if you access these variables on the client.
 	 */
 	server: {
-		SANITY_AUTH_TOKEN: v.string(),
+		SANITY_AUTH_TOKEN: z.string().min(1),
 	},
 
 	/**
@@ -26,8 +26,8 @@ export const env = createEnv({
 	 * 💡 You'll get type errors if these are not prefixed with NEXT_PUBLIC_.
 	 */
 	client: {
-		NEXT_PUBLIC_SANITY_PROJECT_ID: v.string(),
-		NEXT_PUBLIC_SANITY_DATASET: v.string(),
+		NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1),
+		NEXT_PUBLIC_SANITY_DATASET: z.string().min(1),
 	},
 
 	/**
