@@ -2,21 +2,12 @@
  * This config is used to set up Sanity Studio that's mounted on the `app/(sanity)/studio/[[...tool]]/page.tsx` route
  */
 
-import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api"
-import { pageStructure, singletonPlugin } from "@/sanity/plugins/singletons"
-import footer from "@/sanity/schemas/singletons/footer"
-import header from "@/sanity/schemas/singletons/header"
-import settings from "@/sanity/schemas/singletons/settings"
-import youtube from "@/sanity/schemas/youtube"
 import { assist } from "@sanity/assist"
 import { visionTool } from "@sanity/vision"
 import { env } from "env"
 import gsap from "gsap/all"
-import { type PluginOptions, defineConfig } from "sanity"
-import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
-import { linkField } from "sanity-plugin-link-field"
-import { media } from "sanity-plugin-media"
-import { muxInput } from "sanity-plugin-mux-input"
+import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
+import { defineConfig, type PluginOptions } from "sanity"
 import {
 	type DocumentLocation,
 	defineDocuments,
@@ -24,6 +15,15 @@ import {
 	presentationTool,
 } from "sanity/presentation"
 import { structureTool } from "sanity/structure"
+import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
+import { linkField } from "sanity-plugin-link-field"
+import { media } from "sanity-plugin-media"
+import { muxInput } from "sanity-plugin-mux-input"
+import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api"
+import footer from "@/sanity/schemas/singletons/footer"
+import header from "@/sanity/schemas/singletons/header"
+import settings from "@/sanity/schemas/singletons/settings"
+import youtube from "@/sanity/schemas/youtube"
 import author from "./sanity/schemas/blog/author"
 import post from "./sanity/schemas/blog/post"
 import page from "./sanity/schemas/sanityPage"
@@ -55,6 +55,7 @@ export default defineConfig({
 			page,
 		],
 	},
+	beta: { create: { startInCreateEnabled: false } },
 	plugins: [
 		presentationTool({
 			resolve: {

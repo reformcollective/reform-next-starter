@@ -1,6 +1,6 @@
-import type { FooterQueryResult } from "@/sanity.types"
 import UniversalLink from "library/link"
 import { css, fresponsive, styled } from "library/styled"
+import type { FooterQueryResult } from "@/sanity.types"
 
 export default function Footer({ footerText }: NonNullable<FooterQueryResult>) {
 	return (

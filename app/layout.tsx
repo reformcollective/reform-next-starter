@@ -5,10 +5,10 @@ import GlobalProviders from "components/Providers"
 import { eases } from "library/eases"
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
 import { ResetStyles } from "library/reset"
-import { sanityFetch } from "library/sanity/reusableFetch"
-import { GlobalStyles, css, fmobile, fresponsive, styled } from "library/styled"
+import { css, fmobile, fresponsive, GlobalStyles, styled } from "library/styled"
 import { defineQuery, stegaClean } from "next-sanity"
-import { Suspense, lazy } from "react"
+import { lazy, Suspense } from "react"
+import { sanityFetch } from "sanity/lib/live"
 import colors from "styles/colors"
 
 const SanityLive = lazy(() => import("sanity/lib/live"))
@@ -49,7 +49,7 @@ export default async function RootLayout({
 					</PageRoot>
 				</GlobalProviders>
 				{settings?.tags?.map(
-					(tag, i) =>
+					(tag) =>
 						tag.embed && (
 							<div
 								key={tag._key}

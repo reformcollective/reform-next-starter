@@ -1,10 +1,10 @@
 "use client"
 
-import type { Author, Post } from "@/sanity.types"
+import { css, fresponsive, styled } from "library/styled"
 import { useSearchResults } from "library/useSearchResults"
+import type { Author, Post } from "@/sanity.types"
 import { useBlogQuery } from "./SearchBar"
 import { SmallCard } from "./SmallCard"
-import { css, fresponsive, styled } from "library/styled"
 
 export function PostList({
 	posts,

@@ -1,10 +1,10 @@
 "use client"
 
-import type { AllPostsQueryResult } from "@/sanity.types"
-import { PostList } from "blog/components/PostList"
 import { LargeCard } from "blog/components/LargeCard"
+import { PostList } from "blog/components/PostList"
 import { useBlogQuery } from "blog/components/SearchBar"
 import UniversalLink from "library/link"
+import type { AllPostsQueryResult } from "@/sanity.types"
 
 export function BlogHomeClient({
 	allCards,
@@ -30,7 +30,9 @@ export function BlogHomeClient({
 				</>
 			)}
 			<PostList posts={firstPageCards} />
-			<UniversalLink href="/blog/all">show all</UniversalLink>
+			{hasMoreThanOnePage && (
+				<UniversalLink href="/blog/all">show all</UniversalLink>
+			)}
 		</>
 	)
 }

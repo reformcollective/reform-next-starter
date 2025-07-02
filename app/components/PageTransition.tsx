@@ -6,6 +6,7 @@ import { usePageTransition } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 import { useRef } from "react"
 import colors from "styles/colors"
+
 const smoothEase = "cubic-bezier(0.5, 0, 0, 1)"
 
 export default function PageTransition() {

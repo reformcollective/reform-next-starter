@@ -1,14 +1,15 @@
-import type { Page } from "@/sanity.types"
 import { EagerImages } from "library/StaticImage"
 import type { DeepAssetMeta } from "library/sanity/assetMetadata"
+import { Redirect } from "library/sanity/redirect"
 import { resolveOpenGraphImage } from "library/sanity/utils"
 import { siteURL } from "library/siteURL"
 import type { Metadata } from "next"
-import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
+import { defineQuery } from "next-sanity"
 import { type ComponentType, Fragment } from "react"
 import { sanityFetch } from "sanity/lib/live"
-import SectionSample from "sections/Sample"
+import SampleSection from "sections/Sample"
+import type { Page } from "@/sanity.types"
 import { DynamicPageOrder } from "./client"
 
 export type SectionTypes = NonNullable<
@@ -17,6 +18,7 @@ export type SectionTypes = NonNullable<
 export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
 	NonNullable<DeepAssetMeta<Page>["sections"]>[number] & { _type: T }
 > & {
+	// extra properties for creating data sanity attributes
 	documentId: string
 	documentType: string
 	path: string
@@ -24,10 +26,17 @@ export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
 
 export const dynamic = "force-static"
 
+/**
+ * When adding new sections:
+ * - add them to the page schema by exporting the section's schema from `schemas/documents/sections/index.ts`
+ * - section schemas muse not be default exports. They must be named exports
+ * - then update this object to include the new section's component
+ */
 const components: {
 	[sectionType in SectionTypes]: ComponentType<GetSectionType<sectionType>>
 } = {
-	sample: SectionSample,
+	sample: SampleSection,
+	redirect: Redirect,
 }
 
 const pageQuery = defineQuery(`
@@ -47,7 +56,7 @@ export async function generateStaticParams() {
 		perspective: "published",
 		stega: false,
 	})
-	return data.map((page: { slug: string | null }) => ({
+	return data.map((page) => ({
 		slug: page.slug === "home" ? undefined : page.slug?.split("/"),
 	}))
 }

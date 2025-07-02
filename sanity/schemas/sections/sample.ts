@@ -1,6 +1,6 @@
+import { createSectionPreview } from "library/sanity/reusables"
 import { defineArrayMember, defineField } from "sanity"
 import preview from "./preview/sample.png"
-import { createSectionPreview } from "library/sanity/reusables"
 
 export const sample = defineArrayMember({
 	groups: [{ name: "Designed for SamplePage" }],

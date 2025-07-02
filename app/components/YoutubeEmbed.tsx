@@ -14,7 +14,7 @@ export function YoutubeEmbed({
 	return (
 		<ClientOnly>
 			<Embed className={className}>
-				<ReactPlayer url={video.url} width="100%" height="100%" />
+				<ReactPlayer src={video.url} width="100%" height="100%" />
 			</Embed>
 		</ClientOnly>
 	)

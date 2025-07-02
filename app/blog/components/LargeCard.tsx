@@ -1,8 +1,8 @@
-import type { Author as AuthorType, Post } from "@/sanity.types"
 import { DisplayDate } from "library/DisplayDate"
 import UniversalLink from "library/link"
 import { css, fresponsive, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
+import type { Author as AuthorType, Post } from "@/sanity.types"
 
 export function LargeCard({
 	post,
