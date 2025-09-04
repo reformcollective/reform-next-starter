@@ -1,9 +1,9 @@
 "use client"
 
+import { Portal } from "@ariakit/react"
 import { useInterval } from "ahooks"
 import { isBrowser } from "library/deviceDetection"
 import { NextStudio } from "next-sanity/studio"
-import { Portal } from "radix-ui"
 import config from "@/sanity.config"
 
 import "./style.css"
@@ -21,8 +21,8 @@ export default function StudioPage() {
 	}, 4)
 
 	return (
-		<Portal.Root>
+		<Portal>
 			<NextStudio config={config} />
-		</Portal.Root>
+		</Portal>
 	)
 }
