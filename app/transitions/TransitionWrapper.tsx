@@ -9,6 +9,12 @@ import { Transition } from "library/ViewTransition"
 import { usePathname } from "next/navigation"
 import { useEffect } from "react"
 
+/**
+ * Main wrapper component for page transitions.
+ * Handles both view transitions and fallback transitions based on media queries.
+ * Integrates with loader events and manages scroll locking during transitions.
+ */
+
 export default function TransitionWrapper({
 	children,
 }: {
@@ -19,6 +25,10 @@ export default function TransitionWrapper({
 
 	const overrideViewTransitions = useMedia(true, true, true, true)
 
+	/**
+	 * Sets up loader event listeners to update the transition state on the document.
+	 * Cleans up listeners on unmount.
+	 */
 	useEffect(() => {
 		const handleStart = ({ name }: { name?: string }) => {
 			document.documentElement.dataset.transition = name ?? "page"
