@@ -31,7 +31,7 @@ export default async function RootLayout({
 	const { data: settings } = await sanityFetch({ query: settingsQuery })
 
 	return (
-		<html lang="en" style={{ background: colors.white }}>
+		<html lang="en">
 			<body>
 				<GlobalProviders>
 					<Suspense>
@@ -130,9 +130,13 @@ const globalCss = fresponsive(css`
 		outline: 2px solid #00f8;
 	}
 
-	::view-transition-group(*) {
+	/**
+	 * comment below back in if using view transitions
+	 */
+
+	/* ::view-transition-group(*) {
 		animation-timing-function: ${eases.cubic.inOut};
-	}
+	} */
 
 	/**
 	 * this is a workaround for lvh being calculated incorrectly

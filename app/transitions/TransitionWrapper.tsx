@@ -21,7 +21,10 @@ export default function TransitionWrapper({
 	children: React.ReactNode
 }) {
 	const pathname = usePathname()
-	// Todo - if not desired turn off page transitions brutefforce style  for any viewports
+
+	/**
+	 * Can override view transitions based on media queries. This was useful when we used them only for desktop previously.
+	 */
 
 	const overrideViewTransitions = useMedia(true, true, true, true)
 
