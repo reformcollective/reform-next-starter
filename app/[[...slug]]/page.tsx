@@ -10,15 +10,15 @@ import { type ComponentType, Fragment } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import SampleSection from "sections/Sample"
 import type { Page } from "@/sanity.types"
-import { DynamicPageOrder } from "./client"
+import { DynamicPageOrder, type StickyConfig } from "./client"
 
 export type SectionTypes = NonNullable<
 	DeepAssetMeta<Page>["sections"]
 >[number]["_type"]
+
 export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
 	NonNullable<DeepAssetMeta<Page>["sections"]>[number] & { _type: T }
 > & {
-	// extra properties for creating data sanity attributes
 	documentId: string
 	documentType: string
 	path: string
@@ -26,17 +26,25 @@ export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
 
 export const dynamic = "force-static"
 
-/**
- * When adding new sections:
- * - add them to the page schema by exporting the section's schema from `schemas/documents/sections/index.ts`
- * - section schemas muse not be default exports. They must be named exports
- * - then update this object to include the new section's component
- */
 const components: {
 	[sectionType in SectionTypes]: ComponentType<GetSectionType<sectionType>>
 } = {
 	sample: SampleSection,
 	redirect: Redirect,
+}
+
+/**
+ * stickyConfigsBySection is a mapping of section _type to sticky config
+ * only add a section here if you want it to be sticky
+ * if a section is not listed, it will not be sticky by default
+ * @example
+ * sample: { fullWidth: "0", zIndex: 1 },
+ * redirect: { fullWidth: "0", zIndex: 2 },
+ */
+
+const stickyConfigsBySection: Partial<Record<SectionTypes, StickyConfig>> = {
+	// sample: { fullWidth: "0", zIndex: 1 },
+	// redirect: { fullWidth: "0", zIndex: 2 },
 }
 
 const pageQuery = defineQuery(`
@@ -56,11 +64,10 @@ export async function generateStaticParams() {
 		perspective: "published",
 		stega: false,
 	})
-	return data.map((page) => ({
+	return data.map((page: { slug: string | null }) => ({
 		slug: page.slug === "home" ? undefined : page.slug?.split("/"),
 	}))
 }
-
 export async function generateMetadata({
 	params,
 }: {
@@ -112,9 +119,11 @@ export default async function TemplatePage({
 	})
 
 	if (!relevantPage) notFound()
-
 	if (!relevantPage.sections) notFound()
 
+	/**
+	 * for each section, get the sticky config if it exists, otherwise default to null
+	 */
 	return (
 		<>
 			{relevantPage.noIndex ? (
@@ -123,26 +132,36 @@ export default async function TemplatePage({
 			<DynamicPageOrder
 				documentId={relevantPage._id}
 				documentType={relevantPage._type}
-				sections={relevantPage.sections.map((section, index) => {
-					const Component = components[section._type]
-					if (!Component) {
-						console.warn(`Unknown section type "${section._type}"`)
-						return {
-							key: Math.random().toString(),
-							content: null,
+				sections={relevantPage.sections.map(
+					(section: { _type: SectionTypes; _key: string }, index: number) => {
+						const Component = components[section._type]
+						if (!Component) {
+							console.warn(`unknown section type "${section._type}"`)
+							return {
+								key: Math.random().toString(),
+								content: null,
+								stickyConfig: null,
+							}
 						}
-					}
-					const Wrapper = index === 0 ? EagerImages : Fragment
-					return {
-						key: section._key,
-						content: (
-							<Wrapper>
+
+						const Wrapper = index === 0 ? EagerImages : Fragment
+						// get sticky config if present, otherwise null
+						const stickyConfig = stickyConfigsBySection[section._type] ?? null
+
+						const content = (
+							<Wrapper key={section._key}>
 								{/* @ts-ignore not possible to narrow the type here */}
 								<Component {...section} />
 							</Wrapper>
-						),
-					}
-				})}
+						)
+
+						return {
+							key: section._key,
+							content,
+							stickyConfig,
+						}
+					},
+				)}
 			/>
 		</>
 	)

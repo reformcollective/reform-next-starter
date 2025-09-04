@@ -1,5 +1,5 @@
 import { allPostsQuery } from "blog/queries"
-import { sanityFetch } from "library/sanity/reusableFetch"
+import { sanityFetch } from "sanity/lib/live"
 import { BlogHomeClient } from "./BlogHomeClient"
 
 export default async function BlogHome() {

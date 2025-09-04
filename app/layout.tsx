@@ -10,6 +10,7 @@ import { defineQuery, stegaClean } from "next-sanity"
 import { lazy, Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import colors from "styles/colors"
+import TransitionWrapper from "transitions/TransitionWrapper"
 
 const SanityLive = lazy(() => import("sanity/lib/live"))
 const PageTransition = lazy(() => import("components/PageTransition"))
@@ -29,8 +30,10 @@ export default async function RootLayout({
 	const { data: footerData } = await sanityFetch({ query: footerQuery })
 	const { data: settings } = await sanityFetch({ query: settingsQuery })
 
+	console.log({ headerData, footerData, settings })
+
 	return (
-		<html lang="en">
+		<html lang="en" style={{ background: colors.white }}>
 			<body>
 				<GlobalProviders>
 					<Suspense>
@@ -44,12 +47,12 @@ export default async function RootLayout({
 							<PageTransition />
 						</Suspense>
 						{headerData && <Header {...headerData} />}
-						{children}
+						<TransitionWrapper>{children}</TransitionWrapper>
 						{footerData && <Footer {...footerData} />}
 					</PageRoot>
 				</GlobalProviders>
 				{settings?.tags?.map(
-					(tag) =>
+					(tag: { _key: string; embed?: string }) =>
 						tag.embed && (
 							<div
 								key={tag._key}
@@ -69,7 +72,7 @@ const PageRoot = styled("div", {
 		isolation: isolate;
 
 		/* ensure page content fills the view vertically */
-		min-height: 100lvh;
+		min-height: 100svh;
 		grid-template-rows: auto auto auto 1fr;
 
 		/* design grid system */
@@ -83,12 +86,11 @@ const PageRoot = styled("div", {
 		})};
 
 		/* reset colors */
-		background: ${colors.red};
-		color: ${colors.white};
+		color: ${colors.black};
 
 		main {
 			background: ${colors.white};
-			color: ${colors.red};
+			color: ${colors.black};
 		}
 	`),
 	...fmobile(css`
@@ -103,8 +105,7 @@ const PageRoot = styled("div", {
 // TODO: configure a default text color and background
 const globalCss = fresponsive(css`
 	html {
-		background: ${colors.white};
-		color: ${colors.red};
+		color: ${colors.black};
 		font-family: sans-serif;
 
 		/* hide scrollbars */
@@ -117,7 +118,7 @@ const globalCss = fresponsive(css`
 	}
 
 	body {
-		overflow-x: hidden;
+		overflow-x: clip;
 	}
 
 	* {
@@ -133,10 +134,6 @@ const globalCss = fresponsive(css`
 
 	::view-transition-group(*) {
 		animation-timing-function: ${eases.cubic.inOut};
-	}
-
-	::view-transition-group(form-progress) {
-		animation: none;
 	}
 
 	/**

@@ -65,8 +65,8 @@ export default defineConfig({
 						filter: `_type == "post" && slug.current == $slug && category.slug.current == $category`,
 					},
 					{
-						route: "/pages/*",
-						filter: `_type == "page"`,
+						route: "/:slug",
+						filter: `_type == "page" && slug.current == $slug`,
 					},
 				]),
 				locations: {

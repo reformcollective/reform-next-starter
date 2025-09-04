@@ -1,3 +1,6 @@
 import { defineLibraryConfig } from "library/defaultConfig"
 
-export default defineLibraryConfig({})
+export default defineLibraryConfig({
+	scaleFully: false,
+	transitionNames: [],
+})

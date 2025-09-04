@@ -1,7 +1,7 @@
 import { PostList } from "blog/components/PostList"
 import { allPostsQuery } from "blog/queries"
-import { sanityFetch } from "library/sanity/reusableFetch"
 import { Suspense } from "react"
+import { sanityFetch } from "sanity/lib/live"
 
 export default async function BlogCategories({
 	params,

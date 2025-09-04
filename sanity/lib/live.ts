@@ -1,4 +1,7 @@
-import { SanityLive } from "library/sanity/reusableFetch"
+import {
+	LibraryLive as SanityLive,
+	libraryFetch as sanityFetch,
+} from "library/sanity/reusableFetch"
 
-export * from "library/sanity/reusableFetch"
+export { sanityFetch }
 export default SanityLive

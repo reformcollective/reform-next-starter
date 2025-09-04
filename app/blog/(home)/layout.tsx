@@ -1,9 +1,9 @@
 import { Categories } from "blog/components/Categories"
 import { SearchBar } from "blog/components/SearchBar"
 import { allPostsQuery } from "blog/queries"
-import { sanityFetch } from "library/sanity/reusableFetch"
 import { css, fresponsive, styled } from "library/styled"
 import { type ReactNode, Suspense } from "react"
+import { sanityFetch } from "sanity/lib/live"
 
 export default async function BlogLayout({
 	children,

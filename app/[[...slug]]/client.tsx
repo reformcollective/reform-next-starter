@@ -2,12 +2,27 @@
 
 import { env } from "env"
 import { siteURL } from "library/siteURL"
-import { css, fresponsive, keyframes, styled } from "library/styled"
+import {
+	css,
+	fmobile,
+	fresponsive,
+	ftablet,
+	keyframes,
+	styled,
+} from "library/styled"
 import { createDataAttribute, type SanityDocument } from "next-sanity"
 import { useOptimistic } from "next-sanity/hooks"
-import type { ReactNode } from "react"
+import { type ReactNode, useEffect } from "react"
 import { studioUrl } from "@/sanity/lib/api"
 import type { Page } from "@/sanity.types"
+
+// stickyconfig defines the options for making a section sticky
+export type StickyConfig = {
+	fullWidth?: string
+	tablet?: string
+	mobile?: string
+	zIndex?: number
+}
 
 const config = {
 	projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -25,6 +40,7 @@ export const DynamicPageOrder = ({
 	sections: {
 		key: string
 		content: ReactNode
+		stickyConfig?: StickyConfig | null
 	}[]
 }) => {
 	const sectionOrder = sections.map((section) => section.key)
@@ -32,25 +48,30 @@ export const DynamicPageOrder = ({
 	const order = useOptimistic<string[], SanityDocument<Page>>(
 		sectionOrder,
 		(currentSections, action) => {
-			// The action contains updated document data from Sanity
-			// when someone makes an edit in the Studio
-
-			// If the edit was to a different document, ignore it
 			if (action.id !== documentId) {
 				return currentSections
 			}
 
-			// If there are sections in the updated document, use them
 			if (action.document.sections) {
-				// Reconcile References. https://www.sanity.io/docs/enabling-drag-and-drop#ffe728eea8c1
 				return action.document.sections.map((section) => section._key)
 			}
 
-			// Otherwise keep the current sections
 			return currentSections
 		},
 	)
 
+	useEffect(() => {
+		// reset all sticky positions on mount
+		const stickyElements = document.querySelectorAll("[data-sticky-wrapper]")
+		stickyElements.forEach((el) => {
+			const htmlEl = el as HTMLElement
+			htmlEl.style.position = ""
+			void htmlEl.offsetHeight
+			htmlEl.style.position = ""
+		})
+	}, [])
+
+	// render each section, passing stickyconfig if present
 	return order
 		.map((key) => sections.find((section) => section.key === key) ?? key)
 		.map((section) =>
@@ -63,17 +84,20 @@ export const DynamicPageOrder = ({
 						type: documentType,
 						path: `sections[_key=="${section.key}"]`,
 					}).toString()}
+					$stickyConfig={section.stickyConfig}
+					data-sticky-wrapper
 				>
 					{section.content}
 				</Section>
 			) : (
 				<Fallback key={section}>
 					<Shimmer />
-					Loading section data...
+					loading section data...
 				</Fallback>
 			),
 		)
 }
+
 const Shimmer = keyframes`
 	0% {
 		background-position: 100% 0;
@@ -83,12 +107,61 @@ const Shimmer = keyframes`
 	}
 `
 
-const Section = styled("div", {
-	gridColumn: "fullbleed",
-	display: "grid",
-	gridTemplateColumns: "subgrid",
-	maxWidth: "100vw",
-})
+// section is a styled div that applies sticky styles if stickyconfig is present
+const Section = styled(
+	"div",
+	({ $stickyConfig }: { $stickyConfig?: StickyConfig | null }) => {
+		const base = {
+			gridColumn: "fullbleed",
+			display: "grid",
+			gridTemplateColumns: "subgrid",
+			maxWidth: "100vw",
+			isolation: "isolate", // creates a new stacking context for z-index
+		}
+
+		// if no stickyconfig, just return base styles
+		if (!$stickyConfig) return base
+
+		// apply sticky styles for each breakpoint if present
+		const { fullWidth, tablet, mobile, zIndex = 1 } = $stickyConfig
+
+		return {
+			...base,
+
+			...(fullWidth &&
+				fresponsive(css`
+					position: sticky;
+					top: ${fullWidth};
+					z-index: ${zIndex};
+				`)),
+
+			...(!fullWidth &&
+				zIndex !== 1 &&
+				fresponsive(css`
+					z-index: ${zIndex};
+				`)),
+
+			...(tablet &&
+				ftablet(css`
+					position: sticky;
+					top: ${tablet};
+					z-index: ${zIndex};
+				`)),
+
+			...(mobile
+				? fmobile(css`
+						position: sticky;
+						top: ${mobile};
+						z-index: ${zIndex};
+					`)
+				: (fullWidth || tablet) &&
+					fmobile(css`
+						position: relative;
+						top: unset;
+					`)),
+		}
+	},
+)
 
 const Fallback = styled("div", {
 	...fresponsive(css`
