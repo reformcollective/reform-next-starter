@@ -30,8 +30,6 @@ export default async function RootLayout({
 	const { data: footerData } = await sanityFetch({ query: footerQuery })
 	const { data: settings } = await sanityFetch({ query: settingsQuery })
 
-	console.log({ headerData, footerData, settings })
-
 	return (
 		<html lang="en" style={{ background: colors.white }}>
 			<body>
