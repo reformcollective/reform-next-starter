@@ -8,17 +8,29 @@ import { type NumberInputProps, set, unset } from "sanity"
  */
 
 interface CreateSliderOptions {
-	/** Minimum value for the slider (default: 0). */
+	/**
+	 * Minimum value for the slider.
+	 * @default 0
+	 */
 	min?: number
-	/** Maximum value for the slider (default: 100). */
+
+	/**
+	 * Maximum value for the slider.
+	 * @default 100
+	 */
 	max?: number
-	/** Step value for the slider (default: 1). */
+
+	/**
+	 * Step value for the slider.
+	 * @default 1
+	 */
 	step?: number
 }
 
 /**
  * Factory function to create a slider input React component for Sanity forms.
- * @param options Configuration options for the slider.
+ *
+ * @param options - Configuration options for the slider.
  * @returns Slider input component for Sanity number fields.
  */
 export function createSliderInput(options: CreateSliderOptions = {}) {
@@ -26,7 +38,8 @@ export function createSliderInput(options: CreateSliderOptions = {}) {
 
 	/**
 	 * Slider input component for Sanity number fields.
-	 * @param props Props from Sanity number input.
+	 *
+	 * @param props - Props from Sanity number input.
 	 * @returns Slider input element.
 	 */
 	return function SliderInput(props: NumberInputProps) {
@@ -34,7 +47,8 @@ export function createSliderInput(options: CreateSliderOptions = {}) {
 
 		/**
 		 * Handles slider value change event.
-		 * @param event Change event from input.
+		 *
+		 * @param event - Change event from input.
 		 */
 		const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 			const newValue = Number(event.target.value)
