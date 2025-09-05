@@ -55,11 +55,8 @@ export async function generateMetadata(
 	}
 }
 
-export default async function PostPage({
-	params,
-}: {
-	params: Promise<{ slug: string }>
-}) {
+export default async function PostPage(props: PageProps<"/blog/post/[slug]">) {
+	const { params } = props
 	const [{ data: post }, { data: relatedPosts }] = await Promise.all([
 		sanityFetch({
 			query: singlePostQuery,
