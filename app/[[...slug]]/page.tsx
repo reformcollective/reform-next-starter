@@ -138,7 +138,7 @@ export default async function TemplatePage({
 						if (!Component) {
 							console.warn(`unknown section type "${section._type}"`)
 							return {
-								key: Math.random().toString(),
+								key: section._key,
 								content: null,
 								stickyConfig: null,
 							}
