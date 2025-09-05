@@ -1,4 +1,11 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"extends": ["app/library/biome-shared.jsonc"]
+	"extends": ["app/library/biome-shared.jsonc"],
+	"linter": {
+		"rules": {
+			"correctness": {
+				"useUniqueElementIds": "off"
+			}
+		}
+	}
 }
