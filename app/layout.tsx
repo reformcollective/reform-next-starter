@@ -21,11 +21,8 @@ const footerQuery = defineQuery(`*[_type == "footer"][0]`)
 
 const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
-export default async function RootLayout({
-	children,
-}: {
-	children: React.ReactNode
-}) {
+export default async function RootLayout(props: LayoutProps<"/">) {
+	const { children } = props
 	const { data: headerData } = await sanityFetch({ query: headerQuery })
 	const { data: footerData } = await sanityFetch({ query: footerQuery })
 	const { data: settings } = await sanityFetch({ query: settingsQuery })
