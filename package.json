@@ -114,5 +114,6 @@
 			"sharp",
 			"vue-demi"
 		]
-	}
+	},
+	"devDependencies": {}
 }
