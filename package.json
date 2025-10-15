@@ -7,8 +7,8 @@
 		"postbuild": "mkdir -p public/studio && sanity manifest extract --path public/studio/static",
 		"analyze": "ANALYZE=true next build",
 		"serve": "next start",
-		"lint": "biome lint --write && stylelint . --fix",
-		"format": "prettier --write . && biome check --write",
+		"lint": "biome lint --write && stylelint . --fix && pnpm --recursive lint",
+		"format": "prettier --write . && biome check --write && stylelint . --fix && pnpm --recursive format",
 		"preinstall": "npx only-allow pnpm",
 		"pnpm:devPreinstall": "pnpm run checkEnv && pnpm run submodule",
 		"checkEnv": "if [ -n \"$CI\" ]; then exit 0; else ls .env || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
@@ -75,9 +75,18 @@
 		"last 99 firefox versions and last 1 year",
 		"last 99 FirefoxAndroid versions and last 1 year"
 	],
-	"packageManager": "pnpm@10.12.4",
-	"engines": {
-		"node": "22.x"
+	"packageManager": "pnpm@10.17.1",
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": "^24.8.0",
+			"onFail": "download"
+		},
+		"packageManager": {
+			"name": "pnpm",
+			"version": "10.17.1",
+			"onFail": "download"
+		}
 	},
 	"lint-staged": {
 		"*": [
@@ -98,6 +107,7 @@
 			"@biomejs/biome",
 			"@parcel/watcher",
 			"@tailwindcss/oxide",
+			"@vercel/speed-insights",
 			"esbuild",
 			"lefthook",
 			"puppeteer",
