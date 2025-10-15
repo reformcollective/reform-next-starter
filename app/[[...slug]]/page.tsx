@@ -10,7 +10,6 @@ import { type ComponentType, Fragment } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import SampleSection from "sections/Sample"
 import type { Page } from "@/sanity.types"
-import { DynamicPageOrder, type StickyConfig } from "./client"
 
 export type SectionTypes = NonNullable<
 	DeepAssetMeta<Page>["sections"]
@@ -31,20 +30,6 @@ const components: {
 } = {
 	sample: SampleSection,
 	redirect: Redirect,
-}
-
-/**
- * stickyConfigsBySection is a mapping of section _type to sticky config
- * only add a section here if you want it to be sticky
- * if a section is not listed, it will not be sticky by default
- * @example
- * sample: { fullWidth: "0", zIndex: 1 },
- * redirect: { fullWidth: "0", zIndex: 2 },
- */
-
-const stickyConfigsBySection: Partial<Record<SectionTypes, StickyConfig>> = {
-	// sample: { fullWidth: "0", zIndex: 1 },
-	// redirect: { fullWidth: "0", zIndex: 2 },
 }
 
 const pageQuery = defineQuery(`
@@ -121,48 +106,30 @@ export default async function TemplatePage({
 	if (!relevantPage) notFound()
 	if (!relevantPage.sections) notFound()
 
-	/**
-	 * for each section, get the sticky config if it exists, otherwise default to null
-	 */
+	/** Render sections in order */
 	return (
 		<>
 			{relevantPage.noIndex ? (
 				<meta name="robots" content="noindex, nofollow" />
 			) : null}
-			<DynamicPageOrder
-				documentId={relevantPage._id}
-				documentType={relevantPage._type}
-				sections={relevantPage.sections.map(
-					(section: { _type: SectionTypes; _key: string }, index: number) => {
-						const Component = components[section._type]
-						if (!Component) {
-							console.warn(`unknown section type "${section._type}"`)
-							return {
-								key: section._key,
-								content: null,
-								stickyConfig: null,
-							}
-						}
+			{relevantPage.sections.map(
+				(section: { _type: SectionTypes; _key: string }, index: number) => {
+					const Component = components[section._type]
+					if (!Component) {
+						console.warn(`unknown section type "${section._type}"`)
+						return null
+					}
 
-						const Wrapper = index === 0 ? EagerImages : Fragment
-						// get sticky config if present, otherwise null
-						const stickyConfig = stickyConfigsBySection[section._type] ?? null
+					const Wrapper = index === 0 ? EagerImages : Fragment
 
-						const content = (
-							<Wrapper key={section._key}>
-								{/* @ts-ignore not possible to narrow the type here */}
-								<Component {...section} />
-							</Wrapper>
-						)
-
-						return {
-							key: section._key,
-							content,
-							stickyConfig,
-						}
-					},
-				)}
-			/>
+					return (
+						<Wrapper key={section._key}>
+							{/* @ts-ignore not possible to narrow the type here */}
+							<Component {...section} />
+						</Wrapper>
+					)
+				},
+			)}
 		</>
 	)
 }

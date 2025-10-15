@@ -20,7 +20,6 @@ const nextConfig: NextConfig = {
 		SC_DISABLE_SPEEDY: "false",
 		NEXT_PUBLIC_DEPLOY_URL: serverSiteURL,
 	},
-	typedRoutes: true,
 
 	turbopack: {
 		rules: {

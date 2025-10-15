@@ -3,9 +3,6 @@
 # dependencies
 /node_modules
 /studio/node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
 
 # testing
 /coverage
@@ -26,6 +23,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # local env files
 .env
@@ -51,7 +49,6 @@ sanity.types.ts
 .unlighthouse
 public/studio
 nextjs-routes.d.ts
-
 
 # anything in the husky folder
 .husky/*
