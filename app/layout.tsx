@@ -90,6 +90,7 @@ const PageRoot = styled("div", {
 			color: ${colors.black};
 		}
 	`),
+
 	...f.small(css`
 		--subgrid-columns: ${makeResponsiveGrid({
 			columnCount: 4,
