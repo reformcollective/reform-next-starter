@@ -131,7 +131,6 @@ export default async function TemplatePage({
 			) : null}
 			<DynamicPageOrder
 				documentId={relevantPage._id}
-				documentType={relevantPage._type}
 				sections={relevantPage.sections.map(
 					(section: { _type: SectionTypes; _key: string }, index: number) => {
 						const Component = components[section._type]

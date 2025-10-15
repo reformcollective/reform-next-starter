@@ -1,7 +1,5 @@
 "use client"
 
-import { env } from "env"
-import { siteURL } from "library/siteURL"
 import {
 	css,
 	fmobile,
@@ -10,10 +8,9 @@ import {
 	keyframes,
 	styled,
 } from "library/styled"
-import { createDataAttribute, type SanityDocument } from "next-sanity"
+import type { SanityDocument } from "next-sanity"
 import { useOptimistic } from "next-sanity/hooks"
 import { type ReactNode, useEffect } from "react"
-import { studioUrl } from "@/sanity/lib/api"
 import type { Page } from "@/sanity.types"
 
 // stickyconfig defines the options for making a section sticky
@@ -24,19 +21,11 @@ export type StickyConfig = {
 	zIndex?: number
 }
 
-const config = {
-	projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-	dataset: env.NEXT_PUBLIC_SANITY_DATASET,
-	baseUrl: `${siteURL}${studioUrl}`,
-}
-
 export const DynamicPageOrder = ({
 	documentId,
-	documentType,
 	sections,
 }: {
 	documentId: string
-	documentType: string
 	sections: {
 		key: string
 		content: ReactNode
@@ -78,12 +67,6 @@ export const DynamicPageOrder = ({
 			typeof section === "object" ? (
 				<Section
 					key={section?.key}
-					data-sanity={createDataAttribute({
-						...config,
-						id: documentId,
-						type: documentType,
-						path: `sections[_key=="${section.key}"]`,
-					}).toString()}
 					$stickyConfig={section.stickyConfig}
 					data-sticky-wrapper
 				>
@@ -116,7 +99,6 @@ const Section = styled(
 			display: "grid",
 			gridTemplateColumns: "subgrid",
 			maxWidth: "100vw",
-			isolation: "isolate", // creates a new stacking context for z-index
 		}
 
 		// if no stickyconfig, just return base styles
@@ -166,7 +148,7 @@ const Section = styled(
 const Fallback = styled("div", {
 	...fresponsive(css`
 		background: linear-gradient(120deg, #eee 30%, #eef 40%, #eee 50%);
-		background-size: 200% 100%;
+		background-size: 100% 100%;
 		height: 500px;
 		width: calc(100% - 100px);
 		animation: ${Shimmer} 2s infinite linear;

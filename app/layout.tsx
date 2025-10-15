@@ -5,12 +5,12 @@ import GlobalProviders from "components/Providers"
 import { eases } from "library/eases"
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
 import { ResetStyles } from "library/reset"
-import { css, fmobile, fresponsive, GlobalStyles, styled } from "library/styled"
+import { css, f, fresponsive, GlobalStyles, styled } from "library/styled"
 import { defineQuery, stegaClean } from "next-sanity"
 import { lazy, Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import colors from "styles/colors"
-import TransitionWrapper from "transitions/TransitionWrapper"
+import { desktopDesignSize, mobileDesignSize } from "styles/media"
 
 const SanityLive = lazy(() => import("sanity/lib/live"))
 const PageTransition = lazy(() => import("components/PageTransition"))
@@ -21,8 +21,11 @@ const footerQuery = defineQuery(`*[_type == "footer"][0]`)
 
 const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
-export default async function RootLayout(props: LayoutProps<"/">) {
-	const { children } = props
+export default async function RootLayout({
+	children,
+}: {
+	children: React.ReactNode
+}) {
 	const { data: headerData } = await sanityFetch({ query: headerQuery })
 	const { data: footerData } = await sanityFetch({ query: footerQuery })
 	const { data: settings } = await sanityFetch({ query: settingsQuery })
@@ -36,13 +39,14 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 					</Suspense>
 					<GlobalStyles>{globalCss}</GlobalStyles>
 					<ResetStyles />
+
 					<PageRoot className="root-layout">
-						<Preloader />
 						<Suspense>
 							<PageTransition />
 						</Suspense>
+						<Preloader />
 						{headerData && <Header {...headerData} />}
-						<TransitionWrapper>{children}</TransitionWrapper>
+						{children}
 						{footerData && <Footer {...footerData} />}
 					</PageRoot>
 				</GlobalProviders>
@@ -69,35 +73,36 @@ const PageRoot = styled("div", {
 		/* ensure page content fills the view vertically */
 		min-height: 100svh;
 		grid-template-rows: auto auto auto 1fr;
-
-		/* design grid system */
 		display: grid;
 		grid-template-columns: var(--subgrid-columns);
 		--subgrid-columns: ${makeResponsiveGrid({
-			columnCount: 8,
+			columnCount: 10,
 			gutter: "20px",
-			margin: "30px",
-			scaleFully: true,
+			margin: "50px",
+			sourceDesignWidth: desktopDesignSize,
 		})};
 
 		/* reset colors */
 		color: ${colors.black};
+
+		/* prevent x overflow on touch devices */
+		overflow-x: clip;
 
 		main {
 			background: ${colors.white};
 			color: ${colors.black};
 		}
 	`),
-	...fmobile(css`
+	...f.small(css`
 		--subgrid-columns: ${makeResponsiveGrid({
 			columnCount: 4,
 			gutter: "10px",
-			margin: "20px",
+			margin: "24px",
+			sourceDesignWidth: mobileDesignSize,
 		})};
 	`),
 })
 
-// TODO: configure a default text color and background
 const globalCss = fresponsive(css`
 	html {
 		color: ${colors.black};

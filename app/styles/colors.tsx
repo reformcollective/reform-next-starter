@@ -50,4 +50,18 @@ const CSSColors = Object.fromEntries(
 	[key in keyof typeof rawColors]: `var(--${key})`
 }
 
-export default CSSColors
+const jsColors = Object.fromEntries(
+	colorEntries.map(([key, [hex]]) => {
+		return [key, hex]
+	}),
+) as {
+	[key in keyof typeof rawColors]: string
+}
+
+const colors = {
+	...CSSColors,
+	...jsColors,
+	// add any custom colors here
+} as const
+
+export default colors

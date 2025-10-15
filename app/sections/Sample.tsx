@@ -23,5 +23,6 @@ export default async function SampleSection({
 const Wrapper = styled("div", {
 	...fresponsive(css`
 		padding: 200px;
+		min-height: 60vh;
 	`),
 })
