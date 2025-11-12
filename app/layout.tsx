@@ -107,7 +107,6 @@ const globalCss = fresponsive(css`
 		font-family: sans-serif;
 
 		/* hide scrollbars */
-		/* stylelint-disable-next-line plugin/no-unsupported-browser-features */
 		scrollbar-width: none;
 
 		body::-webkit-scrollbar {

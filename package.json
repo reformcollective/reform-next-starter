@@ -57,7 +57,7 @@
 		"server-only": "0.0.1",
 		"styled-components": "6.1.19",
 		"stylelint": "16.25.0",
-		"stylelint-config-reform-collective": "github:reformcollective/stylelint-config-reform",
+		"stylelint-config-reform-collective": "github:reformcollective/stylelint-config-reform#migration",
 		"svgo": "4.0.0",
 		"typescript": "5.9.3",
 		"unlighthouse": "0.17.4",

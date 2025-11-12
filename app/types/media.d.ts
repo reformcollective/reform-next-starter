@@ -59,12 +59,12 @@ declare module "*.mp4" {
 	export default content
 }
 
-declare module "*.svg" {
-	const content: import("next/image").StaticImageData
+declare module "*.webm" {
+	const content: string
 	export default content
 }
 
-declare module "*.webm" {
-	const content: string
+declare module "*.svg" {
+	const content: import("next/image").StaticImageData
 	export default content
 }
