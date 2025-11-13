@@ -1,7 +1,8 @@
 // My css.d.ts file
 import type * as CSS from "csstype"
 
-type _Test = CSS.Properties
+// load bearing type declaration
+type _ThisIsRequired = CSS.Properties
 
 declare module "csstype" {
 	interface Properties {
