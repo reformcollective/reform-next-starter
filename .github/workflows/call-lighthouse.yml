@@ -11,6 +11,9 @@ on:
 jobs:
   library:
     permissions:
+      contents: read
+      pages: write
+      id-token: write
       pull-requests: write
     # this hash is updated automatically, so if you're resolving a merge conflict, either hash is fine
     uses: reformcollective/library/.github/workflows/lighthouse.yml@b6eb9d53edcc2e33f1b472752b3cddc1b3eb841a
