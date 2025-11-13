@@ -15,7 +15,7 @@
 		"prepare": "lefthook install",
 		"typegen": "sanity schema extract && sanity typegen generate --verbose",
 		"generate-manifest": "mkdir -p public/studio && sanity manifest extract --path public/studio/static",
-		"analyze-bundle": "pnpm dlx @statoscope/cli@latest generate --input .next/server/webpack-stats.json --output .next/server/webpack-stats.html --open",
+		"analyze-bundle": "TURBOPACK_STATS=1 pnpm build && pnpm dlx @statoscope/cli@latest generate --input .next/server/webpack-stats.json --output .next/server/webpack-stats.html --open",
 		"check-env": "if [ -n \"$CI\" ]; then exit 0; else ls .env || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
 		"init-submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0"
 	},
