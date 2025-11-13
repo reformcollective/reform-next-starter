@@ -2,8 +2,6 @@
 
 import Footer from "components/Footer"
 import Header from "components/Header"
-import PageTransition from "components/PageTransition"
-// import { Preloader } from "components/Preloader"
 import GlobalProviders from "components/Providers"
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
 import { siteURL } from "library/siteURL"
@@ -38,8 +36,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 					<PageRoot className="root-layout">
 						<Suspense>
 							<SanityLive />
-							{/* <Preloader /> */}
-							<PageTransition />
 							{headerData && <Header {...headerData} />}
 							{children}
 							{footerData && <Footer {...footerData} />}
