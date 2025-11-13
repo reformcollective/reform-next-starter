@@ -49,6 +49,7 @@
 		"react-dom": "19.2.0",
 		"react-player": "3.3.3",
 		"sanity": "4.15.0",
+		"sanity-image": "1.0.0",
 		"sanity-plugin-asset-source-unsplash": "4.0.1",
 		"sanity-plugin-link-field": "file:app/library/patches/sanity-plugin-link-field-1.4.0.tgz",
 		"sanity-plugin-media": "4.0.0",

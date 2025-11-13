@@ -42,9 +42,7 @@ const Wrapper = styled("div", {
 		display: grid;
 		place-items: center;
 		translate: 0 calc(var(--preloader-hidden, 1) * 50%);
-		transition:
-			translate 1.05s ${smoothEase},
-			opacity 0.2s ease-in-out;
+		transition: translate 1.05s ${smoothEase}, opacity 0.2s ease-in-out;
 		pointer-events: none;
 
 		&::before,

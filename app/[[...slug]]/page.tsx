@@ -71,8 +71,8 @@ export async function generateMetadata({
 	const image = relevantPage?.ogImage
 		? resolveOpenGraphImage(relevantPage?.ogImage)
 		: settings?.ogImage
-			? resolveOpenGraphImage(settings?.ogImage)
-			: undefined
+		? resolveOpenGraphImage(settings?.ogImage)
+		: undefined
 	const imageData = image ? [image] : undefined
 
 	return {
