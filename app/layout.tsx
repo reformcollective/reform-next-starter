@@ -68,7 +68,7 @@ const PageRoot = styled("div", {
 		/* layout grid setup */
 		min-height: 100svh;
 		display: grid;
-		grid-template: "header" "content" "footer";
+		grid-template: "header" auto "content" 1fr "footer" auto;
 		grid-template-columns: var(--subgrid-columns);
 		--subgrid-columns: ${makeResponsiveGrid({
 			columnCount: 10,
