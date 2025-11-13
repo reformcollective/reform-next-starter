@@ -16,7 +16,6 @@
 		// other utitlities
 		"naumovs.color-highlight", // highlight colors in the editor
 		"kisstkondoros.csstriggers", // shows data from https://css-triggers.com/
-		"wix.vscode-import-cost", // show the weight of importing a module
 		"meganrogge.template-string-converter", // converts strings to template strings when you type '${'
 		"unpacksoftware.run-it", // restarts typescript after running sanity typegen
 		"actboy168.tasks" // adds a button to the status bar to run sanity typegen
