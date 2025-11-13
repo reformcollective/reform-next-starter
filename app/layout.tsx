@@ -3,15 +3,16 @@
 import Footer from "components/Footer"
 import Header from "components/Header"
 import PageTransition from "components/PageTransition"
-import { Preloader } from "components/Preloader"
+// import { Preloader } from "components/Preloader"
 import GlobalProviders from "components/Providers"
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
 import { siteURL } from "library/siteURL"
-import { css, f, fresponsive, styled } from "library/styled"
+import { css, f, fresponsive, styled } from "library/styled/alpha"
 import type { Metadata } from "next"
 import { defineQuery, stegaClean } from "next-sanity"
 import { Suspense } from "react"
 import SanityLive, { sanityFetch } from "sanity/lib/live"
+import "styles/colors.css"
 import { desktopDesignSize, mobileDesignSize } from "styles/media"
 
 // FIXME: lazify SanityLive + PageTransition
@@ -37,7 +38,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 					<PageRoot className="root-layout">
 						<Suspense>
 							<SanityLive />
-							<Preloader />
+							{/* <Preloader /> */}
 							<PageTransition />
 							{headerData && <Header {...headerData} />}
 							{children}
@@ -60,8 +61,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 	)
 }
 
-const PageRoot = styled("div", {
-	...fresponsive(css`
+const PageRoot = styled("div", [
+	f.responsive(css`
 		/*  ensure modals, portals, etc. don't appear behind the page */
 		isolation: isolate;
 
@@ -81,7 +82,7 @@ const PageRoot = styled("div", {
 		overflow-x: clip;
 	`),
 
-	...f.small(css`
+	f.small(css`
 		--subgrid-columns: ${makeResponsiveGrid({
 			columnCount: 4,
 			gutter: "10px",
@@ -89,4 +90,4 @@ const PageRoot = styled("div", {
 			sourceDesignWidth: mobileDesignSize,
 		})};
 	`),
-})
+])

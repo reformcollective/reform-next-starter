@@ -1,8 +1,8 @@
-import { css, fresponsive, styled } from "library/styled"
+import { css, fresponsive, styled } from "library/styled/alpha"
 import UniversalImage from "library/UniversalImage"
-import type { Author } from "@/sanity.types"
+import type { Author as AuthorType } from "sanity/lib/types"
 
-export function AuthorLink({ author }: { author: Author | null | undefined }) {
+export function AuthorLink({ author }: { author: AuthorType | null | undefined }) {
 	if (!author) return null
 
 	return (

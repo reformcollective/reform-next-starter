@@ -3,7 +3,9 @@
 import gsap from "gsap/all"
 import { sleep } from "library/functions"
 import { usePageTransition } from "library/link/usePageTransition"
-import { css, f, styled } from "library/styled"
+import { useGSAP } from "@gsap/react"
+import { usePathname } from "next/navigation"
+import { css, f, styled } from "library/styled/alpha"
 import { useRef } from "react"
 import colors from "styles/colors"
 
@@ -32,8 +34,8 @@ export default function PageTransition() {
 	)
 }
 
-const Wrapper = styled("div", () => ({
-	...f.responsive(css`
+const Wrapper = styled("div", {
+	base: f.responsive(css`
 		--preloader-hidden: 1;
 
 		position: fixed;
@@ -69,14 +71,14 @@ const Wrapper = styled("div", () => ({
 			height: 100%;
 		}
 	`),
-}))
+})
 
-const Text = styled("div", () => ({
-	...f.responsive(css`
+const Text = styled("div", {
+	base: f.responsive(css`
 		font-size: 2rem;
 		color: ${colors.red};
 		text-align: center;
 		opacity: 0;
 		transition: opacity 0.2s ease-in-out;
 	`),
-}))
+})

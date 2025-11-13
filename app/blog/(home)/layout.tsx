@@ -1,12 +1,11 @@
-import { Categories } from "blog/components/Categories"
-import { SearchBar } from "blog/components/SearchBar"
+import Categories from "../components/Categories"
+import SearchBar from "../components/SearchBar"
 import { allPostsQuery } from "blog/queries"
-import { css, fresponsive, styled } from "library/styled"
+import { css, fresponsive, styled } from "library/styled/alpha"
 import { Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
 
-export default async function BlogLayout(props: LayoutProps<"/blog">) {
-	const { children } = props
+const BlogLayout = async ({ children }: { children: React.ReactNode }) => {
 	const { data: allCards } = await sanityFetch({ query: allPostsQuery })
 
 	return (

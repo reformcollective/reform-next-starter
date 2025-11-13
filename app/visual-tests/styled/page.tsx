@@ -1,14 +1,16 @@
 "use client"
 
+import { createVar } from "@vanilla-extract/css"
 import {
 	css,
+	f,
 	fmobile,
 	fresponsive,
 	ftablet,
 	keyframes,
 	styled,
 	unresponsive,
-} from "library/styled"
+} from "library/styled/alpha"
 import { useMedia } from "library/useMedia"
 
 export default function Page() {
@@ -41,23 +43,23 @@ const Box = styled(
 )
 
 // extending a component + passing props
-const ColoredBox = styled(Box, ({ boxColor }: { boxColor: string }) =>
-	fresponsive(css`
-		background: ${boxColor};
-	`),
-)
+const boxColor = createVar()
+const ColoredBox = styled(Box, {
+	base: { color: boxColor },
+	variables: { boxColor },
+})
 
 // mixing responsive and unresponsive CSS
-const UnresponsiveBox = styled(Box, {
-	...unresponsive(css`
+const UnresponsiveBox = styled(Box, [
+	unresponsive(css`
 		width: 200px;
 		background-color: blue;
 	`),
-	...fresponsive(css`
+	f.responsive(css`
 		color: white;
 		padding: 20px;
 	`),
-})
+])
 
 // animations
 const FadeInKeyframes = keyframes`
@@ -83,52 +85,53 @@ const AnimatedBox = styled(
 )
 
 // variants example
-const variants = {
-	red: css`
-		background: red;
-		color: green;
-	`,
-	green: css`
-		background: green;
-		color: red;
-	`,
-}
-const ComponentWithVariants = styled(
-	"div",
-	({ variant }: { variant: keyof typeof variants }) =>
-		fresponsive(css`
-			${variants[variant]}
-		`),
-)
+const ComponentWithVariants = styled("div", {
+	variants: {
+		variant: {
+			red: fresponsive(css`
+				background: red;
+				color: green;
+			`),
+			green: fresponsive(css`
+				background: green;
+				color: red;
+			`),
+		},
+	},
+})
 
 // responsive styles example
-const WithResponsiveSample = styled("div", {
-	...fresponsive(css`
+const WithResponsiveSample = styled("div", [
+	f.responsive(css`
 		border: 10px solid black;
 		margin: 10px;
 		padding: 10px;
 		color: purple;
-
-		code {
-			font-family: monospace;
-			color: #00d5ff;
-		}
 	`),
-	...ftablet(css`
+	ftablet(css`
 		width: 512px;
 		background: dodgerblue;
 		color: red;
-
-		code {
-			color: blue;
-		}
 	`),
-	...fmobile(css`
+	fmobile(css`
 		width: 300px;
 		background-color: green;
 		color: orange;
 	`),
-})
+	{
+		within: {
+			code: [
+				f.responsive(css`
+					font-family: monospace;
+					color: #00d5ff;
+				`),
+				f.mobile(css`
+					color: blue;
+				`),
+			],
+		},
+	},
+])
 
 // fully scaled example
 const FullyScaled = styled(

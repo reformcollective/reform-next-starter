@@ -73,7 +73,6 @@ export default defineType({
 				{ type: "youtube", icon: PlayIcon },
 			],
 			title: "Text",
-			validation: (Rule) => Rule.required(),
 		}),
 	],
 })

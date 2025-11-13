@@ -1,10 +1,12 @@
 "use client"
 
-import { css, fresponsive, styled } from "library/styled"
-import { useSearchResults } from "library/useSearchResults"
-import type { Author, Post } from "@/sanity.types"
-import { useBlogQuery } from "./SearchBar"
+import { LargeCard } from "./LargeCard"
 import { SmallCard } from "./SmallCard"
+import { css, fresponsive, styled } from "library/styled/alpha"
+import type { Post } from "sanity/lib/types"
+import { useSearchResults } from "library/useSearchResults"
+import type { Author } from "@/sanity.types"
+import { useBlogQuery } from "./SearchBar"
 
 export function PostList({
 	posts,

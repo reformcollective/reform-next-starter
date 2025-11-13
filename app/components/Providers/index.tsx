@@ -8,7 +8,6 @@ import { ResetStyles } from "library/reset"
 import { ScreenProvider } from "library/ScreenContext"
 import { SmoothScrollStyle } from "library/Scroll"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
-import { ColorStyle } from "styles/colors"
 import { ProjectStyles } from "styles/project"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -37,7 +36,6 @@ export default function GlobalProviders({
 			<ScreenProvider>
 				<PageTransitionProvider>
 					<SmoothScrollStyle />
-					<ColorStyle />
 					<ProjectStyles />
 					<ResetStyles />
 

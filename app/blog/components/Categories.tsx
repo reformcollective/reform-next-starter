@@ -1,6 +1,7 @@
 "use client"
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled"
+import { css, fresponsive, styled } from "library/styled/alpha"
+import { f } from "library/styled/alpha"
 import { useQueryState } from "nuqs"
 
 export function Categories({
@@ -55,10 +56,17 @@ const Wrapper = styled(
 	`),
 )
 
-const Button = styled(UniversalLink, ({ isActive }: { isActive: boolean }) =>
-	fresponsive(css`
+const Button = styled(UniversalLink, {
+	base: f.responsive(css`
 		border: 1px solid orange;
 		padding: 10px;
-		text-decoration: ${isActive ? "underline" : "none"};
 	`),
-)
+	variants: {
+		isActive: {
+			true: fresponsive(css`
+				text-decoration: underline;
+			`),
+			false: [],
+		},
+	},
+})

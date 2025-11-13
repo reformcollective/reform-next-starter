@@ -1,5 +1,5 @@
 import { createStyleString } from "@capsizecss/core"
-import { css } from "library/styled"
+import { css } from "library/styled/vanilla"
 
 export const transparentText = css`
 	/* stylelint-disable-next-line property-no-vendor-prefix  */

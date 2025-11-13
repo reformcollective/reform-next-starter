@@ -1,11 +1,13 @@
 "use client"
 
-import { css, fresponsive, styled } from "library/styled"
+import UniversalLink from "library/link"
+import UniversalImage from "library/UniversalImage"
+import { css, fresponsive, styled } from "library/styled/alpha"
 import useAutoHideHeader from "library/useAutoHideHeader"
 import { useRef } from "react"
-import type { HeaderQueryResult } from "@/sanity.types"
+import type { Header } from "sanity/lib/types"
 
-export default function Header({ headerText }: NonNullable<HeaderQueryResult>) {
+const Header = (props: Header) => {
 	const wrapperRef = useRef<HTMLDivElement>(null)
 	useAutoHideHeader(wrapperRef)
 

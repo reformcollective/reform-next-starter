@@ -1,8 +1,8 @@
 "use client"
 
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled"
-import { parseAsString, useQueryState } from "nuqs"
+import { css, fresponsive, styled } from "library/styled/alpha"
+import { useQueryState, useQueryStates } from "nuqs"
 
 export const useBlogQuery = () => {
 	return useQueryState("query", parseAsString.withDefault(""))
