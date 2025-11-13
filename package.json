@@ -45,6 +45,7 @@
 		"next": "16.0.2",
 		"next-sanity": "11.6.6",
 		"nuqs": "2.7.3",
+		"prettier": "3.6.2",
 		"react": "19.2.0",
 		"react-dom": "19.2.0",
 		"react-player": "3.3.3",

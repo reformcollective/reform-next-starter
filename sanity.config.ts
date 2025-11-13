@@ -142,7 +142,7 @@ export default defineConfig({
 											title: doc?.title || "Untitled",
 											href: `/posts/${doc?.slug}`,
 										},
-								  ]
+									]
 								: [],
 						}),
 					}),
@@ -158,7 +158,7 @@ export default defineConfig({
 											title: doc?.title || "Untitled",
 											href: `/${doc.slug}`,
 										},
-								  ]
+									]
 								: [],
 						}),
 					}),
