@@ -2,10 +2,8 @@
 
 import AutoAnimate from "library/AutoAnimate"
 import UniversalLink from "library/link"
-import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { attrs, css, fresponsive, styled } from "library/styled/alpha"
 import { Fragment, useEffect, useState } from "react"
-import { animated } from "react-spring"
 
 const BaseWrapper = styled(
 	AutoAnimate,

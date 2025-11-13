@@ -1,0 +1,2 @@
+# exclude from line counts in PRS
+pnpm-lock.yaml binary

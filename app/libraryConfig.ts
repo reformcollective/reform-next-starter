@@ -5,5 +5,5 @@ export default defineLibraryConfig({
 	transitionNames: [],
 	tabletBreakpoint: "largeMobile",
 	pageSectionGroups: ["Designed for Homepage"],
-	stylingSystem: "vanilla",
+	stylingSystem: "both",
 })

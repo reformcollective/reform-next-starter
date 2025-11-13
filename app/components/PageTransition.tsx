@@ -3,11 +3,9 @@
 import gsap from "gsap/all"
 import { sleep } from "library/functions"
 import { usePageTransition } from "library/link/usePageTransition"
-import { useGSAP } from "@gsap/react"
-import { usePathname } from "next/navigation"
 import { css, f, styled } from "library/styled/alpha"
 import { useRef } from "react"
-import colors from "styles/colors"
+import { colors } from "styles/colors.css"
 
 const smoothEase = "cubic-bezier(0.5, 0, 0, 1)"
 

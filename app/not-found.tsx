@@ -1,5 +1,5 @@
 import { css, f, styled } from "library/styled/alpha"
-import colors from "styles/colors"
+import { colors } from "styles/colors.css"
 import textStyles from "styles/text"
 
 export default function NotFound() {
