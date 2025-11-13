@@ -1,28 +1,31 @@
+"use cache"
+
 import Footer from "components/Footer"
 import Header from "components/Header"
+import PageTransition from "components/PageTransition"
 import { Preloader } from "components/Preloader"
 import GlobalProviders from "components/Providers"
-import { eases } from "library/eases"
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
-import { ResetStyles } from "library/reset"
-import { css, f, fresponsive, GlobalStyles, styled } from "library/styled"
+import { siteURL } from "library/siteURL"
+import { css, f, fresponsive, styled } from "library/styled"
+import type { Metadata } from "next"
 import { defineQuery, stegaClean } from "next-sanity"
-import { lazy, Suspense } from "react"
-import { sanityFetch } from "sanity/lib/live"
-import colors from "styles/colors"
+import { Suspense } from "react"
+import SanityLive, { sanityFetch } from "sanity/lib/live"
 import { desktopDesignSize, mobileDesignSize } from "styles/media"
 
-const SanityLive = lazy(() => import("sanity/lib/live"))
-const PageTransition = lazy(() => import("components/PageTransition"))
+// FIXME: lazify SanityLive + PageTransition
+// https://github.com/vercel/next.js/issues/85538
 
 const headerQuery = defineQuery(`*[_type == "header"][0]`)
-
 const footerQuery = defineQuery(`*[_type == "footer"][0]`)
-
 const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
-export default async function RootLayout(props: LayoutProps<"/">) {
-	const { children } = props
+export const metadata: Metadata = {
+	metadataBase: siteURL,
+}
+
+export default async function RootLayout({ children }: LayoutProps<"/">) {
 	const { data: headerData } = await sanityFetch({ query: headerQuery })
 	const { data: footerData } = await sanityFetch({ query: footerQuery })
 	const { data: settings } = await sanityFetch({ query: settingsQuery })
@@ -31,20 +34,15 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 		<html lang="en">
 			<body>
 				<GlobalProviders>
-					<Suspense>
-						<SanityLive />
-					</Suspense>
-					<GlobalStyles>{globalCss}</GlobalStyles>
-					<ResetStyles />
-
 					<PageRoot className="root-layout">
 						<Suspense>
+							<SanityLive />
+							<Preloader />
 							<PageTransition />
+							{headerData && <Header {...headerData} />}
+							{children}
+							{footerData && <Footer {...footerData} />}
 						</Suspense>
-						<Preloader />
-						{headerData && <Header {...headerData} />}
-						{children}
-						{footerData && <Footer {...footerData} />}
 					</PageRoot>
 				</GlobalProviders>
 				{settings?.tags?.map(
@@ -67,10 +65,10 @@ const PageRoot = styled("div", {
 		/*  ensure modals, portals, etc. don't appear behind the page */
 		isolation: isolate;
 
-		/* ensure page content fills the view vertically */
+		/* layout grid setup */
 		min-height: 100svh;
-		grid-template-rows: auto auto auto 1fr;
 		display: grid;
+		grid-template: "header" "content" "footer";
 		grid-template-columns: var(--subgrid-columns);
 		--subgrid-columns: ${makeResponsiveGrid({
 			columnCount: 10,
@@ -79,16 +77,8 @@ const PageRoot = styled("div", {
 			sourceDesignWidth: desktopDesignSize,
 		})};
 
-		/* reset colors */
-		color: ${colors.black};
-
 		/* prevent x overflow on touch devices */
 		overflow-x: clip;
-
-		main {
-			background: ${colors.white};
-			color: ${colors.black};
-		}
 	`),
 
 	...f.small(css`
@@ -100,63 +90,3 @@ const PageRoot = styled("div", {
 		})};
 	`),
 })
-
-const globalCss = fresponsive(css`
-	html {
-		color: ${colors.black};
-		font-family: sans-serif;
-
-		/* hide scrollbars */
-		scrollbar-width: none;
-
-		body::-webkit-scrollbar {
-			display: none;
-		}
-	}
-
-	body {
-		overflow-x: clip;
-	}
-
-	* {
-		/* need this so that fonts match figma */
-		text-rendering: geometricprecision;
-		-webkit-font-smoothing: antialiased;
-	}
-
-	/** restore default focus states for elements that need them */
-	*:focus-visible {
-		outline: 2px solid #00f8;
-	}
-
-	/**
-	 * comment below back in if using view transitions
-	 */
-
-	/* ::view-transition-group(*) {
-		animation-timing-function: ${eases.cubic.inOut};
-	} */
-
-	/**
-	 * this is a workaround for lvh being calculated incorrectly
-	 * - on iOS safari
-	 * - AND only in the webview
-	 * - AND only before the page has resized (sometimes)
-	 *
-	 * this will only be visible if lvh is calculated incorrectly
-	 * safari is such a good browser with no problems
-	 */
-	@supports not (cursor: cell) {
-		body::before {
-			content: "";
-			pointer-events: none;
-			position: fixed;
-			top: 100lvh;
-			left: 0;
-			width: 100vw;
-			height: 100lvh;
-			background: red;
-			z-index: 999;
-		}
-	}
-`)

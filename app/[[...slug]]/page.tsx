@@ -23,8 +23,6 @@ export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
 	path: string
 }
 
-export const dynamic = "force-static"
-
 const components: {
 	[sectionType in SectionTypes]: ComponentType<GetSectionType<sectionType>>
 } = {
