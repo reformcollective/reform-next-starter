@@ -1,9 +1,5 @@
 export { metadata, viewport } from "next-sanity/studio"
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode
-}) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
 	return <>{children}</>
 }
