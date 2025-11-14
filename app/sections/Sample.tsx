@@ -1,6 +1,6 @@
 import type { GetSectionType } from "[[...slug]]/page"
 import { sleep } from "library/functions"
-import { css, fresponsive, styled } from "library/styled"
+import { css, fresponsive, styled } from "library/styled/alpha"
 
 export default async function SampleSection({
 	title,
@@ -20,9 +20,9 @@ export default async function SampleSection({
 	)
 }
 
-const Wrapper = styled("div", {
-	...fresponsive(css`
+const Wrapper = styled("div", [
+	fresponsive(css`
 		padding: 200px;
 		min-height: 60vh;
 	`),
-})
+])

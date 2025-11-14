@@ -2,35 +2,30 @@
 
 import AutoAnimate from "library/AutoAnimate"
 import UniversalLink from "library/link"
-import { attrs, css, fresponsive, styled } from "library/styled"
+import { attrs, css, fresponsive, styled } from "library/styled/alpha"
 import { Fragment, useEffect, useState } from "react"
 
-const Animate = attrs(
-	styled(
-		AutoAnimate,
-		fresponsive(css`
-			outline: 1px solid red;
-		`),
-	),
-	{
-		duration: 3,
-		skipFirstAnimation: false,
-	},
+const BaseWrapper = styled(
+	AutoAnimate,
+	fresponsive(css`
+		outline: 1px solid red;
+	`),
 )
-
-const OpacityAnimate = attrs(
-	styled(
-		AutoAnimate,
-		fresponsive(css`
-			outline: 1px solid green;
-		`),
-	),
-	{
-		duration: 3,
-		skipFirstAnimation: false,
-		parameters: { yPercent: undefined, opacity: 0 },
-	},
+const Animate = attrs(BaseWrapper, {
+	duration: 3,
+	skipFirstAnimation: false,
+})
+const OpacityWrapper = styled(
+	AutoAnimate,
+	fresponsive(css`
+		outline: 1px solid green;
+	`),
 )
+const OpacityAnimate = attrs(OpacityWrapper, {
+	duration: 3,
+	skipFirstAnimation: false,
+	parameters: { yPercent: undefined, opacity: 0 },
+})
 
 export default function AutoTests() {
 	const [flipper, setFlipper] = useState(false)

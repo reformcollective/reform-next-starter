@@ -8,7 +8,7 @@ import { DisplayDate } from "library/DisplayDate"
 import { InfiniteSideScroll } from "library/InfiniteSideScroll"
 import UniversalLink from "library/link"
 import StaticImage from "library/StaticImage"
-import { styled } from "library/styled"
+import { styled } from "library/styled/alpha"
 import { useState } from "react"
 
 export default function DesignPage() {
@@ -89,7 +89,7 @@ export default function DesignPage() {
 			</TextOverflowWrapper>
 			<h2>Display Date</h2>
 			<DisplayDate
-				date={Date.now()}
+				date={1762984857903}
 				options={{
 					year: "numeric",
 					month: "long",
@@ -147,10 +147,13 @@ const Wrapper = styled("div", {
 	gap: "40px",
 	padding: "40px 20px",
 	overflow: "clip",
+	gridColumn: "main",
 
-	".track": {
-		display: "flex",
-		gap: "15px",
+	within: {
+		".track": {
+			display: "flex",
+			gap: "15px",
+		},
 	},
 })
 
@@ -199,17 +202,20 @@ const SnapWrap = styled("div", {
 	overflow: "auto",
 	scrollSnapType: "x mandatory",
 
-	"& :first-child": {
-		marginLeft: "50%",
-	},
-	"& :last-child": {
-		marginRight: "50%",
+	within: {
+		"& :first-child": {
+			marginLeft: "50%",
+		},
+		"& :last-child": {
+			marginRight: "50%",
+		},
+
+		// hide scrollbar
+		"&::-webkit-scrollbar": {
+			display: "none",
+		},
 	},
 
-	// hide scrollbar
-	"&::-webkit-scrollbar": {
-		display: "none",
-	},
 	scrollbarWidth: "none",
 })
 

@@ -4,10 +4,11 @@ import Userback from "@userback/widget"
 import gsap, { ScrollTrigger } from "gsap/all"
 import { browserData, isBrowser } from "library/deviceDetection"
 import { PageTransitionProvider } from "library/link/usePageTransition"
+import { ResetStyles } from "library/reset"
 import { ScreenProvider } from "library/ScreenContext"
 import { SmoothScrollStyle } from "library/Scroll"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
-import { ColorStyle } from "styles/colors"
+import { ProjectStyles } from "styles/project"
 
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.defaults({
@@ -35,7 +36,9 @@ export default function GlobalProviders({
 			<ScreenProvider>
 				<PageTransitionProvider>
 					<SmoothScrollStyle />
-					<ColorStyle />
+					<ProjectStyles />
+					<ResetStyles />
+
 					{children}
 				</PageTransitionProvider>
 			</ScreenProvider>

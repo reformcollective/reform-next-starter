@@ -1,4 +1,4 @@
-import { globby } from "globby"
+import { globSync } from "node:fs"
 import { siteURL } from "library/siteURL"
 import type { MetadataRoute } from "next"
 import { defineQuery } from "next-sanity"
@@ -50,7 +50,7 @@ function normalizePath(path: string) {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	// 1) File-based routes
-	const pages = await globby(["app/**/page.tsx"])
+	const pages = globSync("app/**/page.tsx")
 	const fileRoutes = pages
 		// skip dynamic routes like [slug], [[...slug]]
 		.filter((p) => !/\[.+\]/.test(p))

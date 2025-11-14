@@ -1,6 +1,5 @@
 export { metadata, viewport } from "next-sanity/studio"
 
-export default function RootLayout(props: LayoutProps<"/">) {
-	const { children } = props
+export default function RootLayout({ children }: LayoutProps<"/">) {
 	return <>{children}</>
 }

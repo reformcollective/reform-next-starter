@@ -5,11 +5,11 @@
 		"jsx": "preserve",
 		"incremental": true,
 		"plugins": [{ "name": "next" }],
-		"baseUrl": "./app",
 		"paths": {
-			"@/*": ["../*"],
-			"sanity/*": ["../sanity/*"],
-			"page": ["./[[...slug]]/page"]
+			"*": ["./app/*"],
+			"@/*": ["./*"],
+			"sanity/*": ["./sanity/*"],
+			"page": ["./app/[[...slug]]/page"]
 		}
 	},
 	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -55,7 +55,8 @@
 		"^next/router$",
 		"^gsap/(?!all$).+",
 		"^gsap$",
-		"^gsap-trial"
+		"^gsap-trial",
+		"^library/styled$"
 	],
 	"workbench.editor.customLabels.patterns": {
 		"**/index.tsx": "${dirname} / index.tsx",

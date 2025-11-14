@@ -1,5 +1,12 @@
+// My css.d.ts file
+import type * as CSS from "csstype"
+
+// load bearing type declaration
+type _ThisIsRequired = CSS.Properties
+
 declare module "csstype" {
 	interface Properties {
-		[index: `--${string}`]: unknown
+		// Allow any CSS Custom Properties
+		[index: `--${string}`]: string | number | undefined
 	}
 }
