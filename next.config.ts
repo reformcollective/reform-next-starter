@@ -9,7 +9,11 @@ const nextConfig: NextConfig = {
     root: "/",
   },
 
+  // we check types manually using tsgo
+  typescript: { ignoreBuildErrors: true },
+
   experimental: {
+    // enable filesystem caching for build and dev
     turbopackFileSystemCacheForBuild: true,
     turbopackFileSystemCacheForDev: true,
   },

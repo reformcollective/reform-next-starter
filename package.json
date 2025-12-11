@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "tsgo && next build",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write"
@@ -20,6 +20,7 @@
     "@types/node": "^20.19.26",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@typescript/native-preview": "7.0.0-dev.20251210.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "typescript": "^5.9.3"
   }
