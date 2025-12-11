@@ -2,7 +2,13 @@
 
 # dependencies
 /node_modules
-/studio/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # testing
 /coverage
@@ -11,9 +17,8 @@
 /.next/
 /out/
 
-# sanity
-/.sanity/
-/dist/
+# production
+/build
 
 # misc
 .DS_Store
@@ -23,12 +28,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+.pnpm-debug.log*
 
-# local env files
-.env
-.env.*
-!.env.example
+# env files (can opt-in for committing if needed)
+.env*
 
 # vercel
 .vercel
@@ -36,19 +39,3 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# bad lock files
-package-lock.json
-yarn.lock
-bun.lockb
-bun.lock
-
-# generated files
-schema.json
-sanity.types.ts
-.unlighthouse
-public/studio
-nextjs-routes.d.ts
-
-# anything in the husky folder
-.husky/*
