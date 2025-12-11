@@ -1,4 +1,4 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"extends": ["app/library/biome/biome-project.jsonc"]
+	"extends": ["library/biome/biome-project.jsonc"]
 }

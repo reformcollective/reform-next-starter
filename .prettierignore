@@ -1,4 +1,4 @@
 .vscode
 pnpm-lock.yaml
-app/library
+library
 .next

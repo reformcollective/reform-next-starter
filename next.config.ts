@@ -1,6 +1,6 @@
 import type { NextConfig } from "next"
-import { serverSiteURL } from "./app/library/siteURL/determine"
-import { withVanillaSplit } from "./app/library/vanilla/withVanillaSplit"
+import { serverSiteURL } from "./library/siteURL/determine"
+import { withVanillaSplit } from "./library/vanilla/withVanillaSplit"
 
 const nextConfig: NextConfig = {
 	env: {

@@ -52,7 +52,7 @@
 		"sanity": "4.15.0",
 		"sanity-image": "1.0.0",
 		"sanity-plugin-asset-source-unsplash": "4.0.1",
-		"sanity-plugin-link-field": "file:app/library/patches/sanity-plugin-link-field-1.4.0.tgz",
+		"sanity-plugin-link-field": "1.4.1",
 		"sanity-plugin-media": "4.0.0",
 		"sanity-plugin-mux-input": "2.11.1",
 		"server-only": "0.0.1",
