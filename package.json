@@ -6,11 +6,12 @@
     "dev": "wireit",
     "build": "wireit",
     "start": "wireit",
+    "test": "wireit",
     "lint": "wireit",
     "format": "wireit",
     "typegen": "wireit",
     "typecheck": "wireit",
-    "test": "wireit",
+    "generate-manifest": "wireit",
     "prepare": "lefthook install",
     "pnpm:devPreinstall": "pnpm check-env & pnpm init-submodule & pnpm git-config & wait",
     "check-env": "if [ -n \"$CI\" ]; then exit 0; else ls .env || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
@@ -33,7 +34,7 @@
       "service": true
     },
     "build": {
-      "command": "pnpm typecheck & next build & wait"
+      "command": "pnpm typecheck & next build & pnpm generate-manifest & wait"
     },
     "typecheck": {
       "command": "tsgo",
@@ -41,11 +42,40 @@
         "typegen"
       ]
     },
+    "generate-manifest": {
+      "command": "mkdir -p public/studio && sanity manifest extract --path public/studio/static",
+      "files": [
+        "sanity/**/*",
+        "sanity.config.ts"
+      ],
+      "output": [
+        "public/studio/static/**/*"
+      ]
+    },
     "sanity-typegen": {
-      "command": "sanity schema extract && sanity typegen generate --verbose"
+      "command": "sanity schema extract && sanity typegen generate --verbose",
+      "files": [
+        "sanity/**/*",
+        "sanity.config.ts",
+        "app/**/*.ts",
+        "app/**/*.tsx"
+      ],
+      "output": [
+        "schema.json",
+        "sanity.types.ts"
+      ]
     },
     "next-typegen": {
-      "command": "next typegen"
+      "command": "next typegen",
+      "files": [
+        "app/**/*.ts",
+        "app/**/*.tsx",
+        "next.config.ts",
+        "tsconfig.json"
+      ],
+      "output": [
+        ".next/types/**/*.ts"
+      ]
     },
     "typegen": {
       "dependencies": [
@@ -110,7 +140,7 @@
     "jsdom": "27.3.0",
     "lefthook": "2.0.9",
     "lenis": "1.3.16",
-    "next": "16.0.10",
+    "next": "16.1.0-canary.19",
     "next-sanity": "11.6.10",
     "nuqs": "2.8.5",
     "oxfmt": "0.17.0",

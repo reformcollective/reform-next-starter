@@ -13,8 +13,8 @@ const nextConfig: NextConfig = {
     viewTransition: true,
 
     // enable filesystem caching for build and dev
-    // turbopackFileSystemCacheForBuild: true,
-    // turbopackFileSystemCacheForDev: true,
+    turbopackFileSystemCacheForBuild: true,
+    turbopackFileSystemCacheForDev: true,
   },
 
   env: {
