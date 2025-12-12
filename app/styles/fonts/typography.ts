@@ -1,8 +1,8 @@
 import { Geist } from "next/font/google"
 
 export const geist = Geist({
-  subsets: ["latin"],
-  display: "swap",
+	subsets: ["latin"],
+	display: "swap",
 })
 
 // export const exampleFont = localFont({

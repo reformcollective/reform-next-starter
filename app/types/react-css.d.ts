@@ -5,8 +5,8 @@ import type * as CSS from "csstype"
 type _ThisIsRequired = CSS.Properties
 
 declare module "csstype" {
-  interface Properties {
-    // Allow any CSS Custom Properties
-    [index: `--${string}`]: string | number | undefined
-  }
+	interface Properties {
+		// Allow any CSS Custom Properties
+		[index: `--${string}`]: string | number | undefined
+	}
 }

@@ -1,5 +1,6 @@
 {
-  "embeddedLanguageFormatting": "auto",
-  "semi": false,
-  "ignorePatterns": ["pnpm-lock.yaml", "library/**"]
+	"embeddedLanguageFormatting": "auto",
+	"semi": false,
+	"ignorePatterns": ["pnpm-lock.yaml", "library/**"],
+	"useTabs": true
 }

@@ -9,5 +9,5 @@ import { token } from "sanity/lib/token"
  */
 
 export const { GET } = defineEnableDraftMode({
-  client: client.withConfig({ token }),
+	client: client.withConfig({ token }),
 })

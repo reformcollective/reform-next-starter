@@ -14,18 +14,18 @@ import { resolveOpenGraphImage } from "library/sanity/opengraph"
 export type SectionTypes = NonNullable<DeepAssetMeta<Page>["sections"]>[number]["_type"]
 
 export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
-  NonNullable<DeepAssetMeta<Page>["sections"]>[number] & { _type: T }
+	NonNullable<DeepAssetMeta<Page>["sections"]>[number] & { _type: T }
 > & {
-  documentId: string
-  documentType: string
-  path: string
+	documentId: string
+	documentType: string
+	path: string
 }
 
 const components: {
-  [sectionType in SectionTypes]: ComponentType<GetSectionType<sectionType>>
+	[sectionType in SectionTypes]: ComponentType<GetSectionType<sectionType>>
 } = {
-  sample: SampleSection,
-  redirect: Redirect,
+	sample: SampleSection,
+	redirect: Redirect,
 }
 
 const pageQuery = defineQuery(`
@@ -40,90 +40,90 @@ const pageSlugs = defineQuery(`
 const pageSettingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
 export async function generateStaticParams() {
-  const { data } = await sanityFetch({
-    query: pageSlugs,
-    perspective: "published",
-    stega: false,
-  })
-  return data.map((page: { slug: string | null }) => ({
-    slug: page.slug === "home" ? undefined : page.slug?.split("/"),
-  }))
+	const { data } = await sanityFetch({
+		query: pageSlugs,
+		perspective: "published",
+		stega: false,
+	})
+	return data.map((page: { slug: string | null }) => ({
+		slug: page.slug === "home" ? undefined : page.slug?.split("/"),
+	}))
 }
 export async function generateMetadata({
-  params,
+	params,
 }: {
-  params: Promise<{ slug: string[] | undefined }>
+	params: Promise<{ slug: string[] | undefined }>
 }): Promise<Metadata> {
-  const { data: relevantPage } = await sanityFetch({
-    query: pageQuery,
-    params: {
-      slug: (await params).slug?.join("/") || "home",
-    },
-  })
-  const { data: settings } = await sanityFetch({
-    query: pageSettingsQuery,
-  })
+	const { data: relevantPage } = await sanityFetch({
+		query: pageQuery,
+		params: {
+			slug: (await params).slug?.join("/") || "home",
+		},
+	})
+	const { data: settings } = await sanityFetch({
+		query: pageSettingsQuery,
+	})
 
-  const title = relevantPage?.title ?? settings?.defaultTitle
-  const description = relevantPage?.description ?? settings?.defaultDescription
-  const image = relevantPage?.ogImage
-    ? resolveOpenGraphImage(relevantPage?.ogImage)
-    : settings?.ogImage
-      ? resolveOpenGraphImage(settings?.ogImage)
-      : undefined
-  const imageData = image ? [image] : undefined
+	const title = relevantPage?.title ?? settings?.defaultTitle
+	const description = relevantPage?.description ?? settings?.defaultDescription
+	const image = relevantPage?.ogImage
+		? resolveOpenGraphImage(relevantPage?.ogImage)
+		: settings?.ogImage
+			? resolveOpenGraphImage(settings?.ogImage)
+			: undefined
+	const imageData = image ? [image] : undefined
 
-  return {
-    title,
-    description,
-    twitter: {
-      card: "summary_large_image",
-      images: imageData,
-    },
-    openGraph: {
-      images: imageData,
-    },
-    metadataBase: new URL(siteURL),
-  }
+	return {
+		title,
+		description,
+		twitter: {
+			card: "summary_large_image",
+			images: imageData,
+		},
+		openGraph: {
+			images: imageData,
+		},
+		metadataBase: new URL(siteURL),
+	}
 }
 
 export default async function TemplatePage({
-  params,
+	params,
 }: {
-  params: Promise<{ slug: string[] | undefined }>
+	params: Promise<{ slug: string[] | undefined }>
 }) {
-  const { data: relevantPage } = await sanityFetch({
-    query: pageQuery,
-    params: {
-      slug: (await params).slug?.join("/") || "home",
-    },
-  })
+	const { data: relevantPage } = await sanityFetch({
+		query: pageQuery,
+		params: {
+			slug: (await params).slug?.join("/") || "home",
+		},
+	})
 
-  if (!relevantPage) notFound()
-  if (!relevantPage.sections) notFound()
+	if (!relevantPage) notFound()
+	if (!relevantPage.sections) notFound()
 
-  /** Render sections in order */
-  return (
-    <>
-      {relevantPage.noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
-      {relevantPage.sections.map(
-        (section: { _type: SectionTypes; _key: string }, index: number) => {
-          const Component = components[section._type]
-          if (!Component) {
-            console.warn(`unknown section type "${section._type}"`)
-            return null
-          }
+	/** Render sections in order */
+	return (
+		<>
+			{relevantPage.noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
+			{relevantPage.sections.map(
+				(section: { _type: SectionTypes; _key: string }, index: number) => {
+					const Component = components[section._type]
+					if (!Component) {
+						console.warn(`unknown section type "${section._type}"`)
+						return null
+					}
 
-          const Wrapper = index === 0 ? EagerImages : Fragment
+					const Wrapper = index === 0 ? EagerImages : Fragment
 
-          return (
-            <Wrapper key={section._key}>
-              {/* @ts-ignore not possible to narrow the type here */}
-              <Component {...section} />
-            </Wrapper>
-          )
-        },
-      )}
-    </>
-  )
+					return (
+						<Wrapper key={section._key}>
+							{/* @ts-ignore not possible to narrow the type here */}
+							<Component {...section} />
+						</Wrapper>
+					)
+				},
+			)}
+		</>
+	)
 }

@@ -1,47 +1,47 @@
 {
-  "oxc.fmt.experimental": true,
-  "editor.defaultFormatter": "oxc.oxc-vscode",
-  "stylelint.validate": ["css", "scss", "typescript", "typescriptreact"],
-  "run-it.commands": [
-    {
-      "delay": 5000,
-      "commands": ["typescript.restartTsServer"],
-      "files": ["**/tsconfig.json", "**/sanity.types.ts"]
-    },
-    {
-      "delay": 5000,
-      "commands": ["workbench.action.tasks.build"],
-      "files": ["**/sanity/schemas/**/*.ts", "**/sanity/schemas/**/*.tsx", "**/sanity.config.ts"]
-    }
-  ],
-  "cSpell.enabled": true,
-  "cSpell.diagnosticLevel": "Hint",
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.preferences.autoImportFileExcludePatterns": [
-    "restyle",
-    "styled-components",
-    "styled-jsx"
-  ],
-  "typescript.preferences.autoImportSpecifierExcludeRegexes": [
-    "^next/router$",
-    "^gsap/(?!all$).+",
-    "^gsap$",
-    "^gsap-trial",
-    "^library/styled$"
-  ],
-  "workbench.editor.customLabels.enabled": true,
-  "workbench.editor.customLabels.patterns": {
-    "**/page.{tsx,jsx,js,ts}": "${dirname} / page.${extname}",
-    "**/layout.{tsx,jsx,js,ts}": "${dirname} / layout.${extname}",
-    "**/error.{tsx,jsx,js,ts}": "${dirname} / error.${extname}",
-    "**/loading.{tsx,jsx,js,ts}": "${dirname} / loading.${extname}",
-    "**/route.{tsx,jsx,js,ts}": "${dirname} / route.${extname}"
-  },
-  "editor.linkedEditing": true,
-  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-  "typescript.experimental.useTsgo": true,
+	"oxc.fmt.experimental": true,
+	"editor.defaultFormatter": "oxc.oxc-vscode",
+	"stylelint.validate": ["css", "scss", "typescript", "typescriptreact"],
+	"run-it.commands": [
+		{
+			"delay": 5000,
+			"commands": ["typescript.restartTsServer"],
+			"files": ["**/tsconfig.json", "**/sanity.types.ts"]
+		},
+		{
+			"delay": 5000,
+			"commands": ["workbench.action.tasks.build"],
+			"files": ["**/sanity/schemas/**/*.ts", "**/sanity/schemas/**/*.tsx", "**/sanity.config.ts"]
+		}
+	],
+	"cSpell.enabled": true,
+	"cSpell.diagnosticLevel": "Hint",
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"typescript.preferences.autoImportFileExcludePatterns": [
+		"restyle",
+		"styled-components",
+		"styled-jsx"
+	],
+	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
+		"^next/router$",
+		"^gsap/(?!all$).+",
+		"^gsap$",
+		"^gsap-trial",
+		"^library/styled$"
+	],
+	"workbench.editor.customLabels.enabled": true,
+	"workbench.editor.customLabels.patterns": {
+		"**/page.{tsx,jsx,js,ts}": "${dirname} / page.${extname}",
+		"**/layout.{tsx,jsx,js,ts}": "${dirname} / layout.${extname}",
+		"**/error.{tsx,jsx,js,ts}": "${dirname} / error.${extname}",
+		"**/loading.{tsx,jsx,js,ts}": "${dirname} / loading.${extname}",
+		"**/route.{tsx,jsx,js,ts}": "${dirname} / route.${extname}"
+	},
+	"editor.linkedEditing": true,
+	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
+	"typescript.experimental.useTsgo": true,
 
-  /* unsorted settings */
-  "": ""
+	/* unsorted settings */
+	"": ""
 }

@@ -6,9 +6,9 @@ import config from "sanity.config"
 import "./style.css"
 
 export default function StudioPage() {
-  return (
-    <Portal>
-      <NextStudio config={config} />
-    </Portal>
-  )
+	return (
+		<Portal>
+			<NextStudio config={config} />
+		</Portal>
+	)
 }
