@@ -59,9 +59,11 @@ export async function generateMetadata({
 		params: {
 			slug: (await params).slug?.join("/") || "home",
 		},
+		stega: false,
 	})
 	const { data: settings } = await sanityFetch({
 		query: pageSettingsQuery,
+		stega: false,
 	})
 
 	const title = relevantPage?.title ?? settings?.defaultTitle
@@ -97,6 +99,7 @@ export default async function TemplatePage({
 		params: {
 			slug: (await params).slug?.join("/") || "home",
 		},
+		stega: true,
 	})
 
 	if (!relevantPage) notFound()

@@ -8,12 +8,7 @@ import { env } from "app/env"
 import gsap from "gsap/all"
 import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
 import { defineConfig, type PluginOptions } from "sanity"
-import {
-	type DocumentLocation,
-	defineDocuments,
-	defineLocations,
-	presentationTool,
-} from "sanity/presentation"
+import { presentationTool } from "sanity/presentation"
 import { structureTool } from "sanity/structure"
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
 import { linkField } from "sanity-plugin-link-field"
@@ -25,7 +20,6 @@ import header from "sanity/schemas/singletons/header"
 import settings from "sanity/schemas/singletons/settings"
 import { youtube } from "library/sanity/reusables"
 import page from "sanity/schemas/sanityPage"
-import { PresentationIcon } from "@sanity/icons"
 import { RocketIcon } from "node_modules/@sanity/icons/dist"
 import { authorType } from "sanity/schemas/blog/authorType"
 import { blockContentType } from "sanity/schemas/blog/blockContentType"
@@ -41,11 +35,6 @@ import { codeInput } from "@sanity/code-input"
 
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
-
-const homeLocation = {
-	title: "Home",
-	href: "/",
-} satisfies DocumentLocation
 
 const singletons = [settings, header, footer]
 

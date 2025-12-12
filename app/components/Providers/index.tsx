@@ -23,7 +23,7 @@ if (
 	isBrowser &&
 	(window.location.href.includes("netlify") || window.location.href.includes("vercel"))
 )
-	Userback("A-v0IzZWe1Wp6WdUZsgSwl1T41O")
+	void Userback("A-v0IzZWe1Wp6WdUZsgSwl1T41O")
 
 export default function GlobalProviders({ children }: { children: React.ReactNode }) {
 	return (

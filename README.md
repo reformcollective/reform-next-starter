@@ -68,3 +68,8 @@ Built with Next. Install dependencies with `pnpm i` and run with `pnpm dev`
 
 1. (Optional) Install Node
    You don't strictly need Node, since pnpm will download it for you. If you do want to install node globally, you can do so with pnpm: `pnpm env use --global lts`
+
+1. (Optional) Configure wireit
+   Wireit by default will run tasks in parallel where possible. It suppresses logs when doing so, unless there's an error. If you want to see verbose logging output, you can set an environment variable to configure the behavior. You can also disable parallel runs entirely in a similar fashion. See their readme for more details: https://github.com/google/wireit#environment-variables
+
+   I've configured my default logger to be `WIREIT_LOGGER=metrics`

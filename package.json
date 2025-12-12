@@ -34,7 +34,10 @@
 			"service": true
 		},
 		"build": {
-			"command": "pnpm typecheck & next build & pnpm generate-manifest & wait"
+			"command": "pnpm typecheck & pnpm generate-manifest & next build & wait",
+			"env": {
+				"WIREIT_LOGGER": "quiet"
+			}
 		},
 		"typecheck": {
 			"command": "tsgo",
