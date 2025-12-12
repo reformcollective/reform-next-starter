@@ -28,3 +28,5 @@ export default function RootLayout({
     </html>
   )
 }
+
+const _a: string = 1
