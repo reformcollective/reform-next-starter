@@ -7,7 +7,7 @@ Remove each item from the list as you complete it.
 
 1. Clone using the template in GitHub
 1. Copy the starters `.env` file to your own `.env` file (you'll update this during sanity setup or ejection)
-1. Update all existing packages with `pnpm dlx npm-check-updates --deep -u` (feel free to update the starter repository as well)
+1. Update all existing packages with `pnpm dlx npm-check-updates -c 1 --deep -u` (feel free to update the starter repository as well)
 1. Update the README.md to add project-specific image and name below
 1. Delete the `app/visual-tests` folder
 
@@ -15,15 +15,14 @@ Remove each item from the list as you complete it.
 
 1. Configure branch rules on github (you should export and import the starter's rule set)
 1. In repository settings, enable "Always suggest updating pull request branches", "Allow auto-merge", and "Automatically delete head branches"
-1. Set up a Netlify build and link to sanity if available/part of project
-1. Add .env variables (if any) to Netlify, Notion, and Github (beware fancy quotes) (see sanity setup)
-1. Delete _summary_ commit checks from netlify notifications. do not delete the _state_ commit checks.
+1. Set up a Vercel build and link to sanity if available/part of project
+1. Add .env variables (if any) to Vercel, Notion, and Github (beware fancy quotes) (see sanity setup)
 
 ## Design Setup
 
-1. Add any typography to `app/styles/fonts/typography.ts`, and configure a default text color/style in `app/layout.tsx`
+1. Add any typography to `app/styles/fonts/typography.ts`, and configure a default text color/style in `app/styles/project.tsx`
 1. Add any text styles to `app/styles/text.ts`
-1. Configure the library config according to this project's needs. for example, you should remove the default transitions.
+1. Configure the library config according to this project's needs.
 1. Update the `app/manifest.webmanifest` to include colors and metadata
 1. If they exist, export the fullmark, logomark, and wordmark from figma and add them to `app/images`
 
@@ -33,14 +32,13 @@ If this project is using a CMS, set up a new project in Sanity. If we're not sur
 
 ### Removing Sanity
 
-1. in `package.json`, delete the `typegen` and `postinstall` scripts
-1. delete `app/(sanity)`, `app/blog`, `app/[slug]`, and `sanity` folders
+1. in `package.json`, delete any scripts that reference sanity.
+1. delete `app/(sanity)`, `app/blog`, `app/[[...slug]]`, and `sanity` folders
 1. delete `.vscode/tasks.json`, `sanity.config.ts`, `sanity.types.ts`, and `sanity.cli.ts`, and any other sanity-related files in the root of the project
 1. remove `SanityLive`, `SanityFetch`, and `defineQuery`, as well as any dependent code, from `app/layout.tsx`, `app/components/Header.tsx`, `app/components/Footer.tsx`, and `app/sitemap.ts`
 1. add `library/sanity` and `library/UniversalImage.tsx` to the `exclude` array in `tsconfig.json` (you'll be using StaticImage instead)
 1. remove any sanity-related packages from `package.json`
-1. update isSanity to false in `.github/workflows/call-code-checks.yml`
-1. run `pnpx tsc` and clean up any type errors or missed sanity files
+1. run `pnpx tsgo` and clean up any type errors or missed sanity files
 1. if no env variables remain, you can also remove the `checkEnv` script from `package.json`
 
 ### Setting up Sanity
