@@ -1,5 +1,5 @@
 {
   "embeddedLanguageFormatting": "auto",
   "semi": false,
-  "ignorePatterns": ["library/**"]
+  "ignorePatterns": ["pnpm-lock.yaml", "library/**"]
 }
