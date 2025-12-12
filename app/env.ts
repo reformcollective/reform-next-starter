@@ -3,6 +3,7 @@ import * as z from "zod"
 
 export const env = createEnv({
 	skipValidation: false,
+	emptyStringAsUndefined: true,
 
 	/**
 	 * Unprefixed variables provided by the system
