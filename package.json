@@ -1,27 +1,63 @@
 {
-	"name": "starter-update",
-	"version": "0.1.0",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"dev": "next dev",
-		"build": "tsgo && next build",
-		"start": "next start",
-		"lint": "biome check",
-		"format": "biome format --write"
-	},
-	"dependencies": {
-		"next": "16.1.0-canary.16",
-		"react": "^19.2.1",
-		"react-dom": "^19.2.1"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.3.8",
-		"@types/node": "^20.19.26",
-		"@types/react": "^19.2.7",
-		"@types/react-dom": "^19.2.3",
-		"@typescript/native-preview": "7.0.0-dev.20251210.1",
-		"babel-plugin-react-compiler": "^1.0.0",
-		"typescript": "^5.9.3"
-	}
+  "name": "starter-update",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "tsgo && next build",
+    "start": "next start",
+    "lint": "oxlint --fix --type-aware && stylelint . --fix && pnpm --recursive lint",
+    "format": "oxfmt && pnpm --recursive format",
+    "pnpm:devPreinstall": "pnpm check-env && pnpm init-submodule && pnpm git-config",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "pnpm typegen || exit 0",
+    "prepare": "lefthook install",
+    "typegen": "sanity schema extract && sanity typegen generate --verbose",
+    "check-env": "if [ -n \"$CI\" ]; then exit 0; else ls .env || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
+    "git-config": "git config submodule.recurse true",
+    "init-submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0"
+  },
+  "dependencies": {
+    "@capsizecss/core": "4.1.3",
+    "@vanilla-extract/css": "^1.17.5",
+    "next": "16.1.0-canary.16",
+    "react": "19.2.1",
+    "react-dom": "19.2.1"
+  },
+  "devDependencies": {
+    "@total-typescript/tsconfig": "1.0.4",
+    "@types/node": "20.19.26",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@typescript/native-preview": "7.0.0-dev.20251210.1",
+    "babel-plugin-react-compiler": "1.0.0",
+    "gsap": "3.14.1",
+    "lefthook": "2.0.9",
+    "oxfmt": "0.17.0",
+    "oxlint": "1.32.0",
+    "oxlint-tsgolint": "0.8.5",
+    "prettier": "3.7.4",
+    "stylelint": "16.26.1",
+    "stylelint-config-reform-collective": "github:reformcollective/stylelint-config-reform#migration",
+    "typescript": "5.9.3"
+  },
+  "stylelint": {
+    "extends": "stylelint-config-reform-collective"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "$react",
+      "react-dom": "$react-dom",
+      "@types/react": "$@types/react",
+      "@types/react-dom": "$@types/react-dom",
+      "gsap": "$gsap",
+      "@vanilla-extract/compiler": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/compiler@edaedbb",
+      "@vanilla-extract/css": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/css@edaedbb",
+      "@vanilla-extract/integration": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/integration@edaedbb",
+      "@vanilla-extract/next-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/next-plugin@edaedbb",
+      "@vanilla-extract/turbopack-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/turbopack-plugin@edaedbb",
+      "@vanilla-extract/webpack-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/webpack-plugin@edaedbb"
+    }
+  }
 }

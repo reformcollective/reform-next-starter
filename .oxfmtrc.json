@@ -1,0 +1,5 @@
+{
+  "embeddedLanguageFormatting": "auto",
+  "semi": false,
+  "ignorePatterns": ["library/**"]
+}

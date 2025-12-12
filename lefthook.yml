@@ -1,0 +1,28 @@
+pre-commit:
+  jobs:
+    - name: lint
+      run: pnpm oxlint --fix --type-aware
+      glob:
+        - "*.js"
+        - "*.jsx"
+        - "*.ts"
+        - "*.tsx"
+        - "*.json"
+        - "*.jsonc"
+        - "*.css"
+      stage_fixed: true
+    - name: format
+      run: pnpm oxfmt
+      glob:
+        - "*.js"
+        - "*.jsx"
+        - "*.ts"
+        - "*.tsx"
+        - "*.json"
+        - "*.jsonc"
+        - "*.css"
+      stage_fixed: true
+    - name: update workflow hashes
+      run: node ./library/.github/update-hash.js || true
+    - name: stage workflow hashes
+      run: git add ./.github/workflows
