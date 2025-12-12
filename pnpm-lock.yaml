@@ -28,7 +28,7 @@ importers:
         version: https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/css@edaedbb
       next:
         specifier: 16.1.0-canary.16
-        version: 16.1.0-canary.16(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+        version: 16.1.0-canary.16(@babel/core@7.28.5)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react:
         specifier: 19.2.1
         version: 19.2.1
@@ -60,6 +60,9 @@ importers:
       lefthook:
         specifier: 2.0.9
         version: 2.0.9
+      node:
+        specifier: runtime:24.11.1
+        version: runtime:24.11.1
       oxfmt:
         specifier: 0.17.0
         version: 0.17.0
@@ -94,8 +97,8 @@ importers:
         specifier: ^0
         version: 0.29.1(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       "@sanity/image-url":
-        specifier: 2.0.1
-        version: 2.0.1
+        specifier: 2.0.2
+        version: 2.0.2
       "@vanilla-extract/css":
         specifier: https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/css@edaedbb
         version: https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/css@edaedbb
@@ -1738,10 +1741,10 @@ packages:
         integrity: sha512-PZ8n0FbZgHVYB4uMet8QjMvHLEqrRf+BcXoAUMMrk5OYpRQt1/Vd2hwRbkGhkoXAlD8KlQs9CFryMpXlKZu0Lg==,
       }
 
-  "@sanity/image-url@2.0.1":
+  "@sanity/image-url@2.0.2":
     resolution:
       {
-        integrity: sha512-5PEZiWMa70cTp/+S2shkHkhdh3rKClZd86K3sNbk78tyGP86cdYWnEicA54GZA52ZJ/l4lmpmB8m/FLzR4H5wg==,
+        integrity: sha512-JnwFIHATLXHGVTCKmVwV0xy3xKwGlgVfeUB9cWxu72xJZMsQUyFgGiTz4zD9gRXuncAndkmtzHeIG+2vhKgxHA==,
       }
     engines: { node: ">=20.19.0" }
 
@@ -3405,6 +3408,96 @@ packages:
         integrity: sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA==,
       }
 
+  node@runtime:24.11.1:
+    resolution:
+      type: variations
+      variants:
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-mLqRmgOQ2MQi1LsxBexbd3I89UFDtMHkudd2kPoHUgY=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-aix-ppc64.tar.gz
+          targets:
+            - cpu: ppc64
+              os: aix
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-sFqjpm7+aAAj+TC9WvP9u9VCeU2lZEyirXEdaMvU3DU=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-darwin-arm64.tar.gz
+          targets:
+            - cpu: arm64
+              os: darwin
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-CWCBttb83T9boPXx1EpH6DA3rS546tomZxwlL+ZN0RE=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-darwin-x64.tar.gz
+          targets:
+            - cpu: x64
+              os: darwin
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-Dck+xceYsNNH8GjbbSBdA96ppxdl5qU5IraCuRJl1x8=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-linux-arm64.tar.gz
+          targets:
+            - cpu: arm64
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-zUFAfzNS3i8GbqJsXF0OqbY2I3TWthg4Wp8una0iBhY=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-linux-ppc64le.tar.gz
+          targets:
+            - cpu: ppc64le
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-XUyLyl+PJZP5CB3uOYNHYOhaFvphyVDz6G7IWZbwBVA=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-linux-s390x.tar.gz
+          targets:
+            - cpu: s390x
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-WKX/XMjyIA5Fi+oi4ynVwZlKobER1JnKRuwkEdWCOco=
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-linux-x64.tar.gz
+          targets:
+            - cpu: x64
+              os: linux
+        - resolution:
+            archive: zip
+            bin: node.exe
+            integrity: sha256-zp7k5Ufr3/NVvrSOMJsWbCTfa+ApHJ6vEDzhXz3p5bQ=
+            prefix: node-v24.11.1-win-arm64
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-win-arm64.zip
+          targets:
+            - cpu: arm64
+              os: win32
+        - resolution:
+            archive: zip
+            bin: node.exe
+            integrity: sha256-U1WubXxJ7dz959NKw0hoIGAKgxv4HcO9ylyNtqm7DnY=
+            prefix: node-v24.11.1-win-x64
+            type: binary
+            url: https://nodejs.org/download/release/v24.11.1/node-v24.11.1-win-x64.zip
+          targets:
+            - cpu: x64
+              os: win32
+    version: 24.11.1
+    hasBin: true
+
   normalize-path@3.0.0:
     resolution:
       {
@@ -4898,7 +4991,7 @@ snapshots:
 
   "@sanity-image/url-builder@1.0.0": {}
 
-  "@sanity/image-url@2.0.1":
+  "@sanity/image-url@2.0.2":
     dependencies:
       "@sanity/signed-urls": 2.0.1
 
@@ -5870,32 +5963,9 @@ snapshots:
       - "@babel/core"
       - babel-plugin-macros
 
-  next@16.1.0-canary.16(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
-    dependencies:
-      "@next/env": 16.1.0-canary.16
-      "@swc/helpers": 0.5.15
-      baseline-browser-mapping: 2.9.6
-      caniuse-lite: 1.0.30001760
-      postcss: 8.4.31
-      react: 19.2.1
-      react-dom: 19.2.1(react@19.2.1)
-      styled-jsx: 5.1.6(react@19.2.1)
-    optionalDependencies:
-      "@next/swc-darwin-arm64": 16.1.0-canary.16
-      "@next/swc-darwin-x64": 16.1.0-canary.16
-      "@next/swc-linux-arm64-gnu": 16.1.0-canary.16
-      "@next/swc-linux-arm64-musl": 16.1.0-canary.16
-      "@next/swc-linux-x64-gnu": 16.1.0-canary.16
-      "@next/swc-linux-x64-musl": 16.1.0-canary.16
-      "@next/swc-win32-arm64-msvc": 16.1.0-canary.16
-      "@next/swc-win32-x64-msvc": 16.1.0-canary.16
-      babel-plugin-react-compiler: 1.0.0
-      sharp: 0.34.5
-    transitivePeerDependencies:
-      - "@babel/core"
-      - babel-plugin-macros
-
   node-releases@2.0.27: {}
+
+  node@runtime:24.11.1: {}
 
   normalize-path@3.0.0: {}
 
@@ -6183,11 +6253,6 @@ snapshots:
       react: 19.2.1
     optionalDependencies:
       "@babel/core": 7.28.5
-
-  styled-jsx@5.1.6(react@19.2.1):
-    dependencies:
-      client-only: 0.0.1
-      react: 19.2.1
 
   stylelint-config-recommended@17.0.0(stylelint@16.25.0(typescript@5.9.3)):
     dependencies:

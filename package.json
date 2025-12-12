@@ -42,8 +42,13 @@
     "stylelint-config-reform-collective": "github:reformcollective/stylelint-config-reform#migration",
     "typescript": "5.9.3"
   },
-  "stylelint": {
-    "extends": "stylelint-config-reform-collective"
+  "packageManager": "pnpm@10.25.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.11.1",
+      "onFail": "download"
+    }
   },
   "pnpm": {
     "overrides": {
@@ -59,5 +64,8 @@
       "@vanilla-extract/turbopack-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/turbopack-plugin@edaedbb",
       "@vanilla-extract/webpack-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/webpack-plugin@edaedbb"
     }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-reform-collective"
   }
 }
