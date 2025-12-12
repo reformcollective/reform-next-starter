@@ -2,6 +2,7 @@
 	"private": true,
 	"author": "Reform Collective",
 	"name": "website",
+	"type": "module",
 	"scripts": {
 		"dev": "wireit",
 		"build": "wireit",
@@ -13,8 +14,8 @@
 		"typecheck": "wireit",
 		"generate-manifest": "wireit",
 		"prepare": "lefthook install",
-		"pnpm:devPreinstall": "pnpm check-env & pnpm init-submodule & pnpm git-config & wait",
-		"check-env": "if [ -n \"$CI\" ]; then exit 0; else ls .env || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
+		"pnpm:devPreinstall": "pnpm -s check-env & pnpm -s init-submodule & pnpm -s git-config & wait",
+		"check-env": "if [ -n \"$CI\" ]; then exit 0; else node --env-file=.env app/env.ts || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
 		"git-config": "git config submodule.recurse true",
 		"init-submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0"
 	},
@@ -34,7 +35,7 @@
 			"service": true
 		},
 		"build": {
-			"command": "pnpm typecheck & pnpm generate-manifest & next build & wait",
+			"command": "pnpm -s typecheck & pnpm -s generate-manifest & next build & wait",
 			"env": {
 				"WIREIT_LOGGER": "quiet"
 			}
