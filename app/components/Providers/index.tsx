@@ -30,7 +30,7 @@ export default function GlobalProviders({ children }: { children: React.ReactNod
 		<NuqsAdapter>
 			<ScreenProvider>
 				<PageTransitionProvider>
-					<SmoothScrollStyle />
+					<SmoothScrollStyle allowNestedScroll />
 					<ProjectStyles />
 					<ResetStyles />
 
