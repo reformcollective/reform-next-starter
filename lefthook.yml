@@ -11,7 +11,9 @@ pre-commit:
         - "*.jsonc"
         - "*.css"
       stage_fixed: true
+
     - name: update workflow hashes
       run: node ./library/.github/update-hash.js || true
+
     - name: stage workflow hashes
       run: git add ./.github/workflows
