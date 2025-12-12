@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "tsgo && next build",
     "start": "next start",
-    "lint": "oxlint --fix --type-aware && stylelint . --fix && pnpm --recursive lint",
+    "lint": "oxlint --fix --type-aware --type-check && stylelint . --fix && pnpm --recursive lint",
     "format": "oxfmt && pnpm --recursive format",
     "pnpm:devPreinstall": "pnpm check-env && pnpm init-submodule && pnpm git-config",
     "preinstall": "npx only-allow pnpm",
