@@ -50,3 +50,6 @@ sanity.types.ts
 public/studio
 /.sanity/
 /dist/
+
+# wireit
+.wireit

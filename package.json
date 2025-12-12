@@ -3,19 +3,86 @@
   "author": "Reform Collective",
   "name": "website",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build && tsgo",
-    "start": "next start",
-    "lint": "oxlint --fix --type-aware --type-check && stylelint . --fix && pnpm --recursive lint",
-    "format": "oxfmt && pnpm --recursive format",
-    "pnpm:devPreinstall": "pnpm check-env && pnpm init-submodule && pnpm git-config",
-    "preinstall": "npx only-allow pnpm",
-    "postinstall": "pnpm typegen || exit 0",
+    "dev": "wireit",
+    "build": "wireit",
+    "start": "wireit",
+    "lint": "wireit",
+    "format": "wireit",
+    "typegen": "wireit",
+    "typecheck": "wireit",
+    "test": "wireit",
     "prepare": "lefthook install",
-    "typegen": "sanity schema extract && sanity typegen generate --verbose",
+    "pnpm:devPreinstall": "pnpm check-env & pnpm init-submodule & pnpm git-config & wait",
     "check-env": "if [ -n \"$CI\" ]; then exit 0; else ls .env || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
     "git-config": "git config submodule.recurse true",
     "init-submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0"
+  },
+  "wireit": {
+    "dev": {
+      "command": "next dev",
+      "dependencies": [
+        "typegen"
+      ],
+      "service": true
+    },
+    "start": {
+      "command": "next start",
+      "dependencies": [
+        "build"
+      ],
+      "service": true
+    },
+    "build": {
+      "command": "pnpm typecheck & next build & wait"
+    },
+    "typecheck": {
+      "command": "tsgo",
+      "dependencies": [
+        "typegen"
+      ]
+    },
+    "sanity-typegen": {
+      "command": "sanity schema extract && sanity typegen generate --verbose"
+    },
+    "next-typegen": {
+      "command": "next typegen"
+    },
+    "typegen": {
+      "dependencies": [
+        "next-typegen",
+        "sanity-typegen"
+      ]
+    },
+    "stylelint": {
+      "command": "stylelint . --fix"
+    },
+    "oxlint": {
+      "command": "oxlint --fix --type-aware --type-check",
+      "dependencies": [
+        "typegen"
+      ]
+    },
+    "lint": {
+      "dependencies": [
+        "./library:lint",
+        "stylelint",
+        "oxlint"
+      ]
+    },
+    "oxfmt": {
+      "command": "oxfmt"
+    },
+    "format": {
+      "dependencies": [
+        "./library:format",
+        "oxfmt"
+      ]
+    },
+    "test": {
+      "dependencies": [
+        "./library:test"
+      ]
+    }
   },
   "dependencies": {
     "@base-ui/react": "1.0.0",
@@ -67,6 +134,7 @@
     "typescript": "5.9.3",
     "unlighthouse": "0.17.4",
     "vite-tsconfig-paths": "5.1.4",
+    "wireit": "0.14.12",
     "zod": "4.1.13"
   },
   "packageManager": "pnpm@10.25.0",
@@ -90,16 +158,7 @@
       "@vanilla-extract/next-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/next-plugin@edaedbb",
       "@vanilla-extract/turbopack-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/turbopack-plugin@edaedbb",
       "@vanilla-extract/webpack-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/webpack-plugin@edaedbb"
-    },
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core",
-      "esbuild",
-      "lefthook",
-      "puppeteer",
-      "sharp",
-      "vue-demi"
-    ]
+    }
   },
   "stylelint": {
     "extends": "stylelint-config-reform-collective"
