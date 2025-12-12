@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
 		turbopackFileSystemCacheForDev: true,
 	},
 
+	images: {
+		qualities: [90],
+	},
+
 	env: {
 		// our site's URL
 		NEXT_PUBLIC_DEPLOY_URL: serverSiteURL,
