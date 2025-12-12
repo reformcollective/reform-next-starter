@@ -1,11 +1,10 @@
 {
-  "name": "starter-update",
-  "version": "0.1.0",
   "private": true,
-  "type": "module",
+  "author": "Reform Collective",
+  "name": "website",
   "scripts": {
     "dev": "next dev",
-    "build": "tsgo && next build",
+    "build": "next build && tsgo",
     "start": "next start",
     "lint": "oxlint --fix --type-aware --type-check && stylelint . --fix && pnpm --recursive lint",
     "format": "oxfmt && pnpm --recursive format",
@@ -19,28 +18,56 @@
     "init-submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0"
   },
   "dependencies": {
+    "@base-ui/react": "1.0.0",
     "@capsizecss/core": "4.1.3",
-    "@vanilla-extract/css": "^1.17.5",
-    "next": "16.1.0-canary.16",
-    "react": "19.2.1",
-    "react-dom": "19.2.1"
-  },
-  "devDependencies": {
+    "@sanity/assist": "5.0.2",
+    "@sanity/client": "7.13.2",
+    "@sanity/code-input": "6.0.3",
+    "@sanity/icons": "3.7.4",
+    "@sanity/image-url": "2.0.2",
+    "@sanity/vision": "4.21.1",
+    "@svgr/webpack": "8.1.0",
+    "@t3-oss/env-nextjs": "0.13.8",
+    "@total-typescript/ts-reset": "0.6.1",
     "@total-typescript/tsconfig": "1.0.4",
-    "@types/node": "20.19.26",
+    "@types/node": "25.0.1",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
-    "@typescript/native-preview": "7.0.0-dev.20251210.1",
-    "babel-plugin-react-compiler": "1.0.0",
+    "@typescript/native-preview": "7.0.0-dev.20251211.1",
+    "@userback/widget": "0.3.12",
+    "@vanilla-extract/css": "1.17.5",
+    "@vanilla-extract/dynamic": "2.1.5",
+    "ahooks": "3.9.6",
+    "babel-plugin-react-compiler": "19.1.0-rc.3",
     "gsap": "3.14.1",
+    "jsdom": "27.3.0",
     "lefthook": "2.0.9",
+    "lenis": "1.3.16",
+    "next": "16.0.10",
+    "next-sanity": "11.6.10",
+    "nuqs": "2.8.5",
     "oxfmt": "0.17.0",
     "oxlint": "1.32.0",
-    "oxlint-tsgolint": "0.8.5",
+    "oxlint-tsgolint": "0.8.6",
     "prettier": "3.7.4",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-player": "3.4.0",
+    "sanity": "4.21.1",
+    "sanity-image": "1.0.0",
+    "sanity-plugin-asset-source-unsplash": "4.0.1",
+    "sanity-plugin-link-field": "1.4.2",
+    "sanity-plugin-media": "4.1.0",
+    "sanity-plugin-mux-input": "2.12.0",
+    "server-only": "0.0.1",
+    "styled-components": "6.1.19",
     "stylelint": "16.26.1",
     "stylelint-config-reform-collective": "github:reformcollective/stylelint-config-reform#migration",
-    "typescript": "5.9.3"
+    "svgo": "4.0.0",
+    "typescript": "5.9.3",
+    "unlighthouse": "0.17.4",
+    "vite-tsconfig-paths": "5.1.4",
+    "zod": "4.1.13"
   },
   "packageManager": "pnpm@10.25.0",
   "devEngines": {
@@ -63,9 +90,19 @@
       "@vanilla-extract/next-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/next-plugin@edaedbb",
       "@vanilla-extract/turbopack-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/turbopack-plugin@edaedbb",
       "@vanilla-extract/webpack-plugin": "https://pkg.pr.new/RJWadley/vanilla-extract/@vanilla-extract/webpack-plugin@edaedbb"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "lefthook",
+      "puppeteer",
+      "sharp",
+      "vue-demi"
+    ]
   },
   "stylelint": {
     "extends": "stylelint-config-reform-collective"
-  }
+  },
+  "devDependencies": {}
 }

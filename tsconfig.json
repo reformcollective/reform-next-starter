@@ -7,9 +7,8 @@
     "incremental": true,
     "plugins": [{ "name": "next" }],
     "paths": {
-      "@/*": ["./*"],
-      "sanity/*": ["./sanity/*"],
-      "library/*": ["./library/*"],
+      "*": ["./*"],
+      "page": ["./app/[[...slug]]/page"],
     },
   },
   "include": [

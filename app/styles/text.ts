@@ -55,8 +55,8 @@ const textStyles = {
       fontMetrics: sampleMetrics,
     })};
 		font-style: normal;
-	    	font-weight: 300;
-              `,
+		font-weight: 300;
+	`,
   h2: css`
     
   `,

@@ -4,5 +4,5 @@ export default defineLibraryConfig({
   scaleFully: false,
   tabletBreakpoint: "largeMobile",
   pageSectionGroups: ["Designed for Homepage"],
-  stylingSystem: "vanilla",
+  stylingSystem: "both",
 })
