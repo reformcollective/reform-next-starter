@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 	metadataBase: siteURL,
 }
 
+export * from "library/segmentDefaults"
+
 export default async function RootLayout({ children }: LayoutProps<"/">) {
 	const { data: headerData } = await sanityFetch({ query: headerQuery })
 	const { data: footerData } = await sanityFetch({ query: footerQuery })

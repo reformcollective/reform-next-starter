@@ -89,6 +89,8 @@ export async function generateMetadata({
 	}
 }
 
+export * from "library/segmentDefaults"
+
 export default async function TemplatePage({
 	params,
 }: {
