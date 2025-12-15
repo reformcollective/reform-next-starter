@@ -7,4 +7,4 @@ jobs:
     secrets:
       SECRETS_JSON: ${{ toJSON(secrets) }}
     with:
-      isSanity: true
+      runOnGithubActions: false
