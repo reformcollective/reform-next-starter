@@ -8,9 +8,9 @@
 		"plugins": [{ "name": "next" }],
 		"paths": {
 			"*": ["./*"],
-			"page": ["./app/[[...slug]]/page"],
-		},
+			"page": ["./app/[[...slug]]/page"]
+		}
 	},
 	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts"],
-	"exclude": ["next-env.d.ts", "node_modules", "library"],
+	"exclude": ["next-env.d.ts", "node_modules", "library"]
 }
