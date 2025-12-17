@@ -18,17 +18,17 @@
 	"cSpell.diagnosticLevel": "Hint",
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true,
-	"typescript.preferences.autoImportFileExcludePatterns": [
+	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
 		"restyle",
 		"styled-components",
-		"styled-jsx"
-	],
-	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
+		"styled-jsx",
 		"^next/router$",
 		"^gsap/(?!all$).+",
 		"^gsap$",
 		"^gsap-trial",
-		"^library/styled$"
+		"^library/styled$",
+		"node_modules/.*",
+		"^../styled$"
 	],
 	"workbench.editor.customLabels.enabled": true,
 	"workbench.editor.customLabels.patterns": {
