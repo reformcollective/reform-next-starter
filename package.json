@@ -13,7 +13,8 @@
 		"typegen": "wireit",
 		"typecheck": "wireit",
 		"generate-manifest": "wireit",
-		"pnpm:devPreinstall": "wireit",
+		"pnpm:devPreinstall": "pnpm init-submodule && pnpm git-config",
+		"postinstall": "pnpm check-env",
 		"prepare": "lefthook install",
 		"check-env": "if [ -n \"$CI\" ]; then exit 0; else node --env-file=.env app/env.ts || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
 		"git-config": "git config submodule.recurse true",
@@ -119,13 +120,6 @@
 		"test": {
 			"dependencies": [
 				"./library:test"
-			]
-		},
-		"pnpm:devPreinstall": {
-			"dependencies": [
-				"check-env",
-				"init-submodule",
-				"git-config"
 			]
 		}
 	},
