@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "wireit",
 		"build": "wireit",
-		"start": "wireit",
+		"serve": "wireit",
 		"test": "wireit",
 		"lint": "wireit",
 		"format": "wireit",
@@ -113,7 +113,7 @@
 			],
 			"service": true
 		},
-		"start": {
+		"serve": {
 			"command": "next start",
 			"dependencies": [
 				"build"
