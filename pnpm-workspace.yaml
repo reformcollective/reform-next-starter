@@ -1,8 +1,3 @@
 packages:
   - "."
   - "library"
-
-packageExtensions:
-  "@sanity/vision":
-    peerDependencies:
-      sanity: "*"

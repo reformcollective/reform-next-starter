@@ -43,7 +43,7 @@ export async function generateStaticParams() {
 	const { data } = await sanityFetch({
 		query: pageSlugs,
 		perspective: "published",
-		stega: false,
+		disableStega: true,
 	})
 	return data.map((page: { slug: string | null }) => ({
 		slug: page.slug === "home" ? undefined : page.slug?.split("/"),
@@ -59,11 +59,11 @@ export async function generateMetadata({
 		params: {
 			slug: (await params).slug?.join("/") || "home",
 		},
-		stega: false,
+		disableStega: true,
 	})
 	const { data: settings } = await sanityFetch({
 		query: pageSettingsQuery,
-		stega: false,
+		disableStega: true,
 	})
 
 	const title = relevantPage?.title ?? settings?.defaultTitle
@@ -101,7 +101,6 @@ export default async function TemplatePage({
 		params: {
 			slug: (await params).slug?.join("/") || "home",
 		},
-		stega: true,
 	})
 
 	if (!relevantPage) notFound()
