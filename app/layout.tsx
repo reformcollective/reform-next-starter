@@ -31,12 +31,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 			<body>
 				<GlobalProviders>
 					<PageRoot className="root-layout">
-						<Suspense>
-							<SanityLive />
-							{headerData && <Header {...headerData} />}
-							{children}
-							{footerData && <Footer {...footerData} />}
-						</Suspense>
+						<SanityLive />
+						{headerData && <Header {...headerData} />}
+						{children}
+						{footerData && <Footer {...footerData} />}
 					</PageRoot>
 				</GlobalProviders>
 				{settings?.tags?.map(
