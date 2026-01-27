@@ -7,7 +7,7 @@ html {
 }
 
 /*
-	Revert all the styles of the "User-Agent-Stylesheet", except for the 'display' property
+	Revert all the styles found in `reset.tsx`
 	Sanity Studio does not need the reset styles, as it already has its own design system.
 	This fixes some text elements not receiving italics/underline, etc.
 */
