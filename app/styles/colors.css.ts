@@ -18,10 +18,7 @@ const variables = Object.entries(rawColors).map(([key, value]) => ({
 
 globalStyle(":root", {
 	vars: Object.fromEntries(
-		variables.map(({ value, variable }) => [
-			variable,
-			value as unknown as string,
-		]),
+		variables.map(({ value, variable }) => [variable, value as unknown as string]),
 	),
 })
 

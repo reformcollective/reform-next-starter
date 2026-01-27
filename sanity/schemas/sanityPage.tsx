@@ -40,18 +40,17 @@ export const pageMetadata = [
 		description: (
 			<>
 				<p>
-					This will be used to generate the URL for this page. For example,{" "}
-					<Code>about</Code> will create a page at <Code>{siteURL}/about</Code>
+					This will be used to generate the URL for this page. For example, <Code>about</Code> will
+					create a page at <Code>{siteURL}/about</Code>
 				</p>
 				<br />
 				<p>
-					<Code>home</Code> is a special slug that will create a page at{" "}
-					<Code>{siteURL}</Code>
+					<Code>home</Code> is a special slug that will create a page at <Code>{siteURL}</Code>
 				</p>
 				<br />
 				<p>
-					You can also use a nested slug. For example, <Code>about/us</Code>{" "}
-					will create a page at <Code>{siteURL}/about/us</Code>
+					You can also use a nested slug. For example, <Code>about/us</Code> will create a page at{" "}
+					<Code>{siteURL}/about/us</Code>
 				</p>
 				<br />
 			</>
@@ -101,9 +100,9 @@ export const pageMetadata = [
 		title: "Hide from Search Engines",
 		description: (
 			<>
-				Enable this to hide the page from search engines like Google. Note that
-				once a page has been detected by a search engine, disabling this will
-				not immediately remove the page from search engines.
+				Enable this to hide the page from search engines like Google. Note that once a page has been
+				detected by a search engine, disabling this will not immediately remove the page from search
+				engines.
 			</>
 		),
 	}),

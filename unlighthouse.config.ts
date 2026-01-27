@@ -11,7 +11,4 @@ export default defineUnlighthouseConfig({
 			seo: 0, // seo is often CMS driven
 		},
 	},
-	scanner: {
-		device: "desktop", // temporary until any mobile is done
-	},
 })

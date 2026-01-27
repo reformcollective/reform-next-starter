@@ -2,7 +2,10 @@ import ClientOnly from "library/ClientOnly"
 import { css, fresponsive, styled } from "library/styled"
 import ReactPlayer from "react-player"
 
-export function YoutubeEmbed({
+/**
+ * A React component for playing a variety of URLs, including file paths, HLS, DASH, YouTube, Vimeo, Wistia and Mux.
+ */
+export function VideoEmbed({
 	className,
 	video,
 }: {
@@ -26,7 +29,7 @@ const Embed = styled(
 		display: grid;
 		width: 600px;
 		height: 400px;
-
+		
 		> div {
 			width: 100% !important;
 			height: 100% !important;

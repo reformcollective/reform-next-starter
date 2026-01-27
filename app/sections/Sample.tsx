@@ -1,11 +1,8 @@
-import type { GetSectionType } from "[[...slug]]/page"
+import type { GetSectionType } from "page"
 import { sleep } from "library/functions"
 import { css, fresponsive, styled } from "library/styled/alpha"
 
-export default async function SampleSection({
-	title,
-	text,
-}: GetSectionType<"sample">) {
+export default async function SampleSection({ title, text }: GetSectionType<"sample">) {
 	/**
 	 * artificially delay so we can see the loading state
 	 * in sanity studio

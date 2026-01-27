@@ -3,7 +3,7 @@
 import { css, fresponsive, styled } from "library/styled/alpha"
 import useAutoHideHeader from "library/useAutoHideHeader"
 import { useRef } from "react"
-import type { HeaderQueryResult } from "@/sanity.types"
+import type { HeaderQueryResult } from "sanity.types"
 
 export default function Header({ headerText }: NonNullable<HeaderQueryResult>) {
 	const wrapperRef = useRef<HTMLDivElement>(null)

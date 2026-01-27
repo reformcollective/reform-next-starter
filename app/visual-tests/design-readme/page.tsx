@@ -72,19 +72,12 @@ export default function DesignPage() {
 					/>
 				</AnimateNoClip>
 			</Row>
-			<Link href={"/visual-tests/auto-animate"}>
-				See more AutoAnimate examples
-			</Link>
+			<Link href={"/visual-tests/auto-animate"}>See more AutoAnimate examples</Link>
 			<h2>Custom Text Overflow</h2>
 			<TextOverflowWrapper>
-				<CustomTextOverflow
-					maxLines={1}
-					truncatePosition={-10}
-					ellipsis="......"
-				>
-					I pledge Allegiance to the flag of the United States of America and to
-					the Republic for which it stands, one nation under God, indivisible,
-					with Liberty and Justice for all.
+				<CustomTextOverflow maxLines={1} truncatePosition={-10} ellipsis="......">
+					I pledge Allegiance to the flag of the United States of America and to the Republic for
+					which it stands, one nation under God, indivisible, with Liberty and Justice for all.
 				</CustomTextOverflow>
 			</TextOverflowWrapper>
 			<h2>Display Date</h2>
@@ -106,11 +99,7 @@ export default function DesignPage() {
 				<SnapItem>D</SnapItem>
 				<SnapItem>E</SnapItem>
 			</InfiniteSideScroll>
-			<InfiniteSideScroll
-				marqueeSpeed={1}
-				reversed
-				scrollVelocity={(v) => -Math.abs(v) / 500}
-			>
+			<InfiniteSideScroll marqueeSpeed={1} reversed scrollVelocity={(v) => -Math.abs(v) / 500}>
 				<SnapItem>A</SnapItem>
 				<SnapItem>B</SnapItem>
 				<SnapItem>C</SnapItem>

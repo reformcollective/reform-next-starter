@@ -2,8 +2,9 @@
 
 import AutoAnimate from "library/AutoAnimate"
 import UniversalLink from "library/link"
-import { attrs, css, fresponsive, styled } from "library/styled/alpha"
+import { css, fresponsive, styled } from "library/styled/alpha"
 import { Fragment, useEffect, useState } from "react"
+import { attrs } from "library/styled"
 
 const BaseWrapper = styled(
 	AutoAnimate,
@@ -53,15 +54,9 @@ export default function AutoTests() {
 			<h1>AutoAnimate Tests</h1>
 			<UniversalLink href="/">go home</UniversalLink>
 			<h2>standard</h2>
-			<Animate alignment="start">
-				{flipper ? "start" : "antidisestablishmentarianism"}
-			</Animate>
-			<Animate alignment="center">
-				{flipper ? "center" : "antidisestablishmentarianism"}
-			</Animate>
-			<Animate alignment="end">
-				{flipper ? "end" : "antidisestablishmentarianism"}
-			</Animate>
+			<Animate alignment="start">{flipper ? "start" : "antidisestablishmentarianism"}</Animate>
+			<Animate alignment="center">{flipper ? "center" : "antidisestablishmentarianism"}</Animate>
+			<Animate alignment="end">{flipper ? "end" : "antidisestablishmentarianism"}</Animate>
 			<h2>tall</h2>
 			<Row>
 				<Animate alignment="start">

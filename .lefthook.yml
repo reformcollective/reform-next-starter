@@ -1,8 +1,0 @@
-pre-commit:
-  jobs:
-    - name: update workflow hashes
-      run: node ./app/library/.github/update-hash.js || true
-    - name: stage workflow hashes
-      run: git add ./.github/workflows
-    - name: lint staged files
-      run: pnpm dlx lint-staged || true

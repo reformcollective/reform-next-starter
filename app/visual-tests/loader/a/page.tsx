@@ -25,19 +25,13 @@ export default function Loader() {
 	return (
 		<Wrapper>
 			<h1>Loader Tests</h1>
-			<UniversalLink href="/visual-tests/loader/b">
-				Go to Loader B
-			</UniversalLink>
+			<UniversalLink href="/visual-tests/loader/b">Go to Loader B</UniversalLink>
 			<UniversalLink href="/">go home</UniversalLink>
 			<h2>these should both appear:</h2>
 			<h3>{immediateLoad ? "immediate load" : "waiting for load"}</h3>
 			<h3>{delayedLoad ? "delayed load" : "waiting for load"}</h3>
-			<UniversalLink href="/visual-tests/loader/a#content-21">
-				scroll to content 21
-			</UniversalLink>
-			<UniversalLink href="#content-21">
-				scroll to content 21 (bare hash)
-			</UniversalLink>
+			<UniversalLink href="/visual-tests/loader/a#content-21">scroll to content 21</UniversalLink>
+			<UniversalLink href="#content-21">scroll to content 21 (bare hash)</UniversalLink>
 			<p style={{ viewTransitionName: "thing-1" }}>content 1</p>
 			<p style={{ viewTransitionName: "thing-2" }}>content 2</p>
 			<p style={{ viewTransitionName: "thing-3" }}>content 3</p>
@@ -87,7 +81,7 @@ const Wrapper = styled(
 		padding: 100px;
 		background: #ffe;
 		color: black;
-
+		
 		p {
 			opacity: 0.5;
 		}

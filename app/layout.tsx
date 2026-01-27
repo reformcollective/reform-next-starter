@@ -1,20 +1,14 @@
-"use cache"
-
-import Footer from "components/Footer"
-import Header from "components/Header"
-import GlobalProviders from "components/Providers"
+import Footer from "app/components/Footer"
+import Header from "app/components/Header"
+import GlobalProviders from "app/components/Providers"
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
 import { siteURL } from "library/siteURL"
 import { css, f, styled } from "library/styled/alpha"
 import type { Metadata } from "next"
 import { defineQuery, stegaClean } from "next-sanity"
-import { Suspense } from "react"
 import SanityLive, { sanityFetch } from "sanity/lib/live"
-import "styles/colors.css"
-import { desktopDesignSize, mobileDesignSize } from "styles/media"
-
-// FIXME: lazify SanityLive + PageTransition
-// https://github.com/vercel/next.js/issues/85538
+import "app/styles/colors.css"
+import { desktopDesignSize, mobileDesignSize } from "app/styles/media"
 
 const headerQuery = defineQuery(`*[_type == "header"][0]`)
 const footerQuery = defineQuery(`*[_type == "footer"][0]`)
@@ -23,6 +17,8 @@ const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 export const metadata: Metadata = {
 	metadataBase: siteURL,
 }
+
+export * from "library/segmentDefaults"
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
 	const { data: headerData } = await sanityFetch({ query: headerQuery })
@@ -34,12 +30,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 			<body>
 				<GlobalProviders>
 					<PageRoot className="root-layout">
-						<Suspense>
-							<SanityLive />
-							{headerData && <Header {...headerData} />}
-							{children}
-							{footerData && <Footer {...footerData} />}
-						</Suspense>
+						<SanityLive />
+						{headerData && <Header {...headerData} />}
+						{children}
+						{footerData && <Footer {...footerData} />}
 					</PageRoot>
 				</GlobalProviders>
 				{settings?.tags?.map(

@@ -1,22 +1,21 @@
 {
 	"recommendations": [
 		// language support
-		"styled-components.vscode-styled-components",
+		"mf.vscode-styled-components",
 		"redhat.vscode-xml",
 
 		// formatters, linters
-		"biomejs.biome",
 		"stylelint.vscode-stylelint",
-		"esbenp.prettier-vscode",
+		"oxc.oxc-vscode",
 
 		// typescript helpers
 		"mylesmurphy.prettify-ts",
 		"yoavbls.pretty-ts-errors",
+		"typescriptteam.native-preview",
 
 		// other utitlities
+		"Soulcode.vscode-unwanted-extensions", // notify about unwanted extensions
 		"naumovs.color-highlight", // highlight colors in the editor
-		"kisstkondoros.csstriggers", // shows data from https://css-triggers.com/
-		"meganrogge.template-string-converter", // converts strings to template strings when you type '${'
 		"unpacksoftware.run-it", // restarts typescript after running sanity typegen
 		"actboy168.tasks" // adds a button to the status bar to run sanity typegen
 	],
@@ -24,6 +23,8 @@
 		// built into VS Code
 		"formulahendry.auto-rename-tag",
 		// built into VS Code
-		"formulahendry.auto-complete-tag"
+		"formulahendry.auto-complete-tag",
+		// abandoned
+		"styled-components.vscode-styled-components"
 	]
 }

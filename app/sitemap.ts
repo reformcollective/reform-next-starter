@@ -27,9 +27,7 @@ function stripRouteGroupsAndFile(path: string) {
 	const parts = rel.split("/").filter(Boolean)
 
 	// drop route groups exactly
-	const noGroups = parts.filter(
-		(seg) => !(seg.startsWith("(") && seg.endsWith(")")),
-	)
+	const noGroups = parts.filter((seg) => !(seg.startsWith("(") && seg.endsWith(")")))
 
 	// drop the final file segment (page.tsx)
 	const noFile = noGroups.filter((seg) => seg !== "page.tsx")
@@ -62,9 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const { data: blogPosts } = await sanityFetch({ query: sitemapBlogQuery })
 
 	const cmsRoutes = [
-		...sanityPages.map((p: SanityPage) =>
-			normalizePath(p.slug === "home" ? "/" : `/${p.slug}`),
-		),
+		...sanityPages.map((p: SanityPage) => normalizePath(p.slug === "home" ? "/" : `/${p.slug}`)),
 		...blogPosts.map((p: BlogPost) => normalizePath(`/blog/${p.slug}`)),
 	]
 

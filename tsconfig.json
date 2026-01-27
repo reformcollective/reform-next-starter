@@ -1,17 +1,16 @@
 {
 	"extends": "@total-typescript/tsconfig/bundler/dom",
 	"compilerOptions": {
+		"allowImportingTsExtensions": true,
 		"lib": ["ES2024", "DOM", "DOM.Iterable"],
 		"jsx": "preserve",
 		"incremental": true,
 		"plugins": [{ "name": "next" }],
 		"paths": {
-			"*": ["./app/*"],
-			"@/*": ["./*"],
-			"sanity/*": ["./sanity/*"],
+			"*": ["./*"],
 			"page": ["./app/[[...slug]]/page"]
 		}
 	},
-	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-	"exclude": ["node_modules", "next-env.d.ts"]
+	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts"],
+	"exclude": ["next-env.d.ts", "node_modules", "library"]
 }

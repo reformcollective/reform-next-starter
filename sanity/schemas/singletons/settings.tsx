@@ -17,8 +17,7 @@ export default defineType({
 			name: "defaultDescription",
 			title: "Default Page Description",
 			type: "string",
-			description:
-				"This will be used when shared on socials, and by some search engines.",
+			description: "This will be used when shared on socials, and by some search engines.",
 		}),
 		universalImage({
 			name: "ogImage",

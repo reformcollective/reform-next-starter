@@ -1,29 +1,7 @@
 {
-	/* formatting */
-	"editor.defaultFormatter": "biomejs.biome",
-	"[javascript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[typescript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[javascriptreact]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[typescriptreact]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[xml]": {
-		"editor.defaultFormatter": "redhat.vscode-xml"
-	},
-	"[snippets]": {
-		"editor.defaultFormatter": "vscode.json-language-features"
-	},
-
-	/* recommended extension config */
-	"template-string-converter.autoRemoveTemplateString": true,
+	"oxc.fmt.experimental": true,
+	"editor.defaultFormatter": "oxc.oxc-vscode",
 	"stylelint.validate": ["css", "scss", "typescript", "typescriptreact"],
-	"run-it.globalDebug": true,
 	"run-it.commands": [
 		{
 			"delay": 5000,
@@ -33,39 +11,36 @@
 		{
 			"delay": 5000,
 			"commands": ["workbench.action.tasks.build"],
-			"files": [
-				"**/sanity/schemas/**/*.ts",
-				"**/sanity/schemas/**/*.tsx",
-				"**/sanity.config.ts"
-			]
+			"files": ["**/sanity/schemas/**/*.ts", "**/sanity/schemas/**/*.tsx", "**/sanity.config.ts"]
 		}
 	],
 	"cSpell.enabled": true,
 	"cSpell.diagnosticLevel": "Hint",
-
-	/* workbench settings */
-	"typescript.tsdk": "./node_modules/typescript/lib",
+	"typescript.tsdk": "node_modules/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true,
-	"typescript.preferences.autoImportFileExcludePatterns": [
+	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
 		"restyle",
 		"styled-components",
-		"styled-jsx"
-	],
-	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
+		"styled-jsx",
 		"^next/router$",
 		"^gsap/(?!all$).+",
 		"^gsap$",
 		"^gsap-trial",
-		"^library/styled$"
+		"^library/styled$",
+		"node_modules/.*",
+		"^../styled$"
 	],
+	"workbench.editor.customLabels.enabled": true,
 	"workbench.editor.customLabels.patterns": {
-		"**/index.tsx": "${dirname} / index.tsx",
-		"**/index.ts": "${dirname} / index.ts",
-		"**/page.tsx": "${dirname} / page.tsx",
-		"**/layout.ts": "${dirname} / layout.ts"
+		"**/page.{tsx,jsx,js,ts}": "${dirname} / page.${extname}",
+		"**/layout.{tsx,jsx,js,ts}": "${dirname} / layout.${extname}",
+		"**/error.{tsx,jsx,js,ts}": "${dirname} / error.${extname}",
+		"**/loading.{tsx,jsx,js,ts}": "${dirname} / loading.${extname}",
+		"**/route.{tsx,jsx,js,ts}": "${dirname} / route.${extname}"
 	},
 	"editor.linkedEditing": true,
 	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
+	"typescript.experimental.useTsgo": true,
 
 	/* unsorted settings */
 	"": ""

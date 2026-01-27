@@ -1,5 +1,5 @@
 import { foundation } from "library/layers.css"
-import { css } from "library/styled/alpha"
+import { compileTime, css } from "library/styled/alpha"
 
 const style = css`
 	@layer ${foundation} {
@@ -16,6 +16,6 @@ const style = css`
 	}
 `
 
-export const ProjectStyles = () => {
-	return <style>{style}</style>
-}
+const compiledStyle = compileTime(() => style)
+
+export const ProjectStyles = () => <style>{compiledStyle}</style>

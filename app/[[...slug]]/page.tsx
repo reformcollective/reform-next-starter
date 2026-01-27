@@ -1,19 +1,17 @@
 import { EagerImages } from "library/StaticImage"
 import type { DeepAssetMeta } from "library/sanity/assetMetadata"
 import { Redirect } from "library/sanity/redirect"
-import { resolveOpenGraphImage } from "library/sanity/utils"
 import { siteURL } from "library/siteURL"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { defineQuery } from "next-sanity"
 import { type ComponentType, Fragment } from "react"
 import { sanityFetch } from "sanity/lib/live"
-import SampleSection from "sections/Sample"
-import type { Page } from "@/sanity.types"
+import type { Page } from "sanity.types"
+import SampleSection from "app/sections/Sample"
+import { resolveOpenGraphImage } from "library/sanity/opengraph"
 
-export type SectionTypes = NonNullable<
-	DeepAssetMeta<Page>["sections"]
->[number]["_type"]
+export type SectionTypes = NonNullable<DeepAssetMeta<Page>["sections"]>[number]["_type"]
 
 export type GetSectionType<T extends SectionTypes> = DeepAssetMeta<
 	NonNullable<DeepAssetMeta<Page>["sections"]>[number] & { _type: T }
@@ -45,7 +43,7 @@ export async function generateStaticParams() {
 	const { data } = await sanityFetch({
 		query: pageSlugs,
 		perspective: "published",
-		stega: false,
+		disableStega: true,
 	})
 	return data.map((page: { slug: string | null }) => ({
 		slug: page.slug === "home" ? undefined : page.slug?.split("/"),
@@ -61,9 +59,11 @@ export async function generateMetadata({
 		params: {
 			slug: (await params).slug?.join("/") || "home",
 		},
+		disableStega: true,
 	})
 	const { data: settings } = await sanityFetch({
 		query: pageSettingsQuery,
+		disableStega: true,
 	})
 
 	const title = relevantPage?.title ?? settings?.defaultTitle
@@ -89,6 +89,8 @@ export async function generateMetadata({
 	}
 }
 
+export * from "library/segmentDefaults"
+
 export default async function TemplatePage({
 	params,
 }: {
@@ -107,9 +109,7 @@ export default async function TemplatePage({
 	/** Render sections in order */
 	return (
 		<>
-			{relevantPage.noIndex ? (
-				<meta name="robots" content="noindex, nofollow" />
-			) : null}
+			{relevantPage.noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
 			{relevantPage.sections.map(
 				(section: { _type: SectionTypes; _key: string }, index: number) => {
 					const Component = components[section._type]

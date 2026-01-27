@@ -4,221 +4,162 @@
 
 import { assist } from "@sanity/assist"
 import { visionTool } from "@sanity/vision"
-import { env } from "env"
+import { env } from "app/env"
 import gsap from "gsap/all"
 import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
 import { defineConfig, type PluginOptions } from "sanity"
-import {
-	type DocumentLocation,
-	defineDocuments,
-	defineLocations,
-	presentationTool,
-} from "sanity/presentation"
+import { presentationTool } from "sanity/presentation"
 import { structureTool } from "sanity/structure"
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
 import { linkField } from "sanity-plugin-link-field"
 import { media } from "sanity-plugin-media"
 import { muxInput } from "sanity-plugin-mux-input"
-import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api"
-import footer from "@/sanity/schemas/singletons/footer"
-import header from "@/sanity/schemas/singletons/header"
-import settings from "@/sanity/schemas/singletons/settings"
-import youtube from "@/sanity/schemas/youtube"
-import author from "./sanity/schemas/blog/author"
-import post from "./sanity/schemas/blog/post"
-import page from "./sanity/schemas/sanityPage"
+import { apiVersion, dataset, projectId, studioUrl } from "sanity/lib/api"
+import footer from "sanity/schemas/singletons/footer"
+import header from "sanity/schemas/singletons/header"
+import settings from "sanity/schemas/singletons/settings"
+import { youtube } from "library/sanity/reusables"
+import page from "sanity/schemas/sanityPage"
+import { RocketIcon } from "node_modules/@sanity/icons/dist"
+import { authorType } from "sanity/schemas/blog/authorType"
+import { blockContentType } from "sanity/schemas/blog/blockContentType"
+import { categoryType } from "sanity/schemas/blog/categoryType"
+import { postType } from "sanity/schemas/blog/postType"
+import {
+	getLinkableTypes,
+	resolveDocumentLocations,
+	resolveProductionUrl,
+} from "sanity/lib/slug-resolver"
+import { siteURL } from "library/siteURL"
+import { codeInput } from "@sanity/code-input"
 
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
-
-const homeLocation = {
-	title: "Home",
-	href: "/",
-} satisfies DocumentLocation
 
 const singletons = [settings, header, footer]
 
 export default defineConfig({
 	/**
-	 * basePath
-	 * The path where the Studio UI is mounted in your app (usually configured
-	 * from `studioUrl`). This controls the route prefix for Sanity Studio.
+	 * workspace properties
+	 * @see https://www.sanity.io/docs/studio/configuration#k781e9f7dc1c2
 	 */
-	basePath: studioUrl,
-
-	/**
-	 * projectId
-	 * Your Sanity project identifier. This tells the Studio which project to
-	 * connect to when reading/writing content.
-	 */
-	projectId,
-
-	/**
-	 * dataset
-	 * The dataset within the Sanity project to use (for example `production`).
-	 * Keep separate datasets for staging/production if desired.
-	 */
+	// ⬇ Required
 	dataset,
+	projectId,
+	basePath: studioUrl,
+	// ⬇ Optional
+	title: "TODO - name the studio",
+	subtitle: "subtitle",
+	icon: RocketIcon,
 
 	/**
-	 * title
-	 * The human-readable title for the Studio. Shown in the Studio window/tab
-	 * and used as a descriptive label for administrators.
-	 */
-	title: "TODO - give the studio a name",
-
-	/**
-	 * schema
-	 * The Sanity schema configuration: register document and object types
-	 * (including singletons, blog schemas, and other content types) here.
+	 * schema types to include
+	 * @see https://www.sanity.io/docs/studio/configuration#k1ed5d17ef21e
 	 */
 	schema: {
 		types: [
-			// Singletons
+			// singletons
 			...singletons,
-			// Blog
-			author,
-			post,
-			// Other Schemas
+
+			// reusables
 			youtube,
+
+			// blog
+			authorType,
+			blockContentType,
+			categoryType,
+			postType,
+
+			// project schemas
 			page,
 		],
 	},
 
 	/**
-	 * beta
-	 * Opt-in flags for experimental Studio features. The example here disables
-	 * auto-creating of documents in beta feature flows.
+	 * document actions and badges
+	 * @see https://www.sanity.io/docs/studio/configuration#f9bb2e4a3c59
 	 */
-	beta: { create: { startInCreateEnabled: false } },
+	document: {
+		productionUrl: async (_, context) => {
+			return resolveProductionUrl(context.document)
+		},
+	},
 
 	/**
-	 * plugins
-	 * An array of Studio plugins that extend functionality (presentation,
-	 * structure, media sources, AI assist, vision, etc). Plugins may be
-	 * conditionally included (for example, only in development).
+	 * plugins!
 	 */
 	plugins: [
+		// ===============================
+		// tool plugins
+		// ===============================
+
 		/**
-		 * presentationTool
-		 * Adds a presentation layer in the Studio useful for previewing and
-		 * locating documents in the front-end routing surface. Key options:
-		 * - resolve.mainDocuments: define routes and filters for main documents
-		 * - resolve.locations: provide quick links/locations for documents
-		 * - previewUrl: configuration for draft-mode preview endpoints
+		 * presentation tool, for live previews of draft content
+		 * @see https://www.sanity.io/docs/visual-editing/configuring-the-presentation-tool
 		 */
 		presentationTool({
-			resolve: {
-				mainDocuments: defineDocuments([
-					{
-						route: "/blog/:category/:slug", // multi-slug example
-						filter: `_type == "post" && slug.current == $slug && category.slug.current == $category`,
-					},
-					{
-						route: "/:slug",
-						filter: `_type == "page" && slug.current == $slug`,
-					},
-				]),
-				locations: {
-					...Object.fromEntries(
-						singletons.map((singleton) => [
-							singleton.name,
-							defineLocations({
-								locations: [homeLocation],
-								message: "This document is used on all pages",
-								tone: "caution",
-							}),
-						]),
-					),
-					post: defineLocations({
-						select: {
-							title: "title",
-							slug: "slug.current",
-						},
-						resolve: (doc) => ({
-							locations: doc?.slug
-								? [
-										{
-											title: doc?.title || "Untitled",
-											href: `/posts/${doc?.slug}`,
-										},
-									]
-								: [],
-						}),
-					}),
-					page: defineLocations({
-						select: {
-							title: "title",
-							slug: "slug.current",
-						},
-						resolve: (doc) => ({
-							locations: doc?.slug
-								? [
-										{
-											title: doc?.title || "Untitled",
-											href: `/${doc.slug}`,
-										},
-									]
-								: [],
-						}),
-					}),
+			previewUrl: {
+				initial: siteURL,
+				previewMode: {
+					enable: "/api/draft-mode/enable",
+					disable: "/api/draft-mode/disable",
 				},
 			},
-			previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
+			allowOrigins: ["http://localhost:*"],
+			resolve: { locations: resolveDocumentLocations },
+			title: "Live Preview",
 		}),
+
 		/**
-		 * structureTool
-		 * Controls the Studio's sidebar/document tree structure and default
-		 * document views. Provide a `structure` (S) builder and optionally
-		 * a `defaultDocumentNode` to customize per-document view nodes (e.g.
-		 * show form, preview, or custom views).
+		 * structure tool
+		 * @see https://www.sanity.io/docs/studio/structure-tool
 		 */
-		structureTool({
-			structure: pageStructure(singletons),
-			defaultDocumentNode: (S) => {
-				return S.document().views([S.view.form()])
-			},
-		}),
-		linkField(),
+		structureTool({ structure: pageStructure(singletons), title: "All Content" }),
+
 		/**
-		 * singletonPlugin
-		 * Configures the global "new document" button and document actions to
-		 * suit the Settings document singleton. Accepts an array of singleton
-		 * names and adjusts the Studio's creation/actions UI accordingly.
+		 * media tool
+		 * @see https://www.sanity.io/plugins/sanity-plugin-media
+		 */
+		media(),
+
+		/**
+		 * video tool
+		 * @see https://www.sanity.io/plugins/sanity-plugin-mux-input
+		 */
+		muxInput({ max_resolution_tier: "2160p" }),
+
+		/**
+		 * vision tool
+		 * @see https://www.sanity.io/docs/content-lake/the-vision-plugin
+		 */
+		env.NODE_ENV === "development" && visionTool({ defaultApiVersion: apiVersion }),
+
+		// ===============================
+		// non-tool plugins
+		// ===============================
+
+		/**
+		 * adds a link field that allows you to link to other documents
+		 * @see https://www.sanity.io/plugins/sanity-plugin-link-field
+		 */
+		linkField({
+			linkableSchemaTypes: getLinkableTypes(),
+		}),
+		/**
+		 * our custom singleton plugin
 		 */
 		singletonPlugin(singletons.map((singleton) => singleton.name)),
 		/**
-		 * unsplashImageAsset
-		 * Adds Unsplash as an image asset source so editors can search and insert
-		 * images directly from Unsplash inside the Studio.
+		 * adds unsplash as an image asset source
 		 */
 		unsplashImageAsset(),
 		/**
-		 * media
-		 * Provides a media browser and tools for viewing and managing images and
-		 * other media assets in the Studio.
-		 */
-		media(),
-		/**
-		 * muxInput
-		 * Adds MUX video input support. Configure options such as
-		 * `max_resolution_tier` to control upload/processing preferences.
-		 */
-		muxInput({
-			max_resolution_tier: "2160p",
-		}),
-		/**
-		 * assist
-		 * Sets up AI Assist in the Studio with preset prompts and helpers.
-		 * See: https://www.sanity.io/docs/ai-assist
+		 * adds AI assist
 		 */
 		assist(),
 		/**
-		 * visionTool (development only)
-		 * Enables the Vision tool which lets you run GROQ queries in the Studio.
-		 * Included only when NODE_ENV === 'development'.
+		 * adds syntax-highlighted code input
 		 */
-		env.NODE_ENV === "development" &&
-			visionTool({ defaultApiVersion: apiVersion }),
+		codeInput(),
 	].filter(Boolean) as PluginOptions[],
 })

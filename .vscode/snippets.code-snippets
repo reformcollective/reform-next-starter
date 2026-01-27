@@ -2,22 +2,22 @@
 	"fully responsive": {
 		"prefix": "fresponsive",
 		"body": ["f.responsive(css`", "\t$0", "`)"],
-		"description": "generate fully responsive desktop query"
+		"description": "generate fully responsive desktop query",
 	},
 	"fully responsive tablet": {
 		"prefix": "ftablet",
 		"body": ["f.tablet(css`", "\t$0", "`)"],
-		"description": "generate fully responsive tablet query"
+		"description": "generate fully responsive tablet query",
 	},
 	"fully responsive mobile": {
 		"prefix": "fmobile",
 		"body": ["f.mobile(css`", "\t$0", "`)"],
-		"description": "generate fully responsive mobile query"
+		"description": "generate fully responsive mobile query",
 	},
 	"fully small": {
 		"prefix": "fsmall",
 		"body": ["f.small(css`", "\t$0", "`)"],
-		"description": "generate fully responsive small query"
+		"description": "generate fully responsive small query",
 	},
 	"stub all breakpoints": {
 		"prefix": "styled",
@@ -32,8 +32,8 @@
 			"f.mobile(css`",
 			"\t$4",
 			"`)",
-			"})"
+			"})",
 		],
-		"description": "generate fully responsive mobile query"
-	}
+		"description": "generate fully responsive mobile query",
+	},
 }

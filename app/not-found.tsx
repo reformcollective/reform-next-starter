@@ -1,6 +1,6 @@
 import { css, f, styled } from "library/styled/alpha"
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 
 export default function NotFound() {
 	return <Main>NOT FOUND</Main>

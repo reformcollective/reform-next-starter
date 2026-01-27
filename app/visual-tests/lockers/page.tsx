@@ -78,12 +78,8 @@ export default function ScrollLock() {
 				manually resume (demo purposes, don't use on sites)
 			</button>
 			<UniversalLink href="/visual-tests/lockers">go to top</UniversalLink>
-			<UniversalLink href="/visual-tests/lockers#test">
-				go to anchor
-			</UniversalLink>
-			<UniversalLink href="/">
-				go home (lockers will remove on unmount)
-			</UniversalLink>
+			<UniversalLink href="/visual-tests/lockers#test">go to anchor</UniversalLink>
+			<UniversalLink href="/">go home (lockers will remove on unmount)</UniversalLink>
 			<br />
 			<br />
 			<br />
@@ -161,7 +157,7 @@ const Wrapper = styled(
 		align-items: center;
 		gap: 40px;
 		padding: 100px;
-
+		
 		button,
 		a {
 			cursor: pointer;

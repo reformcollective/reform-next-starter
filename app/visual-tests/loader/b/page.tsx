@@ -8,18 +8,10 @@ export default async function LoaderB() {
 	return (
 		<Wrapper>
 			<h1>Loader Tests B</h1>
-			<UniversalLink href="/visual-tests/loader/a">
-				Go to Loader A
-			</UniversalLink>
-			<UniversalLink href="/visual-tests/loader/a">
-				Slide to Loader A
-			</UniversalLink>
-			<UniversalLink href="/visual-tests/loader/a#content-21">
-				instant to content 21
-			</UniversalLink>
-			<UniversalLink href="/visual-tests/loader/a#content-21">
-				fade to content 21
-			</UniversalLink>
+			<UniversalLink href="/visual-tests/loader/a">Go to Loader A</UniversalLink>
+			<UniversalLink href="/visual-tests/loader/a">Slide to Loader A</UniversalLink>
+			<UniversalLink href="/visual-tests/loader/a#content-21">instant to content 21</UniversalLink>
+			<UniversalLink href="/visual-tests/loader/a#content-21">fade to content 21</UniversalLink>
 			<UniversalLink href="/visual-tests/loader/a?query=true#content-21">
 				with query parameter
 			</UniversalLink>
@@ -47,7 +39,7 @@ const Wrapper = styled(
 		padding: 100px;
 		background: #eff;
 		color: black;
-
+		
 		p {
 			opacity: 0.5;
 		}
