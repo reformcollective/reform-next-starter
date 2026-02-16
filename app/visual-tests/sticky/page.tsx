@@ -4,13 +4,13 @@ import nativeSmoothPin from "library/nativeSmoothPin"
 import UniversalLink from "library/link"
 import { css, fresponsive, styled } from "library/styled/alpha"
 
-const sizeOrder: Array<"square" | "100vh" | "110vh"> = ["square", "100vh", "110vh"]
+const sizeOrder: Array<"square" | "100vh" | "120vh"> = ["square", "100vh", "120vh"]
 const topOrder: Array<"zero" | "neg" | "pos"> = ["zero", "neg", "pos"]
 
 const sizeLabel: Record<(typeof sizeOrder)[number], string> = {
 	square: "square",
 	"100vh": "100vh",
-	"110vh": "110vh",
+	"120vh": "120vh",
 }
 const topLabel: Record<(typeof topOrder)[number], string> = {
 	zero: "top: 0",
@@ -133,7 +133,7 @@ const StickyElement = styled("div", {
 		size: {
 			square: [{ width: "100%", aspectRatio: "1" }],
 			"100vh": [{ height: "100vh" }],
-			"110vh": [{ height: "110vh" }],
+			"120vh": [{ height: "120vh" }],
 		},
 		top: {
 			zero: [],
