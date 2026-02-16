@@ -12,5 +12,5 @@
 		}
 	},
 	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts"],
-	"exclude": ["next-env.d.ts", "node_modules", "library"]
+	"exclude": ["next-env.d.ts", "node_modules"]
 }
