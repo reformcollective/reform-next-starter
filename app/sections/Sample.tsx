@@ -16,10 +16,6 @@ export default async function SampleSection({
 	 */
 	await sleep(2000)
 
-	if (genericVideo3) {
-		console.log("Video 3 props:", genericVideo3)
-	}
-
 	return (
 		<Wrapper>
 			<h1>{title}</h1>
