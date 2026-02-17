@@ -1,5 +1,5 @@
 import type { GetSectionType } from "page"
-import { VideoEmbed, getVideoProps } from "library/videos/VideoEmbed"
+import { VideoEmbed } from "library/videos/VideoEmbed"
 import { sleep } from "library/functions"
 import { css, fresponsive, styled } from "library/styled/alpha"
 
@@ -16,7 +16,7 @@ export default async function SampleSection(props: GetSectionType<"sample">) {
 		<Wrapper>
 			<h1>{title}</h1>
 			<p>{text}</p>
-			{sampleVideo && <VideoEmbed {...getVideoProps(sampleVideo)} />}
+			{sampleVideo && <VideoEmbed video={sampleVideo} />}
 		</Wrapper>
 	)
 }
