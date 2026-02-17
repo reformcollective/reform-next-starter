@@ -1,15 +1,11 @@
 import type { GetSectionType } from "page"
-import { VideoEmbed, getVideoProps } from "app/components/VideoEmbed"
+import { VideoEmbed, getVideoProps } from "library/videos/VideoEmbed"
 import { sleep } from "library/functions"
 import { css, fresponsive, styled } from "library/styled/alpha"
 
-export default async function SampleSection({
-	title,
-	text,
-	genericVideo,
-	genericVideo2,
-	genericVideo3,
-}: GetSectionType<"sample">) {
+export default async function SampleSection(props: GetSectionType<"sample">) {
+	const { title, text, sampleVideo } = props
+
 	/**
 	 * artificially delay so we can see the loading state
 	 * in sanity studio
@@ -20,33 +16,15 @@ export default async function SampleSection({
 		<Wrapper>
 			<h1>{title}</h1>
 			<p>{text}</p>
-			{genericVideo && (
-				<div>
-					<h2>Generic Video</h2>
-					<VideoEmbed {...getVideoProps(genericVideo)} />
-				</div>
-			)}
-
-			{genericVideo2 && (
-				<div>
-					<h2>Generic Video 2</h2>
-					<VideoEmbed {...getVideoProps(genericVideo2)} />
-				</div>
-			)}
-
-			{genericVideo3 && (
-				<div>
-					<h2>Generic Video 3</h2>
-					<VideoEmbed {...getVideoProps(genericVideo3)} />
-				</div>
-			)}
+			{sampleVideo && <VideoEmbed {...getVideoProps(sampleVideo)} />}
 		</Wrapper>
 	)
 }
 
 const Wrapper = styled("div", [
 	fresponsive(css`
-		padding: 200px;
+		display: grid;
+		gap: 40px;
 		min-height: 60vh;
 	`),
 ])
