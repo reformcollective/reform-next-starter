@@ -8,15 +8,25 @@ import { Form } from "@base-ui/react/form"
 import { NumberField } from "@base-ui/react/number-field"
 import { Radio } from "@base-ui/react/radio"
 import { RadioGroup } from "@base-ui/react/radio-group"
+import { Select } from "@base-ui/react/select"
 import { Slider } from "@base-ui/react/slider"
 import { Switch } from "@base-ui/react/switch"
 import { Button } from "@base-ui/react/button"
 import { useState } from "react"
 import { css, f, styled } from "library/styled/alpha"
-import textStyles from "app/styles/text"
 import { colors } from "app/styles/colors.css"
 
 const NEEDS = ["Branding", "Web Design", "Development", "SEO", "Content Strategy"]
+
+const INDUSTRIES = [
+	{ label: "Technology", value: "technology" },
+	{ label: "Healthcare", value: "healthcare" },
+	{ label: "Finance", value: "finance" },
+	{ label: "Education", value: "education" },
+	{ label: "Retail", value: "retail" },
+]
+
+const ROLES = ["Designer", "Developer", "Manager"]
 
 async function submitForm(url: string) {
 	// Mimic a server response
@@ -66,6 +76,15 @@ export default function ExampleForm() {
 							setLoading(false)
 						}}
 					>
+						{/* Unstyled base-ui field structure for reference:
+						<Field.Root name="fieldName">
+							<Field.Label>Label</Field.Label>
+							<Field.Control required placeholder="..." />
+							<Field.Description>Helper text</Field.Description>
+							<Field.Error match="valueMissing">Required</Field.Error>
+							<Field.Error match="typeMismatch">Invalid</Field.Error>
+						</Field.Root>
+						*/}
 						<StyledFieldRoot name="name">
 							<StyledLabel>Full name *</StyledLabel>
 							<StyledInput type="text" required placeholder="Jane Smith" autoComplete="name" />
@@ -101,13 +120,23 @@ export default function ExampleForm() {
 							{errors.url && <ServerError>{errors.url}</ServerError>}
 						</StyledFieldRoot>
 
-						{/* Textarea with min character count */}
+						{/* Unstyled textarea with min/max character count for reference:
+						<Field.Root name="message">
+							<Field.Label>Message</Field.Label>
+							<Field.Control render={<textarea rows={4} />} required minLength={20} maxLength={100} placeholder="..." />
+							<Field.Description>Must be at least 20 characters</Field.Description>
+							<Field.Error match="valueMissing">Required</Field.Error>
+							<Field.Error match="tooShort">Too short</Field.Error>
+							<Field.Error match="tooLong">Too long</Field.Error>
+						</Field.Root>
+						*/}
 						<StyledFieldRoot name="message">
 							<StyledLabel>Message *</StyledLabel>
 							<Field.Control
 								render={<StyledTextarea rows={4} />}
 								required
 								minLength={20}
+								maxLength={100}
 								placeholder="Tell us about your project..."
 							/>
 							<Field.Description render={<Hint />}>
@@ -115,13 +144,83 @@ export default function ExampleForm() {
 							</Field.Description>
 							<StyledError match="valueMissing">Please enter a message</StyledError>
 							<StyledError match="tooShort">Message must be at least 20 characters</StyledError>
+							<StyledError match="tooLong">Message must be less than 100 characters</StyledError>
 						</StyledFieldRoot>
 
-						{/* Radio group */}
-						<StyledFieldRoot name="role">
+						{/* Unstyled select for reference:
+						<Field.Root name="industry">
+							<Field.Label nativeLabel={false} render={<div />}>Industry</Field.Label>
+							<Select.Root required>
+								<Select.Trigger>
+									<Select.Value placeholder="Select..." />
+									<Select.Icon>▾</Select.Icon>
+								</Select.Trigger>
+								<Select.Portal>
+									<Select.Positioner sideOffset={4}>
+										<Select.Popup>
+											<Select.List>
+												{INDUSTRIES.map(({ label, value }) => (
+													<Select.Item key={value} value={value}>
+														<Select.ItemText>{label}</Select.ItemText>
+													</Select.Item>
+												))}
+											</Select.List>
+										</Select.Popup>
+									</Select.Positioner>
+								</Select.Portal>
+							</Select.Root>
+							<Field.Error match="valueMissing">Required</Field.Error>
+						</Field.Root>
+						*/}
+						<StyledFieldRoot name="industry">
+							<Field.Label nativeLabel={false} render={<StyledLabelDiv />}>
+								Industry *
+							</Field.Label>
+							<Select.Root required items={INDUSTRIES}>
+								<StyledSelectTrigger>
+									<Select.Value placeholder="Select an industry" />
+									<Select.Icon render={<SelectChevron />}>▾</Select.Icon>
+								</StyledSelectTrigger>
+								<Select.Portal>
+									<Select.Positioner sideOffset={4}>
+										<StyledSelectPopup>
+											<Select.List>
+												{INDUSTRIES.map(({ label, value }) => (
+													<StyledSelectItem key={value} value={value}>
+														<Select.ItemText>{label}</Select.ItemText>
+													</StyledSelectItem>
+												))}
+											</Select.List>
+										</StyledSelectPopup>
+									</Select.Positioner>
+								</Select.Portal>
+							</Select.Root>
+							<StyledError match="valueMissing">Please select an industry</StyledError>
+						</StyledFieldRoot>
+
+						{/* Unstyled radio group for reference:
+						<Field.Root name="role">
+							<Fieldset.Root render={<RadioGroup required />}>
+								<Fieldset.Legend>Role</Fieldset.Legend>
+								{ROLES.map((role) => (
+									<Field.Item key={role}>
+										<Field.Label>
+											<Radio.Root value={role}>
+												<Radio.Indicator />
+											</Radio.Root>
+											{role}
+										</Field.Label>
+									</Field.Item>
+								))}
+							</Fieldset.Root>
+							<Field.Error match="valueMissing">Required</Field.Error>
+						</Field.Root>
+						*/}
+						{/* Radio group - https://base-ui.com/react/components/radio#form-integration */}
+						<Field.Root name="role">
 							<Fieldset.Root render={<StyledRadioGroup required />}>
-								<Fieldset.Legend render={<StyledLegend />}>Role *</Fieldset.Legend>
-								{["Designer", "Developer", "Manager"].map((role) => (
+								<StyledLegend>Role *</StyledLegend>
+								{ROLES.map((role) => (
 									<Field.Item key={role}>
 										<ItemLabel>
 											<StyledRadio value={role}>
@@ -133,19 +232,35 @@ export default function ExampleForm() {
 								))}
 							</Fieldset.Root>
 							<StyledError match="valueMissing">Please select a role</StyledError>
-						</StyledFieldRoot>
+						</Field.Root>
 
-						{/* Checkbox group — at least 2 required */}
-						<StyledFieldRoot
+						{/* Unstyled checkbox group for reference:
+						<Field.Root name="needs" validate={() => needs.length >= 2 ? null : "Please select at least 2 needs"}>
+							<Fieldset.Root render={<CheckboxGroup value={needs} onValueChange={setNeeds} />}>
+								<Fieldset.Legend>What do you need help with?</Fieldset.Legend>
+								{NEEDS.map((need) => (
+									<Field.Item key={need}>
+										<Field.Label>
+											<Checkbox.Root value={need}>
+												<Checkbox.Indicator />
+											</Checkbox.Root>
+											{need}
+										</Field.Label>
+									</Field.Item>
+								))}
+							</Fieldset.Root>
+							<Field.Error match="customError">Please select at least 2 needs</Field.Error>
+						</Field.Root>
+						*/}
+						{/* Checkbox group — at least 2 required - https://base-ui.com/react/components/checkbox-group#form-integration */}
+						<Field.Root
 							name="needs"
 							validate={() => (needs.length >= 2 ? null : "Please select at least 2 needs")}
 						>
 							<Fieldset.Root
 								render={<StyledCheckboxGroup value={needs} onValueChange={setNeeds} />}
 							>
-								<Fieldset.Legend render={<StyledLegend />}>
-									What do you need help with? *
-								</Fieldset.Legend>
+								<StyledLegend>What do you need help with? *</StyledLegend>
 								<Hint>Select at least 2</Hint>
 								{NEEDS.map((need) => (
 									<Field.Item key={need}>
@@ -159,8 +274,23 @@ export default function ExampleForm() {
 								))}
 							</Fieldset.Root>
 							<StyledError match="customError">Please select at least 2 needs</StyledError>
-						</StyledFieldRoot>
+						</Field.Root>
 
+						{/* Unstyled range slider for reference:
+						<Field.Root name="budget">
+							<Fieldset.Root render={<Slider.Root defaultValue={[25, 75]} min={0} max={100} step={5} />}>
+								<Fieldset.Legend>Budget range</Fieldset.Legend>
+								<Slider.Value />
+								<Slider.Control>
+									<Slider.Track>
+										<Slider.Indicator />
+										<Slider.Thumb index={0} />
+										<Slider.Thumb index={1} />
+									</Slider.Track>
+								</Slider.Control>
+							</Fieldset.Root>
+						</Field.Root>
+						*/}
 						{/* Range slider */}
 						<StyledFieldRoot name="budget">
 							<Fieldset.Root
@@ -180,6 +310,16 @@ export default function ExampleForm() {
 							</Fieldset.Root>
 						</StyledFieldRoot>
 
+						{/* Unstyled switch for reference:
+						<Field.Root name="newsletter">
+							<Field.Label>
+								Subscribe to newsletter
+								<Switch.Root>
+									<Switch.Thumb />
+								</Switch.Root>
+							</Field.Label>
+						</Field.Root>
+						*/}
 						{/* Toggle / Switch */}
 						<StyledFieldRoot name="newsletter">
 							<SwitchLabel>
@@ -190,6 +330,19 @@ export default function ExampleForm() {
 							</SwitchLabel>
 						</StyledFieldRoot>
 
+						{/* Unstyled number field for reference:
+						<Field.Root name="teamSize">
+							<Field.Label>Team size</Field.Label>
+							<NumberField.Root defaultValue={1} min={1} max={50} required>
+								<NumberField.Group>
+									<NumberField.Decrement>−</NumberField.Decrement>
+									<NumberField.Input />
+									<NumberField.Increment>+</NumberField.Increment>
+								</NumberField.Group>
+							</NumberField.Root>
+							<Field.Error match="valueMissing">Required</Field.Error>
+						</Field.Root>
+						*/}
 						{/* Number field / Counter */}
 						<StyledFieldRoot name="teamSize">
 							<NumberField.Root defaultValue={1} min={1} max={50} required>
@@ -203,6 +356,17 @@ export default function ExampleForm() {
 							<StyledError match="valueMissing">Please enter team size</StyledError>
 						</StyledFieldRoot>
 
+						{/* Unstyled single checkbox for reference:
+						<Field.Root name="terms">
+							<Field.Label>
+								<Checkbox.Root required>
+									<Checkbox.Indicator />
+								</Checkbox.Root>
+								I agree to the terms and conditions
+							</Field.Label>
+							<Field.Error match="valueMissing">Required</Field.Error>
+						</Field.Root>
+						*/}
 						{/* Checkbox */}
 						<StyledFieldRoot name="terms">
 							<CheckboxLabel>
@@ -370,6 +534,84 @@ const StyledError = styled(Field.Error, [
 const ServerError = styled("p", [
 	f.responsive(css`
 		color: ${colors.red};
+	`),
+])
+
+// ─── Select ──────────────────────────────────────────────────────────────────
+
+const StyledLabelDiv = styled("div", [
+	f.responsive(css`
+		color: ${colors.black};
+		font-weight: 500;
+	`),
+])
+
+const StyledSelectTrigger = styled(Select.Trigger, [
+	f.responsive(css`
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 16px;
+		margin: 0;
+		border: 1px solid #e5e7eb;
+		width: 100%;
+		height: 48px;
+		border-radius: 8px;
+		font-family: inherit;
+		background-color: transparent;
+		color: ${colors.black};
+		cursor: pointer;
+
+		&:focus-visible {
+			outline: 2px solid ${colors.blue};
+			outline-offset: -1px;
+		}
+
+		&[data-invalid] {
+			border-color: ${colors.red};
+		}
+
+		&[data-placeholder] {
+			color: #9ca3af;
+		}
+	`),
+])
+
+const SelectChevron = styled("span", [
+	f.responsive(css`
+		font-size: 18px;
+		color: #6b7280;
+	`),
+])
+
+const StyledSelectPopup = styled(Select.Popup, [
+	f.responsive(css`
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 8px;
+		padding: 4px;
+		box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
+	`),
+])
+
+const StyledSelectItem = styled(Select.Item, [
+	f.responsive(css`
+		display: flex;
+		align-items: center;
+		padding: 8px 12px;
+		border-radius: 4px;
+		cursor: pointer;
+		color: ${colors.black};
+		outline: none;
+
+		&[data-highlighted] {
+			background: #f3f4f6;
+		}
+
+		&[data-selected] {
+			font-weight: 500;
+		}
 	`),
 ])
 
