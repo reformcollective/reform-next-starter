@@ -54,11 +54,12 @@ export async function generateMetadata({
 }: {
 	params: Promise<{ slug: string[] | undefined }>
 }): Promise<Metadata> {
+	const slug = (await params).slug?.join("/") || "home"
+	const pageUrl = `${siteURL}${slug === "home" ? "" : `/${slug}`}`
+
 	const { data: relevantPage } = await sanityFetch({
 		query: pageQuery,
-		params: {
-			slug: (await params).slug?.join("/") || "home",
-		},
+		params: { slug },
 		disableStega: true,
 	})
 	const { data: settings } = await sanityFetch({
@@ -78,12 +79,18 @@ export async function generateMetadata({
 	return {
 		title,
 		description,
+		openGraph: {
+			type: "website",
+			url: pageUrl,
+			siteName: settings?.defaultTitle ?? undefined,
+			images: imageData,
+		},
 		twitter: {
 			card: "summary_large_image",
 			images: imageData,
 		},
-		openGraph: {
-			images: imageData,
+		alternates: {
+			canonical: pageUrl,
 		},
 		metadataBase: new URL(siteURL),
 	}
