@@ -5,11 +5,16 @@ import { CheckboxGroup } from "@base-ui/react/checkbox-group"
 import { Field } from "@base-ui/react/field"
 import { Fieldset } from "@base-ui/react/fieldset"
 import { Form } from "@base-ui/react/form"
+import { NumberField } from "@base-ui/react/number-field"
 import { Radio } from "@base-ui/react/radio"
 import { RadioGroup } from "@base-ui/react/radio-group"
+import { Slider } from "@base-ui/react/slider"
+import { Switch } from "@base-ui/react/switch"
 import { Button } from "@base-ui/react/button"
 import { useState } from "react"
 import { css, f, styled } from "library/styled/alpha"
+import textStyles from "app/styles/text"
+import { colors } from "app/styles/colors.css"
 
 const NEEDS = ["Branding", "Web Design", "Development", "SEO", "Content Strategy"]
 
@@ -96,24 +101,42 @@ export default function ExampleForm() {
 							{errors.url && <ServerError>{errors.url}</ServerError>}
 						</StyledFieldRoot>
 
+						{/* Textarea with min character count */}
+						<StyledFieldRoot name="message">
+							<StyledLabel>Message *</StyledLabel>
+							<Field.Control
+								render={<StyledTextarea rows={4} />}
+								required
+								minLength={20}
+								placeholder="Tell us about your project..."
+							/>
+							<Field.Description render={<Hint />}>
+								Must be at least 20 characters
+							</Field.Description>
+							<StyledError match="valueMissing">Please enter a message</StyledError>
+							<StyledError match="tooShort">Message must be at least 20 characters</StyledError>
+						</StyledFieldRoot>
+
 						{/* Radio group */}
-						<Field.Root name="role">
+						<StyledFieldRoot name="role">
 							<Fieldset.Root render={<StyledRadioGroup required />}>
 								<Fieldset.Legend render={<StyledLegend />}>Role *</Fieldset.Legend>
 								{["Designer", "Developer", "Manager"].map((role) => (
-									<RadioLabel key={role}>
-										<StyledRadio value={role}>
-											<StyledRadioIndicator />
-										</StyledRadio>
-										{role}
-									</RadioLabel>
+									<Field.Item key={role}>
+										<ItemLabel>
+											<StyledRadio value={role}>
+												<StyledRadioIndicator />
+											</StyledRadio>
+											{role}
+										</ItemLabel>
+									</Field.Item>
 								))}
 							</Fieldset.Root>
 							<StyledError match="valueMissing">Please select a role</StyledError>
-						</Field.Root>
+						</StyledFieldRoot>
 
 						{/* Checkbox group — at least 2 required */}
-						<Field.Root
+						<StyledFieldRoot
 							name="needs"
 							validate={() => (needs.length >= 2 ? null : "Please select at least 2 needs")}
 						>
@@ -125,21 +148,63 @@ export default function ExampleForm() {
 								</Fieldset.Legend>
 								<Hint>Select at least 2</Hint>
 								{NEEDS.map((need) => (
-									<RadioLabel key={need}>
-										<StyledCheckbox value={need}>
-											<StyledCheckboxIndicator>✓</StyledCheckboxIndicator>
-										</StyledCheckbox>
-										{need}
-									</RadioLabel>
+									<Field.Item key={need}>
+										<ItemLabel>
+											<StyledCheckbox value={need}>
+												<StyledCheckboxIndicator>✓</StyledCheckboxIndicator>
+											</StyledCheckbox>
+											{need}
+										</ItemLabel>
+									</Field.Item>
 								))}
 							</Fieldset.Root>
-							{/* Hidden control mirrors checkbox group value so Field.Root can validate */}
-							<Field.Control type="hidden" name="needs" value={needs.join(",")} readOnly />
 							<StyledError match="customError">Please select at least 2 needs</StyledError>
-						</Field.Root>
+						</StyledFieldRoot>
+
+						{/* Range slider */}
+						<StyledFieldRoot name="budget">
+							<Fieldset.Root
+								render={<StyledSliderRoot defaultValue={[25, 75]} min={0} max={100} step={5} />}
+							>
+								<SliderHeader>
+									<Fieldset.Legend render={<StyledLegend />}>Budget range ($k)</Fieldset.Legend>
+									<Slider.Value render={<SliderValueText />} />
+								</SliderHeader>
+								<Slider.Control render={<StyledSliderControl />}>
+									<Slider.Track render={<StyledSliderTrack />}>
+										<Slider.Indicator render={<StyledSliderIndicator />} />
+										<Slider.Thumb index={0} render={<StyledSliderThumb />} />
+										<Slider.Thumb index={1} render={<StyledSliderThumb />} />
+									</Slider.Track>
+								</Slider.Control>
+							</Fieldset.Root>
+						</StyledFieldRoot>
+
+						{/* Toggle / Switch */}
+						<StyledFieldRoot name="newsletter">
+							<SwitchLabel>
+								Subscribe to newsletter{""}
+								<StyledSwitch defaultChecked>
+									<StyledSwitchThumb />
+								</StyledSwitch>
+							</SwitchLabel>
+						</StyledFieldRoot>
+
+						{/* Number field / Counter */}
+						<StyledFieldRoot name="teamSize">
+							<NumberField.Root defaultValue={1} min={1} max={50} required>
+								<StyledLabel>Team size *</StyledLabel>
+								<StyledNumberGroup>
+									<StyledDecrement>−</StyledDecrement>
+									<StyledNumberInput />
+									<StyledIncrement>+</StyledIncrement>
+								</StyledNumberGroup>
+							</NumberField.Root>
+							<StyledError match="valueMissing">Please enter team size</StyledError>
+						</StyledFieldRoot>
 
 						{/* Checkbox */}
-						<Field.Root name="terms">
+						<StyledFieldRoot name="terms">
 							<CheckboxLabel>
 								<StyledCheckbox required>
 									<StyledCheckboxIndicator>✓</StyledCheckboxIndicator>
@@ -147,7 +212,7 @@ export default function ExampleForm() {
 								I agree to the terms and conditions *
 							</CheckboxLabel>
 							<StyledError match="valueMissing">You must agree to the terms</StyledError>
-						</Field.Root>
+						</StyledFieldRoot>
 
 						<StyledButton type="submit" disabled={loading} focusableWhenDisabled>
 							{loading ? "Submitting..." : "Submit"}
@@ -168,7 +233,7 @@ const Wrapper = styled("div", [
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 4rem 1rem;
+		padding: 80px 24px;
 		background-color: #f9fafb;
 	`),
 ])
@@ -176,29 +241,25 @@ const Wrapper = styled("div", [
 const Card = styled("div", [
 	f.responsive(css`
 		width: 100%;
-		max-width: 24rem;
+		max-width: 480px;
 		background: white;
 		border: 1px solid #e5e7eb;
-		border-radius: 0.75rem;
-		padding: 2rem;
+		border-radius: 16px;
+		padding: 40px;
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: 32px;
 	`),
 ])
 
 const Heading = styled("h1", [
 	f.responsive(css`
-		font-size: 1.25rem;
-		font-weight: 600;
-		color: #111827;
-		margin: 0;
+		
 	`),
 ])
 
 const Description = styled("p", [
 	f.responsive(css`
-		font-size: 0.875rem;
 		color: #6b7280;
 		margin: 0;
 	`),
@@ -206,7 +267,7 @@ const Description = styled("p", [
 
 const RequiredNote = styled("p", [
 	f.responsive(css`
-		font-size: 0.75rem;
+		font-size: 14px;
 		color: #9ca3af;
 		margin: 0;
 	`),
@@ -214,19 +275,16 @@ const RequiredNote = styled("p", [
 
 const SuccessMessage = styled("p", [
 	f.responsive(css`
-		font-size: 0.875rem;
 		color: #15803d;
 		margin: 0;
 	`),
 ])
 
-// ─── Form ────────────────────────────────────────────────────────────────────
-
 const StyledForm = styled(Form, [
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		gap: 30px;
+		gap: 36px;
 	`),
 ])
 
@@ -235,70 +293,83 @@ const StyledFieldRoot = styled(Field.Root, [
 		display: flex;
 		flex-direction: column;
 		align-items: start;
-		gap: 0.25rem;
+		gap: 6px;
 	`),
 ])
 
 const StyledLabel = styled(Field.Label, [
 	f.responsive(css`
-		font-size: 0.875rem;
-		line-height: 1.25rem;
-		font-weight: 500;
-		color: #111827;
+		color: ${colors.black};
 	`),
 ])
 
 const Hint = styled("p", [
 	f.responsive(css`
-		font-size: 0.75rem;
 		color: #6b7280;
-		margin: 0;
 	`),
 ])
 
 const StyledInput = styled(Field.Control, [
 	f.responsive(css`
 		box-sizing: border-box;
-		padding: 0 0.875rem;
+		padding: 0 16px;
 		margin: 0;
 		border: 1px solid #e5e7eb;
 		width: 100%;
-		height: 2.5rem;
-		border-radius: 0.375rem;
+		height: 48px;
+		border-radius: 8px;
 		font-family: inherit;
-		font-size: 1rem;
 		background-color: transparent;
-		color: #111827;
+		color: ${colors.black};
 		
 		&::placeholder {
 			color: #9ca3af;
 		}
 		
 		&:focus {
-			outline: 2px solid #3b82f6;
+			outline: 2px solid ${colors.blue};
 			outline-offset: -1px;
 		}
 		
 		[data-invalid] & {
-			border-color: #991b1b;
+			border-color: ${colors.red};
+		}
+	`),
+])
+
+const StyledTextarea = styled("textarea", [
+	f.responsive(css`
+		box-sizing: border-box;
+		padding: 12px;
+		border: 1px solid #e5e7eb;
+		width: 100%;
+		border-radius: 8px;
+		color: ${colors.black};
+		
+		&::placeholder {
+			color: #9ca3af;
+		}
+		
+		&:focus {
+			outline: 2px solid ${colors.blue};
+			outline-offset: -1px;
+		}
+		
+		[data-invalid] & {
+			border-color: ${colors.red};
 		}
 	`),
 ])
 
 const StyledError = styled(Field.Error, [
 	f.responsive(css`
-		font-size: 0.875rem;
-		line-height: 1.25rem;
-		color: #991b1b;
+		color: ${colors.red};
 	`),
 ])
 
 const ServerError = styled("p", [
 	f.responsive(css`
-		font-size: 0.875rem;
-		line-height: 1.25rem;
-		color: #991b1b;
-		margin: 0;
+		color: ${colors.red};
 	`),
 ])
 
@@ -308,31 +379,24 @@ const StyledRadioGroup = styled(RadioGroup, [
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 12px;
 		border: none;
-		margin: 0;
-		padding: 0;
 	`),
 ])
 
 const StyledLegend = styled("legend", [
 	f.responsive(css`
-		font-size: 0.875rem;
-		line-height: 1.25rem;
-		font-weight: 500;
-		color: #111827;
-		padding: 0;
-		margin-bottom: 0.25rem;
+		color: ${colors.black};
+		margin-bottom: 6px;
 	`),
 ])
 
-const RadioLabel = styled("label", [
+const ItemLabel = styled(Field.Label, [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.875rem;
-		color: #111827;
+		gap: 10px;
+		color: ${colors.black};
 		cursor: pointer;
 	`),
 ])
@@ -342,8 +406,8 @@ const StyledRadio = styled(Radio.Root, [
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 1.125rem;
-		height: 1.125rem;
+		width: 18px;
+		height: 18px;
 		border-radius: 50%;
 		border: 1px solid #d1d5db;
 		background: white;
@@ -351,47 +415,40 @@ const StyledRadio = styled(Radio.Root, [
 		flex-shrink: 0;
 		
 		&:focus-visible {
-			outline: 2px solid #3b82f6;
+			outline: 2px solid ${colors.blue};
 			outline-offset: 2px;
 		}
 		
 		&[data-checked] {
-			border-color: #3b82f6;
+			border-color: ${colors.blue};
 		}
 	`),
 ])
 
 const StyledRadioIndicator = styled(Radio.Indicator, [
 	f.responsive(css`
-		width: 0.5rem;
-		height: 0.5rem;
+		width: 8px;
+		height: 8px;
 		border-radius: 50%;
-		background: #3b82f6;
+		background: ${colors.blue};
 	`),
 ])
-
-// ─── Checkbox group ──────────────────────────────────────────────────────────
 
 const StyledCheckboxGroup = styled(CheckboxGroup, [
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-		border: none;
-		margin: 0;
-		padding: 0;
+		gap: 12px;
 	`),
 ])
-
-// ─── Checkbox ────────────────────────────────────────────────────────────────
 
 const CheckboxLabel = styled(Field.Label, [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.875rem;
-		color: #111827;
+		gap: 10px;
+		font-size: 16px;
+		color: ${colors.black};
 		cursor: pointer;
 	`),
 ])
@@ -401,33 +458,221 @@ const StyledCheckbox = styled(Checkbox.Root, [
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 1.125rem;
-		height: 1.125rem;
-		border-radius: 0.25rem;
+		width: 18px;
+		height: 18px;
+		border-radius: 4px;
 		border: 1px solid #d1d5db;
 		background: white;
 		cursor: pointer;
 		flex-shrink: 0;
 		
 		&:focus-visible {
-			outline: 2px solid #3b82f6;
+			outline: 2px solid ${colors.blue};
 			outline-offset: 2px;
 		}
 		
 		&[data-checked] {
-			background: #3b82f6;
-			border-color: #3b82f6;
+			background: ${colors.blue};
+			border-color: ${colors.blue};
 		}
 	`),
 ])
 
 const StyledCheckboxIndicator = styled(Checkbox.Indicator, [
 	f.responsive(css`
-		font-size: 0.75rem;
+		font-size: 12px;
 		line-height: 1;
 		color: white;
 	`),
 ])
+
+// ─── Slider ──────────────────────────────────────────────────────────────────
+
+const StyledSliderRoot = styled(Slider.Root, [
+	f.responsive(css`
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		border: none;
+		width: 100%;
+	`),
+])
+
+const SliderHeader = styled("div", [
+	f.responsive(css`
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	`),
+])
+
+const SliderValueText = styled("span", [
+	f.responsive(css`
+		color: #6b7280;
+	`),
+])
+
+const StyledSliderControl = styled("div", [
+	f.responsive(css`
+		display: flex;
+		align-items: center;
+		height: 20px;
+	`),
+])
+
+const StyledSliderTrack = styled("div", [
+	f.responsive(css`
+		position: relative;
+		width: 100%;
+		height: 4px;
+		border-radius: 2px;
+		background: #e5e7eb;
+	`),
+])
+
+const StyledSliderIndicator = styled("div", [
+	f.responsive(css`
+		position: absolute;
+		height: 100%;
+		border-radius: 2px;
+		background: ${colors.blue};
+	`),
+])
+
+const StyledSliderThumb = styled("div", [
+	f.responsive(css`
+		position: absolute;
+		width: 18px;
+		height: 18px;
+		border-radius: 50%;
+		background: white;
+		border: 2px solid ${colors.blue};
+		cursor: pointer;
+		transform: translateX(-50%);
+		
+		&:focus-visible {
+			outline: 2px solid ${colors.blue};
+			outline-offset: 2px;
+		}
+	`),
+])
+
+// ─── Switch ──────────────────────────────────────────────────────────────────
+
+const SwitchLabel = styled(Field.Label, [
+	f.responsive(css`
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-weight: 500;
+		color: ${colors.black};
+		cursor: pointer;
+	`),
+])
+
+const StyledSwitch = styled(Switch.Root, [
+	f.responsive(css`
+		position: relative;
+		width: 44px;
+		height: 24px;
+		border-radius: 12px;
+		border: none;
+		background: #d1d5db;
+		cursor: pointer;
+		padding: 0;
+		flex-shrink: 0;
+		transition: background 0.15s;
+		
+		&[data-checked] {
+			background: #3b82f6;
+		}
+		
+		&:focus-visible {
+			outline: 2px solid ${colors.blue};
+			outline-offset: 2px;
+		}
+	`),
+])
+
+const StyledSwitchThumb = styled(Switch.Thumb, [
+	f.responsive(css`
+		position: absolute;
+		top: 50%;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: white;
+		box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+		transition: transform 0.15s;
+		transform: translateY(-50%) translateX(3px);
+		
+		[data-checked] & {
+			transform: translateY(-50%) translateX(22px);
+		}
+	`),
+])
+
+// ─── Number field ────────────────────────────────────────────────────────────
+
+const StyledNumberGroup = styled(NumberField.Group, [
+	f.responsive(css`
+		display: flex;
+		align-items: center;
+		border: 1px solid #e5e7eb;
+		border-radius: 6px;
+		overflow: hidden;
+		width: fit-content;
+	`),
+])
+
+const StyledNumberInput = styled(NumberField.Input, [
+	f.responsive(css`
+		box-sizing: border-box;
+		width: 56px;
+		height: 40px;
+		border: none;
+		border-left: 1px solid #e5e7eb;
+		border-right: 1px solid #e5e7eb;
+		text-align: center;
+		font-family: inherit;
+		font-size: 16px;
+		color: ${colors.black};
+		background: transparent;
+		
+		&:focus {
+			outline: 2px solid ${colors.blue};
+			outline-offset: -1px;
+		}
+	`),
+])
+
+const numberButtonStyles = [
+	f.responsive(css`
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border: none;
+		background: #f9fafb;
+		cursor: pointer;
+		font-size: 18px;
+		color: ${colors.black};
+		
+		@media (hover: hover) {
+			&:hover {
+				background: #f3f4f6;
+			}
+		}
+		
+		&:active {
+			background: #e5e7eb;
+		}
+	`),
+]
+
+const StyledDecrement = styled(NumberField.Decrement, numberButtonStyles)
+const StyledIncrement = styled(NumberField.Increment, numberButtonStyles)
 
 // ─── Submit ──────────────────────────────────────────────────────────────────
 
@@ -437,18 +682,18 @@ const StyledButton = styled(Button, [
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: 2.5rem;
-		padding: 0 0.875rem;
+		height: 40px;
+		padding: 0 14px;
 		margin: 0;
 		outline: 0;
 		border: 1px solid #e5e7eb;
-		border-radius: 0.375rem;
+		border-radius: 6px;
 		background-color: #f9fafb;
 		font-family: inherit;
-		font-size: 1rem;
+		font-size: 16px;
 		font-weight: 500;
-		line-height: 1.5rem;
-		color: #111827;
+		line-height: 24px;
+		color: ${colors.black};
 		
 		@media (hover: hover) {
 			&:hover:not([data-disabled]) {
@@ -457,7 +702,7 @@ const StyledButton = styled(Button, [
 		}
 		
 		&:focus-visible {
-			outline: 2px solid #3b82f6;
+			outline: 2px solid ${colors.blue};
 			outline-offset: -1px;
 		}
 		

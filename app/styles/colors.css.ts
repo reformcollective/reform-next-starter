@@ -7,6 +7,8 @@ import { createVar, globalStyle } from "@vanilla-extract/css"
 export const rawColors = {
 	white: ["#FFF", "color(display-p3 1 1 1)"],
 	red: ["#FE3712"],
+	green: ["#22C55E"],
+	blue: ["#3B82F6"],
 	black: ["#000", "color(display-p3 0 0 0)"],
 } as const
 
