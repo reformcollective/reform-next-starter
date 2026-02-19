@@ -291,16 +291,16 @@ export default function ExampleForm() {
 								<Combobox.Input placeholder="Search countries..." />
 								<Combobox.Trigger>▾</Combobox.Trigger>
 								<Combobox.Portal>
-									<Combobox.Positioner sideOffset={8}>
+									<Combobox.Positioner sideOffset={0}>
 										<Combobox.Popup>
+											<Combobox.Empty>No results</Combobox.Empty>
 											<Combobox.List>
-												<Combobox.Empty>No results</Combobox.Empty>
-												{COUNTRIES.map((country) => (
+												{(country) => (
 													<Combobox.Item key={country} value={country}>
 														<Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
 														{country}
 													</Combobox.Item>
-												))}
+												)}
 											</Combobox.List>
 										</Combobox.Popup>
 									</Combobox.Positioner>
@@ -308,6 +308,9 @@ export default function ExampleForm() {
 							</Combobox.Root>
 							<Field.Error match="valueMissing">Required</Field.Error>
 						</Field.Root>
+
+						Note: Use a render function in Combobox.List (not .map()) so
+						base-ui can filter items as the user types.
 						*/}
 							<StyledFieldRoot name="country">
 								<Field.Label nativeLabel={false} render={<StyledLabelDiv />}>
@@ -321,19 +324,19 @@ export default function ExampleForm() {
 										</StyledComboboxTrigger>
 									</StyledComboboxInputRow>
 									<Combobox.Portal>
-										<Combobox.Positioner sideOffset={0}>
+										<Combobox.Positioner sideOffset={4}>
 											<StyledComboboxPopup>
-												<Combobox.List>
-													<StyledComboboxEmpty>No results</StyledComboboxEmpty>
-													{COUNTRIES.map((country) => (
+												<StyledComboboxEmpty>No results</StyledComboboxEmpty>
+												<StyledComboboxList>
+													{(country) => (
 														<StyledComboboxItem key={country} value={country}>
 															<Combobox.ItemIndicator render={<StyledItemIndicator />}>
 																✓
 															</Combobox.ItemIndicator>
 															<StyledItemText>{country}</StyledItemText>
 														</StyledComboboxItem>
-													))}
-												</Combobox.List>
+													)}
+												</StyledComboboxList>
 											</StyledComboboxPopup>
 										</Combobox.Positioner>
 									</Combobox.Portal>
@@ -356,16 +359,16 @@ export default function ExampleForm() {
 								<Combobox.Input placeholder="Search skills..." />
 								<Combobox.Trigger>▾</Combobox.Trigger>
 								<Combobox.Portal>
-									<Combobox.Positioner sideOffset={8}>
+									<Combobox.Positioner sideOffset={0}>
 										<Combobox.Popup>
+											<Combobox.Empty>No results</Combobox.Empty>
 											<Combobox.List>
-												<Combobox.Empty>No results</Combobox.Empty>
-												{SKILLS.map((skill) => (
+												{(skill) => (
 													<Combobox.Item key={skill} value={skill}>
 														<Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
 														{skill}
 													</Combobox.Item>
-												))}
+												)}
 											</Combobox.List>
 										</Combobox.Popup>
 									</Combobox.Positioner>
@@ -401,17 +404,17 @@ export default function ExampleForm() {
 									<Combobox.Portal>
 										<Combobox.Positioner sideOffset={0}>
 											<StyledComboboxPopup>
-												<Combobox.List>
-													<StyledComboboxEmpty>No results</StyledComboboxEmpty>
-													{SKILLS.map((skill) => (
+												<StyledComboboxEmpty>No results</StyledComboboxEmpty>
+												<StyledComboboxList>
+													{(skill) => (
 														<StyledComboboxItem key={skill} value={skill}>
 															<Combobox.ItemIndicator render={<StyledItemIndicator />}>
 																✓
 															</Combobox.ItemIndicator>
 															<StyledItemText>{skill}</StyledItemText>
 														</StyledComboboxItem>
-													))}
-												</Combobox.List>
+													)}
+												</StyledComboboxList>
 											</StyledComboboxPopup>
 										</Combobox.Positioner>
 									</Combobox.Portal>
@@ -951,24 +954,21 @@ const StyledComboboxPopup = styled(Combobox.Popup, [
 	f.responsive(css`
 		box-sizing: border-box;
 		background: white;
-		border: 1px solid #e5e7eb;
-		border-radius: 8px;
-		padding: 4px;
+		border-radius: 6px;
+		outline: 1px solid #e5e7eb;
 		box-shadow:
 			0 10px 15px -3px rgb(0 0 0 / 10%),
 			0 4px 6px -4px rgb(0 0 0 / 10%);
-		max-height: 240px;
-		overflow-y: auto;
+		color: ${colors.black};
 		width: var(--anchor-width);
+		max-width: var(--available-width);
 		transform-origin: var(--transform-origin);
-		transition:
-			transform 150ms,
-			opacity 150ms;
-		
+		transition: opacity 100ms, transform 100ms;
+
 		&[data-starting-style],
 		&[data-ending-style] {
 			opacity: 0;
-			transform: scale(0.9);
+			transform: scale(0.95);
 		}
 	`),
 ])
@@ -980,11 +980,12 @@ const StyledComboboxItem = styled(Combobox.Item, [
 		grid-template-columns: 0.75rem 1fr;
 		gap: 8px;
 		align-items: center;
-		padding: 8px 10px;
+		padding-block: 8px;
+		padding-left: 16px;
+		padding-right: 32px;
 		cursor: default;
 		color: ${colors.black};
 		outline: none;
-		font-size: 14px;
 
 		&[data-highlighted] {
 			z-index: 0;
@@ -997,17 +998,36 @@ const StyledComboboxItem = styled(Combobox.Item, [
 			z-index: -1;
 			position: absolute;
 			inset-block: 0;
-			inset-inline: 4px;
+			inset-inline: 8px;
 			border-radius: 4px;
 			background-color: ${colors.black};
 		}
 	`),
 ])
 
+const StyledComboboxList = styled(Combobox.List, [
+	f.responsive(css`
+		box-sizing: border-box;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding-block: 8px;
+		scroll-padding-block: 8px;
+		outline: none;
+		max-height: min(23rem, var(--available-height));
+		
+		&[data-empty] {
+			padding: 0;
+		}
+	`),
+])
+
 const StyledComboboxEmpty = styled(Combobox.Empty, [
 	f.responsive(css`
-		padding: 8px 12px;
-		color: #9ca3af;
+		&:not(:empty) {
+			color: #9ca3af;
+			line-height: 1rem;
+			padding: 1rem;
+		}
 	`),
 ])
 
