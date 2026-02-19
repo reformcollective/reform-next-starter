@@ -55,10 +55,20 @@ async function submitForm(data: { url: string; email: string }) {
 	return { success: true }
 }
 
+// Experiment with useActionState (see /action-test for working example):
+// - Uses `action` prop on <Form> instead of `onSubmit` with e.preventDefault()
+// - Uncontrolled inputs reset to `defaultValue` after each server action re-render,
+//   so the server action must return submitted values and feed them back as defaultValue
+// - <Form errors={state.serverErrors}> works with a single catch-all <Field.Error />,
+//   but NOT with match-based Field.Errors — a formError causes ALL of them to render
+// - Main benefit is progressive enhancement (forms work without JS)
+// - For most cases, onSubmit is simpler: DOM values persist naturally, no round-tripping
+
 export default function ExampleForm() {
 	const [errors, setErrors] = useState<Record<string, string>>({})
 	const [loading, setLoading] = useState(false)
 	const [success, setSuccess] = useState(false)
+	const [submittedData, setSubmittedData] = useState<Record<string, string>>({})
 	const [needs, setNeeds] = useState<string[]>([])
 	const [skills, setSkills] = useState<string[]>([])
 
@@ -66,7 +76,12 @@ export default function ExampleForm() {
 		<Wrapper>
 			<Card>
 				{success ? (
-					<SuccessMessage>Thanks! We'll be in touch soon.</SuccessMessage>
+					<>
+						<SuccessMessage>Thanks! We'll be in touch soon.</SuccessMessage>
+						<pre style={{ whiteSpace: "pre-wrap", fontSize: 12, color: "#6b7280" }}>
+							{JSON.stringify(submittedData, null, 2)}
+						</pre>
+					</>
 				) : (
 					<>
 						<Heading>Get in touch</Heading>
@@ -76,6 +91,12 @@ export default function ExampleForm() {
 							onSubmit={async (e) => {
 								e.preventDefault()
 								const formData = new FormData(e.currentTarget)
+								console.log("Form submission:", {
+									...Object.fromEntries(formData.entries()),
+									needs,
+									skills,
+									budget: formData.getAll("budget"),
+								})
 
 								setErrors({})
 								setLoading(true)
@@ -86,6 +107,12 @@ export default function ExampleForm() {
 								if (response.errors) {
 									setErrors(response.errors)
 								} else {
+									setSubmittedData({
+										...(Object.fromEntries(formData.entries()) as Record<string, string>),
+										needs: needs.join(", "), // multi-select checkboxes return multiple values with the same name "Design, Development"
+										skills: skills.join(", "), // multi-select combobox returns multiple values with the same name "React, Vue, Angular"
+										budget: formData.getAll("budget").join(" – "), // range slider returns multiple values with the same name "20 - 40"
+									})
 									setSuccess(true)
 								}
 								setLoading(false)
@@ -107,20 +134,25 @@ export default function ExampleForm() {
 							</StyledFieldRoot>
 
 							{/* Unstyled email field with validation for reference:
-                        <Field.Root name="email">
-                            <Field.Label>Email *</Field.Label>
-                            <Field.Control
-                                type="email"
-                                required
-                                placeholder="jane@company.com"
-                                autoComplete="email"
-                                pattern=".+@.+\..+"
-                            />
-                            <Field.Description>Helper text</Field.Description>
-                            <Field.Error match="valueMissing">Required</Field.Error>
-                            <Field.Error match="typeMismatch">Invalid</Field.Error>
-                        </Field.Root>
-                        */}
+						<Field.Root name="email">
+							<Field.Label>Email *</Field.Label>
+							<Field.Control
+								type="email"
+								required
+								placeholder="jane@company.com"
+								autoComplete="email"
+								pattern=".+@.+\..+"
+							/>
+							<Field.Error match="valueMissing">Required</Field.Error>
+							<Field.Error match="typeMismatch">Invalid email</Field.Error>
+							<Field.Error match="patternMismatch">Must include @ and domain</Field.Error>
+							{errors.email && <p>{errors.email}</p>}
+						</Field.Root>
+
+						Note: Server-side errors can't use <Form errors={}> with match-based
+						Field.Errors — a formError causes ALL Field.Error components to render.
+						Instead, handle server errors manually with a conditional.
+						*/}
 							<StyledFieldRoot name="email">
 								<StyledLabel>Email *</StyledLabel>
 								<StyledInput
@@ -200,17 +232,18 @@ export default function ExampleForm() {
 							{/* Unstyled select for reference:
 						<Field.Root name="industry">
 							<Field.Label nativeLabel={false} render={<div />}>Industry</Field.Label>
-							<Select.Root required>
+							<Select.Root required items={INDUSTRIES}>
 								<Select.Trigger>
 									<Select.Value placeholder="Select..." />
 									<Select.Icon>▾</Select.Icon>
 								</Select.Trigger>
 								<Select.Portal>
-									<Select.Positioner sideOffset={4}>
+									<Select.Positioner sideOffset={8}>
 										<Select.Popup>
 											<Select.List>
 												{INDUSTRIES.map(({ label, value }) => (
 													<Select.Item key={value} value={value}>
+														<Select.ItemIndicator>✓</Select.ItemIndicator>
 														<Select.ItemText>{label}</Select.ItemText>
 													</Select.Item>
 												))}
@@ -232,12 +265,15 @@ export default function ExampleForm() {
 										<Select.Icon render={<SelectChevron />}>▾</Select.Icon>
 									</StyledSelectTrigger>
 									<Select.Portal>
-										<Select.Positioner sideOffset={4}>
+										<Select.Positioner sideOffset={8}>
 											<StyledSelectPopup>
 												<Select.List>
 													{INDUSTRIES.map(({ label, value }) => (
 														<StyledSelectItem key={value} value={value}>
-															<Select.ItemText>{label}</Select.ItemText>
+															<Select.ItemIndicator render={<StyledItemIndicator />}>
+																✓
+															</Select.ItemIndicator>
+															<Select.ItemText render={<StyledItemText />}>{label}</Select.ItemText>
 														</StyledSelectItem>
 													))}
 												</Select.List>
@@ -255,13 +291,13 @@ export default function ExampleForm() {
 								<Combobox.Input placeholder="Search countries..." />
 								<Combobox.Trigger>▾</Combobox.Trigger>
 								<Combobox.Portal>
-									<Combobox.Positioner sideOffset={4}>
+									<Combobox.Positioner sideOffset={8}>
 										<Combobox.Popup>
 											<Combobox.List>
 												<Combobox.Empty>No results</Combobox.Empty>
 												{COUNTRIES.map((country) => (
 													<Combobox.Item key={country} value={country}>
-														<Combobox.ItemIndicator />
+														<Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
 														{country}
 													</Combobox.Item>
 												))}
@@ -285,13 +321,16 @@ export default function ExampleForm() {
 										</StyledComboboxTrigger>
 									</StyledComboboxInputRow>
 									<Combobox.Portal>
-										<Combobox.Positioner sideOffset={4}>
+										<Combobox.Positioner sideOffset={0}>
 											<StyledComboboxPopup>
 												<Combobox.List>
 													<StyledComboboxEmpty>No results</StyledComboboxEmpty>
 													{COUNTRIES.map((country) => (
 														<StyledComboboxItem key={country} value={country}>
-															{country}
+															<Combobox.ItemIndicator render={<StyledItemIndicator />}>
+																✓
+															</Combobox.ItemIndicator>
+															<StyledItemText>{country}</StyledItemText>
 														</StyledComboboxItem>
 													))}
 												</Combobox.List>
@@ -317,13 +356,13 @@ export default function ExampleForm() {
 								<Combobox.Input placeholder="Search skills..." />
 								<Combobox.Trigger>▾</Combobox.Trigger>
 								<Combobox.Portal>
-									<Combobox.Positioner sideOffset={4}>
+									<Combobox.Positioner sideOffset={8}>
 										<Combobox.Popup>
 											<Combobox.List>
 												<Combobox.Empty>No results</Combobox.Empty>
 												{SKILLS.map((skill) => (
 													<Combobox.Item key={skill} value={skill}>
-														<Combobox.ItemIndicator />
+														<Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
 														{skill}
 													</Combobox.Item>
 												))}
@@ -360,13 +399,16 @@ export default function ExampleForm() {
 										</StyledComboboxTrigger>
 									</StyledMultiInputRow>
 									<Combobox.Portal>
-										<Combobox.Positioner sideOffset={4}>
+										<Combobox.Positioner sideOffset={0}>
 											<StyledComboboxPopup>
 												<Combobox.List>
 													<StyledComboboxEmpty>No results</StyledComboboxEmpty>
 													{SKILLS.map((skill) => (
 														<StyledComboboxItem key={skill} value={skill}>
-															{skill}
+															<Combobox.ItemIndicator render={<StyledItemIndicator />}>
+																✓
+															</Combobox.ItemIndicator>
+															<StyledItemText>{skill}</StyledItemText>
 														</StyledComboboxItem>
 													))}
 												</Combobox.List>
@@ -744,6 +786,16 @@ const StyledSelectTrigger = styled(Select.Trigger, [
 		color: ${colors.black};
 		cursor: pointer;
 
+		@media (hover: hover) {
+			&:hover {
+				background-color: #f3f4f6;
+			}
+		}
+
+		&[data-popup-open] {
+			background-color: #f3f4f6;
+		}
+
 		&:focus-visible {
 			outline: 2px solid ${colors.blue};
 			outline-offset: -1px;
@@ -772,27 +824,72 @@ const StyledSelectPopup = styled(Select.Popup, [
 		border: 1px solid #e5e7eb;
 		border-radius: 8px;
 		padding: 4px;
-		box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
+		box-shadow:
+			0 10px 15px -3px rgb(0 0 0 / 10%),
+			0 4px 6px -4px rgb(0 0 0 / 10%);
+		width: var(--anchor-width);
+		transform-origin: var(--transform-origin);
+		transition:
+			transform 150ms,
+			opacity 150ms;
+		
+		&[data-starting-style],
+		&[data-ending-style] {
+			opacity: 0;
+			transform: scale(0.9);
+		}
+		
+		&[data-side="none"] {
+			transition: none;
+			transform: none;
+			opacity: 1;
+			min-width: calc(var(--anchor-width) + 1rem);
+		}
 	`),
 ])
 
 const StyledSelectItem = styled(Select.Item, [
 	f.responsive(css`
-		display: flex;
+		box-sizing: border-box;
+		display: grid;
+		grid-template-columns: 0.75rem 1fr;
+		gap: 8px;
 		align-items: center;
-		padding: 8px 12px;
-		border-radius: 4px;
-		cursor: pointer;
+		padding: 8px 10px;
+		cursor: default;
 		color: ${colors.black};
 		outline: none;
 
 		&[data-highlighted] {
-			background: #f3f4f6;
+			z-index: 0;
+			position: relative;
+			color: white;
 		}
 
-		&[data-selected] {
-			font-weight: 500;
+		&[data-highlighted]::before {
+			content: "";
+			z-index: -1;
+			position: absolute;
+			inset-block: 0;
+			inset-inline: 4px;
+			border-radius: 4px;
+			background-color: ${colors.black};
 		}
+	`),
+])
+
+const StyledItemIndicator = styled("span", [
+	f.responsive(css`
+		grid-column-start: 1;
+		display: flex;
+		align-items: center;
+		font-size: 12px;
+	`),
+])
+
+const StyledItemText = styled("span", [
+	f.responsive(css`
+		grid-column-start: 2;
 	`),
 ])
 
@@ -852,32 +949,57 @@ const StyledComboboxTrigger = styled(Combobox.Trigger, [
 
 const StyledComboboxPopup = styled(Combobox.Popup, [
 	f.responsive(css`
+		box-sizing: border-box;
 		background: white;
 		border: 1px solid #e5e7eb;
 		border-radius: 8px;
 		padding: 4px;
-		box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
+		box-shadow:
+			0 10px 15px -3px rgb(0 0 0 / 10%),
+			0 4px 6px -4px rgb(0 0 0 / 10%);
 		max-height: 240px;
 		overflow-y: auto;
+		width: var(--anchor-width);
+		transform-origin: var(--transform-origin);
+		transition:
+			transform 150ms,
+			opacity 150ms;
+		
+		&[data-starting-style],
+		&[data-ending-style] {
+			opacity: 0;
+			transform: scale(0.9);
+		}
 	`),
 ])
 
 const StyledComboboxItem = styled(Combobox.Item, [
 	f.responsive(css`
-		display: flex;
+		box-sizing: border-box;
+		display: grid;
+		grid-template-columns: 0.75rem 1fr;
+		gap: 8px;
 		align-items: center;
-		padding: 8px 12px;
-		border-radius: 4px;
-		cursor: pointer;
+		padding: 8px 10px;
+		cursor: default;
 		color: ${colors.black};
 		outline: none;
+		font-size: 14px;
 
 		&[data-highlighted] {
-			background: #f3f4f6;
+			z-index: 0;
+			position: relative;
+			color: white;
 		}
 
-		&[data-selected] {
-			font-weight: 500;
+		&[data-highlighted]::before {
+			content: "";
+			z-index: -1;
+			position: absolute;
+			inset-block: 0;
+			inset-inline: 4px;
+			border-radius: 4px;
+			background-color: ${colors.black};
 		}
 	`),
 ])
