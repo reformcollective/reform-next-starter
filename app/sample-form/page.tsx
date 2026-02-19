@@ -13,7 +13,7 @@ import { Select } from "@base-ui/react/select"
 import { Slider } from "@base-ui/react/slider"
 import { Switch } from "@base-ui/react/switch"
 import { Button } from "@base-ui/react/button"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { css, f, styled } from "library/styled/alpha"
 import { colors } from "app/styles/colors.css"
 import { NEEDS, INDUSTRIES, ROLES, COUNTRIES, SKILLS } from "./data"
@@ -71,6 +71,8 @@ export default function ExampleForm() {
 	const [submittedData, setSubmittedData] = useState<Record<string, string>>({})
 	const [needs, setNeeds] = useState<string[]>([])
 	const [skills, setSkills] = useState<string[]>([])
+	const countryRowRef = useRef<HTMLDivElement>(null)
+	const skillsRowRef = useRef<HTMLDivElement>(null)
 
 	return (
 		<Wrapper>
@@ -317,14 +319,14 @@ export default function ExampleForm() {
 									Country *
 								</Field.Label>
 								<Combobox.Root required items={COUNTRIES}>
-									<StyledComboboxInputRow>
+									<StyledComboboxInputRow ref={countryRowRef}>
 										<StyledComboboxInput placeholder="Search countries..." />
 										<StyledComboboxTrigger>
 											<Combobox.Icon render={<SelectChevron />}>▾</Combobox.Icon>
 										</StyledComboboxTrigger>
 									</StyledComboboxInputRow>
 									<Combobox.Portal>
-										<Combobox.Positioner sideOffset={4}>
+										<Combobox.Positioner sideOffset={4} anchor={countryRowRef}>
 											<StyledComboboxPopup>
 												<StyledComboboxEmpty>No results</StyledComboboxEmpty>
 												<StyledComboboxList>
@@ -385,7 +387,7 @@ export default function ExampleForm() {
 									Skills *
 								</Field.Label>
 								<Combobox.Root multiple items={SKILLS} value={skills} onValueChange={setSkills}>
-									<StyledMultiInputRow>
+									<StyledMultiInputRow ref={skillsRowRef}>
 										<StyledComboboxChips>
 											{skills.map((skill) => (
 												<StyledComboboxChip key={skill}>
@@ -402,7 +404,7 @@ export default function ExampleForm() {
 										</StyledComboboxTrigger>
 									</StyledMultiInputRow>
 									<Combobox.Portal>
-										<Combobox.Positioner sideOffset={0}>
+										<Combobox.Positioner sideOffset={0} anchor={skillsRowRef}>
 											<StyledComboboxPopup>
 												<StyledComboboxEmpty>No results</StyledComboboxEmpty>
 												<StyledComboboxList>
@@ -952,7 +954,6 @@ const StyledComboboxTrigger = styled(Combobox.Trigger, [
 
 const StyledComboboxPopup = styled(Combobox.Popup, [
 	f.responsive(css`
-		box-sizing: border-box;
 		background: white;
 		border-radius: 6px;
 		outline: 1px solid #e5e7eb;
@@ -962,8 +963,8 @@ const StyledComboboxPopup = styled(Combobox.Popup, [
 		color: ${colors.black};
 		width: var(--anchor-width);
 		max-width: var(--available-width);
-		transform-origin: var(--transform-origin);
 		transition: opacity 100ms, transform 100ms;
+		transform-origin: var(--transform-origin);
 
 		&[data-starting-style],
 		&[data-ending-style] {
@@ -1065,13 +1066,26 @@ const StyledComboboxChip = styled(Combobox.Chip, [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
-		gap: 4px;
-		padding: 2px 6px 2px 10px;
-		background: #e5e7eb;
-		border-radius: 999px;
-		font-size: 14px;
+		background-color: #e5e7eb;
 		color: ${colors.black};
-		white-space: nowrap;
+		border-radius: 6px;
+		padding: 4px 4px 4px 8px;
+		overflow: hidden;
+		gap: 4px;
+		outline: 0;
+		cursor: default;
+		
+		&:focus-within {
+			background-color: ${colors.black};
+			color: #e5e7eb;
+		}
+		
+		@media (hover: hover) {
+			&[data-highlighted] {
+				background-color: ${colors.black};
+				color: #e5e7eb;
+			}
+		}
 	`),
 ])
 
