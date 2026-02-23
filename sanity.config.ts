@@ -18,7 +18,7 @@ import { apiVersion, dataset, projectId, studioUrl } from "sanity/lib/api"
 import footer from "sanity/schemas/singletons/footer"
 import header from "sanity/schemas/singletons/header"
 import settings from "sanity/schemas/singletons/settings"
-import { youtube } from "library/sanity/reusables"
+import { video, youtube } from "library/sanity/reusables"
 import page from "sanity/schemas/sanityPage"
 import { RocketIcon } from "node_modules/@sanity/icons/dist"
 import { authorType } from "sanity/schemas/blog/authorType"
@@ -63,6 +63,7 @@ export default defineConfig({
 
 			// reusables
 			youtube,
+			video,
 
 			// blog
 			authorType,

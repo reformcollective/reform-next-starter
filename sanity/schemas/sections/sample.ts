@@ -20,5 +20,11 @@ export const sample = defineArrayMember({
 			name: "text",
 			title: "Section Text",
 		}),
+
+		defineField({
+			name: "sampleVideo",
+			title: "Sample Video",
+			type: "video",
+		}),
 	],
 })

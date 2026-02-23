@@ -58,7 +58,7 @@
 		"sanity-plugin-asset-source-unsplash": "^7.0.2",
 		"sanity-plugin-link-field": "^1.4.2",
 		"sanity-plugin-media": "^4.1.1",
-		"sanity-plugin-mux-input": "^2.13.0",
+		"sanity-plugin-mux-input": "^2.14.0",
 		"server-only": "^0.0.1",
 		"stylelint": "^17.0.0",
 		"stylelint-config-reform-collective": "github:reformcollective/stylelint-config-reform#migration",
