@@ -7,6 +7,7 @@ import { notFound } from "next/navigation"
 import { defineQuery } from "next-sanity"
 import { type ComponentType, Fragment } from "react"
 import { sanityFetch } from "sanity/lib/live"
+import { resolveProductionUrl } from "sanity/lib/slug-resolver"
 import type { Page } from "sanity.types"
 import SampleSection from "app/sections/Sample"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
@@ -54,13 +55,15 @@ export async function generateMetadata({
 }: {
 	params: Promise<{ slug: string[] | undefined }>
 }): Promise<Metadata> {
+	const slug = (await params).slug?.join("/") || "home"
+
 	const { data: relevantPage } = await sanityFetch({
 		query: pageQuery,
-		params: {
-			slug: (await params).slug?.join("/") || "home",
-		},
+		params: { slug },
 		disableStega: true,
 	})
+
+	const pageUrl = resolveProductionUrl(relevantPage)
 	const { data: settings } = await sanityFetch({
 		query: pageSettingsQuery,
 		disableStega: true,
@@ -78,12 +81,18 @@ export async function generateMetadata({
 	return {
 		title,
 		description,
+		openGraph: {
+			type: "website",
+			url: pageUrl,
+			siteName: settings?.defaultTitle ?? undefined,
+			images: imageData,
+		},
 		twitter: {
 			card: "summary_large_image",
 			images: imageData,
 		},
-		openGraph: {
-			images: imageData,
+		alternates: {
+			canonical: pageUrl,
 		},
 		metadataBase: new URL(siteURL),
 	}

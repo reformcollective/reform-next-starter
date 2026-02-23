@@ -8,7 +8,7 @@ import { DisplayDate } from "library/DisplayDate"
 import { InfiniteSideScroll } from "library/InfiniteSideScroll"
 import UniversalLink from "library/link"
 import StaticImage from "library/StaticImage"
-import { styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled/alpha"
 import { useState } from "react"
 
 export default function DesignPage() {
@@ -130,20 +130,23 @@ export default function DesignPage() {
 }
 
 const Wrapper = styled("div", {
-	maxWidth: "82ch",
-	margin: "0 auto",
-	display: "grid",
-	gap: "40px",
-	padding: "40px 20px",
-	overflow: "clip",
-	gridColumn: "main",
-
-	within: {
-		".track": {
-			display: "flex",
-			gap: "15px",
+	base: [
+		{
+			maxWidth: "82ch",
+			margin: "0 auto",
+			display: "grid",
+			gap: "40px",
+			padding: "40px 20px",
+			overflow: "clip",
+			gridColumn: "main",
 		},
-	},
+		f.unresponsive(css`
+			& .track {
+				display: flex;
+				gap: 15px;
+			}
+		`),
+	],
 })
 
 const SVG = styled("svg", {
@@ -186,26 +189,28 @@ const TextOverflowWrapper = styled("div", {
 })
 
 const SnapWrap = styled("div", {
-	display: "flex",
-	gap: "1rem",
-	overflow: "auto",
-	scrollSnapType: "x mandatory",
-
-	within: {
-		"& :first-child": {
-			marginLeft: "50%",
+	base: [
+		{
+			display: "flex",
+			gap: "1rem",
+			overflow: "auto",
+			scrollSnapType: "x mandatory",
+			scrollbarWidth: "none",
 		},
-		"& :last-child": {
-			marginRight: "50%",
-		},
-
-		// hide scrollbar
-		"&::-webkit-scrollbar": {
-			display: "none",
-		},
-	},
-
-	scrollbarWidth: "none",
+		f.unresponsive(css`
+			& :first-child {
+				margin-left: 50%;
+			}
+			
+			& :last-child {
+				margin-right: 50%;
+			}
+			
+			&::-webkit-scrollbar {
+				display: none;
+			}
+		`),
+	],
 })
 
 const SnapItem = styled("div", {
