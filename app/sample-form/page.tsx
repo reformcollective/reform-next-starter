@@ -17,6 +17,7 @@ import { useRef, useState } from "react"
 import { css, f, styled } from "library/styled/alpha"
 import { colors } from "app/styles/colors.css"
 import { NEEDS, INDUSTRIES, ROLES, COUNTRIES, SKILLS } from "./data"
+import { InputField } from "app/components/Form/Fields/InputField"
 
 const DISPOSABLE_DOMAINS = [
 	"test.com",
@@ -129,45 +130,24 @@ export default function ExampleForm() {
 							<Field.Error match="typeMismatch">Invalid</Field.Error>
 						</Field.Root>
 						*/}
-							<StyledFieldRoot name="name">
-								<StyledLabel>Full name *</StyledLabel>
-								<StyledInput type="text" required placeholder="Jane Smith" autoComplete="name" />
-								<StyledError match="valueMissing">Please enter your name</StyledError>
-							</StyledFieldRoot>
+							<InputField
+								name="name"
+								label="Full name"
+								required
+								placeholder="Jane Smith"
+								autoComplete="name"
+								hint="Herbie Hancock"
+							/>
 
-							{/* Unstyled email field with validation for reference:
-						<Field.Root name="email">
-							<Field.Label>Email *</Field.Label>
-							<Field.Control
+							<InputField
+								name="email"
+								label="Email"
 								type="email"
 								required
 								placeholder="jane@company.com"
 								autoComplete="email"
 								pattern=".+@.+\..+"
 							/>
-							<Field.Error match="valueMissing">Required</Field.Error>
-							<Field.Error match="typeMismatch">Invalid email</Field.Error>
-							<Field.Error match="patternMismatch">Must include @ and domain</Field.Error>
-							{errors.email && <p>{errors.email}</p>}
-						</Field.Root>
-
-						Note: Server-side errors can't use <Form errors={}> with match-based
-						Field.Errors — a formError causes ALL Field.Error components to render.
-						Instead, handle server errors manually with a conditional.
-						*/}
-							<StyledFieldRoot name="email">
-								<StyledLabel>Email *</StyledLabel>
-								<StyledInput
-									type="email"
-									required
-									placeholder="jane@company.com"
-									autoComplete="email"
-									pattern=".+@.+\..+"
-								/>
-								<StyledError match="valueMissing">Please enter your email</StyledError>
-								<StyledError match="patternMismatch">Please enter a valid email</StyledError>
-								{errors.email && <StyledServerError>{errors.email}</StyledServerError>}
-							</StyledFieldRoot>
 
 							{/* Unstyled URL field with validation for reference:
 						<Field.Root name="url">
