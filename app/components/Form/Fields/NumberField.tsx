@@ -87,7 +87,13 @@ export function NumberField({
 				min={min}
 				max={max}
 				step={step}
-				onValueChange={onValueChange}
+				onValueChange={
+					onValueChange
+						? (v) => {
+								if (v !== null) onValueChange(v)
+							}
+						: undefined
+				}
 			>
 				<Group>
 					<Decrement>−</Decrement>

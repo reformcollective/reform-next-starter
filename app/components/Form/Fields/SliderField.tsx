@@ -81,17 +81,27 @@ export function SliderField(props: SliderFieldProps) {
 		actionsRef,
 	} = props
 
-	const sliderProps = props.range
-		? {
-				defaultValue: props.defaultValue,
-				value: props.value,
-				onValueChange: props.onValueChange,
+	const sliderRender = props.range ? (
+		<SliderRoot
+			min={min}
+			max={max}
+			step={step}
+			defaultValue={props.defaultValue}
+			value={props.value}
+			onValueChange={props.onValueChange}
+		/>
+	) : (
+		<SliderRoot
+			min={min}
+			max={max}
+			step={step}
+			defaultValue={props.defaultValue}
+			value={props.value}
+			onValueChange={
+				props.onValueChange ? (values: number[]) => props.onValueChange!(values[0]!) : undefined
 			}
-		: {
-				defaultValue: props.defaultValue,
-				value: props.value,
-				onValueChange: props.onValueChange ? ([v]: number[]) => props.onValueChange!(v) : undefined,
-			}
+		/>
+	)
 
 	return (
 		<StyledFieldRoot
@@ -102,7 +112,7 @@ export function SliderField(props: SliderFieldProps) {
 			validationDebounceTime={validationDebounceTime}
 			actionsRef={actionsRef}
 		>
-			<Fieldset.Root render={<SliderRoot min={min} max={max} step={step} {...sliderProps} />}>
+			<Fieldset.Root render={sliderRender}>
 				<SliderHeader>
 					<Fieldset.Legend render={<Legend />}>{label}</Fieldset.Legend>
 					<Slider.Value render={<ValueText />} />
