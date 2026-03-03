@@ -98,7 +98,7 @@ export function SliderField(props: SliderFieldProps) {
 			defaultValue={props.defaultValue}
 			value={props.value}
 			onValueChange={
-				props.onValueChange ? (values: number[]) => props.onValueChange!(values[0]!) : undefined
+				props.onValueChange ? (value: number) => props.onValueChange!(value) : undefined
 			}
 		/>
 	)
