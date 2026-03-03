@@ -38,8 +38,8 @@ interface InputFieldProps {
 	/**
 	 * When to run validation.
 	 * - `"onSubmit"` — on form submit, re-validates on change after first failure.
-	 * - `"onBlur"` — when the input loses focus.
-	 * - `"onChange"` — on every keystroke.
+	 * - `"onBlur"` — when the field loses focus.
+	 * - `"onChange"` — on every change.
 	 * @default "onSubmit"
 	 */
 	validationMode?: Form.ValidationMode

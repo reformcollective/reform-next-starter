@@ -1,597 +1,362 @@
 "use client"
 
-import { Checkbox } from "@base-ui/react/checkbox"
-import { CheckboxGroup } from "@base-ui/react/checkbox-group"
-import { Field } from "@base-ui/react/field"
-import { Fieldset } from "@base-ui/react/fieldset"
-import { Form } from "@base-ui/react/form"
-import { NumberField } from "@base-ui/react/number-field"
-import { Radio } from "@base-ui/react/radio"
-import { RadioGroup } from "@base-ui/react/radio-group"
-import { Combobox } from "@base-ui/react/combobox"
-import { Select } from "@base-ui/react/select"
-import { Slider } from "@base-ui/react/slider"
-import { Switch } from "@base-ui/react/switch"
-import { Button } from "@base-ui/react/button"
-import { useRef, useState } from "react"
+import { useRef, useState, type FormEvent } from "react"
+import type { FieldRoot } from "@base-ui/react/field"
 import { css, f, styled } from "library/styled/alpha"
+import { Form } from "@base-ui/react/form"
+import { Button } from "@base-ui/react/button"
 import { colors } from "app/styles/colors.css"
-import { NEEDS, INDUSTRIES, ROLES, COUNTRIES, SKILLS } from "./data"
-import { InputField } from "app/components/Form/Fields/InputField"
+import ClientOnly from "library/ClientOnly"
+import {
+	CheckboxField,
+	CheckboxGroupField,
+	ComboboxField,
+	InputField,
+	NumberField,
+	RadioGroupField,
+	SelectField,
+	SliderField,
+	SwitchField,
+	TextAreaField,
+} from "app/components/Form/Fields"
 
-const DISPOSABLE_DOMAINS = [
-	"test.com",
-	"mailinator.com",
-	"tempmail.com",
-	"throwaway.email",
-	"guerrillamail.com",
+const COUNTRIES_TO_VISIT = [
+	"Argentina",
+	"Australia",
+	"Brazil",
+	"Canada",
+	"Chile",
+	"China",
+	"Colombia",
+	"Croatia",
+	"Czech Republic",
+	"Denmark",
+	"Egypt",
+	"Finland",
+	"France",
+	"Germany",
+	"Greece",
+	"Iceland",
+	"India",
+	"Indonesia",
+	"Ireland",
+	"Italy",
+	"Japan",
+	"Kenya",
+	"Mexico",
+	"Morocco",
+	"Netherlands",
+	"New Zealand",
+	"Norway",
+	"Peru",
+	"Poland",
+	"Portugal",
+	"Singapore",
+	"South Africa",
+	"South Korea",
+	"Spain",
+	"Sweden",
+	"Switzerland",
+	"Thailand",
+	"Turkey",
+	"United Kingdom",
+	"United States",
+	"Vietnam",
 ]
 
-async function submitForm(data: { url: string; email: string }) {
-	// Mimic a server response
-	await new Promise((resolve) => setTimeout(resolve, 1000))
-
-	const errors: Record<string, string> = {}
-
-	// Validate URL
-	try {
-		const parsed = new URL(data.url)
-		if (parsed.hostname.endsWith("example.com")) {
-			errors.url = "The example domain is not allowed"
-		}
-	} catch {
-		errors.url = "This is not a valid URL"
-	}
-
-	// Validate email domain
-	const emailDomain = data.email.split("@")[1]?.toLowerCase()
-	if (emailDomain && DISPOSABLE_DOMAINS.includes(emailDomain)) {
-		errors.email = "Disposable email addresses are not allowed"
-	}
-
-	if (Object.keys(errors).length > 0) {
-		return { errors }
-	}
-
-	return { success: true }
+const FIELD_LABELS: Record<string, string> = {
+	firstName: "First Name",
+	favoriteColor: "Favorite Color (checkboxes)",
+	preferredColor: "Favorite Color (select)",
+	dietaryPreference: "Dietary Preference",
+	email: "Email",
+	vowelTest: "Vowel Test",
+	website: "Website",
+	password: "Password",
+	confirmPassword: "Confirm Password",
+	about: "About You",
+	capital: "Capital City",
+	countriesToVisit: "Countries to Visit",
+	newsletter: "Newsletter",
+	darkMode: "Dark Mode",
+	quantity: "Quantity",
+	budget: "Budget ($k)",
+	priceRange: "Price Range ($k)",
 }
 
-// Experiment with useActionState (see /action-test for working example):
-// - Uses `action` prop on <Form> instead of `onSubmit` with e.preventDefault()
-// - Uncontrolled inputs reset to `defaultValue` after each server action re-render,
-//   so the server action must return submitted values and feed them back as defaultValue
-// - <Form errors={state.serverErrors}> works with a single catch-all <Field.Error />,
-//   but NOT with match-based Field.Errors — a formError causes ALL of them to render
-// - Main benefit is progressive enhancement (forms work without JS)
-// - For most cases, onSubmit is simpler: DOM values persist naturally, no round-tripping
+const MASKED_FIELDS = new Set(["password", "confirmPassword"])
 
-export default function ExampleForm() {
-	const [errors, setErrors] = useState<Record<string, string>>({})
-	const [loading, setLoading] = useState(false)
-	const [success, setSuccess] = useState(false)
-	const [submittedData, setSubmittedData] = useState<Record<string, string>>({})
-	const [needs, setNeeds] = useState<string[]>([])
-	const [skills, setSkills] = useState<string[]>([])
-	const countryRowRef = useRef<HTMLDivElement>(null)
-	const skillsRowRef = useRef<HTMLDivElement>(null)
+type ValidationMode = "onSubmit" | "onBlur" | "onChange"
+
+export default function SampleForm() {
+	const [validationMode, setValidationMode] = useState<ValidationMode>("onSubmit")
+	const [submittedData, setSubmittedData] = useState<Record<string, string | string[]> | null>(null)
+	const confirmPasswordRef = useRef<FieldRoot.Actions | null>(null)
+
+	const vowelidate = (value: unknown) => {
+		const isEmpty = value === undefined || value === null || value === ""
+		if (isEmpty) return "We need to know your vowels!"
+		const hasVowel = /[aeiouAEIOU]/.test(String(value))
+		return hasVowel ? null : "Must contain at least one vowel"
+	}
+
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		const formData = new FormData(e.currentTarget)
+		const data: Record<string, string | string[]> = {}
+		const keys = [...new Set(formData.keys())]
+		for (const key of keys) {
+			const values = formData.getAll(key) as string[]
+			data[key] = values.length === 1 ? values[0]! : values
+		}
+		setSubmittedData(data)
+	}
 
 	return (
-		<Wrapper>
-			<Card>
-				{success ? (
-					<>
-						<SuccessMessage>Thanks! We'll be in touch soon.</SuccessMessage>
-						<pre style={{ whiteSpace: "pre-wrap", fontSize: 12, color: "#6b7280" }}>
-							{JSON.stringify(submittedData, null, 2)}
-						</pre>
-					</>
-				) : (
-					<>
-						<Heading>Get in touch</Heading>
-						<Description>Fill out the form below and we'll get back to you shortly.</Description>
-						<RequiredNote>* indicates a required field</RequiredNote>
-						<StyledForm
-							onSubmit={async (e) => {
-								e.preventDefault()
-								const formData = new FormData(e.currentTarget)
-								console.log("Form submission:", {
-									...Object.fromEntries(formData.entries()),
-									needs,
-									skills,
-									budget: formData.getAll("budget"),
-								})
+		<ClientOnly>
+			<Wrapper>
+				<Card>
+					{submittedData ? (
+						<Results data={submittedData} onReset={() => setSubmittedData(null)} />
+					) : (
+						<>
+							<ControlPanel>
+								<ControlGroup>
+									<ControlLabel>Validation</ControlLabel>
+									<SegmentedGroup>
+										{(["onSubmit", "onBlur", "onChange"] as const).map((mode) => (
+											<SegmentedButton
+												key={mode}
+												data-active={validationMode === mode || undefined}
+											>
+												<HiddenRadio
+													type="radio"
+													name="validationMode"
+													value={mode}
+													checked={validationMode === mode}
+													onChange={() => setValidationMode(mode)}
+												/>
+												{mode}
+											</SegmentedButton>
+										))}
+									</SegmentedGroup>
+								</ControlGroup>
+							</ControlPanel>
 
-								setErrors({})
-								setLoading(true)
-								const response = await submitForm({
-									url: formData.get("url") as string,
-									email: formData.get("email") as string,
-								})
-								if (response.errors) {
-									setErrors(response.errors)
-								} else {
-									setSubmittedData({
-										...(Object.fromEntries(formData.entries()) as Record<string, string>),
-										needs: needs.join(", "), // multi-select checkboxes return multiple values with the same name "Design, Development"
-										skills: skills.join(", "), // multi-select combobox returns multiple values with the same name "React, Vue, Angular"
-										budget: formData.getAll("budget").join(" – "), // range slider returns multiple values with the same name "20 - 40"
-									})
-									setSuccess(true)
-								}
-								setLoading(false)
-							}}
-						>
-							{/* Unstyled base-ui field structure for reference:
-						<Field.Root name="fieldName">
-							<Field.Label>Label</Field.Label>
-							<Field.Control required placeholder="..." />
-							<Field.Description>Helper text</Field.Description>
-							<Field.Error match="valueMissing">Required</Field.Error>
-							<Field.Error match="typeMismatch">Invalid</Field.Error>
-						</Field.Root>
-						*/}
-							<InputField
-								name="name"
-								label="Full name"
-								required
-								placeholder="Jane Smith"
-								autoComplete="name"
-								hint="Herbie Hancock"
-							/>
-
-							<InputField
-								name="email"
-								label="Email"
-								type="email"
-								required
-								placeholder="jane@company.com"
-								autoComplete="email"
-								pattern=".+@.+\..+"
-							/>
-
-							{/* Unstyled URL field with validation for reference:
-						<Field.Root name="url">
-							<Field.Label>Homepage *</Field.Label>
-							<Field.Control
-								type="url"
-								required
-								placeholder="https://example.com"
-								pattern="https?://.*"
-							/>
-							<Field.Error match="valueMissing">Required</Field.Error>
-							<Field.Error match="typeMismatch">Invalid URL</Field.Error>
-							<Field.Error match="patternMismatch">URL must start with http:// or https://</Field.Error>
-						</Field.Root>
-
-						Note: Server-side errors can't use <Form errors={}> with match-based
-						Field.Errors — a formError causes ALL Field.Error components to render.
-						Instead, handle server errors manually with a conditional:
-						{errors.fieldName && <p>{errors.fieldName}</p>}
-						*/}
-							<StyledFieldRoot name="url">
-								<StyledLabel>Homepage *</StyledLabel>
-								<StyledInput
+							<StyledForm
+								key={validationMode}
+								validationMode={validationMode}
+								onSubmit={handleSubmit}
+							>
+								<InputField
+									name="firstName"
+									label="First Name"
+									type="text"
+									required
+									placeholder="Enter your first name"
+									autoComplete="name"
+									hint="Your first name"
+									minLength={6}
+									maxLength={10}
+								/>
+								<CheckboxGroupField
+									name="favoriteColor"
+									label="Favorite Color"
+									items={[
+										{ value: "red", label: "Red" },
+										{ value: "green", label: "Green" },
+										{ value: "blue", label: "Blue" },
+									]}
+									required
+									hint="Select your favorite color"
+								/>
+								<RadioGroupField
+									name="dietaryPreference"
+									label="Dietary Preference"
+									items={[
+										{ value: "vegetarian", label: "Vegetarian" },
+										{ value: "vegan", label: "Vegan" },
+										{ value: "pescatarian", label: "Pescatarian" },
+										{ value: "omnivore", label: "Omnivore" },
+									]}
+									required
+									hint="Select your dietary preference"
+								/>
+								<InputField
+									name="email"
+									label="Email"
+									type="email"
+									required
+									placeholder="Enter your email"
+									autoComplete="email"
+									hint="We'll never share your email."
+								/>
+								<InputField
+									name="vowelTest"
+									label="Vowel Test"
+									type="text"
+									placeholder="Must contain at least one vowel"
+									validate={vowelidate}
+									hint="The letter 'Y' does not count as a vowel here."
+									minLength={6}
+									maxLength={20}
+								/>
+								<InputField
+									name="website"
+									label="Website"
 									type="url"
-									required
 									placeholder="https://example.com"
-									pattern="https?://.*"
+									autoComplete="url"
+									pattern="https?://.+"
+									hint="Must be a valid URL starting with http:// or https://"
 								/>
-								<StyledError match="valueMissing">Please enter a URL</StyledError>
-								<StyledError match="typeMismatch">Please enter a valid URL</StyledError>
-								<StyledError match="patternMismatch">
-									URL must start with http:// or https://
-								</StyledError>
-								{errors.url && <StyledServerError>{errors.url}</StyledServerError>}
-							</StyledFieldRoot>
-
-							{/* Unstyled textarea with min/max character count for reference:
-						<Field.Root name="message">
-							<Field.Label>Message</Field.Label>
-							<Field.Control render={<textarea rows={4} />} required minLength={20} maxLength={100} placeholder="..." />
-							<Field.Description>Must be at least 20 characters</Field.Description>
-							<Field.Error match="valueMissing">Required</Field.Error>
-							<Field.Error match="tooShort">Too short</Field.Error>
-							<Field.Error match="tooLong">Too long</Field.Error>
-						</Field.Root>
-						*/}
-							<StyledFieldRoot name="message">
-								<StyledLabel>Message *</StyledLabel>
-								<Field.Control
-									render={<StyledTextarea rows={4} />}
+								<InputField
+									name="password"
+									label="Password"
+									type="password"
 									required
-									minLength={20}
-									maxLength={100}
-									placeholder="Tell us about your project..."
+									placeholder="Enter a password"
+									autoComplete="new-password"
+									hint="Must be at least 8 characters."
+									pattern=".{8,}"
+									validationMode="onChange"
+									validate={() => {
+										confirmPasswordRef.current?.validate()
+										return null
+									}}
 								/>
-								<Field.Description render={<Hint />}>
-									Must be at least 20 characters
-								</Field.Description>
-								<StyledError match="valueMissing">Please enter a message</StyledError>
-								<StyledError match="tooShort">Message must be at least 20 characters</StyledError>
-								<StyledError match="tooLong">Message must be less than 100 characters</StyledError>
-							</StyledFieldRoot>
+								<InputField
+									name="confirmPassword"
+									label="Confirm Password"
+									type="password"
+									required
+									placeholder="Confirm your password"
+									autoComplete="new-password"
+									hint="Must match the password field."
+									actionsRef={confirmPasswordRef}
+									validate={(value, formValues) =>
+										value === formValues.password ? null : "Passwords do not match"
+									}
+									validationMode="onChange"
+								/>
+								<TextAreaField
+									name="about"
+									label="About You"
+									required
+									placeholder="Tell us about yourself"
+									hint="Must be between 10 and 200 characters."
+									minLength={10}
+									maxLength={200}
+								/>
+								<SelectField
+									name="preferredColor"
+									label="Favorite Color"
+									placeholder="Select your favorite color"
+									hint="This field is optional."
+									alignItemWithTrigger={false}
+									items={[
+										{ value: null, label: "None" },
+										{ value: "red", label: "Red" },
+										{ value: "green", label: "Green" },
+										{ value: "blue", label: "Blue" },
+									]}
+								/>
+								<ComboboxField
+									name="capital"
+									label="Capital City"
+									required
+									placeholder="Search capitals..."
+									items={[
+										"Berlin",
+										"Madrid",
+										"Paris",
+										"Rome",
+										"Lisbon",
+										"Athens",
+										"Vienna",
+										"Warsaw",
+										"Prague",
+										"Amsterdam",
+									]}
+								/>
+								<ComboboxField
+									multiple
+									name="countriesToVisit"
+									label="Countries to Visit"
+									items={COUNTRIES_TO_VISIT}
+									required
+									placeholder="Search countries..."
+									hint="Select all the countries you'd like to visit."
+								/>
+								<CheckboxField name="newsletter" label="Subscribe to newsletter" />
+								<SwitchField name="darkMode" label="Enable dark mode" defaultChecked />
+								<NumberField
+									name="quantity"
+									label="Quantity"
+									required
+									defaultValue={1}
+									min={1}
+									max={100}
+								/>
+								<SliderField
+									name="budget"
+									label="Budget ($k)"
+									min={0}
+									max={200}
+									step={5}
+									defaultValue={50}
+								/>
+								<SliderField
+									range
+									name="priceRange"
+									label="Price Range ($k)"
+									min={0}
+									max={200}
+									step={5}
+									defaultValue={[25, 100]}
+								/>
+								<StyledButton type="submit">Submit</StyledButton>
+							</StyledForm>
+						</>
+					)}
+				</Card>
+			</Wrapper>
+		</ClientOnly>
+	)
+}
 
-							{/* Unstyled select for reference:
-						<Field.Root name="industry">
-							<Field.Label nativeLabel={false} render={<div />}>Industry</Field.Label>
-							<Select.Root required items={INDUSTRIES}>
-								<Select.Trigger>
-									<Select.Value placeholder="Select..." />
-									<Select.Icon>▾</Select.Icon>
-								</Select.Trigger>
-								<Select.Portal>
-									<Select.Positioner sideOffset={8}>
-										<Select.Popup>
-											<Select.List>
-												{INDUSTRIES.map(({ label, value }) => (
-													<Select.Item key={value} value={value}>
-														<Select.ItemIndicator>✓</Select.ItemIndicator>
-														<Select.ItemText>{label}</Select.ItemText>
-													</Select.Item>
-												))}
-											</Select.List>
-										</Select.Popup>
-									</Select.Positioner>
-								</Select.Portal>
-							</Select.Root>
-							<Field.Error match="valueMissing">Required</Field.Error>
-						</Field.Root>
-						*/}
-							<StyledFieldRoot name="industry">
-								<Field.Label nativeLabel={false} render={<StyledLabelDiv />}>
-									Industry *
-								</Field.Label>
-								<Select.Root required items={INDUSTRIES}>
-									<StyledSelectTrigger>
-										<Select.Value placeholder="Select an industry" />
-										<Select.Icon render={<SelectChevron />}>▾</Select.Icon>
-									</StyledSelectTrigger>
-									<Select.Portal>
-										<Select.Positioner sideOffset={8}>
-											<StyledSelectPopup>
-												<Select.List>
-													{INDUSTRIES.map(({ label, value }) => (
-														<StyledSelectItem key={value} value={value}>
-															<Select.ItemIndicator render={<StyledItemIndicator />}>
-																✓
-															</Select.ItemIndicator>
-															<Select.ItemText render={<StyledItemText />}>{label}</Select.ItemText>
-														</StyledSelectItem>
-													))}
-												</Select.List>
-											</StyledSelectPopup>
-										</Select.Positioner>
-									</Select.Portal>
-								</Select.Root>
-								<StyledError match="valueMissing">Please select an industry</StyledError>
-							</StyledFieldRoot>
+// ─── Results ──────────────────────────────────────────────────────────────────
 
-							{/* Unstyled combobox for reference:
-						<Field.Root name="country">
-							<Field.Label nativeLabel={false} render={<div />}>Country</Field.Label>
-							<Combobox.Root required items={COUNTRIES}>
-								<Combobox.Input placeholder="Search countries..." />
-								<Combobox.Trigger>▾</Combobox.Trigger>
-								<Combobox.Portal>
-									<Combobox.Positioner sideOffset={0}>
-										<Combobox.Popup>
-											<Combobox.Empty>No results</Combobox.Empty>
-											<Combobox.List>
-												{(country) => (
-													<Combobox.Item key={country} value={country}>
-														<Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
-														{country}
-													</Combobox.Item>
-												)}
-											</Combobox.List>
-										</Combobox.Popup>
-									</Combobox.Positioner>
-								</Combobox.Portal>
-							</Combobox.Root>
-							<Field.Error match="valueMissing">Required</Field.Error>
-						</Field.Root>
-
-						Note: Use a render function in Combobox.List (not .map()) so
-						base-ui can filter items as the user types.
-						*/}
-							<StyledFieldRoot name="country">
-								<Field.Label nativeLabel={false} render={<StyledLabelDiv />}>
-									Country *
-								</Field.Label>
-								<Combobox.Root required items={COUNTRIES}>
-									<StyledComboboxInputRow ref={countryRowRef}>
-										<StyledComboboxInput placeholder="Search countries..." />
-										<StyledComboboxTrigger>
-											<Combobox.Icon render={<SelectChevron />}>▾</Combobox.Icon>
-										</StyledComboboxTrigger>
-									</StyledComboboxInputRow>
-									<Combobox.Portal>
-										<Combobox.Positioner sideOffset={4} anchor={countryRowRef}>
-											<StyledComboboxPopup>
-												<StyledComboboxEmpty>No results</StyledComboboxEmpty>
-												<StyledComboboxList>
-													{(country) => (
-														<StyledComboboxItem key={country} value={country}>
-															<Combobox.ItemIndicator render={<StyledItemIndicator />}>
-																✓
-															</Combobox.ItemIndicator>
-															<StyledItemText>{country}</StyledItemText>
-														</StyledComboboxItem>
-													)}
-												</StyledComboboxList>
-											</StyledComboboxPopup>
-										</Combobox.Positioner>
-									</Combobox.Portal>
-								</Combobox.Root>
-								<StyledError match="valueMissing">Please select a country</StyledError>
-							</StyledFieldRoot>
-
-							{/* Unstyled multi-select combobox for reference:
-						<Field.Root name="skills" validate={() => skills.length > 0 ? null : "Please select at least one skill"}>
-							<Field.Label nativeLabel={false} render={<div />}>Skills</Field.Label>
-							<Combobox.Root multiple items={SKILLS} value={skills} onValueChange={setSkills}>
-								<Combobox.Chips>
-									{skills.map((skill) => (
-										<Combobox.Chip key={skill}>
-											{skill}
-											<Combobox.ChipRemove>×</Combobox.ChipRemove>
-										</Combobox.Chip>
-									))}
-								</Combobox.Chips>
-								<Combobox.Input placeholder="Search skills..." />
-								<Combobox.Trigger>▾</Combobox.Trigger>
-								<Combobox.Portal>
-									<Combobox.Positioner sideOffset={0}>
-										<Combobox.Popup>
-											<Combobox.Empty>No results</Combobox.Empty>
-											<Combobox.List>
-												{(skill) => (
-													<Combobox.Item key={skill} value={skill}>
-														<Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
-														{skill}
-													</Combobox.Item>
-												)}
-											</Combobox.List>
-										</Combobox.Popup>
-									</Combobox.Positioner>
-								</Combobox.Portal>
-							</Combobox.Root>
-							<Field.Error match="customError">Please select at least one skill</Field.Error>
-						</Field.Root>
-						*/}
-							<StyledFieldRoot
-								name="skills"
-								validate={() => (skills.length > 0 ? null : "Please select at least one skill")}
-							>
-								<Field.Label nativeLabel={false} render={<StyledLabelDiv />}>
-									Skills *
-								</Field.Label>
-								<Combobox.Root multiple items={SKILLS} value={skills} onValueChange={setSkills}>
-									<StyledMultiInputRow ref={skillsRowRef}>
-										<StyledComboboxChips>
-											{skills.map((skill) => (
-												<StyledComboboxChip key={skill}>
-													{skill}
-													<StyledChipRemove>×</StyledChipRemove>
-												</StyledComboboxChip>
-											))}
-										</StyledComboboxChips>
-										<StyledComboboxInput
-											placeholder={skills.length === 0 ? "Search skills..." : ""}
-										/>
-										<StyledComboboxTrigger>
-											<Combobox.Icon render={<SelectChevron />}>▾</Combobox.Icon>
-										</StyledComboboxTrigger>
-									</StyledMultiInputRow>
-									<Combobox.Portal>
-										<Combobox.Positioner sideOffset={0} anchor={skillsRowRef}>
-											<StyledComboboxPopup>
-												<StyledComboboxEmpty>No results</StyledComboboxEmpty>
-												<StyledComboboxList>
-													{(skill) => (
-														<StyledComboboxItem key={skill} value={skill}>
-															<Combobox.ItemIndicator render={<StyledItemIndicator />}>
-																✓
-															</Combobox.ItemIndicator>
-															<StyledItemText>{skill}</StyledItemText>
-														</StyledComboboxItem>
-													)}
-												</StyledComboboxList>
-											</StyledComboboxPopup>
-										</Combobox.Positioner>
-									</Combobox.Portal>
-								</Combobox.Root>
-								<StyledError match="customError">Please select at least one skill</StyledError>
-							</StyledFieldRoot>
-
-							{/* Unstyled radio group for reference:
-						<Field.Root name="role">
-							<Fieldset.Root render={<RadioGroup required />}>
-								<Fieldset.Legend>Role</Fieldset.Legend>
-								{ROLES.map((role) => (
-									<Field.Item key={role}>
-										<Field.Label>
-											<Radio.Root value={role}>
-												<Radio.Indicator />
-											</Radio.Root>
-											{role}
-										</Field.Label>
-									</Field.Item>
-								))}
-							</Fieldset.Root>
-							<Field.Error match="valueMissing">Required</Field.Error>
-						</Field.Root>
-						*/}
-							{/* Radio group - https://base-ui.com/react/components/radio#form-integration */}
-							<Field.Root name="role">
-								<Fieldset.Root render={<StyledRadioGroup required />}>
-									<StyledLegend>Role *</StyledLegend>
-									{ROLES.map((role) => (
-										<Field.Item key={role}>
-											<ItemLabel>
-												<StyledRadio value={role}>
-													<StyledRadioIndicator />
-												</StyledRadio>
-												{role}
-											</ItemLabel>
-										</Field.Item>
-									))}
-								</Fieldset.Root>
-								<StyledError match="valueMissing">Please select a role</StyledError>
-							</Field.Root>
-
-							{/* Unstyled checkbox group for reference:
-						<Field.Root name="needs" validate={() => needs.length >= 2 ? null : "Please select at least 2 needs"}>
-							<Fieldset.Root render={<CheckboxGroup value={needs} onValueChange={setNeeds} />}>
-								<Fieldset.Legend>What do you need help with?</Fieldset.Legend>
-								{NEEDS.map((need) => (
-									<Field.Item key={need}>
-										<Field.Label>
-											<Checkbox.Root value={need}>
-												<Checkbox.Indicator />
-											</Checkbox.Root>
-											{need}
-										</Field.Label>
-									</Field.Item>
-								))}
-							</Fieldset.Root>
-							<Field.Error match="customError">Please select at least 2 needs</Field.Error>
-						</Field.Root>
-						*/}
-							{/* Checkbox group — at least 2 required - https://base-ui.com/react/components/checkbox-group#form-integration */}
-							<Field.Root
-								name="needs"
-								validate={() => (needs.length >= 2 ? null : "Please select at least 2 needs")}
-							>
-								<Fieldset.Root
-									render={<StyledCheckboxGroup value={needs} onValueChange={setNeeds} />}
-								>
-									<StyledLegend>What do you need help with? *</StyledLegend>
-									<Hint>Select at least 2</Hint>
-									{NEEDS.map((need) => (
-										<Field.Item key={need}>
-											<ItemLabel>
-												<StyledCheckbox value={need}>
-													<StyledCheckboxIndicator>✓</StyledCheckboxIndicator>
-												</StyledCheckbox>
-												{need}
-											</ItemLabel>
-										</Field.Item>
-									))}
-								</Fieldset.Root>
-								<StyledError match="customError">Please select at least 2 needs</StyledError>
-							</Field.Root>
-
-							{/* Unstyled range slider for reference:
-						<Field.Root name="budget">
-							<Fieldset.Root render={<Slider.Root defaultValue={[25, 75]} min={0} max={100} step={5} />}>
-								<Fieldset.Legend>Budget range</Fieldset.Legend>
-								<Slider.Value />
-								<Slider.Control>
-									<Slider.Track>
-										<Slider.Indicator />
-										<Slider.Thumb index={0} />
-										<Slider.Thumb index={1} />
-									</Slider.Track>
-								</Slider.Control>
-							</Fieldset.Root>
-						</Field.Root>
-						*/}
-							{/* Range slider - https://base-ui.com/react/components/slider#form-integration */}
-							<StyledFieldRoot name="budget">
-								<Fieldset.Root
-									render={<StyledSliderRoot defaultValue={[25, 75]} min={0} max={100} step={5} />}
-								>
-									<SliderHeader>
-										<Fieldset.Legend render={<StyledLegend />}>Budget range ($k)</Fieldset.Legend>
-										<Slider.Value render={<SliderValueText />} />
-									</SliderHeader>
-									<Slider.Control render={<StyledSliderControl />}>
-										<Slider.Track render={<StyledSliderTrack />}>
-											<Slider.Indicator render={<StyledSliderIndicator />} />
-											<StyledSliderThumb index={0} />
-											<StyledSliderThumb index={1} />
-										</Slider.Track>
-									</Slider.Control>
-								</Fieldset.Root>
-							</StyledFieldRoot>
-
-							{/* Unstyled switch for reference:
-						<Field.Root name="newsletter">
-							<Field.Label>
-								Subscribe to newsletter
-								<Switch.Root>
-									<Switch.Thumb />
-								</Switch.Root>
-							</Field.Label>
-						</Field.Root>
-						*/}
-							{/* Toggle / Switch */}
-							<StyledFieldRoot name="newsletter">
-								<SwitchLabel>
-									Subscribe to newsletter{""}
-									<StyledSwitch defaultChecked>
-										<StyledSwitchThumb />
-									</StyledSwitch>
-								</SwitchLabel>
-							</StyledFieldRoot>
-
-							{/* Unstyled number field for reference:
-						<Field.Root name="teamSize">
-							<Field.Label>Team size</Field.Label>
-							<NumberField.Root defaultValue={1} min={1} max={50} required>
-								<NumberField.Group>
-									<NumberField.Decrement>−</NumberField.Decrement>
-									<NumberField.Input />
-									<NumberField.Increment>+</NumberField.Increment>
-								</NumberField.Group>
-							</NumberField.Root>
-							<Field.Error match="valueMissing">Required</Field.Error>
-						</Field.Root>
-						*/}
-							{/* Number field / Counter */}
-							<StyledFieldRoot name="teamSize">
-								<NumberField.Root defaultValue={1} min={1} max={50} required>
-									<StyledLabel>Team size *</StyledLabel>
-									<StyledNumberGroup>
-										<StyledDecrement>−</StyledDecrement>
-										<StyledNumberInput />
-										<StyledIncrement>+</StyledIncrement>
-									</StyledNumberGroup>
-								</NumberField.Root>
-								<StyledError match="valueMissing">Please enter team size</StyledError>
-							</StyledFieldRoot>
-
-							{/* Unstyled single checkbox for reference:
-						<Field.Root name="terms">
-							<Field.Label>
-								<Checkbox.Root required>
-									<Checkbox.Indicator />
-								</Checkbox.Root>
-								I agree to the terms and conditions
-							</Field.Label>
-							<Field.Error match="valueMissing">Required</Field.Error>
-						</Field.Root>
-						*/}
-							{/* Checkbox */}
-							<StyledFieldRoot name="terms">
-								<CheckboxLabel>
-									<StyledCheckbox required>
-										<StyledCheckboxIndicator>✓</StyledCheckboxIndicator>
-									</StyledCheckbox>
-									I agree to the terms and conditions *
-								</CheckboxLabel>
-								<StyledError match="valueMissing">You must agree to the terms</StyledError>
-							</StyledFieldRoot>
-
-							<StyledButton type="submit" disabled={loading} focusableWhenDisabled>
-								{loading ? "Submitting..." : "Submit"}
-							</StyledButton>
-						</StyledForm>
-					</>
-				)}
-			</Card>
-		</Wrapper>
+function Results({
+	data,
+	onReset,
+}: {
+	data: Record<string, string | string[]>
+	onReset: () => void
+}) {
+	return (
+		<ResultsWrapper>
+			<ResultsHeading>Submitted</ResultsHeading>
+			<ResultsList>
+				{Object.entries(data).map(([key, value]) => {
+					const label = FIELD_LABELS[key] ?? key
+					const display = MASKED_FIELDS.has(key)
+						? "••••••••"
+						: Array.isArray(value)
+							? value.join(", ") || "—"
+							: value || "—"
+					return (
+						<ResultsRow key={key}>
+							<ResultsLabel>{label}</ResultsLabel>
+							<ResultsValue>{display}</ResultsValue>
+						</ResultsRow>
+					)
+				})}
+			</ResultsList>
+			<StyledButton type="button" onClick={onReset}>
+				Start Over
+			</StyledButton>
+		</ResultsWrapper>
 	)
 }
 
@@ -623,777 +388,97 @@ const Card = styled("div", [
 	`),
 ])
 
-const Heading = styled("h1", [
-	f.responsive(css`
-		
-	`),
-])
-
-const Description = styled("p", [
-	f.responsive(css`
-		color: #6b7280;
-		margin: 0;
-	`),
-])
-
-const RequiredNote = styled("p", [
-	f.responsive(css`
-		font-size: 14px;
-		color: #9ca3af;
-		margin: 0;
-	`),
-])
-
-const SuccessMessage = styled("p", [
-	f.responsive(css`
-		color: #15803d;
-		margin: 0;
-	`),
-])
-
 const StyledForm = styled(Form, [
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		gap: 60px;
+		gap: 24px;
 	`),
 ])
 
-const StyledFieldRoot = styled(Field.Root, [
+// ─── Control panel ───────────────────────────────────────────────────────────
+
+const ControlPanel = styled("div", [
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		align-items: start;
-		gap: 6px;
-	`),
-])
-
-const StyledLabel = styled(Field.Label, [
-	f.responsive(css`
-		color: ${colors.black};
-	`),
-])
-
-const Hint = styled("p", [
-	f.responsive(css`
-		color: #6b7280;
-	`),
-])
-
-const StyledInput = styled(Field.Control, [
-	f.responsive(css`
-		box-sizing: border-box;
-		padding: 0 16px;
-		margin: 0;
-		border: 1px solid #e5e7eb;
-		width: 100%;
-		height: 48px;
+		gap: 16px;
+		padding: 16px;
+		background: #f3f4f6;
 		border-radius: 8px;
-		font-family: inherit;
-		background-color: transparent;
-		color: ${colors.black};
-		
-		&::placeholder {
-			color: #9ca3af;
-		}
-		
-		&:focus {
-			outline: 2px solid ${colors.blue};
-			outline-offset: -1px;
-		}
-		
-		[data-invalid] & {
-			border-color: ${colors.red};
-		}
+		border: 1px dashed #d1d5db;
 	`),
 ])
 
-const StyledTextarea = styled("textarea", [
-	f.responsive(css`
-		box-sizing: border-box;
-		padding: 12px;
-		border: 1px solid #e5e7eb;
-		width: 100%;
-		border-radius: 8px;
-		color: ${colors.black};
-		
-		&::placeholder {
-			color: #9ca3af;
-		}
-		
-		&:focus {
-			outline: 2px solid ${colors.blue};
-			outline-offset: -1px;
-		}
-		
-		[data-invalid] & {
-			border-color: ${colors.red};
-		}
-	`),
-])
-
-const StyledError = styled(Field.Error, [
-	f.responsive(css`
-		color: ${colors.red};
-	`),
-])
-
-const StyledServerError = styled("p", [
-	f.responsive(css`
-		color: ${colors.red};
-		margin: 0;
-	`),
-])
-
-// ─── Select ──────────────────────────────────────────────────────────────────
-
-const StyledLabelDiv = styled("div", [
-	f.responsive(css`
-		color: ${colors.black};
-		font-weight: 500;
-	`),
-])
-
-const StyledSelectTrigger = styled(Select.Trigger, [
-	f.responsive(css`
-		box-sizing: border-box;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 0 16px;
-		margin: 0;
-		border: 1px solid #e5e7eb;
-		width: 100%;
-		height: 48px;
-		border-radius: 8px;
-		font-family: inherit;
-		background-color: transparent;
-		color: ${colors.black};
-		cursor: pointer;
-
-		@media (hover: hover) {
-			&:hover {
-				background-color: #f3f4f6;
-			}
-		}
-
-		&[data-popup-open] {
-			background-color: #f3f4f6;
-		}
-
-		&:focus-visible {
-			outline: 2px solid ${colors.blue};
-			outline-offset: -1px;
-		}
-
-		&[data-invalid] {
-			border-color: ${colors.red};
-		}
-
-		&[data-placeholder] {
-			color: #9ca3af;
-		}
-	`),
-])
-
-const SelectChevron = styled("span", [
-	f.responsive(css`
-		font-size: 18px;
-		color: #6b7280;
-	`),
-])
-
-const StyledSelectPopup = styled(Select.Popup, [
-	f.responsive(css`
-		background: white;
-		border: 1px solid #e5e7eb;
-		border-radius: 8px;
-		padding: 4px;
-		box-shadow:
-			0 10px 15px -3px rgb(0 0 0 / 10%),
-			0 4px 6px -4px rgb(0 0 0 / 10%);
-		width: var(--anchor-width);
-		transform-origin: var(--transform-origin);
-		transition:
-			transform 150ms,
-			opacity 150ms;
-		
-		&[data-starting-style],
-		&[data-ending-style] {
-			opacity: 0;
-			transform: scale(0.9);
-		}
-		
-		&[data-side="none"] {
-			transition: none;
-			transform: none;
-			opacity: 1;
-			min-width: calc(var(--anchor-width) + 1rem);
-		}
-	`),
-])
-
-const StyledSelectItem = styled(Select.Item, [
-	f.responsive(css`
-		box-sizing: border-box;
-		display: grid;
-		grid-template-columns: 0.75rem 1fr;
-		gap: 8px;
-		align-items: center;
-		padding: 8px 10px;
-		cursor: default;
-		color: ${colors.black};
-		outline: none;
-
-		&[data-highlighted] {
-			z-index: 0;
-			position: relative;
-			color: white;
-		}
-
-		&[data-highlighted]::before {
-			content: "";
-			z-index: -1;
-			position: absolute;
-			inset-block: 0;
-			inset-inline: 4px;
-			border-radius: 4px;
-			background-color: ${colors.black};
-		}
-	`),
-])
-
-const StyledItemIndicator = styled("span", [
-	f.responsive(css`
-		grid-column-start: 1;
-		display: flex;
-		align-items: center;
-		font-size: 12px;
-	`),
-])
-
-const StyledItemText = styled("span", [
-	f.responsive(css`
-		grid-column-start: 2;
-	`),
-])
-
-// ─── Combobox ────────────────────────────────────────────────────────────────
-
-const StyledComboboxInputRow = styled("div", [
+const ControlGroup = styled("div", [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
-		border: 1px solid #e5e7eb;
-		border-radius: 8px;
-		width: 100%;
-		overflow: hidden;
-
-		&:focus-within {
-			outline: 2px solid ${colors.blue};
-			outline-offset: -1px;
-		}
-
-		[data-invalid] & {
-			border-color: ${colors.red};
-		}
-	`),
-])
-
-const StyledComboboxInput = styled(Combobox.Input, [
-	f.responsive(css`
-		flex: 1;
-		box-sizing: border-box;
-		padding: 0 16px;
-		height: 48px;
-		border: none;
-		outline: none;
-		font-family: inherit;
-		background: transparent;
-		color: ${colors.black};
-
-		&::placeholder {
-			color: #9ca3af;
-		}
-	`),
-])
-
-const StyledComboboxTrigger = styled(Combobox.Trigger, [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 48px;
-		border: none;
-		background: transparent;
-		cursor: pointer;
-		flex-shrink: 0;
-	`),
-])
-
-const StyledComboboxPopup = styled(Combobox.Popup, [
-	f.responsive(css`
-		background: white;
-		border-radius: 6px;
-		outline: 1px solid #e5e7eb;
-		box-shadow:
-			0 10px 15px -3px rgb(0 0 0 / 10%),
-			0 4px 6px -4px rgb(0 0 0 / 10%);
-		color: ${colors.black};
-		width: var(--anchor-width);
-		max-width: var(--available-width);
-		transition: opacity 100ms, transform 100ms;
-		transform-origin: var(--transform-origin);
-
-		&[data-starting-style],
-		&[data-ending-style] {
-			opacity: 0;
-			transform: scale(0.95);
-		}
-	`),
-])
-
-const StyledComboboxItem = styled(Combobox.Item, [
-	f.responsive(css`
-		box-sizing: border-box;
-		display: grid;
-		grid-template-columns: 0.75rem 1fr;
-		gap: 8px;
-		align-items: center;
-		padding-block: 8px;
-		padding-left: 16px;
-		padding-right: 32px;
-		cursor: default;
-		color: ${colors.black};
-		outline: none;
-
-		&[data-highlighted] {
-			z-index: 0;
-			position: relative;
-			color: white;
-		}
-
-		&[data-highlighted]::before {
-			content: "";
-			z-index: -1;
-			position: absolute;
-			inset-block: 0;
-			inset-inline: 8px;
-			border-radius: 4px;
-			background-color: ${colors.black};
-		}
-	`),
-])
-
-const StyledComboboxList = styled(Combobox.List, [
-	f.responsive(css`
-		box-sizing: border-box;
-		overflow-y: auto;
-		overscroll-behavior: contain;
-		padding-block: 8px;
-		scroll-padding-block: 8px;
-		outline: none;
-		max-height: min(23rem, var(--available-height));
-		
-		&[data-empty] {
-			padding: 0;
-		}
-	`),
-])
-
-const StyledComboboxEmpty = styled(Combobox.Empty, [
-	f.responsive(css`
-		&:not(:empty) {
-			color: #9ca3af;
-			line-height: 1rem;
-			padding: 1rem;
-		}
-	`),
-])
-
-const StyledMultiInputRow = styled("div", [
-	f.responsive(css`
-		display: flex;
+		gap: 16px;
 		flex-wrap: wrap;
-		align-items: center;
-		gap: 6px;
-		border: 1px solid #e5e7eb;
-		border-radius: 8px;
-		width: 100%;
-		min-height: 48px;
-		padding: 6px 6px 6px 12px;
-		box-sizing: border-box;
-
-		&:focus-within {
-			outline: 2px solid ${colors.blue};
-			outline-offset: -1px;
-		}
-
-		[data-invalid] & {
-			border-color: ${colors.red};
-		}
 	`),
 ])
 
-const StyledComboboxChips = styled(Combobox.Chips, [
+const ControlLabel = styled("span", [
 	f.responsive(css`
-		display: contents;
+		font-weight: 600;
+		font-size: 13px;
+		color: #374151;
+		min-width: 110px;
 	`),
 ])
 
-const StyledComboboxChip = styled(Combobox.Chip, [
+const SegmentedGroup = styled("div", [
 	f.responsive(css`
 		display: flex;
-		align-items: center;
-		background-color: #e5e7eb;
-		color: ${colors.black};
+		border: 1px solid #d1d5db;
 		border-radius: 6px;
-		padding: 4px 4px 4px 8px;
 		overflow: hidden;
-		gap: 4px;
-		outline: 0;
-		cursor: default;
-		
-		&:focus-within {
-			background-color: ${colors.black};
-			color: #e5e7eb;
-		}
-		
-		@media (hover: hover) {
-			&[data-highlighted] {
-				background-color: ${colors.black};
-				color: #e5e7eb;
-			}
-		}
 	`),
 ])
 
-const StyledChipRemove = styled(Combobox.ChipRemove, [
+const SegmentedButton = styled("label", [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 16px;
-		height: 16px;
-		border: none;
-		background: transparent;
-		cursor: pointer;
-		color: #6b7280;
-		font-size: 16px;
-		line-height: 1;
-		padding: 0;
-
-		&:hover {
-			color: ${colors.black};
-		}
-	`),
-])
-
-// ─── Radio ───────────────────────────────────────────────────────────────────
-
-const StyledRadioGroup = styled(RadioGroup, [
-	f.responsive(css`
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		border: none;
-	`),
-])
-
-const StyledLegend = styled("legend", [
-	f.responsive(css`
-		color: ${colors.black};
-		margin-bottom: 6px;
-	`),
-])
-
-const ItemLabel = styled(Field.Label, [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		color: ${colors.black};
-		cursor: pointer;
-	`),
-])
-
-const StyledRadio = styled(Radio.Root, [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 18px;
-		height: 18px;
-		border-radius: 50%;
-		border: 1px solid #d1d5db;
-		background: white;
-		cursor: pointer;
-		flex-shrink: 0;
-		
-		&:focus-visible {
-			outline: 2px solid ${colors.blue};
-			outline-offset: 2px;
-		}
-		
-		&[data-checked] {
-			border-color: ${colors.blue};
-		}
-	`),
-])
-
-const StyledRadioIndicator = styled(Radio.Indicator, [
-	f.responsive(css`
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		background: ${colors.blue};
-	`),
-])
-
-const StyledCheckboxGroup = styled(CheckboxGroup, [
-	f.responsive(css`
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-	`),
-])
-
-const CheckboxLabel = styled(Field.Label, [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		font-size: 16px;
-		color: ${colors.black};
-		cursor: pointer;
-	`),
-])
-
-const StyledCheckbox = styled(Checkbox.Root, [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 18px;
-		height: 18px;
-		border-radius: 4px;
-		border: 1px solid #d1d5db;
-		background: white;
-		cursor: pointer;
-		flex-shrink: 0;
-		
-		&:focus-visible {
-			outline: 2px solid ${colors.blue};
-			outline-offset: 2px;
-		}
-		
-		&[data-checked] {
-			background: ${colors.blue};
-			border-color: ${colors.blue};
-		}
-	`),
-])
-
-const StyledCheckboxIndicator = styled(Checkbox.Indicator, [
-	f.responsive(css`
+		padding: 6px 12px;
 		font-size: 12px;
-		line-height: 1;
-		color: white;
-	`),
-])
-
-// ─── Slider ──────────────────────────────────────────────────────────────────
-
-const StyledSliderRoot = styled(Slider.Root, [
-	f.responsive(css`
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		border: none;
-		width: 100%;
-	`),
-])
-
-const SliderHeader = styled("div", [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	`),
-])
-
-const SliderValueText = styled("span", [
-	f.responsive(css`
-		color: #6b7280;
-	`),
-])
-
-const StyledSliderControl = styled("div", [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		height: 20px;
-	`),
-])
-
-const StyledSliderTrack = styled("div", [
-	f.responsive(css`
-		position: relative;
-		width: 100%;
-		height: 4px;
-		border-radius: 2px;
-		background: #e5e7eb;
-	`),
-])
-
-const StyledSliderIndicator = styled("div", [
-	f.responsive(css`
-		position: absolute;
-		height: 100%;
-		border-radius: 2px;
-		background: ${colors.blue};
-	`),
-])
-
-const StyledSliderThumb = styled(Slider.Thumb, [
-	f.responsive(css`
-		position: absolute;
-		width: 18px;
-		height: 18px;
-		border-radius: 50%;
-		background: white;
-		border: 2px solid ${colors.blue};
-		cursor: pointer;
-		transform: translateX(-50%);
-
-		&:has(:focus-visible) {
-            outline: 2px solid ${colors.blue};
-            outline-offset: 1px;
-        }
-	`),
-])
-
-// ─── Switch ──────────────────────────────────────────────────────────────────
-
-const SwitchLabel = styled(Field.Label, [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		gap: 12px;
 		font-weight: 500;
-		color: ${colors.black};
-		cursor: pointer;
-	`),
-])
-
-const StyledSwitch = styled(Switch.Root, [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		width: 44px;
-		height: 24px;
-		padding: 2px;
-		box-sizing: border-box;
-		border-radius: 999px;
-		border: none;
-		cursor: pointer;
-		flex-shrink: 0;
-		background: linear-gradient(90deg, ${colors.blue} 35%, #d1d5db 65%);
-		background-size: 200% 100%;
-		background-position-x: 100%;
-		transition: background-position-x 125ms ease;
-
-		&[data-checked] {
-			background-position-x: 0%;
-		}
-
-		&:focus-visible {
-			outline: 2px solid ${colors.blue};
-			outline-offset: 2px;
-		}
-	`),
-])
-
-const StyledSwitchThumb = styled(Switch.Thumb, [
-	f.responsive(css`
-		aspect-ratio: 1 / 1;
-		height: 100%;
-		border-radius: 50%;
+		color: #6b7280;
 		background: white;
-		box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
-		transition: translate 125ms ease;
-		translate: 0 0;
-		
-		[data-checked] & {
-			translate: 20px 0;
-		}
-	`),
-])
-
-// ─── Number field ────────────────────────────────────────────────────────────
-
-const StyledNumberGroup = styled(NumberField.Group, [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		border: 1px solid #e5e7eb;
-		border-radius: 6px;
-		width: fit-content;
-	`),
-])
-
-const StyledNumberInput = styled(NumberField.Input, [
-	f.responsive(css`
-		box-sizing: border-box;
-		width: 56px;
-		height: 40px;
-		border: none;
-		border-left: 1px solid #e5e7eb;
-		border-right: 1px solid #e5e7eb;
-		text-align: center;
-		font-family: inherit;
-		font-size: 16px;
-		color: ${colors.black};
-		background: transparent;
-        z-index: 10;
-		
-		&:focus {
-			outline: 2px solid ${colors.blue};
-			outline-offset: -1px;
-		}
-	`),
-])
-
-const numberButtonStyles = [
-	f.responsive(css`
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		border: none;
-		background: #f9fafb;
 		cursor: pointer;
-		font-size: 18px;
-		color: ${colors.black};
-		
+		border-right: 1px solid #d1d5db;
+		transition: background 100ms, color 100ms;
+
+		&:last-child {
+			border-right: none;
+		}
+
 		@media (hover: hover) {
 			&:hover {
-				background: #f3f4f6;
+				background: #f9fafb;
 			}
 		}
-		
-		&:active {
-			background: #e5e7eb;
+
+		&[data-active] {
+			background: ${colors.black};
+			color: white;
 		}
 	`),
-]
+])
 
-const StyledDecrement = styled(NumberField.Decrement, numberButtonStyles)
-const StyledIncrement = styled(NumberField.Increment, numberButtonStyles)
+const HiddenRadio = styled("input", [
+	f.responsive(css`
+		position: absolute;
+		opacity: 0;
+		width: 0;
+		height: 0;
+		pointer-events: none;
+	`),
+])
 
-// ─── Submit ──────────────────────────────────────────────────────────────────
+// ─── Submit / Reset ───────────────────────────────────────────────────────────
 
 const StyledButton = styled(Button, [
 	f.responsive(css`
@@ -1412,27 +497,95 @@ const StyledButton = styled(Button, [
 		font-size: 16px;
 		font-weight: 500;
 		line-height: 24px;
+		margin-top: 24px;
 		color: ${colors.black};
-		
+
 		@media (hover: hover) {
 			&:hover:not([data-disabled]) {
 				background-color: #f3f4f6;
 			}
 		}
-		
+
 		&:focus-visible {
 			outline: 2px solid ${colors.blue};
 			outline-offset: -1px;
 		}
-		
+
 		&:active:not([data-disabled]) {
 			background-color: #e5e7eb;
 			box-shadow: inset 0 1px 3px #e5e7eb;
 			border-top-color: #d1d5db;
 		}
-		
+
 		&[data-disabled] {
 			color: #6b7280;
 		}
+	`),
+])
+
+// ─── Results view ─────────────────────────────────────────────────────────────
+
+const ResultsWrapper = styled("div", [
+	f.responsive(css`
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	`),
+])
+
+const ResultsHeading = styled("h2", [
+	f.responsive(css`
+		margin: 0 0 20px;
+		font-size: 18px;
+		font-weight: 600;
+		color: ${colors.black};
+	`),
+])
+
+const ResultsList = styled("dl", [
+	f.responsive(css`
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+		border: 1px solid #e5e7eb;
+		border-radius: 8px;
+		overflow: hidden;
+	`),
+])
+
+const ResultsRow = styled("div", [
+	f.responsive(css`
+		display: flex;
+		gap: 16px;
+		padding: 10px 14px;
+		border-bottom: 1px solid #f3f4f6;
+		
+		&:last-child {
+			border-bottom: none;
+		}
+		
+		&:nth-child(even) {
+			background: #f9fafb;
+		}
+	`),
+])
+
+const ResultsLabel = styled("dt", [
+	f.responsive(css`
+		flex-shrink: 0;
+		width: 140px;
+		font-size: 13px;
+		font-weight: 600;
+		color: #6b7280;
+	`),
+])
+
+const ResultsValue = styled("dd", [
+	f.responsive(css`
+		margin: 0;
+		font-size: 13px;
+		color: ${colors.black};
+		overflow-wrap: anywhere;
 	`),
 ])

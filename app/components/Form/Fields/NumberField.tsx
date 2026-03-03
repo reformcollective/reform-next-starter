@@ -1,33 +1,36 @@
 "use client"
 
-import { useState, type RefObject } from "react"
+import { type RefObject } from "react"
+import { NumberField as BaseNumberField } from "@base-ui/react/number-field"
 import { Field } from "@base-ui/react/field"
 import type { FieldRoot } from "@base-ui/react/field"
 import type { Form } from "@base-ui/react/form"
 import { css, f, styled } from "library/styled/alpha"
 import { colors } from "app/styles/colors.css"
 
-interface TextAreaFieldProps {
+interface NumberFieldProps {
 	/** Identifies the field when a form is submitted. */
 	name: string
-	/** Text displayed above the textarea. */
+	/** Text displayed above the number input. */
 	label: string
 	/** Marks the field as required, appends "*" to the label. */
 	required?: boolean
-	/** Disables the textarea and prevents interaction. */
+	/** Disables the number field and prevents interaction. */
 	disabled?: boolean
-	/** Placeholder text shown when the textarea is empty. */
-	placeholder?: string
-	/** HTML autocomplete hint (e.g. "street-address", "shipping address-line1"). */
-	autoComplete?: string
-	/** Minimum character length for the value to be valid. */
-	minLength?: number
-	/** Maximum character length for the value to be valid. */
-	maxLength?: number
-	/** Number of visible text rows. @default 4 */
-	rows?: number
-	/** Helper text displayed below the textarea. */
+	/** Helper text displayed below the number field. */
 	hint?: string
+	/** Initial value for an uncontrolled field. */
+	defaultValue?: number
+	/** Controlled value. */
+	value?: number
+	/** Minimum allowed value. */
+	min?: number
+	/** Maximum allowed value. */
+	max?: number
+	/** Step increment for the +/− buttons. @default 1 */
+	step?: number
+	/** Callback fired when the value changes. */
+	onValueChange?: (value: number) => void
 	/**
 	 * Custom validation function. Receives `(value, formValues)`.
 	 * Return `null` if valid, or a string/string[] of error messages.
@@ -47,24 +50,23 @@ interface TextAreaFieldProps {
 	actionsRef?: RefObject<FieldRoot.Actions | null>
 }
 
-export function TextAreaField({
+export function NumberField({
 	name,
 	label,
 	required,
 	disabled,
-	placeholder,
-	autoComplete,
-	minLength,
-	maxLength,
-	rows = 4,
 	hint,
+	defaultValue,
+	value,
+	min,
+	max,
+	step,
+	onValueChange,
 	validate,
 	validationMode,
 	validationDebounceTime,
 	actionsRef,
-}: TextAreaFieldProps) {
-	const [filled, setFilled] = useState(false)
-
+}: NumberFieldProps) {
 	return (
 		<StyledFieldRoot
 			name={name}
@@ -78,31 +80,21 @@ export function TextAreaField({
 				{label}
 				{required && " *"}
 			</Label>
-			<TextAreaWrapper>
-				<Field.Control
-					render={<Control rows={rows} onChange={(e) => setFilled(e.target.value !== "")} />}
-					required={required}
-					placeholder={placeholder}
-					autoComplete={autoComplete}
-					minLength={minLength}
-					maxLength={maxLength}
-				/>
-				<Field.Validity>
-					{({ validity }) => {
-						if (validity.valid === null) return null
-						if (validity.valid && !filled) return null
-						return (
-							<IconSlot>
-								{validity.valid ? (
-									<ValidIcon aria-hidden>✓</ValidIcon>
-								) : (
-									<ErrorIcon aria-hidden>✕</ErrorIcon>
-								)}
-							</IconSlot>
-						)
-					}}
-				</Field.Validity>
-			</TextAreaWrapper>
+			<BaseNumberField.Root
+				required={required}
+				defaultValue={defaultValue}
+				value={value}
+				min={min}
+				max={max}
+				step={step}
+				onValueChange={onValueChange}
+			>
+				<Group>
+					<Decrement>−</Decrement>
+					<NumberInput />
+					<Increment>+</Increment>
+				</Group>
+			</BaseNumberField.Root>
 			{hint && <Description>{hint}</Description>}
 			<Field.Error />
 		</StyledFieldRoot>
@@ -132,63 +124,62 @@ const Description = styled(Field.Description, [
 	`),
 ])
 
-const TextAreaWrapper = styled("div", [
+const Group = styled(BaseNumberField.Group, [
 	f.responsive(css`
-		position: relative;
-		width: 100%;
+		display: flex;
+		align-items: center;
+		border: 1px solid #e5e7eb;
+		border-radius: 6px;
+		width: fit-content;
 	`),
 ])
 
-const Control = styled("textarea", [
+const NumberInput = styled(BaseNumberField.Input, [
 	f.responsive(css`
 		box-sizing: border-box;
-		padding: 12px;
-		margin: 0;
-		border: 1px solid #e5e7eb;
-		width: 100%;
-		border-radius: 8px;
+		width: 56px;
+		height: 40px;
+		border: none;
+		border-left: 1px solid #e5e7eb;
+		border-right: 1px solid #e5e7eb;
+		text-align: center;
 		font-family: inherit;
-		background-color: transparent;
+		font-size: 16px;
 		color: ${colors.black};
-		max-width: 100%;
-		overflow-wrap: anywhere;
-
-		&::placeholder {
-			color: #9ca3af;
-		}
+		background: transparent;
+		z-index: 10;
 
 		&:focus {
 			outline: 2px solid ${colors.blue};
 			outline-offset: -1px;
 		}
-
-		[data-invalid] & {
-			border-color: ${colors.red};
-		}
 	`),
 ])
 
-const IconSlot = styled("span", [
+const buttonStyles = [
 	f.responsive(css`
-		position: absolute;
-		right: 12px;
-		top: 16px;
 		display: flex;
 		align-items: center;
-		pointer-events: none;
-		font-size: 14px;
-		line-height: 1;
-	`),
-])
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border: none;
+		background: #f9fafb;
+		cursor: pointer;
+		font-size: 18px;
+		color: ${colors.black};
 
-const ValidIcon = styled("span", [
-	f.responsive(css`
-		color: #15803d;
-	`),
-])
+		@media (hover: hover) {
+			&:hover {
+				background: #f3f4f6;
+			}
+		}
 
-const ErrorIcon = styled("span", [
-	f.responsive(css`
-		color: ${colors.red};
+		&:active {
+			background: #e5e7eb;
+		}
 	`),
-])
+]
+
+const Decrement = styled(BaseNumberField.Decrement, buttonStyles)
+const Increment = styled(BaseNumberField.Increment, buttonStyles)

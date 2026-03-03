@@ -96,7 +96,7 @@ export function SelectField({
 			validationDebounceTime={validationDebounceTime}
 			actionsRef={actionsRef}
 		>
-			<Field.Label nativeLabel={false} render={<LabelDiv />}>
+			<Field.Label nativeLabel={false} render={<Label />}>
 				{label}
 				{required && " *"}
 			</Field.Label>
@@ -145,7 +145,7 @@ const StyledFieldRoot = styled(Field.Root, [
 	`),
 ])
 
-const LabelDiv = styled("div", [
+const Label = styled("div", [
 	f.responsive(css`
 		color: ${colors.black};
 	`),
