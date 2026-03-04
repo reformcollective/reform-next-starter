@@ -43,11 +43,56 @@ library/            # git submodule — shared Reform library code
 sanity/             # Sanity schemas and config
 ```
 
+## Styling — Vanilla Split
+
+Styles are written using **vanilla split**: a zero-runtime CSS-in-JS system built on top of vanilla-extract. Import from `library/styled/alpha`.
+
+```tsx
+import { styled, f, css } from "library/styled/alpha"
+
+const Box = styled("div", {
+	base: [
+		f.responsive(css`
+			padding: 24px; /* auto-converts px → responsive vw calc() */
+		`),
+		f.mobile(css`
+			flex-direction: column;
+		`),
+	],
+	variants: {
+		tone: {
+			light: [{ background: "#fff" }],
+			dark:  [{ background: "#000" }],
+		},
+	},
+	defaultVariants: { tone: "light" },
+})
+```
+
+### Key APIs
+
+| API | Purpose |
+|-----|---------|
+| `styled(tag, config)` | Create a styled component with base styles, variants, tokens |
+| `f.responsive(...)` | Fluid scaling across all breakpoints (px → calc/vw) |
+| `f.desktop/tablet/mobile/small/large(...)` | Styles scoped to a single breakpoint range |
+| `f.scaledResponsive(...)` | Force vw scaling on all breakpoints (no snapping) |
+| `tokens` | Map props to CSS variables for runtime values (coordinates, colors, etc.) |
+| `as` prop | Change the rendered element at runtime |
+| `Component.toString()` | Returns the class selector — use for parent→child style targeting |
+
+### Rules
+
+- **Define styles in the file they're used** — the vanilla-split loader handles extraction. Do not export styled components from `.ts`/`.tsx` files to use elsewhere; this will fail.
+- **Use `.css.ts` files** strictly for vanilla-extract variables (`createVar`), keyframes, and global styles.
+- **No inline styles, no CSS modules, no Tailwind.**
+
+See `library/styled/README.md` for full docs.
+
 ## Code Conventions
 
 - **Formatting**: tabs for indentation, no semicolons (enforced by oxfmt)
 - **Imports**: use path aliases — `library/...` for the submodule, `@/` is not configured; use relative imports or the `library/` alias
-- **CSS**: vanilla-extract only — no inline styles, no CSS modules, no Tailwind
 - **Types**: prefer `zod` or `valibot` for runtime validation; Sanity types are auto-generated into `sanity.types.ts`
 - **No `any`**: oxlint enforces this with type-aware checks
 
