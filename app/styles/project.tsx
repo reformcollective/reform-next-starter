@@ -5,7 +5,7 @@ const style = css`
 	@layer ${foundation} {
 		/* set base project colors */
 		html {
-			background: orange;
+			background: #fdf6ee;
 			color: blue;
 		}
 
