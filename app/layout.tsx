@@ -9,6 +9,10 @@ import { defineQuery, stegaClean } from "next-sanity"
 import SanityLive, { sanityFetch } from "sanity/lib/live"
 import "app/styles/colors.css"
 import { desktopDesignSize, mobileDesignSize } from "app/styles/media"
+import { Preloader } from "app/components/Preloader"
+import { Suspense, lazy } from "react"
+
+const PageTransition = lazy(() => import("app/components/PageTransition"))
 
 const headerQuery = defineQuery(`*[_type == "header"][0]`)
 const footerQuery = defineQuery(`*[_type == "footer"][0]`)
@@ -30,6 +34,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 			<body>
 				<GlobalProviders>
 					<PageRoot className="root-layout">
+						<Preloader />
+						<Suspense>
+							<PageTransition />
+						</Suspense>
 						<SanityLive />
 						{headerData && <Header {...headerData} />}
 						{children}
