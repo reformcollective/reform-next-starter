@@ -8,6 +8,8 @@ export function createPublishWithReadTime(
 		const originalResult = originalPublishAction(props)
 		const { patch } = useDocumentOperation(props.id, props.type)
 
+		if (!originalResult) return null
+
 		return {
 			...originalResult,
 			label: originalResult?.label ?? "Publish",

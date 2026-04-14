@@ -292,6 +292,7 @@ const NotFoundWrapper = styled("div", [
 		gap: 24px;
 		padding: 108px 106px;
 		width: 827px;
+		grid-column: 1 / -1;
 		background: ${colors.blog1Cream100};
 		border-radius: 10px;
 		border: 1px solid ${colors.blog1Cream400};

@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import { defineQuery } from "next-sanity"
 import { Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
+import { DiscoverCTA } from "app/blog-1/components/DiscoverCTA"
 import { BlogHomeClient } from "./BlogHomeClient"
 
 export const dynamic = "force-static"
@@ -31,7 +32,13 @@ const allPostsQuery = defineQuery(`
 const blogHubQuery = defineQuery(`
 	*[_type == "blog1Hub"][0] {
 		title,
-		discoverCTA,
+		discoverCTA {
+			...,
+			"link": link {
+				...,
+				"internalSlug": internalLink->slug.current
+			}
+		},
 		"featuredPost": featuredPost-> {
 			_id,
 			title,
@@ -75,7 +82,7 @@ export default async function BlogHome() {
 					/>
 				</Suspense>
 			</Inner>
-			{/* TODO: Add DiscoverCTA section here if needed — wire up blogHub?.discoverCTA */}
+			{blogHub?.discoverCTA && <DiscoverCTA {...blogHub.discoverCTA} />}
 		</>
 	)
 }

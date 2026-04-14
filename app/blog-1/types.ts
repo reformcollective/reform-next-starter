@@ -1,5 +1,4 @@
 import type { DeepAssetMeta } from "library/sanity/assetMetadata"
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 // Base post shape returned by allPostsQuery / blogHubQuery
 export type RawCard = {
@@ -8,7 +7,7 @@ export type RawCard = {
 	slug: string | null
 	author: string | null
 	articleTextPreview: string | null
-	mainImage: SanityImageSource | null
+	mainImage: unknown
 	categories: (string | null)[] | null
 	publishedAt: string | null
 	readTime: string | null
@@ -18,11 +17,11 @@ export type RawCard = {
 export type RawAuthor = {
 	name: string | null
 	company: string | null
-	image: SanityImageSource | null
+	image: unknown
 }
 
 // Full post shape returned by singlePostQuery
-export type RawPost = RawCard & {
+export type RawPost = Omit<RawCard, "author"> & {
 	author: RawAuthor | null
 	body: unknown[] | null
 	discoverCTA: Record<string, unknown> | null

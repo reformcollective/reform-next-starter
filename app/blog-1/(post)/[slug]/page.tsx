@@ -1,3 +1,4 @@
+import { DiscoverCTA } from "app/blog-1/components/DiscoverCTA"
 import PostContent from "app/blog-1/components/PostContent"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
@@ -49,12 +50,44 @@ const singlePostQuery = defineQuery(`
 			}
 		},
 		articleTextPreview,
-		mainImage,
+		mainImage {
+			...,
+			"data": {
+				"lqip": asset->metadata.lqip,
+				"aspectRatio": asset->metadata.dimensions.aspectRatio
+			}
+		},
 		"categories": categories[]->title,
 		publishedAt,
 		readTime,
-		body,
-		discoverCTA,
+		body[] {
+			...,
+			_type == "image" => {
+				"data": {
+					"lqip": asset->metadata.lqip,
+					"aspectRatio": asset->metadata.dimensions.aspectRatio
+				}
+			},
+			_type == "video" => {
+				"muxVideo": muxVideo {
+					...,
+					"data": asset-> {
+						playbackId,
+						"videoThumbnailUrl": select(
+							defined(thumbTime) => "https://image.mux.com/" + playbackId + "/thumbnail.jpg?time=" + string(thumbTime),
+							"https://image.mux.com/" + playbackId + "/thumbnail.jpg"
+						)
+					}
+				}
+			}
+		},
+		discoverCTA {
+			...,
+			"link": link {
+				...,
+				"internalSlug": internalLink->slug.current
+			}
+		},
 		"relatedPosts": *[_type == "blog1Post" && slug.current != $slug && count((categories[]->title)[@ in ^.categories[]->title]) > 0] | order(publishedAt desc) [0...3] ${postFragment},
 		"recentPosts": *[_type == "blog1Post" && slug.current != $slug] | order(publishedAt desc) [0...3] ${postFragment}
 	}
@@ -123,7 +156,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 					recentPosts={recentPosts as Parameters<typeof PostContent>[0]["recentPosts"]}
 				/>
 			</Inner>
-			{/* TODO: Add DiscoverCTA section here if needed — wire up post.discoverCTA */}
+			{post.discoverCTA && (
+				<DiscoverCTA {...(post.discoverCTA as Parameters<typeof DiscoverCTA>[0])} />
+			)}
 		</Wrapper>
 	)
 }

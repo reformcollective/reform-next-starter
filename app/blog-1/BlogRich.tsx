@@ -23,7 +23,7 @@ export default function BlogRich({
 	return (
 		<Wrapper className={className}>
 			<TypedPortableText
-				value={value}
+				value={value as Parameters<typeof TypedPortableText>[0]["value"]}
 				components={{
 					types: {
 						image: ({ value }) => (
@@ -39,18 +39,22 @@ export default function BlogRich({
 						video: ({ value }) => <StyledVideoEmbed video={value} />,
 					},
 					block: {
-						normal: ({ children }) => <StyledNormal>{children}</StyledNormal>,
-						h1: ({ children }) => <StyledH1>{children}</StyledH1>,
-						h2: ({ children }) => <StyledH2>{children}</StyledH2>,
+						normal: ({ children }: { children: ReactNode }) => (
+							<StyledNormal>{children}</StyledNormal>
+						),
+						h1: ({ children }: { children: ReactNode }) => <StyledH1>{children}</StyledH1>,
+						h2: ({ children }: { children: ReactNode }) => <StyledH2>{children}</StyledH2>,
 						blockquote: ({ children }: { children: ReactNode }) => (
 							<StyledBlockQuote>{children}</StyledBlockQuote>
 						),
 					},
 					list: {
-						bullet: ({ children }) => <StyledUl>{children}</StyledUl>,
+						bullet: ({ children }: { children: ReactNode }) => <StyledUl>{children}</StyledUl>,
 					},
 					marks: {
-						strong: ({ children }) => <StyledStrong>{children}</StyledStrong>,
+						strong: ({ children }: { children: ReactNode }) => (
+							<StyledStrong>{children}</StyledStrong>
+						),
 						link: ({
 							value,
 							children,
