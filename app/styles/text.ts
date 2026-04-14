@@ -83,10 +83,10 @@ export const clampText = (lines: number) => css`
 `
 
 const sampleMetrics = {
-	capHeight: 682,
-	ascent: 1006,
-	descent: -194,
-	lineGap: 286,
+	capHeight: 728,
+	ascent: 968,
+	descent: -242,
+	lineGap: 0,
 	unitsPerEm: 1000,
 }
 
@@ -117,6 +117,231 @@ const textStyles = {
 		fontSizePx: 30,
 		lineHeightPercent: 120,
 		letterSpacingPx: 0,
+	}),
+
+	// ---------------------------------------------------------------------------
+	// Blog Template 1 Text Styles
+	// NOTE: These use geist as a placeholder for both serif and sans roles.
+	// Replace font references (and metrics) when adopting this template with
+	// project fonts. Sizes and weights match the enzo reference design.
+	// ---------------------------------------------------------------------------
+
+	// Headings Serif (placeholder: geist — replace with project serif font)
+	h1Serif: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 154,
+		fontWeight: 400,
+		lineHeightPercent: 100,
+		letterSpacingPx: -7.7,
+	}),
+	h2Serif: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 84,
+		fontWeight: 400,
+		lineHeightPercent: 100,
+		letterSpacingPx: -4.2,
+	}),
+	h3Serif: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 70,
+		fontWeight: 400,
+		lineHeightPercent: 100,
+		letterSpacingPx: -3.5,
+	}),
+	h4Serif: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 50,
+		fontWeight: 400,
+		lineHeightPercent: 100,
+		letterSpacingPx: -2.5,
+	}),
+	h5Serif: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 40,
+		fontWeight: 400,
+		lineHeightPercent: 100,
+		letterSpacingPx: -2,
+	}),
+	h6Serif: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 26,
+		fontWeight: 400,
+		lineHeightPercent: 120,
+		letterSpacingPx: -0.52,
+	}),
+	h7Serif: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 21,
+		fontWeight: 400,
+		lineHeightPercent: 120,
+		letterSpacingPx: 0,
+	}),
+	h8Serif: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 15,
+		fontWeight: 400,
+		lineHeightPercent: 120,
+		letterSpacingPx: 0,
+	}),
+
+	// Headings Sans (placeholder: geist — replace with project sans font)
+	h1Sans: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 154,
+		fontWeight: 600,
+		lineHeightPercent: 100,
+		letterSpacingPx: -7.7,
+	}),
+	h2Sans: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 98,
+		fontWeight: 600,
+		lineHeightPercent: 100,
+		letterSpacingPx: -4.9,
+	}),
+	h3Sans: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 80,
+		fontWeight: 600,
+		lineHeightPercent: 100,
+		letterSpacingPx: -4,
+	}),
+	h4Sans: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 70,
+		fontWeight: 600,
+		lineHeightPercent: 100,
+		letterSpacingPx: -3.5,
+	}),
+	h5Sans: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 50,
+		fontWeight: 600,
+		lineHeightPercent: 100,
+		letterSpacingPx: -2.5,
+	}),
+	h6Sans: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 40,
+		fontWeight: 600,
+		lineHeightPercent: 100,
+		letterSpacingPx: -2,
+	}),
+	h7Sans: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 40,
+		fontWeight: 400,
+		lineHeightPercent: 120,
+		letterSpacingPx: -0.4,
+	}),
+	h8Sans: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 32,
+		fontWeight: 600,
+		lineHeightPercent: 120,
+		letterSpacingPx: -1.6,
+	}),
+
+	// Paragraphs
+	p1: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 18,
+		fontWeight: 500,
+		lineHeightPercent: 150,
+		letterSpacingPx: -0.18,
+	}),
+	p2: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 14,
+		fontWeight: 500,
+		lineHeightPercent: 150,
+		letterSpacingPx: -0.14,
+	}),
+	p3: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 12,
+		fontWeight: 500,
+		lineHeightPercent: 150,
+		letterSpacingPx: -0.12,
+	}),
+	p4: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 11,
+		fontWeight: 500,
+		lineHeightPercent: 150,
+		letterSpacingPx: -0.11,
+	}),
+	p5: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 10,
+		fontWeight: 400,
+		lineHeightPercent: 150,
+		letterSpacingPx: -0.11,
+	}),
+
+	// Kicker Text
+	kicker1: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 18,
+		fontWeight: 600,
+		lineHeightPercent: 120,
+		letterSpacingPx: -0.9,
+	}),
+	kicker2: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 13,
+		fontWeight: 600,
+		lineHeightPercent: 120,
+		letterSpacingPx: -0.65,
+	}),
+
+	// Links
+	link1: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 14,
+		fontWeight: 600,
+		lineHeightPercent: 130,
+		letterSpacingPx: -0.14,
+	}),
+	link2: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 13,
+		fontWeight: 600,
+		lineHeightPercent: 150,
+		letterSpacingPx: -0.13,
+	}),
+	link3: createStyle({
+		fontFamily: geist,
+		fontMetrics: sampleMetrics,
+		fontSizePx: 11,
+		fontWeight: 600,
+		lineHeightPercent: 150,
+		letterSpacingPx: -0.11,
 	}),
 }
 

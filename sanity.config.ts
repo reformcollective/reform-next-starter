@@ -21,10 +21,12 @@ import settings from "sanity/schemas/singletons/settings"
 import { video, youtube } from "library/sanity/reusables"
 import page from "sanity/schemas/sanityPage"
 import { RocketIcon } from "node_modules/@sanity/icons/dist"
-import { authorType } from "sanity/schemas/blog/authorType"
-import { blockContentType } from "sanity/schemas/blog/blockContentType"
-import { categoryType } from "sanity/schemas/blog/categoryType"
-import { postType } from "sanity/schemas/blog/postType"
+import { blog1AuthorType } from "sanity/schemas/blog/blog-1/authorType"
+import { blog1BlockContentType } from "sanity/schemas/blog/blog-1/blockContentType"
+import { blog1CategoryType } from "sanity/schemas/blog/blog-1/categoryType"
+import { blog1PostType } from "sanity/schemas/blog/blog-1/postType"
+import { blog1Hub } from "sanity/schemas/singletons/blog-1"
+import { createPublishWithReadTime } from "sanity/schemas/blog/blog-1/publishWithReadTime"
 import {
 	getLinkableTypes,
 	resolveDocumentLocations,
@@ -37,6 +39,9 @@ import { codeInput } from "@sanity/code-input"
 gsap.ticker.sleep()
 
 const singletons = [settings, header, footer]
+
+// blog-1 document types managed under the Blog 1 Hub group in the structure
+const blog1Types = ["blog1Post", "blog1Author", "blog1Category", "blog1Hub"]
 
 export default defineConfig({
 	/**
@@ -60,16 +65,17 @@ export default defineConfig({
 		types: [
 			// singletons
 			...singletons,
+			blog1Hub,
 
 			// reusables
 			youtube,
 			video,
 
-			// blog
-			authorType,
-			blockContentType,
-			categoryType,
-			postType,
+			// blog-1 template schemas
+			blog1AuthorType,
+			blog1BlockContentType,
+			blog1CategoryType,
+			blog1PostType,
 
 			// project schemas
 			page,
@@ -83,6 +89,16 @@ export default defineConfig({
 	document: {
 		productionUrl: async (_, context) => {
 			return resolveProductionUrl(context.document)
+		},
+		actions: (prev, context) => {
+			if (context.schemaType === "blog1Post") {
+				return prev.map((originalAction) =>
+					originalAction.action === "publish"
+						? createPublishWithReadTime(originalAction)
+						: originalAction,
+				)
+			}
+			return prev
 		},
 	},
 
@@ -115,7 +131,58 @@ export default defineConfig({
 		 * structure tool
 		 * @see https://www.sanity.io/docs/studio/structure-tool
 		 */
-		structureTool({ structure: pageStructure(singletons), title: "All Content" }),
+		structureTool({
+			title: "All Content",
+			structure: (S) => {
+				const singletonItems = singletons.map((typeDef) =>
+					S.listItem()
+						.title(typeDef.title ?? "Untitled")
+						.icon(typeDef.icon)
+						.child(S.editor().id(typeDef.name).schemaType(typeDef.name).documentId(typeDef.name)),
+				)
+
+				const blog1Item = S.listItem()
+					.title("Blog 1")
+					.child(
+						S.list()
+							.title("Blog 1")
+							.items([
+								S.listItem()
+									.title("Hub Settings")
+									.child(S.editor().id("blog1Hub").schemaType("blog1Hub").documentId("blog1Hub")),
+								S.documentTypeListItem("blog1Post").title("Posts"),
+								S.documentTypeListItem("blog1Author").title("Authors"),
+								S.documentTypeListItem("blog1Category").title("Categories"),
+							]),
+					)
+
+				const allHiddenNames = [...singletons.map((s) => s.name), ...blog1Types]
+
+				const nonSingletonItems = S.documentTypeListItems().filter(
+					(listItem) => !allHiddenNames.includes(listItem.getId() ?? ""),
+				)
+				const middleItems = ["media.tag", "assist.instruction.context"]
+					.map((id) => nonSingletonItems.find((item) => item.getId() === id))
+					.filter(Boolean)
+				const hiddenItems = ["mux.videoAsset"].map((id) =>
+					nonSingletonItems.find((item) => item.getId() === id),
+				)
+				const restOfItems = nonSingletonItems.filter(
+					(item) => !middleItems.includes(item) && !hiddenItems.includes(item),
+				)
+
+				return S.list()
+					.title("Content Types")
+					.items([
+						...singletonItems,
+						blog1Item,
+						S.divider(),
+						...middleItems,
+						S.divider(),
+						...restOfItems,
+					])
+			},
+		}),
 
 		/**
 		 * media tool
@@ -149,7 +216,7 @@ export default defineConfig({
 		/**
 		 * our custom singleton plugin
 		 */
-		singletonPlugin(singletons.map((singleton) => singleton.name)),
+		singletonPlugin([...singletons.map((singleton) => singleton.name), "blog1Hub"]),
 		/**
 		 * adds unsplash as an image asset source
 		 */

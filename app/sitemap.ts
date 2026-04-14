@@ -10,7 +10,7 @@ const sitemapPageQuery = defineQuery(`
 `)
 
 const sitemapBlogQuery = defineQuery(`
-  *[_type == "post" && defined(slug.current)]
+  *[_type == "blog1Post" && defined(slug.current)]
   {"slug": slug.current}
 `)
 
