@@ -24,7 +24,7 @@ export const blog1AuthorType = defineType({
 				source: "name",
 			},
 		}),
-		universalImage({ name: "image", title: "Image", cropType: "css" }),
+		universalImage({ name: "image", title: "Image", cropType: "css", withAlt: false }),
 		defineField({
 			name: "bio",
 			type: "array",

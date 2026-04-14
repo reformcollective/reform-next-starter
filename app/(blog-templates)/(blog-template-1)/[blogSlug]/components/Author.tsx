@@ -1,8 +1,8 @@
 import { css, f, styled } from "library/styled/alpha"
 import UniversalImage from "library/UniversalImage"
-import type { RawAuthor } from "../types"
+import type { PostAuthor } from "../types"
 
-export function AuthorLink({ author }: { author: RawAuthor | null | undefined }) {
+export function AuthorLink({ author }: { author: PostAuthor | null | undefined }) {
 	if (!author) return null
 
 	return (
