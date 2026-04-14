@@ -4,19 +4,19 @@ import BlockquoteWithAttribution from "app/(blog-templates)/(blog-template-1)/[b
 import { colors } from "styles/colors.css"
 import textStyles from "styles/text"
 import UniversalLink from "library/link"
-import type { DeepAssetMeta } from "library/sanity/assetMetadata"
 import { TypedPortableText } from "library/sanity/PortableText"
 import { css, f, styled } from "library/styled/alpha"
 import UniversalImage from "library/UniversalImage"
 import { VideoEmbed } from "library/videos/VideoEmbed"
 import type { ReactNode } from "react"
+import type { BlogBodyBlock } from "./types"
 
 export default function BlogRich({
 	className,
 	value,
 }: {
 	className?: string
-	value: DeepAssetMeta<unknown[]>
+	value: BlogBodyBlock[]
 }) {
 	if (!value) return null
 
