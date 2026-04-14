@@ -8,7 +8,7 @@ import { Fieldset } from "@base-ui/react/fieldset"
 import { Radio } from "@base-ui/react/radio"
 import { RadioGroup } from "@base-ui/react/radio-group"
 import { css, f, styled } from "library/styled/alpha"
-import { colors } from "app/styles/colors.css"
+import { colors } from "styles/colors.css"
 
 interface Option {
 	value: string | null

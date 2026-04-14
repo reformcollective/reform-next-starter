@@ -60,7 +60,8 @@ Argument order: `useMedia(fullWidth, desktop, tablet, mobile)`
 - `"use client"` required for any file using GSAP, refs, or event listeners
 - `.inline.svg` files are imported as React components via SVGR
 - Raster images use `StaticImage` from `"library/StaticImage"`
-- Image imports use `images/` path alias (e.g. `from "images/home/hero.png"`)
+- The `images/` alias (`app/images/`) is for global assets only — brand marks, icons, SVGs used across multiple components
+- Component-specific images live next to the component: convert `Hero.tsx` to `Hero/index.tsx` and place images alongside it (or in `Hero/images/` if there are many). Import them with relative paths.
 
 ## Library
 
@@ -86,39 +87,21 @@ Do exactly what is asked. No extra refactors, comments, or features. Implement d
 - Prefer attempting a solution and iterating based on real results over pre-emptive "but what if..." hedging. Try it, then adjust.
 - Before using any existing component, grep for real call sites in the codebase and read one — don't rely solely on the component definition. The definition shows what props exist; actual usage shows the correct calling convention.
 
-## Sanity Image Queries
-
-Any image field in a GROQ query that will be rendered with `SanityImage` / `UniversalImage` must include an inline `data` projection for LQIP and aspect ratio. `enrichAssets` defaults to `false` — do not rely on post-query enrichment.
-
-```groq
-mainImage {
-  ...,
-  "data": {
-    "lqip": asset->metadata.lqip,
-    "aspectRatio": asset->metadata.dimensions.aspectRatio
-  }
-}
-```
-
-This applies to every image field in every query — `mainImage`, `image`, `photo`, etc. — wherever the result is passed to `SanityImage` / `UniversalImage`.
-
-If inline projection is not feasible for a specific call-site, you can opt into legacy post-query enrichment as a temporary measure by passing `enrichAssets: true` to `sanityFetch`. This is deprecated and should not be used for new code.
-
-```ts
-const { data } = await sanityFetch({ query, enrichAssets: true })
-```
-
 ## Blog Templates
 
-This starter contains multiple blog template presets housed in `app/blog-1/`, `app/blog-2/`, etc. and matching Sanity schemas in `sanity/schemas/blog/blog-1/`, etc.
+This starter contains multiple blog template presets housed in `app/(blog-templates)/(blog-template-1)/[blogSlug]/`, etc. and matching Sanity schemas in `sanity/schemas/blog/blog-1/`, etc.
+
+The public URL for each blog is driven by the hub singleton slug in Sanity — no route folder renaming is needed.
 
 Full adoption instructions are in `sanity/schemas/blog/blog-1/README.md`.
 
 **To adopt a template for a project:**
 
-1. Pick the desired template (e.g. `blog-1`)
-2. Rename the route folder from `blog-1` to `blog`
-3. Rename Sanity type names from `blog1Post` → `post`, `blog1Author` → `author`, `blog1Category` → `category`, `blog1Hub` → `blogHub`
-4. Delete the unused template folders (`blog-2/`, `blog-3/`, etc.)
-5. Replace `blog1Colors` placeholder colors in `colors.css.ts` with project brand colors
-6. Replace placeholder font references in `text.ts` with project fonts
+1. Set the hub slug in Sanity Studio — this controls the public URL
+2. Replace `blog1*` placeholder colors in `app/styles/colors.css.ts` with project brand colors
+3. Update the grid values in `app/(blog-templates)/(blog-template-1)/[blogSlug]/layout.tsx` to match the design
+4. Delete unused template folders under `app/(blog-templates)/` and `sanity/schemas/blog/`
+
+## Conventions
+
+@CONVENTIONS.md

@@ -1,5 +1,5 @@
 import { DocumentTextIcon } from "@sanity/icons"
-import { universalImage, universalLink } from "library/sanity/reusables"
+import { universalImage } from "library/sanity/reusables"
 import { defineArrayMember, defineField, defineType } from "sanity"
 import { ReadTimeInput } from "./ReadTimeInput"
 

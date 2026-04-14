@@ -1,8 +1,8 @@
 "use client"
 
-import { colors } from "app/styles/colors.css"
-import textStyles from "app/styles/text"
-import SearchIcon from "images/icons/search.inline.svg"
+import { colors } from "styles/colors.css"
+import textStyles from "styles/text"
+import SearchIcon from "./search.inline.svg"
 import { css, f, styled } from "library/styled/alpha"
 import { useDebounce } from "ahooks"
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs"

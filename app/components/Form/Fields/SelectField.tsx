@@ -6,7 +6,7 @@ import type { FieldRoot } from "@base-ui/react/field"
 import type { Form } from "@base-ui/react/form"
 import { Select } from "@base-ui/react/select"
 import { css, f, styled } from "library/styled/alpha"
-import { colors } from "app/styles/colors.css"
+import { colors } from "styles/colors.css"
 
 interface Option {
 	value: string | null

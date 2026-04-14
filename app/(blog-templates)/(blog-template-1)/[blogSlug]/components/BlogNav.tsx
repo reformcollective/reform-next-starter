@@ -1,10 +1,10 @@
 "use client"
 
-import { colors } from "app/styles/colors.css"
-import textStyles from "app/styles/text"
+import { colors } from "styles/colors.css"
+import textStyles from "styles/text"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled/alpha"
-import CaretSVG from "images/icons/caret.inline.svg"
+import CaretSVG from "../icons/caret.inline.svg"
 import type { Post } from "../types"
 import Kicker from "./Kicker"
 import { useHeaderTheme } from "./HeaderTheme"

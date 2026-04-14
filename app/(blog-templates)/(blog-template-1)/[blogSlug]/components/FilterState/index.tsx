@@ -1,12 +1,12 @@
 "use client"
 
 import type { ReactNode } from "react"
-import { colors } from "app/styles/colors.css"
-import textStyles from "app/styles/text"
+import { colors } from "styles/colors.css"
+import textStyles from "styles/text"
 import { css, f, styled } from "library/styled/alpha"
-import CaretSVG from "images/icons/caret.inline.svg"
-import ClearFilterSVG from "images/icons/clear-filter.inline.svg"
-import { useBlogCategory, useBlogQuery, useBlogShowAll } from "./SearchBar"
+import CaretSVG from "../../icons/caret.inline.svg"
+import ClearFilterSVG from "./clear-filter.inline.svg"
+import { useBlogCategory, useBlogQuery, useBlogShowAll } from "../SearchBar"
 
 export function FilterState() {
 	const [query, setQuery] = useBlogQuery()

@@ -1,14 +1,14 @@
 import BlogRich from "app/(blog-templates)/(blog-template-1)/[blogSlug]/BlogRich"
-import { colors } from "app/styles/colors.css"
-import textStyles from "app/styles/text"
+import { colors } from "styles/colors.css"
+import textStyles from "styles/text"
 import UniversalImage from "library/UniversalImage"
 import { css, f, styled } from "library/styled/alpha"
-import TimeSVG from "images/icons/time.inline.svg"
-import CalendarSVG from "images/icons/date.inline.svg"
-import RelatedPosts from "./RelatedPosts"
-import BlogNav from "./BlogNav"
-import getReadTime from "app/utils/getReadTime"
-import type { Post, RecentPosts } from "../types"
+import TimeSVG from "./time.inline.svg"
+import CalendarSVG from "./date.inline.svg"
+import RelatedPosts from "../RelatedPosts"
+import BlogNav from "../BlogNav"
+import getReadTime from "utils/getReadTime"
+import type { Post, RecentPosts } from "../../types"
 
 export default function PostContent({
 	post,

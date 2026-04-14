@@ -1,8 +1,8 @@
 "use client"
 
 import BlockquoteWithAttribution from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/BlockquoteWithAttribution"
-import { colors } from "app/styles/colors.css"
-import textStyles from "app/styles/text"
+import { colors } from "styles/colors.css"
+import textStyles from "styles/text"
 import UniversalLink from "library/link"
 import type { DeepAssetMeta } from "library/sanity/assetMetadata"
 import { TypedPortableText } from "library/sanity/PortableText"

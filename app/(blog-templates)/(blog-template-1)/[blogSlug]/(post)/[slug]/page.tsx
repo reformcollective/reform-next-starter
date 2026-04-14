@@ -1,5 +1,5 @@
 import PostContent from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/PostContent"
-import { colors } from "app/styles/colors.css"
+import { colors } from "styles/colors.css"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { css, f, styled } from "library/styled/alpha"
 import { siteURL } from "library/siteURL"

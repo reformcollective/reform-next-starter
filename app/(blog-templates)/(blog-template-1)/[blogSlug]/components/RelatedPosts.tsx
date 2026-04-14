@@ -1,5 +1,5 @@
-import { colors } from "app/styles/colors.css"
-import textStyles from "app/styles/text"
+import { colors } from "styles/colors.css"
+import textStyles from "styles/text"
 import { css, f, styled } from "library/styled/alpha"
 import Kicker from "./Kicker"
 import { PostList } from "./PostList"

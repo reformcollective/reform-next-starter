@@ -6,7 +6,7 @@ import { Field } from "@base-ui/react/field"
 import type { FieldRoot } from "@base-ui/react/field"
 import type { Form } from "@base-ui/react/form"
 import { css, f, styled } from "library/styled/alpha"
-import { colors } from "app/styles/colors.css"
+import { colors } from "styles/colors.css"
 
 interface ComboboxFieldCommonProps {
 	/** Identifies the field when a form is submitted. */

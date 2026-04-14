@@ -1,6 +1,6 @@
-import Footer from "app/components/Footer"
-import Header from "app/components/Header"
-import GlobalProviders from "app/components/Providers"
+import Footer from "components/Footer"
+import Header from "components/Header"
+import GlobalProviders from "components/Providers"
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
 import { siteURL } from "library/siteURL"
 import { css, f, styled } from "library/styled/alpha"
@@ -8,7 +8,7 @@ import type { Metadata } from "next"
 import { defineQuery, stegaClean } from "next-sanity"
 import SanityLive, { sanityFetch } from "sanity/lib/live"
 import "app/styles/colors.css"
-import { desktopDesignSize, mobileDesignSize } from "app/styles/media"
+import { desktopDesignSize, mobileDesignSize } from "styles/media"
 
 const headerQuery = defineQuery(`*[_type == "header"][0]`)
 const footerQuery = defineQuery(`*[_type == "footer"][0]`)

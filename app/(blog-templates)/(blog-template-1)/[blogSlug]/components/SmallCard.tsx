@@ -1,5 +1,5 @@
-import { colors } from "app/styles/colors.css"
-import textStyles, { clampText } from "app/styles/text"
+import { colors } from "styles/colors.css"
+import textStyles, { clampText } from "styles/text"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled/alpha"
 import UniversalImage from "library/UniversalImage"
