@@ -12,6 +12,9 @@ export default function Footer({ footerText }: NonNullable<FooterQueryResult>) {
 				<UniversalLink href="/" style={{ textDecoration: "underline" }}>
 					Go to Home
 				</UniversalLink>
+				<UniversalLink href="/visual-tests" style={{ textDecoration: "underline" }}>
+					Go to Visual Tests
+				</UniversalLink>
 			</Content>
 		</Wrapper>
 	)
