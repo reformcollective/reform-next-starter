@@ -1,5 +1,6 @@
-import { defineType, defineArrayMember, defineField } from "sanity"
 import { ImageIcon } from "@sanity/icons"
+import { universalImage } from "library/sanity/reusables"
+import { defineType, defineArrayMember, defineField } from "sanity"
 import type { ReactNode } from "react"
 
 // h6Sans: 40px, weight 600, letter-spacing -5%
@@ -113,16 +114,8 @@ export const blog1BlockContentType = defineType({
 			},
 		}),
 		defineArrayMember({
-			type: "image",
+			...universalImage({ name: "image", title: "Image", cropType: "uncropped" }),
 			icon: ImageIcon,
-			options: { hotspot: true },
-			fields: [
-				{
-					name: "alt",
-					type: "string",
-					title: "Alternative Text",
-				},
-			],
 		}),
 		defineArrayMember({
 			type: "video",

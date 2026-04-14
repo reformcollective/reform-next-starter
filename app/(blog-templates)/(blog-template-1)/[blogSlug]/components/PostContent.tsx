@@ -1,4 +1,4 @@
-import BlogRich from "app/blog-1/BlogRich"
+import BlogRich from "app/(blog-templates)/(blog-template-1)/[blogSlug]/BlogRich"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import UniversalImage from "library/UniversalImage"
@@ -103,10 +103,9 @@ export default function PostContent({
 const Wrapper = styled("div", [
 	f.responsive(css`
 		position: relative;
-		width: 1420px;
+		grid-column: main;
 		display: flex;
 		flex-direction: column;
-		margin-bottom: 0;
 		background: ${colors.blog1Cream200};
 		border-radius: 16px;
 		margin-top: 106px;
@@ -114,7 +113,6 @@ const Wrapper = styled("div", [
 	f.small(css`
 		grid-column: fullbleed;
 		width: 100%;
-		margin: 0 auto;
 	`),
 ])
 

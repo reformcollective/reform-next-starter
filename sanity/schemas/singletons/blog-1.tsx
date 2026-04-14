@@ -1,41 +1,5 @@
-import { universalLink } from "library/sanity/reusables"
+import { universalImage } from "library/sanity/reusables"
 import { defineField, defineType } from "sanity"
-
-const discoverCTAFields = [
-	defineField({
-		type: "string",
-		name: "title",
-		title: "Section Title",
-		description: "The large header text for the CTA section.",
-		initialValue: "Discover What's Possible",
-		validation: (Rule) => Rule.required(),
-	}),
-	defineField({
-		type: "string",
-		name: "text",
-		title: "Section Text",
-		description: "The smaller supporting text for the CTA section.",
-		validation: (Rule) => Rule.required(),
-	}),
-	defineField({
-		type: "string",
-		name: "colorScheme",
-		title: "Color Scheme",
-		options: {
-			list: [
-				{ title: "Light", value: "light" },
-				{ title: "Dark", value: "dark" },
-			],
-			layout: "radio",
-		},
-		initialValue: "light",
-		validation: (Rule) => Rule.required(),
-	}),
-	{
-		...universalLink({ title: "Link", name: "link", defaultType: "internal" }),
-		initialValue: { type: "internal", toNewTab: false, text: "Learn More" },
-	},
-]
 
 export const blog1Hub = defineType({
 	name: "blog1Hub",
@@ -72,10 +36,25 @@ export const blog1Hub = defineType({
 			},
 		}),
 		defineField({
-			name: "discoverCTA",
-			title: "Discover CTA",
-			type: "object",
-			fields: [...discoverCTAFields],
+			name: "description",
+			title: "Page Description",
+			type: "string",
+			description:
+				"Leave blank to reuse the default, defined in Settings. This will be used when shared on socials, and by some search engines.",
+		}),
+		universalImage({
+			name: "ogImage",
+			title: "Open Graph Image",
+			description:
+				"Leave blank to reuse the default, defined in Settings. Displayed on social cards and search engine results.",
+			cropType: "sanity",
+			withAlt: false,
+		}),
+		defineField({
+			name: "noIndex",
+			type: "boolean",
+			title: "Hide from Search Engines",
+			description: "Enable this to hide the page from search engines like Google.",
 		}),
 	],
 	preview: {

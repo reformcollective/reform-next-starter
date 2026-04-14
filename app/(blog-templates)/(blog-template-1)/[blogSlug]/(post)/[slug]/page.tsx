@@ -1,15 +1,15 @@
-import { DiscoverCTA } from "app/blog-1/components/DiscoverCTA"
-import PostContent from "app/blog-1/components/PostContent"
+import PostContent from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/PostContent"
 import { colors } from "app/styles/colors.css"
-import textStyles from "app/styles/text"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { css, f, styled } from "library/styled/alpha"
+import { siteURL } from "library/siteURL"
 import type { Metadata, ResolvingMetadata } from "next"
 import { notFound } from "next/navigation"
 import { defineQuery } from "next-sanity"
 import { sanityFetch } from "sanity/lib/live"
 
 export const dynamic = "force-static"
+export const dynamicParams = false
 
 const postSlugsQuery = defineQuery(`
 	*[_type == "blog1Post" && defined(slug.current)]{"slug": slug.current}
@@ -83,6 +83,13 @@ const singlePostQuery = defineQuery(`
 		},
 		discoverCTA {
 			...,
+			"icon": icon {
+				...,
+				"data": {
+					"lqip": asset->metadata.lqip,
+					"aspectRatio": asset->metadata.dimensions.aspectRatio
+				}
+			},
 			"link": link {
 				...,
 				"internalSlug": internalLink->slug.current
@@ -103,13 +110,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-	{ params }: { params: Promise<{ slug: string }> },
+	{ params }: { params: Promise<{ blogSlug: string; slug: string }> },
 	parent: ResolvingMetadata,
 ): Promise<Metadata> {
-	const { data: post } = await sanityFetch({
-		query: singlePostQuery,
-		params,
-	})
+	const { blogSlug, slug } = await params
+	const { data: post } = await sanityFetch({ query: singlePostQuery, params: { slug } })
 
 	const title = post?.title || (await parent).title
 	const description = post?.articleTextPreview || (await parent).description
@@ -129,11 +134,19 @@ export async function generateMetadata(
 		openGraph: {
 			images: opengraph,
 		},
+		alternates: {
+			canonical: `${siteURL}/${blogSlug}/${slug}`,
+		},
+		metadataBase: new URL(siteURL),
 	}
 }
 
-export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
-	const slug = (await params).slug
+export default async function PostPage({
+	params,
+}: {
+	params: Promise<{ blogSlug: string; slug: string }>
+}) {
+	const { slug } = await params
 
 	const { data: post } = await sanityFetch({
 		query: singlePostQuery,
@@ -150,12 +163,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
 	return (
 		<Wrapper>
-			<Inner>
-				<PostContent
-					post={post as Parameters<typeof PostContent>[0]["post"]}
-					recentPosts={recentPosts as Parameters<typeof PostContent>[0]["recentPosts"]}
-				/>
-			</Inner>
+			<PostContent
+				post={post as Parameters<typeof PostContent>[0]["post"]}
+				recentPosts={recentPosts as Parameters<typeof PostContent>[0]["recentPosts"]}
+			/>
 			{post.discoverCTA && (
 				<DiscoverCTA {...(post.discoverCTA as Parameters<typeof DiscoverCTA>[0])} />
 			)}
@@ -167,26 +178,7 @@ const Wrapper = styled("div", [
 	f.responsive(css`
 		grid-column: fullbleed;
 		display: grid;
-		place-content: center;
-		background: ${colors.blog1Evergreen700};
-	`),
-	f.small(css`
-		position: relative;
 		grid-template-columns: subgrid;
-	`),
-])
-
-const Inner = styled("div", [
-	f.responsive(css`
-		grid-column: fullbleed;
-		display: grid;
-		place-content: center;
 		background: ${colors.blog1Evergreen700};
-		${textStyles.p1};
-	`),
-	f.small(css`
-		position: relative;
-		grid-template-columns: subgrid;
-		padding: 0 8px;
 	`),
 ])

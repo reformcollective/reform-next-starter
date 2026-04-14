@@ -1,6 +1,6 @@
 "use client"
 
-import BlockquoteWithAttribution from "app/blog-1/components/BlockquoteWithAttribution"
+import BlockquoteWithAttribution from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/BlockquoteWithAttribution"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import UniversalLink from "library/link"

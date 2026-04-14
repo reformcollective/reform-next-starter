@@ -24,7 +24,6 @@ export type RawAuthor = {
 export type RawPost = Omit<RawCard, "author"> & {
 	author: RawAuthor | null
 	body: unknown[] | null
-	discoverCTA: Record<string, unknown> | null
 	relatedPosts: RawCard[]
 	recentPosts: RawCard[]
 }

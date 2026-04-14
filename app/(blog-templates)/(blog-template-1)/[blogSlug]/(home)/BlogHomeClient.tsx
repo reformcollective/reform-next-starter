@@ -1,16 +1,16 @@
 "use client"
 
-import LargeCard from "app/blog-1/components/LargeCard"
-import { Categories } from "app/blog-1/components/Categories"
-import { FilterState } from "app/blog-1/components/FilterState"
+import LargeCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/LargeCard"
+import { Categories } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/Categories"
+import { FilterState } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/FilterState"
 import {
 	useBlogCategory,
 	useBlogQuery,
 	useBlogShowAll,
 	SearchBar,
-} from "app/blog-1/components/SearchBar"
-import SmallCard from "app/blog-1/components/SmallCard"
-import { useHeaderTheme } from "app/blog-1/components/HeaderTheme"
+} from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/SearchBar"
+import SmallCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/SmallCard"
+import { useHeaderTheme } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/HeaderTheme"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled/alpha"
