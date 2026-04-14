@@ -27,14 +27,15 @@ sanity/schemas/blog/blog-1/  →  sanity/schemas/blog/blog/
 
 In every file inside the schema folder, rename the type prefixes:
 
-| Old | New (example) |
-|-----|---------------|
-| `blog1Post` | `post` (or `blogPost`, `resourcesPost`, etc.) |
-| `blog1Author` | `author` |
-| `blog1Category` | `category` |
-| `blog1Hub` | `blogHub` |
+| Old             | New (example)                                 |
+| --------------- | --------------------------------------------- |
+| `blog1Post`     | `post` (or `blogPost`, `resourcesPost`, etc.) |
+| `blog1Author`   | `author`                                      |
+| `blog1Category` | `category`                                    |
+| `blog1Hub`      | `blogHub`                                     |
 
 Files to update:
+
 - `postType.tsx` — `name: "blog1Post"` and any `to: [{ type: "blog1Post" }]` references
 - `authorType.tsx` — `name: "blog1Author"`
 - `categoryType.tsx` — `name: "blog1Category"`
@@ -53,6 +54,7 @@ Files to update:
 ### 6. Update the sitemap
 
 In `app/sitemap.ts`, update the GROQ query:
+
 ```ts
 *[_type == "blog1Post" ...]  →  *[_type == "post" ...]
 ```

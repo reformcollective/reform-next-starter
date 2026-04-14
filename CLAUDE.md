@@ -115,6 +115,7 @@ This starter contains multiple blog template presets housed in `app/blog-1/`, `a
 Full adoption instructions are in `sanity/schemas/blog/blog-1/README.md`.
 
 **To adopt a template for a project:**
+
 1. Pick the desired template (e.g. `blog-1`)
 2. Rename the route folder from `blog-1` to `blog`
 3. Rename Sanity type names from `blog1Post` → `post`, `blog1Author` → `author`, `blog1Category` → `category`, `blog1Hub` → `blogHub`
