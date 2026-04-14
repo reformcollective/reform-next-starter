@@ -5,7 +5,7 @@ import { css, f, styled } from "library/styled/alpha"
 import UniversalImage from "library/UniversalImage"
 import type { Card, RecentPost } from "../types"
 
-export default function SmallCard({ data }: { data: Card | RecentPost }) {
+export default function SmallCard({ data }: { data: Card }) {
 	const { slug, mainImage, title, publishedAt } = data
 
 	const formattedDate = publishedAt
