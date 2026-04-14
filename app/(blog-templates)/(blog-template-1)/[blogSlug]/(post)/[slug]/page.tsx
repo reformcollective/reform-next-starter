@@ -81,20 +81,6 @@ const singlePostQuery = defineQuery(`
 				}
 			}
 		},
-		discoverCTA {
-			...,
-			"icon": icon {
-				...,
-				"data": {
-					"lqip": asset->metadata.lqip,
-					"aspectRatio": asset->metadata.dimensions.aspectRatio
-				}
-			},
-			"link": link {
-				...,
-				"internalSlug": internalLink->slug.current
-			}
-		},
 		"relatedPosts": *[_type == "blog1Post" && slug.current != $slug && count((categories[]->title)[@ in ^.categories[]->title]) > 0] | order(publishedAt desc) [0...3] ${postFragment},
 		"recentPosts": *[_type == "blog1Post" && slug.current != $slug] | order(publishedAt desc) [0...3] ${postFragment}
 	}
@@ -167,9 +153,6 @@ export default async function PostPage({
 				post={post as Parameters<typeof PostContent>[0]["post"]}
 				recentPosts={recentPosts as Parameters<typeof PostContent>[0]["recentPosts"]}
 			/>
-			{post.discoverCTA && (
-				<DiscoverCTA {...(post.discoverCTA as Parameters<typeof DiscoverCTA>[0])} />
-			)}
 		</Wrapper>
 	)
 }

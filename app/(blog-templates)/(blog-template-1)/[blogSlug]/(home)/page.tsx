@@ -136,7 +136,6 @@ export default async function BlogHome() {
 					/>
 				</Suspense>
 			</Inner>
-			{blogHub?.discoverCTA && <DiscoverCTA {...blogHub.discoverCTA} />}
 		</>
 	)
 }
