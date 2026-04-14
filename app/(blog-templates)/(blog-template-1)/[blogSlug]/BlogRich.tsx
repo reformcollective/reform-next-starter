@@ -22,8 +22,8 @@ export default function BlogRich({
 
 	return (
 		<Wrapper className={className}>
-			<TypedPortableText
-				value={value as Parameters<typeof TypedPortableText>[0]["value"]}
+			<TypedPortableText<BlogBodyBlock[]>
+				value={value}
 				components={{
 					types: {
 						image: ({ value }) => (
