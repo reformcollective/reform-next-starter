@@ -7,7 +7,7 @@ export function AuthorLink({ author }: { author: PostAuthor | null | undefined }
 
 	return (
 		<div>
-			<AuthorImage width={200} height={200} src={author.image} />
+			<AuthorImage width={200} height={200} src={author.image} alt={author.name ?? ""} />
 			<div>{author.name}</div>
 		</div>
 	)
