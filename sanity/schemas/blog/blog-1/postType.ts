@@ -54,6 +54,7 @@ export const blog1PostType = defineType({
 			name: "readTime",
 			title: "Read Time",
 			type: "string",
+			readOnly: true,
 			components: { input: ReadTimeInput },
 		}),
 	],
