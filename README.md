@@ -16,7 +16,7 @@ Remove each item from the list as you complete it.
 1. Configure branch rules on github (you should export and import the starter's rule set)
 1. In repository settings, enable "Always suggest updating pull request branches", "Allow auto-merge", and "Automatically delete head branches"
 1. Set up a Vercel build and link to sanity if available/part of project
-1. Add .env variables (if any) to Vercel, Notion, and Github (beware fancy quotes) (see sanity setup)
+1. Add .env variables (if any) to Vercel, Notion, and Github (beware fancy quotes) (see sanity setup).
 
 ## Design Setup
 
