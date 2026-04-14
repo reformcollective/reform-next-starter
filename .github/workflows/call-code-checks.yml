@@ -3,7 +3,7 @@ on: pull_request
 jobs:
   library:
     # this hash is updated automatically, so if you're resolving a merge conflict, either hash is fine
-    uses: reformcollective/library/.github/workflows/code-checks.yml@f9428f170cfc481a177ab12145178338f229baa2
+    uses: reformcollective/library/.github/workflows/code-checks.yml@e2f272e34102efe11930db79cf4af0d901f44515
     secrets:
       SECRETS_JSON: ${{ toJSON(secrets) }}
     with:
