@@ -38,7 +38,7 @@ import { codeInput } from "@sanity/code-input"
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
 
-const singletons = [settings, header, footer]
+const singletons = [settings, header, footer, blog1Hub]
 
 export default defineConfig({
 	/**
