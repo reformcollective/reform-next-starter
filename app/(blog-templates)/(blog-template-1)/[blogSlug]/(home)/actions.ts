@@ -1,7 +1,6 @@
 "use server"
 
-import { defineQuery, type QueryParams } from "next-sanity"
-import { client } from "sanity/lib/client"
+import { defineQuery } from "next-sanity"
 import { sanityFetch } from "sanity/lib/live"
 
 const allPostsServerQuery = defineQuery(`
@@ -59,9 +58,10 @@ export async function searchPosts(query: string): Promise<PostList> {
 		.split(/\s+/)
 		.map((term) => `${term}*`)
 		.join(" ")
-	// cast required: groq-js cannot infer params from match expressions
-	const data = await client.fetch<PostList>(searchedPostsQuery, {
-		query: wildcardQuery,
-	} as unknown as QueryParams)
-	return data ?? []
+	// cast required: groq-js cannot infer $param from match expressions
+	const { data } = await sanityFetch({
+		query: searchedPostsQuery as unknown as typeof allPostsServerQuery,
+		params: { query: wildcardQuery },
+	})
+	return (data as PostList) ?? []
 }
