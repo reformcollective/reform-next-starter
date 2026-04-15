@@ -38,7 +38,8 @@ import { codeInput } from "@sanity/code-input"
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
 
-const singletons = [settings, header, footer, blog1Hub]
+const singletons = [settings, header, footer]
+const allSingletons = [...singletons, blog1Hub]
 
 export default defineConfig({
 	/**
@@ -61,14 +62,13 @@ export default defineConfig({
 	schema: {
 		types: [
 			// singletons
-			...singletons,
+			...allSingletons,
 
 			// reusables
 			youtube,
 			video,
 
 			// blog-1 template schemas
-			blog1Hub,
 			blog1AuthorType,
 			blog1BlockContentType,
 			blog1CategoryType,
@@ -209,7 +209,7 @@ export default defineConfig({
 		/**
 		 * our custom singleton plugin
 		 */
-		singletonPlugin(singletons.map((singleton) => singleton.name)),
+		singletonPlugin(allSingletons.map((singleton) => singleton.name)),
 		/**
 		 * adds unsplash as an image asset source
 		 */
