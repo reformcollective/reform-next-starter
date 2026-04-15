@@ -25,7 +25,7 @@ const allPostsServerQuery = defineQuery(`
 // groq-js does not infer $param from `match` expressions, so defineQuery cannot
 // be used here. The query and return type are correct at runtime.
 const searchedPostsQuery = `
-	*[_type == "blog1Post" && [title, pt::text(body)] match $query] | order(publishedAt desc) {
+	*[_type == "blog1Post" && [title, pt::text(body)] match $searchQuery] | order(publishedAt desc) {
 		_id,
 		title,
 		"slug": slug.current,
@@ -61,7 +61,7 @@ export async function searchPosts(query: string): Promise<PostList> {
 	// groq-js cannot infer params from match expressions — plain string query, params typed freely
 	const { data } = await sanityFetch({
 		query: searchedPostsQuery,
-		params: { query: wildcardQuery },
+		params: { searchQuery: wildcardQuery },
 	})
 	return (data ?? []) as PostList
 }

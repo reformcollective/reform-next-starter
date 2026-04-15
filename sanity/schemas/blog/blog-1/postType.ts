@@ -34,7 +34,7 @@ export const blog1PostType = defineType({
 			validation: (Rule) => Rule.required(),
 		}),
 		{
-			...universalImage({ name: "mainImage", title: "Main Image", cropType: "css" }),
+			...universalImage({ name: "mainImage", title: "Main Image" }),
 		},
 		defineField({
 			name: "categories",

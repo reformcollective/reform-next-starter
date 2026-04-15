@@ -114,7 +114,7 @@ export const blog1BlockContentType = defineType({
 			},
 		}),
 		defineArrayMember({
-			...universalImage({ name: "image", title: "Image", cropType: "uncropped" }),
+			...universalImage({ name: "image", title: "Image" }),
 			icon: ImageIcon,
 		}),
 		defineArrayMember({

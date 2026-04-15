@@ -91,7 +91,6 @@ export const pageMetadata = [
 		title: "Open Graph Image",
 		description:
 			"Leave blank to reuse the default, defined in Settings. Displayed on social cards and search engine results.",
-		cropType: "sanity",
 		withAlt: false,
 	}),
 	defineField({
