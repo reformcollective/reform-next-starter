@@ -18,6 +18,7 @@ import { apiVersion, dataset, projectId, studioUrl } from "sanity/lib/api"
 import footer from "sanity/schemas/singletons/footer"
 import header from "sanity/schemas/singletons/header"
 import settings from "sanity/schemas/singletons/settings"
+
 import { video, youtube } from "library/sanity/reusables"
 import page from "sanity/schemas/sanityPage"
 import { RocketIcon } from "node_modules/@sanity/icons/dist"
@@ -37,10 +38,7 @@ import { codeInput } from "@sanity/code-input"
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
 
-const singletons = [settings, header, footer, blog1Types]
-
-// blog-1 document types managed under the Blog 1 Hub group in the structure
-const blog1Types = ["blog1Post", "blog1Author", "blog1Category", "blog1Hub"]
+const singletons = [settings, header, footer, blog1Hub]
 
 export default defineConfig({
 	/**
@@ -64,7 +62,6 @@ export default defineConfig({
 		types: [
 			// singletons
 			...singletons,
-			blog1Hub,
 
 			// reusables
 			youtube,
