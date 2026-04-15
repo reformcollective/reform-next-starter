@@ -5,7 +5,7 @@ import type { FieldRoot } from "@base-ui/react/field"
 import { css, f, styled } from "library/styled/alpha"
 import { Form } from "@base-ui/react/form"
 import { Button } from "@base-ui/react/button"
-import { colors } from "styles/colors.css"
+import { colors } from "app/styles/colors.css"
 import ClientOnly from "library/ClientOnly"
 import {
 	CheckboxField,
@@ -18,7 +18,7 @@ import {
 	SliderField,
 	SwitchField,
 	TextAreaField,
-} from "components/Form/Fields"
+} from "app/components/Form/Fields"
 
 const COUNTRIES_TO_VISIT = [
 	"Argentina",

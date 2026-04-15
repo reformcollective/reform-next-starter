@@ -1,8 +1,8 @@
 "use client"
 
 import type { ReactNode } from "react"
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled/alpha"
 import CaretSVG from "../../icons/caret.inline.svg"
 import ClearFilterSVG from "./clear-filter.inline.svg"
@@ -104,8 +104,8 @@ const BreadCrumb = styled("div", [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
-		color: ${colors.blog1Evergreen700};
-		${textStyles.p2};
+		color: ${colors.blog1.primary700};
+		${textStyles.blog1.p2};
 	`),
 	f.small(css`
 		align-items: flex-start;
@@ -122,7 +122,7 @@ const CategoryStack = styled("span", [
 
 const AllCategories = styled("button", [
 	f.responsive(css`
-		color: ${colors.blog1Evergreen700};
+		color: ${colors.blog1.primary700};
 		opacity: 0.5;
 		cursor: pointer;
 		transition:
@@ -130,12 +130,12 @@ const AllCategories = styled("button", [
 			opacity 0.3s ease;
 
 		&:hover {
-			color: ${colors.blog1Evergreen300};
+			color: ${colors.blog1.primary300};
 			opacity: 1;
 		}
 
 		&:active {
-			color: ${colors.blog1Evergreen400};
+			color: ${colors.blog1.primary400};
 			opacity: 1;
 		}
 	`),
@@ -158,34 +158,34 @@ const Caret = styled(CaretSVG, [
 
 const ActiveLabel = styled("span", [
 	f.responsive(css`
-		${textStyles.p2};
-		color: ${colors.blog1Cream500};
+		${textStyles.blog1.p2};
+		color: ${colors.blog1.secondary500};
 	`),
 ])
 
 const Highlight = styled("span", [
 	f.responsive(css`
-		color: ${colors.blog1Evergreen800};
+		color: ${colors.blog1.primary800};
 	`),
 ])
 
 const ClearButton = styled("button", [
 	f.responsive(css`
-		${textStyles.p2};
+		${textStyles.blog1.p2};
 		display: flex;
 		align-items: center;
 		gap: 8px;
-		color: ${colors.blog1Evergreen700};
+		color: ${colors.blog1.primary700};
 		flex-shrink: 0;
 		cursor: pointer;
 		transition: color 0.15s ease;
 
 		&:active {
-			color: ${colors.blog1Evergreen300};
+			color: ${colors.blog1.primary300};
 
 			svg path:first-child {
-				fill: ${colors.blog1Evergreen300};
-				stroke: ${colors.blog1Evergreen300};
+				fill: ${colors.blog1.primary300};
+				stroke: ${colors.blog1.primary300};
 			}
 
 			svg path:not(:first-child) {

@@ -1,13 +1,13 @@
 import BlogRich from "app/(blog-templates)/(blog-template-1)/[blogSlug]/BlogRich"
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import UniversalImage from "library/UniversalImage"
 import { css, f, styled } from "library/styled/alpha"
 import TimeSVG from "./time.inline.svg"
 import CalendarSVG from "./date.inline.svg"
 import RelatedPosts from "../RelatedPosts"
 import BlogNav from "../BlogNav"
-import getReadTime from "utils/getReadTime"
+import getReadTime from "app/utils/getReadTime"
 import type { Post, RecentPosts } from "../../types"
 
 export default function PostContent({
@@ -27,7 +27,7 @@ export default function PostContent({
 			})
 		: null
 
-	const readTime = getReadTime(body as Parameters<typeof getReadTime>[0])
+	const readTime = getReadTime(body)
 
 	return (
 		<Wrapper>
@@ -92,7 +92,7 @@ export default function PostContent({
 						</Details>
 					</AuthorSidebarMobile>
 
-					{body && <BlogRich value={body as Parameters<typeof BlogRich>[0]["value"]} />}
+					{body && <BlogRich value={body} />}
 				</MainContent>
 			</BottomContent>
 			{recentPosts && recentPosts.length > 0 && <RelatedPosts recentPosts={recentPosts} />}
@@ -106,7 +106,7 @@ const Wrapper = styled("div", [
 		grid-column: main;
 		display: flex;
 		flex-direction: column;
-		background: ${colors.blog1Cream200};
+		background: ${colors.blog1.secondary200};
 		border-radius: 16px;
 		margin-top: 106px;
 	`),
@@ -159,15 +159,15 @@ const AuthorPhoto = styled(UniversalImage, [
 
 const AuthorName = styled("div", [
 	f.responsive(css`
-		${textStyles.link1};
-		color: ${colors.blog1Evergreen800};
+		${textStyles.blog1.link1};
+		color: ${colors.blog1.primary800};
 	`),
 ])
 
 const MetaItem = styled("div", [
 	f.responsive(css`
-		${textStyles.p3};
-		color: ${colors.blog1Evergreen700};
+		${textStyles.blog1.p3};
+		color: ${colors.blog1.primary700};
 		display: flex;
 		align-items: center;
 		gap: 6px;
@@ -203,26 +203,26 @@ const ArticleImage = styled(UniversalImage, [
 
 const Title = styled("h1", [
 	f.responsive(css`
-		${textStyles.h5Sans};
-		color: ${colors.blog1Evergreen800};
+		${textStyles.blog1.h5Sans};
+		color: ${colors.blog1.primary800};
 		padding-right: 154px;
 		padding-top: 32px;
 	`),
 	f.small(css`
-		${textStyles.h8Sans};
+		${textStyles.blog1.h8Sans};
 		padding-right: 0;
 	`),
 ])
 
 const Description = styled("div", [
 	f.responsive(css`
-		${textStyles.p1};
-		color: ${colors.blog1Black200};
+		${textStyles.blog1.p1};
+		color: ${colors.blog1.baseDark200};
 		padding-right: 154px;
 		white-space: pre-line;
 	`),
 	f.small(css`
-		${textStyles.p2};
+		${textStyles.blog1.p2};
 		padding-right: 0;
 	`),
 ])
@@ -243,11 +243,11 @@ const BottomContent = styled("div", [
 
 const TopSide = styled("div", [
 	f.responsive(css`
-		${textStyles.p2};
-		color: ${colors.blog1Evergreen800};
+		${textStyles.blog1.p2};
+		color: ${colors.blog1.primary800};
 		padding-bottom: 24px;
 		margin-bottom: 24px;
-		border-bottom: 1px solid ${colors.blog1Cream400};
+		border-bottom: 1px solid ${colors.blog1.secondary400};
 		width: 100%;
 	`),
 	f.small(css`
@@ -270,14 +270,14 @@ const TextContent = styled("div", [
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
-			color: ${colors.blog1Evergreen800};
+			color: ${colors.blog1.primary800};
 		`,
 	),
 ])
 
 const CompanyName = styled("div", [
 	f.responsive(css`
-		${textStyles.h8Serif};
+		${textStyles.blog1.h8Serif};
 		color: ${colors.black};
 	`),
 ])
@@ -324,6 +324,6 @@ const Calendar = styled(CalendarSVG, [
 
 const Green = styled("span", [
 	f.responsive(css`
-		color: ${colors.blog1Evergreen300};
+		color: ${colors.blog1.primary300};
 	`),
 ])

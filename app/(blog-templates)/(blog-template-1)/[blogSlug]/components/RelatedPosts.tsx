@@ -1,5 +1,5 @@
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled/alpha"
 import Kicker from "./Kicker"
 import { PostList } from "./PostList"
@@ -26,7 +26,7 @@ export default function RelatedPosts({ recentPosts }: { recentPosts: RecentPosts
 
 const HelperText = styled("div", [
 	f.responsive(css`
-		${textStyles.p1};
+		${textStyles.blog1.p1};
 	`),
 ])
 
@@ -49,13 +49,13 @@ const RelatedHeading = styled("div", [
 	f.responsive(css`
 		display: grid;
 		grid-column: main;
-		${textStyles.h4Sans};
-		color: ${colors.blog1Evergreen800};
+		${textStyles.blog1.h4Sans};
+		color: ${colors.blog1.primary800};
 		margin: 28px 0 54px;
 	`),
 	f.small(css`
 		width: 300px;
-		${textStyles.h5Sans};
+		${textStyles.blog1.h5Sans};
 	`),
 ])
 

@@ -1,7 +1,7 @@
 "use client"
 
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled/alpha"
 import { useBlogCategory } from "./SearchBar"
 import type { Card } from "../types"
@@ -49,7 +49,7 @@ export function Categories({ items }: { items: Card[] }) {
 
 const Wrapper = styled("div", [
 	f.responsive(css`
-		color: ${colors.blog1Evergreen700};
+		color: ${colors.blog1.primary700};
 	`),
 	f.small(css`
 		padding-top: 25px;
@@ -60,13 +60,13 @@ const Wrapper = styled("div", [
 
 const CategoryHeader = styled("div", [
 	f.responsive(css`
-		${textStyles.p2};
+		${textStyles.blog1.p2};
 		display: flex;
 		align-items: center;
 		gap: 10px;
 		margin-bottom: 24px;
 		padding-bottom: 24px;
-		border-bottom: 1px solid ${colors.blog1Cream400};
+		border-bottom: 1px solid ${colors.blog1.secondary400};
 	`),
 ])
 
@@ -80,30 +80,30 @@ const PillGroup = styled("div", [
 
 const Pill = styled("button", [
 	f.responsive(css`
-		${textStyles.p3};
+		${textStyles.blog1.p3};
 		padding: 12px 14px;
 		border-radius: 999px;
 		border: 1px solid transparent;
-		background: ${colors.blog1Cream400};
-		color: ${colors.blog1Evergreen700};
+		background: ${colors.blog1.secondary400};
+		color: ${colors.blog1.primary700};
 		cursor: pointer;
 		transition:
 			background 0.15s,
 			border-color 0.15s;
 
 		&:active {
-			background: ${colors.blog1Cream300};
-			border-color: ${colors.blog1Cream400};
+			background: ${colors.blog1.secondary300};
+			border-color: ${colors.blog1.secondary400};
 		}
 
 		&[data-selected="true"] {
-			background: ${colors.blog1Evergreen200};
+			background: ${colors.blog1.primary200};
 			border-color: transparent;
 		}
 
 		&[data-selected="true"]:active {
-			background: ${colors.blog1Evergreen100};
-			border-color: ${colors.blog1Evergreen200};
+			background: ${colors.blog1.primary100};
+			border-color: ${colors.blog1.primary200};
 		}
 	`),
 ])

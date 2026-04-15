@@ -1,5 +1,5 @@
-import { colors } from "styles/colors.css"
-import textStyles, { clampText } from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles, { clampText } from "app/styles/text"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled/alpha"
 import UniversalImage from "library/UniversalImage"
@@ -77,8 +77,8 @@ const Title = styled("div", [
 const TitleText = styled("div", [
 	f.responsive(css`
 		${clampText(2)};
-		${textStyles.p1};
-		color: ${colors.blog1Black100};
+		${textStyles.blog1.p1};
+		color: ${colors.blog1.baseDark100};
 		padding-top: 2px;
 		margin-top: -2px;
 		padding-bottom: 5px;
@@ -95,8 +95,8 @@ const TitleText = styled("div", [
 
 const PublishDate = styled("div", [
 	f.responsive(css`
-		${textStyles.p3};
-		color: ${colors.blog1Black200};
+		${textStyles.blog1.p3};
+		color: ${colors.blog1.baseDark200};
 		opacity: 0.5;
 		margin: 26px 0 14px;
 	`),

@@ -1,10 +1,10 @@
 "use client"
 
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import SearchIcon from "./search.inline.svg"
 import { css, f, styled } from "library/styled/alpha"
-import { useDebounce } from "ahooks"
+import { useDebounceFn } from "ahooks"
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs"
 import { useEffect, useState } from "react"
 
@@ -26,11 +26,10 @@ export const useBlogShowAll = () => {
 export function SearchBar() {
 	const [query, setQuery] = useBlogQuery()
 	const [inputValue, setInputValue] = useState(() => query ?? "")
-	const debouncedValue = useDebounce(inputValue, { wait: 300 })
 
-	useEffect(() => {
-		setQuery(debouncedValue || null)
-	}, [debouncedValue, setQuery])
+	const { run: debouncedSetQuery } = useDebounceFn((value: string) => setQuery(value || null), {
+		wait: 500,
+	})
 
 	useEffect(() => {
 		if (!query) setInputValue("")
@@ -42,7 +41,10 @@ export function SearchBar() {
 				<Input
 					name="search"
 					value={inputValue}
-					onChange={(e) => setInputValue(e.target.value)}
+					onChange={(e) => {
+						setInputValue(e.target.value)
+						debouncedSetQuery(e.target.value)
+					}}
 					type="text"
 					placeholder="Search..."
 				/>
@@ -76,23 +78,23 @@ const Input = styled("input", [
 		padding: 21px 0 21px 48px;
 		height: 40px;
 		width: 100%;
-		${textStyles.p2};
-		background: ${colors.blog1Cream400};
+		${textStyles.blog1.p2};
+		background: ${colors.blog1.secondary400};
 		border-radius: 10px;
 		border: 1px solid transparent;
 		transition: border-color 0.3s ease;
 
 		&::placeholder {
-			color: ${colors.blog1Cream500};
+			color: ${colors.blog1.secondary500};
 		}
 
 		&:hover {
-			border-color: ${colors.blog1Cream500};
+			border-color: ${colors.blog1.secondary500};
 		}
 
 		&:focus,
 		&:not(:placeholder-shown) {
-			border-color: ${colors.blog1Cream500};
+			border-color: ${colors.blog1.secondary500};
 		}
 
 		&:focus {

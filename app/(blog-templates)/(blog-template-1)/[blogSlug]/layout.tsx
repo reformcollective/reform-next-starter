@@ -1,6 +1,6 @@
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
 import { css, f, styled } from "library/styled/alpha"
-import { desktopDesignSize, mobileDesignSize } from "styles/media"
+import { desktopDesignSize, mobileDesignSize } from "app/styles/media"
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
 	return <BlogRoot>{children}</BlogRoot>

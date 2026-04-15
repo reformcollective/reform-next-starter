@@ -1,5 +1,5 @@
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import type { ComponentProps } from "react"
 import { css, f, styled } from "library/styled/alpha"
 
@@ -41,7 +41,7 @@ const Wrapper = styled("span", {
 					padding: 15px 18px;
 
 					span {
-						${textStyles.kicker1}
+						${textStyles.blog1.kicker1}
 					}
 				`),
 			],
@@ -51,7 +51,7 @@ const Wrapper = styled("span", {
 					padding: 12px 14px;
 
 					span {
-						${textStyles.kicker2}
+						${textStyles.blog1.kicker2}
 					}
 				`),
 			],
@@ -59,21 +59,21 @@ const Wrapper = styled("span", {
 				f.responsive(css`
 					height: 39px;
 					padding: 15px 18px;
-					${textStyles.p3}
+					${textStyles.blog1.p3}
 				`),
 			],
 		},
 		variant: {
 			dark: [
 				f.responsive(css`
-					background: ${colors.blog1Evergreen900};
-					color: ${colors.blog1Neongreen100};
+					background: ${colors.blog1.primary900};
+					color: ${colors.blog1.primaryLight100};
 				`),
 			],
 			light: [
 				f.responsive(css`
-					background: ${colors.blog1Evergreen200};
-					color: ${colors.blog1Evergreen700};
+					background: ${colors.blog1.primary200};
+					color: ${colors.blog1.primary700};
 				`),
 			],
 		},

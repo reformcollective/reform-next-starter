@@ -8,7 +8,7 @@ import { ResetStyles } from "library/reset"
 import { ScreenProvider } from "library/ScreenContext"
 import { SmoothScrollStyle } from "library/Scroll"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
-import { ProjectStyles } from "styles/project"
+import { ProjectStyles } from "app/styles/project"
 
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.defaults({

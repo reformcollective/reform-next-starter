@@ -345,4 +345,26 @@ const textStyles = {
 	}),
 }
 
-export default textStyles
+// ---------------------------------------------------------------------------
+// Blog Template 1 — semantic text style mappings
+// Replace these values with project-specific fonts/sizes when adopting.
+// ---------------------------------------------------------------------------
+const blog1TextStyles = {
+	h2Serif: textStyles.h2Serif,
+	h4Sans: textStyles.h4Sans,
+	h4Serif: textStyles.h4Serif,
+	h5Sans: textStyles.h5Sans,
+	h7Serif: textStyles.h7Serif,
+	h8Sans: textStyles.h8Sans,
+	h8Serif: textStyles.h8Serif,
+	kicker1: textStyles.kicker1,
+	kicker2: textStyles.kicker2,
+	link1: textStyles.link1,
+	link2: textStyles.link2,
+	link3: textStyles.link3,
+	p1: textStyles.p1,
+	p2: textStyles.p2,
+	p3: textStyles.p3,
+}
+
+export default { ...textStyles, blog1: blog1TextStyles }

@@ -1,7 +1,7 @@
 "use client"
 
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled/alpha"
 import CaretSVG from "../icons/caret.inline.svg"
@@ -72,7 +72,7 @@ const Inner = styled("div", [
 		display: flex;
 		gap: 20px;
 		align-items: center;
-		${textStyles.p2};
+		${textStyles.blog1.p2};
 	`),
 	f.small(css`
 		width: auto;
@@ -88,7 +88,7 @@ const BlogNavWrapper = styled("nav", [
 		justify-content: space-between;
 		align-items: center;
 		height: 96px;
-		border-bottom: 1px solid ${colors.blog1Cream400};
+		border-bottom: 1px solid ${colors.blog1.secondary400};
 		padding: 28px 42px;
 		flex-shrink: 0;
 	`),
@@ -107,8 +107,8 @@ const BreadCrumbs = styled("div", [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
-		color: ${colors.blog1Evergreen700};
-		${textStyles.p2};
+		color: ${colors.blog1.primary700};
+		${textStyles.blog1.p2};
 	`),
 	f.small(css`
 		gap: unset;
@@ -126,8 +126,8 @@ const Caret = styled(CaretSVG, [
 
 const StyledUniversalLink = styled(UniversalLink, [
 	f.responsive(css`
-		${textStyles.p2};
-		color: ${colors.blog1Evergreen700};
+		${textStyles.blog1.p2};
+		color: ${colors.blog1.primary700};
 		opacity: 0.5;
 		cursor: pointer;
 		transition:
@@ -135,16 +135,16 @@ const StyledUniversalLink = styled(UniversalLink, [
 			opacity 0.3s ease;
 
 		&:hover {
-			color: ${colors.blog1Evergreen300};
+			color: ${colors.blog1.primary300};
 			opacity: 1;
 		}
 
 		&:active {
-			color: ${colors.blog1Evergreen400};
+			color: ${colors.blog1.primary400};
 			opacity: 1;
 		}
 	`),
 	f.small(css`
-		${textStyles.p3};
+		${textStyles.blog1.p3};
 	`),
 ])

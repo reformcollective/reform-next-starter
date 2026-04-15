@@ -11,14 +11,15 @@ import {
 } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/SearchBar"
 import SmallCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/SmallCard"
 import { useHeaderTheme } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/HeaderTheme"
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled/alpha"
 import { useMedia } from "library/useMedia"
 import { useSearchResults } from "library/useSearchResults"
 import { getResponsivePixels } from "library/viewportUtils"
 import { useSearchParams } from "next/navigation"
-import { Suspense, useEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useRef, useState, useTransition } from "react"
+import { searchPosts } from "./actions"
 import type { Card, FeaturedCard } from "../types"
 
 const PAGE_SIZE = 8
@@ -26,9 +27,10 @@ const PAGE_SIZE = 8
 type BlogHomeClientProps = {
 	allCards: Card[]
 	featuredCaseStudy: FeaturedCard | null
+	searchMode: "client" | "server"
 }
 
-export function BlogHomeClient({ allCards, featuredCaseStudy }: BlogHomeClientProps) {
+export function BlogHomeClient({ allCards, featuredCaseStudy, searchMode }: BlogHomeClientProps) {
 	const featuredCard = featuredCaseStudy
 	const isDebug = useSearchParams().has("debug")
 	const baseCards = allCards.filter((card) => card?._id !== featuredCard?._id)
@@ -43,6 +45,10 @@ export function BlogHomeClient({ allCards, featuredCaseStudy }: BlogHomeClientPr
 	const isSmall = useMedia(false, false, true, true)
 	const columnsRef = useRef<HTMLDivElement>(null)
 
+	// server-side search state
+	const [serverResults, setServerResults] = useState<Card[]>([])
+	const [isPending, startTransition] = useTransition()
+
 	useHeaderTheme("dark")
 
 	useEffect(() => {
@@ -51,19 +57,30 @@ export function BlogHomeClient({ allCards, featuredCaseStudy }: BlogHomeClientPr
 		setVisibleCount(PAGE_SIZE)
 	}, [searchQuery, categories, showAll, isSmall])
 
-	const searchedCards = useSearchResults(
+	useEffect(() => {
+		if (searchMode !== "server") return
+		startTransition(async () => {
+			const results = await searchPosts(searchQuery ?? "")
+			setServerResults(results)
+		})
+	}, [searchQuery, searchMode])
+
+	const clientSearchedCards = useSearchResults(
 		searchQuery ?? "",
 		[...allUnfeaturedCards],
 		["articleTextPreview", "author", "slug", "title"],
 		"_id",
 	)
+
+	const searchedCards = searchMode === "server" ? serverResults : clientSearchedCards
 	const categorizedCards =
 		categories.length > 0
 			? searchedCards.filter((card) => categories.some((cat) => card.categories?.includes(cat)))
 			: searchedCards
 
 	const isFiltered = Boolean(searchQuery) || categories.length > 0
-	const activeCards = isFiltered ? categorizedCards : allUnfeaturedCards
+	const activeCards =
+		searchMode === "server" ? categorizedCards : isFiltered ? categorizedCards : allUnfeaturedCards
 	const visibleCards = activeCards.slice(0, visibleCount)
 	const hasMore = visibleCount < activeCards.length
 
@@ -192,7 +209,7 @@ const Line = styled("hr", [
 		right: 42px;
 		height: 1px;
 		width: calc(100% - 84px);
-		background: ${colors.blog1Cream400};
+		background: ${colors.blog1.secondary400};
 	`),
 	f.small(css`
 		position: relative;
@@ -205,29 +222,29 @@ const Line = styled("hr", [
 
 const HelperText = styled("div", [
 	f.responsive(css`
-		${textStyles.p1};
+		${textStyles.blog1.p1};
 	`),
 ])
 
 const NotFoundTitle = styled("p", [
 	f.responsive(css`
-		${textStyles.h2Serif};
+		${textStyles.blog1.h2Serif};
 	`),
 	f.small(css`
-		${textStyles.h4Serif};
+		${textStyles.blog1.h4Serif};
 		text-align: center;
 	`),
 ])
 
 const NotFoundDescription = styled("p", [
 	f.responsive(css`
-		${textStyles.p2};
+		${textStyles.blog1.p2};
 		width: 317px;
 		text-align: center;
 		margin-top: 60px;
 	`),
 	f.small(css`
-		${textStyles.p3};
+		${textStyles.blog1.p3};
 		width: 100%;
 		margin-top: 32px;
 	`),
@@ -259,24 +276,24 @@ const CardGroup = styled("div", [
 
 const LoadMoreButton = styled("button", [
 	f.responsive(css`
-		${textStyles.p2};
+		${textStyles.blog1.p2};
 		margin-top: 84px;
 		padding: 24px;
 		border-radius: 10px;
 		border: 1px solid transparent;
-		background: ${colors.blog1Cream400};
-		color: ${colors.blog1Evergreen900};
+		background: ${colors.blog1.secondary400};
+		color: ${colors.blog1.primary900};
 		cursor: pointer;
 		transition:
 			background 0.15s ease,
 			border-color 0.15s ease;
 
 		&:hover {
-			background: ${colors.blog1Cream300};
+			background: ${colors.blog1.secondary300};
 		}
 
 		&:active {
-			border-color: ${colors.blog1Cream400};
+			border-color: ${colors.blog1.secondary400};
 		}
 	`),
 	f.small(css`
@@ -293,9 +310,9 @@ const NotFoundWrapper = styled("div", [
 		padding: 108px 106px;
 		width: 827px;
 		grid-column: 1 / -1;
-		background: ${colors.blog1Cream100};
+		background: ${colors.blog1.secondary100};
 		border-radius: 10px;
-		border: 1px solid ${colors.blog1Cream400};
+		border: 1px solid ${colors.blog1.secondary400};
 	`),
 	f.small(css`
 		position: relative;

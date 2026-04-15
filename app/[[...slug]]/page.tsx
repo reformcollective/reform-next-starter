@@ -9,7 +9,7 @@ import { type ComponentType, Fragment } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import { resolveProductionUrl } from "sanity/lib/slug-resolver"
 import type { Page } from "sanity.types"
-import SampleSection from "sections/Sample"
+import SampleSection from "app/sections/Sample"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 
 export type SectionTypes = NonNullable<DeepAssetMeta<Page>["sections"]>[number]["_type"]
@@ -94,7 +94,7 @@ export async function generateMetadata({
 		alternates: {
 			canonical: pageUrl,
 		},
-		metadataBase: new URL(siteURL),
+		metadataBase: siteURL,
 	}
 }
 

@@ -56,6 +56,21 @@ export const blog1Hub = defineType({
 			title: "Hide from Search Engines",
 			description: "Enable this to hide the page from search engines like Google.",
 		}),
+		defineField({
+			name: "searchMode",
+			type: "string",
+			title: "Search Mode",
+			description:
+				"Client-side: all posts are loaded upfront and filtered in the browser — fast, no latency, searches title and preview text only. Server-side: searches are sent to Sanity on each keystroke — adds ~100–300ms latency but enables full body text search. Switch to server-side when you need full article search or have so many posts that loading them all upfront is too slow.",
+			options: {
+				list: [
+					{ title: "Client-side (default — fast, title + preview)", value: "client" },
+					{ title: "Server-side (full body text search)", value: "server" },
+				],
+				layout: "radio",
+			},
+			initialValue: "client",
+		}),
 	],
 	preview: {
 		prepare() {

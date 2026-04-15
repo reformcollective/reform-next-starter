@@ -38,7 +38,7 @@ import { codeInput } from "@sanity/code-input"
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
 
-const singletons = [settings, header, footer, blog1Hub]
+const singletons = [settings, header, footer]
 
 export default defineConfig({
 	/**
@@ -68,6 +68,7 @@ export default defineConfig({
 			video,
 
 			// blog-1 template schemas
+			blog1Hub,
 			blog1AuthorType,
 			blog1BlockContentType,
 			blog1CategoryType,
@@ -142,7 +143,13 @@ export default defineConfig({
 							]),
 					)
 
-				const allHiddenNames = [singletons.map((s) => s.name)]
+				const allHiddenNames = [
+					...singletons.map((s) => s.name),
+					"blog1Hub",
+					"blog1Post",
+					"blog1Author",
+					"blog1Category",
+				]
 
 				const nonSingletonItems = S.documentTypeListItems().filter(
 					(listItem) => !allHiddenNames.includes(listItem.getId() ?? ""),

@@ -1,9 +1,9 @@
 import PostContent from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/PostContent"
-import { colors } from "styles/colors.css"
+import { colors } from "app/styles/colors.css"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { css, f, styled } from "library/styled/alpha"
 import { siteURL } from "library/siteURL"
-import type { Metadata, ResolvingMetadata } from "next"
+import type { Metadata, PageProps, ResolvingMetadata } from "next"
 import { notFound } from "next/navigation"
 import { defineQuery } from "next-sanity"
 import { sanityFetch } from "sanity/lib/live"
@@ -94,7 +94,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-	{ params }: { params: Promise<{ blogSlug: string; slug: string }> },
+	{ params }: PageProps<"/(blog-templates)/(blog-template-1)/[blogSlug]/(post)/[slug]">,
 	parent: ResolvingMetadata,
 ): Promise<Metadata> {
 	const { blogSlug, slug } = await params
@@ -121,15 +121,13 @@ export async function generateMetadata(
 		alternates: {
 			canonical: `${siteURL}/${blogSlug}/${slug}`,
 		},
-		metadataBase: new URL(siteURL),
+		metadataBase: siteURL,
 	}
 }
 
 export default async function PostPage({
 	params,
-}: {
-	params: Promise<{ blogSlug: string; slug: string }>
-}) {
+}: PageProps<"/(blog-templates)/(blog-template-1)/[blogSlug]/(post)/[slug]">) {
 	const { slug } = await params
 
 	const { data: post } = await sanityFetch({
@@ -147,10 +145,7 @@ export default async function PostPage({
 
 	return (
 		<Wrapper>
-			<PostContent
-				post={post as Parameters<typeof PostContent>[0]["post"]}
-				recentPosts={recentPosts as Parameters<typeof PostContent>[0]["recentPosts"]}
-			/>
+			<PostContent post={post} recentPosts={recentPosts} />
 		</Wrapper>
 	)
 }
@@ -160,6 +155,6 @@ const Wrapper = styled("div", [
 		grid-column: fullbleed;
 		display: grid;
 		grid-template-columns: subgrid;
-		background: ${colors.blog1Evergreen700};
+		background: ${colors.blog1.primary700};
 	`),
 ])

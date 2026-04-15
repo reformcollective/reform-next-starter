@@ -1,5 +1,5 @@
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled/alpha"
 
 type BlockquoteWithAttributionProps = {
@@ -30,9 +30,9 @@ export default function BlockquoteWithAttribution({
 const Wrapper = styled("div", [
 	f.responsive(css`
 		position: relative;
-		background: ${colors.blog1Cream300};
+		background: ${colors.blog1.secondary300};
 		border-radius: 10px;
-		border: 1px solid ${colors.blog1Cream400};
+		border: 1px solid ${colors.blog1.secondary400};
 		padding: 70px 42px 70px 72px;
 		display: flex;
 		flex-direction: column;
@@ -47,7 +47,7 @@ const Wrapper = styled("div", [
 
 const Quote = styled("p", [
 	f.responsive(css`
-		${textStyles.p1};
+		${textStyles.blog1.p1};
 	`),
 	f.small(css`
 		width: 100%;
@@ -64,15 +64,15 @@ const NameWrapper = styled("div", [
 
 const Name = styled("div", [
 	f.responsive(css`
-		color: ${colors.blog1Black200};
-		${textStyles.link1};
+		color: ${colors.blog1.baseDark200};
+		${textStyles.blog1.link1};
 	`),
 ])
 
 const Title = styled("div", [
 	f.responsive(css`
-		color: ${colors.blog1Black200};
-		${textStyles.h8Serif};
+		color: ${colors.blog1.baseDark200};
+		${textStyles.blog1.h8Serif};
 	`),
 ])
 
@@ -82,7 +82,7 @@ const VerticalLine = styled("div", [
 		width: 2px;
 		height: calc(100% - 84px);
 		border-radius: 10px;
-		background: ${colors.blog1Pink400};
+		background: ${colors.blog1.tertiary400};
 		left: 42px;
 	`),
 	f.small(css`

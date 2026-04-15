@@ -1,8 +1,8 @@
 "use client"
 
 import BlockquoteWithAttribution from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/BlockquoteWithAttribution"
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import UniversalLink from "library/link"
 import { TypedPortableText } from "library/sanity/PortableText"
 import { css, f, styled } from "library/styled/alpha"
@@ -80,7 +80,7 @@ const Wrapper = styled("div", [
 		grid-template-columns: minmax(0, 1fr);
 		gap: 30px;
 		padding-right: 154px;
-		color: ${colors.blog1Evergreen900};
+		color: ${colors.blog1.primary900};
 		position: relative;
 		overflow-wrap: break-word;
 	`),
@@ -99,35 +99,35 @@ const BlogImage = styled(UniversalImage, [
 
 const StyledNormal = styled("div", [
 	f.responsive(css`
-		${textStyles.p2};
+		${textStyles.blog1.p2};
 	`),
 ])
 
 const StyledH1 = styled("h1", [
 	f.responsive(css`
-		${textStyles.h8Sans};
+		${textStyles.blog1.h8Sans};
 		padding-top: 32px;
 	`),
 ])
 
 const StyledH2 = styled("h2", [
 	f.responsive(css`
-		${textStyles.h7Serif};
+		${textStyles.blog1.h7Serif};
 		padding-top: 32px;
 	`),
 ])
 
 const StyledBlockQuote = styled("blockquote", [
 	f.responsive(css`
-		${textStyles.p1};
-		color: ${colors.blog1Evergreen800};
+		${textStyles.blog1.p1};
+		color: ${colors.blog1.primary800};
 		display: flex;
 		flex-direction: column;
 		padding: 40px;
 		align-items: flex-start;
 		gap: 30px;
 		border-radius: 20px;
-		background: ${colors.blog1Evergreen100};
+		background: ${colors.blog1.primary100};
 
 		em {
 			font-style: normal;
@@ -141,7 +141,7 @@ const StyledUl = styled("ul", [
 		padding-inline-start: 2.3ch;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
-		${textStyles.p2};
+		${textStyles.blog1.p2};
 	`),
 ])
 
@@ -153,7 +153,7 @@ const StyledStrong = styled("strong", [
 
 const StyledLink = styled(UniversalLink, [
 	f.responsive(css`
-		color: ${colors.blog1Evergreen300};
+		color: ${colors.blog1.primary300};
 		text-decoration: underline;
 	`),
 ])

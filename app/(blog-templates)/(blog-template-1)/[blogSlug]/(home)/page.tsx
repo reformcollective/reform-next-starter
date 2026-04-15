@@ -1,8 +1,8 @@
-import { colors } from "styles/colors.css"
+import { colors } from "app/styles/colors.css"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { css, f, styled } from "library/styled/alpha"
 import { siteURL } from "library/siteURL"
-import type { Metadata } from "next"
+import type { Metadata, PageProps } from "next"
 import { defineQuery } from "next-sanity"
 import { Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
@@ -49,6 +49,7 @@ const blogHubQuery = defineQuery(`
 		title,
 		description,
 		noIndex,
+		searchMode,
 		ogImage {
 			...,
 			"data": {
@@ -77,9 +78,7 @@ const blogHubQuery = defineQuery(`
 
 export async function generateMetadata({
 	params,
-}: {
-	params: Promise<{ blogSlug: string }>
-}): Promise<Metadata> {
+}: PageProps<"/(blog-templates)/(blog-template-1)/[blogSlug]/(home)">): Promise<Metadata> {
 	const { blogSlug } = await params
 	const [{ data: blogHub }, { data: settings }] = await Promise.all([
 		sanityFetch({ query: blogHubQuery, disableStega: true }),
@@ -111,13 +110,15 @@ export async function generateMetadata({
 		alternates: {
 			canonical: `${siteURL}/${blogSlug}`,
 		},
-		metadataBase: new URL(siteURL),
+		metadataBase: siteURL,
 	}
 }
 
 export default async function BlogHome() {
-	const { data: allCards } = await sanityFetch({ query: allPostsQuery })
 	const { data: blogHub } = await sanityFetch({ query: blogHubQuery, disableStega: true })
+	const searchMode = blogHub?.searchMode === "server" ? "server" : "client"
+	const { data: allCards } =
+		searchMode === "client" ? await sanityFetch({ query: allPostsQuery }) : { data: [] }
 
 	return (
 		<>
@@ -125,12 +126,9 @@ export default async function BlogHome() {
 			<Inner>
 				<Suspense fallback={<div>Loading blog...</div>}>
 					<BlogHomeClient
-						allCards={(allCards ?? []) as Parameters<typeof BlogHomeClient>[0]["allCards"]}
-						featuredCaseStudy={
-							(blogHub?.featuredPost ?? null) as Parameters<
-								typeof BlogHomeClient
-							>[0]["featuredCaseStudy"]
-						}
+						allCards={allCards ?? []}
+						featuredCaseStudy={blogHub?.featuredPost ?? null}
+						searchMode={searchMode}
 					/>
 				</Suspense>
 			</Inner>
@@ -142,7 +140,7 @@ const Inner = styled("div", [
 	f.responsive(css`
 		position: relative;
 		grid-column: main;
-		background: ${colors.blog1Cream200};
+		background: ${colors.blog1.secondary200};
 		border-radius: 16px;
 	`),
 	f.small(css`

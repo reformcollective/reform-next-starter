@@ -10,12 +10,7 @@
 			"*": ["./*"],
 			"page": ["./app/[[...slug]]/page"],
 			"images/*": ["./app/images/*"],
-			"library/*": ["./library/*"],
-			"styles/*": ["./app/styles/*"],
-			"components/*": ["./app/components/*"],
-			"sections/*": ["./app/sections/*"],
-			"utils/*": ["./app/utils/*"],
-			"types/*": ["./app/types/*"]
+			"library/*": ["./library/*"]
 		}
 	},
 	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts"],

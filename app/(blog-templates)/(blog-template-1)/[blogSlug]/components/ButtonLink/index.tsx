@@ -1,5 +1,5 @@
-import { colors } from "styles/colors.css"
-import textStyles from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import type { UniversalLinkProps } from "library/link"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled/alpha"
@@ -28,7 +28,7 @@ export default function ButtonLink({
 const Wrapper = styled(UniversalLink, {
 	base: [
 		f.responsive(css`
-			color: ${colors.blog1Evergreen200};
+			color: ${colors.blog1.primary200};
 			text-decoration: none;
 			cursor: pointer;
 			display: inline-flex;
@@ -43,31 +43,31 @@ const Wrapper = styled(UniversalLink, {
 		arrow: {
 			false: [
 				f.responsive(css`
-					${textStyles.link3}
+					${textStyles.blog1.link3}
 				`),
 				f.small(css`
-					${textStyles.link3}
+					${textStyles.blog1.link3}
 				`),
 			],
 			true: [
 				f.responsive(css`
-					${textStyles.link2}
+					${textStyles.blog1.link2}
 				`),
 			],
 		},
 		blog: {
 			false: [
 				f.responsive(css`
-					${textStyles.link3}
+					${textStyles.blog1.link3}
 				`),
 				f.small(css`
-					${textStyles.link3}
+					${textStyles.blog1.link3}
 				`),
 			],
 			true: [
 				f.responsive(css`
-					${textStyles.link1}
-					color: ${colors.blog1Plum400};
+					${textStyles.blog1.link1}
+					color: ${colors.blog1.quaternary400};
 				`),
 			],
 		},

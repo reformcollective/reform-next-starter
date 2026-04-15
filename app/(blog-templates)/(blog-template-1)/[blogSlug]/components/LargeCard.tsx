@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import ButtonLink from "./ButtonLink"
-import { colors } from "styles/colors.css"
-import textStyles, { clampText } from "styles/text"
+import { colors } from "app/styles/colors.css"
+import textStyles, { clampText } from "app/styles/text"
 import UniversalImage from "library/UniversalImage"
 import { css, f, styled } from "library/styled/alpha"
 import type { FeaturedCard } from "../types"
@@ -100,8 +100,8 @@ const Image = styled(UniversalImage, [
 
 const Title = styled("div", [
 	f.responsive(css`
-		${textStyles.h8Sans};
-		color: ${colors.blog1Black200};
+		${textStyles.blog1.h8Sans};
+		color: ${colors.blog1.baseDark200};
 		margin: 20px 0 42px;
 		${clampText(4)};
 		max-height: 4lh;
@@ -133,23 +133,23 @@ const Details = styled("div", [
 
 const Description = styled("div", [
 	f.responsive(css`
-		${textStyles.p2};
-		color: ${colors.blog1Black200};
+		${textStyles.blog1.p2};
+		color: ${colors.blog1.baseDark200};
 		${clampText(4)};
 		max-height: 4lh;
 	`),
 	f.small(css`
-		${textStyles.p1};
+		${textStyles.blog1.p1};
 	`),
 ])
 
 const PublishDate = styled("div", [
 	f.responsive(css`
-		color: ${colors.blog1Black100};
-		${textStyles.p2};
+		color: ${colors.blog1.baseDark100};
+		${textStyles.blog1.p2};
 	`),
 	f.small(css`
-		${textStyles.p2};
+		${textStyles.blog1.p2};
 	`),
 ])
 
