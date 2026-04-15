@@ -94,7 +94,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-	{ params }: PageProps<"/(blog-templates)/(blog-template-1)/[blogSlug]/(post)/[slug]">,
+	{ params }: PageProps<"/[blogSlug]/[slug]">,
 	parent: ResolvingMetadata,
 ): Promise<Metadata> {
 	const { blogSlug, slug } = await params
@@ -125,9 +125,7 @@ export async function generateMetadata(
 	}
 }
 
-export default async function PostPage({
-	params,
-}: PageProps<"/(blog-templates)/(blog-template-1)/[blogSlug]/(post)/[slug]">) {
+export default async function PostPage({ params }: PageProps<"/[blogSlug]/[slug]">) {
 	const { slug } = await params
 
 	const { data: post } = await sanityFetch({

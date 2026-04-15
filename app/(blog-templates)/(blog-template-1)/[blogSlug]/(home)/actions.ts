@@ -58,10 +58,10 @@ export async function searchPosts(query: string): Promise<PostList> {
 		.split(/\s+/)
 		.map((term) => `${term}*`)
 		.join(" ")
-	// cast required: groq-js cannot infer $param from match expressions
+	// groq-js cannot infer params from match expressions — plain string query, params typed freely
 	const { data } = await sanityFetch({
-		query: searchedPostsQuery as unknown as typeof allPostsServerQuery,
+		query: searchedPostsQuery,
 		params: { query: wildcardQuery },
 	})
-	return (data as PostList) ?? []
+	return (data ?? []) as PostList
 }

@@ -76,9 +76,7 @@ const blogHubQuery = defineQuery(`
 	}
 `)
 
-export async function generateMetadata({
-	params,
-}: PageProps<"/(blog-templates)/(blog-template-1)/[blogSlug]/(home)">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/[blogSlug]">): Promise<Metadata> {
 	const { blogSlug } = await params
 	const [{ data: blogHub }, { data: settings }] = await Promise.all([
 		sanityFetch({ query: blogHubQuery, disableStega: true }),
