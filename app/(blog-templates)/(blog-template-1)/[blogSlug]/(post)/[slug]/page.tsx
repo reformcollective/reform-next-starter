@@ -29,8 +29,7 @@ const postFragment = `{
 		}
 	},
 	"categories": categories[]->title,
-	publishedAt,
-	readTime
+	publishedAt
 }`
 
 const singlePostQuery = defineQuery(`
@@ -59,7 +58,6 @@ const singlePostQuery = defineQuery(`
 		},
 		"categories": categories[]->title,
 		publishedAt,
-		readTime,
 		body[] {
 			...,
 			_type == "image" => {

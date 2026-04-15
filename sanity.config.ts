@@ -26,7 +26,6 @@ import { blog1BlockContentType } from "sanity/schemas/blog/blog-1/blockContentTy
 import { blog1CategoryType } from "sanity/schemas/blog/blog-1/categoryType"
 import { blog1PostType } from "sanity/schemas/blog/blog-1/postType"
 import { blog1Hub } from "sanity/schemas/singletons/blog-1"
-import { createPublishWithReadTime } from "sanity/schemas/blog/blog-1/publishWithReadTime"
 import {
 	getLinkableTypes,
 	resolveDocumentLocations,
@@ -89,16 +88,6 @@ export default defineConfig({
 	document: {
 		productionUrl: async (_, context) => {
 			return resolveProductionUrl(context.document)
-		},
-		actions: (prev, context) => {
-			if (context.schemaType === "blog1Post") {
-				return prev.map((originalAction) =>
-					originalAction.action === "publish"
-						? createPublishWithReadTime(originalAction)
-						: originalAction,
-				)
-			}
-			return prev
 		},
 	},
 

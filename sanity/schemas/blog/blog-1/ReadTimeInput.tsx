@@ -44,7 +44,7 @@ export function ReadTimeInput() {
 
 	return (
 		<p style={{ margin: "8px 0", color: "var(--card-muted-fg-color)" }}>
-			~{readTime} ({wordCount} words) — saved on publish
+			~{readTime} ({wordCount} words)
 		</p>
 	)
 }

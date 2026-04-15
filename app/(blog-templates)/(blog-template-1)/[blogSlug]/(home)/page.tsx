@@ -38,8 +38,7 @@ const allPostsQuery = defineQuery(`
 			}
 		},
 		"categories": categories[]->title,
-		publishedAt,
-		readTime
+		publishedAt
 	}
 `)
 
@@ -71,8 +70,7 @@ const blogHubQuery = defineQuery(`
 				}
 			},
 			"categories": categories[]->title,
-			publishedAt,
-			readTime
+			publishedAt
 		}
 	}
 `)
