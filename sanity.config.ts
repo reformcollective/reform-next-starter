@@ -209,7 +209,7 @@ export default defineConfig({
 		/**
 		 * our custom singleton plugin
 		 */
-		singletonPlugin([singletons.map((singleton) => singleton.name)]),
+		singletonPlugin(singletons.map((singleton) => singleton.name)),
 		/**
 		 * adds unsplash as an image asset source
 		 */
