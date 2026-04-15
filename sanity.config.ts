@@ -38,7 +38,7 @@ import { codeInput } from "@sanity/code-input"
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
 
-const singletons = [settings, header, footer]
+const singletons = [settings, header, footer, blog1Types]
 
 // blog-1 document types managed under the Blog 1 Hub group in the structure
 const blog1Types = ["blog1Post", "blog1Author", "blog1Category", "blog1Hub"]
@@ -156,7 +156,7 @@ export default defineConfig({
 							]),
 					)
 
-				const allHiddenNames = [...singletons.map((s) => s.name), ...blog1Types]
+				const allHiddenNames = [singletons.map((s) => s.name)]
 
 				const nonSingletonItems = S.documentTypeListItems().filter(
 					(listItem) => !allHiddenNames.includes(listItem.getId() ?? ""),
@@ -216,7 +216,7 @@ export default defineConfig({
 		/**
 		 * our custom singleton plugin
 		 */
-		singletonPlugin([...singletons.map((singleton) => singleton.name), "blog1Hub"]),
+		singletonPlugin([singletons.map((singleton) => singleton.name)]),
 		/**
 		 * adds unsplash as an image asset source
 		 */

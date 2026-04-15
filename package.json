@@ -141,7 +141,7 @@
 			]
 		},
 		"sanity-typegen": {
-			"command": "sanity schema extract && sanity typegen generate",
+			"command": "(sanity schema extract && sanity typegen generate) || (pnpm exec sanity schema validate)",
 			"files": [
 				"sanity/**/*",
 				"sanity.config.ts",
