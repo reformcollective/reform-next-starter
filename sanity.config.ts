@@ -7,9 +7,9 @@ import { visionTool } from "@sanity/vision"
 import { env } from "app/env"
 import gsap from "gsap/all"
 import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
+import { structureTool } from "sanity/structure"
 import { defineConfig, type PluginOptions } from "sanity"
 import { presentationTool } from "sanity/presentation"
-import { structureTool } from "sanity/structure"
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
 import { linkField } from "sanity-plugin-link-field"
 import { media } from "sanity-plugin-media"
@@ -18,13 +18,15 @@ import { apiVersion, dataset, projectId, studioUrl } from "sanity/lib/api"
 import footer from "sanity/schemas/singletons/footer"
 import header from "sanity/schemas/singletons/header"
 import settings from "sanity/schemas/singletons/settings"
+
 import { video, youtube } from "library/sanity/reusables"
 import page from "sanity/schemas/sanityPage"
 import { RocketIcon } from "node_modules/@sanity/icons/dist"
-import { authorType } from "sanity/schemas/blog/authorType"
-import { blockContentType } from "sanity/schemas/blog/blockContentType"
-import { categoryType } from "sanity/schemas/blog/categoryType"
-import { postType } from "sanity/schemas/blog/postType"
+import { blog1AuthorType } from "sanity/schemas/blog/blog-1/authorType"
+import { blog1BlockContentType } from "sanity/schemas/blog/blog-1/blockContentType"
+import { blog1CategoryType } from "sanity/schemas/blog/blog-1/categoryType"
+import { blog1PostType } from "sanity/schemas/blog/blog-1/postType"
+import { blog1Hub } from "sanity/schemas/singletons/blog-1"
 import {
 	getLinkableTypes,
 	resolveDocumentLocations,
@@ -37,6 +39,7 @@ import { codeInput } from "@sanity/code-input"
 gsap.ticker.sleep()
 
 const singletons = [settings, header, footer]
+const allSingletons = [...singletons, blog1Hub]
 
 export default defineConfig({
 	/**
@@ -59,17 +62,17 @@ export default defineConfig({
 	schema: {
 		types: [
 			// singletons
-			...singletons,
+			...allSingletons,
 
 			// reusables
 			youtube,
 			video,
 
-			// blog
-			authorType,
-			blockContentType,
-			categoryType,
-			postType,
+			// blog-1 template schemas
+			blog1AuthorType,
+			blog1BlockContentType,
+			blog1CategoryType,
+			blog1PostType,
 
 			// project schemas
 			page,
@@ -115,7 +118,31 @@ export default defineConfig({
 		 * structure tool
 		 * @see https://www.sanity.io/docs/studio/structure-tool
 		 */
-		structureTool({ structure: pageStructure(singletons), title: "All Content" }),
+		structureTool({
+			title: "All Content",
+			structure: pageStructure(singletons, [
+				{
+					item: (S) =>
+						S.listItem()
+							.title("Blog 1")
+							.child(
+								S.list()
+									.title("Blog 1")
+									.items([
+										S.listItem()
+											.title("Hub Settings")
+											.child(
+												S.editor().id("blog1Hub").schemaType("blog1Hub").documentId("blog1Hub"),
+											),
+										S.documentTypeListItem("blog1Post").title("Posts"),
+										S.documentTypeListItem("blog1Author").title("Authors"),
+										S.documentTypeListItem("blog1Category").title("Categories"),
+									]),
+							),
+					hiddenTypes: ["blog1Hub", "blog1Post", "blog1Author", "blog1Category"],
+				},
+			]),
+		}),
 
 		/**
 		 * media tool
@@ -149,7 +176,7 @@ export default defineConfig({
 		/**
 		 * our custom singleton plugin
 		 */
-		singletonPlugin(singletons.map((singleton) => singleton.name)),
+		singletonPlugin(allSingletons.map((singleton) => singleton.name)),
 		/**
 		 * adds unsplash as an image asset source
 		 */

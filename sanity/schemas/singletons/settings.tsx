@@ -23,7 +23,6 @@ export default defineType({
 			name: "ogImage",
 			title: "Default Open Graph Image",
 			description: "Displayed on social cards and search engine results.",
-			cropType: "sanity",
 			withAlt: false,
 		}),
 		defineField({

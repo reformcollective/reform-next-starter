@@ -10,8 +10,15 @@ const sitemapPageQuery = defineQuery(`
 `)
 
 const sitemapBlogQuery = defineQuery(`
-  *[_type == "post" && defined(slug.current)]
+  *[_type == "blog1Post" && defined(slug.current)]
   {"slug": slug.current}
+`)
+
+const sitemapBlogHubQuery = defineQuery(`
+  *[_type == "blog1Hub"][0] {
+    "slug": slug.current,
+    noIndex
+  }
 `)
 
 interface SanityPage {
@@ -47,7 +54,7 @@ function normalizePath(path: string) {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-	// 1) File-based routes
+	// 1) File-based routes (exclude blog-1 — its URL is driven by the Sanity hub slug)
 	const pages = globSync("app/**/page.tsx")
 	const fileRoutes = pages
 		// skip dynamic routes like [slug], [[...slug]]
@@ -56,12 +63,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		.map(normalizePath)
 
 	// 2) CMS routes
-	const { data: sanityPages } = await sanityFetch({ query: sitemapPageQuery })
-	const { data: blogPosts } = await sanityFetch({ query: sitemapBlogQuery })
+	const [{ data: sanityPages }, { data: blogPosts }, { data: blogHub }] = await Promise.all([
+		sanityFetch({ query: sitemapPageQuery }),
+		sanityFetch({ query: sitemapBlogQuery }),
+		sanityFetch({ query: sitemapBlogHubQuery }),
+	])
+
+	const hubSlug = blogHub?.slug ?? "blog-1"
 
 	const cmsRoutes = [
 		...sanityPages.map((p: SanityPage) => normalizePath(p.slug === "home" ? "/" : `/${p.slug}`)),
-		...blogPosts.map((p: BlogPost) => normalizePath(`/blog/${p.slug}`)),
+		...(blogHub?.noIndex ? [] : [normalizePath(`/${hubSlug}`)]),
+		...blogPosts.map((p: BlogPost) => normalizePath(`/${hubSlug}/${p.slug}`)),
 	]
 
 	// 3) Combine, dedupe, and build absolute URLs safely

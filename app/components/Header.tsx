@@ -31,5 +31,6 @@ const Wrapper = styled(
 		background-color: rebeccapurple;
 		color: white;
 		view-transition-name: header;
+		z-index: 1000;
 	`),
 )

@@ -1,14 +1,20 @@
 import { UserIcon } from "@sanity/icons"
+import { universalImage } from "library/sanity/reusables"
 import { defineArrayMember, defineField, defineType } from "sanity"
 
-export const authorType = defineType({
-	name: "author",
-	title: "Author",
+export const blog1AuthorType = defineType({
+	name: "blog1Author",
+	title: "Blog 1 Author",
 	type: "document",
 	icon: UserIcon,
 	fields: [
 		defineField({
 			name: "name",
+			type: "string",
+			description: "Author's name and Job title (e.g. Jane, CEO )",
+		}),
+		defineField({
+			name: "company",
 			type: "string",
 		}),
 		defineField({
@@ -18,13 +24,7 @@ export const authorType = defineType({
 				source: "name",
 			},
 		}),
-		defineField({
-			name: "image",
-			type: "image",
-			options: {
-				hotspot: true,
-			},
-		}),
+		universalImage({ name: "image", title: "Image", withAlt: false }),
 		defineField({
 			name: "bio",
 			type: "array",
