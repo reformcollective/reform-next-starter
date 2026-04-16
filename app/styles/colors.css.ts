@@ -144,6 +144,14 @@ const flatColors = Object.fromEntries(
 	variables.map(({ key, variable }) => [key, variable]),
 ) as Record<keyof typeof rawColors, `var(--${string})`>
 
+function mapToVars<T extends Record<string, keyof typeof rawColors>>(
+	map: T,
+): { [K in keyof T]: `var(--${string})` } {
+	return Object.fromEntries(Object.entries(map).map(([key, raw]) => [key, flatColors[raw]])) as {
+		[K in keyof T]: `var(--${string})`
+	}
+}
+
 export const colors = {
 	white: flatColors.white,
 	red: flatColors.red,
@@ -151,11 +159,7 @@ export const colors = {
 	blue: flatColors.blue,
 	black: flatColors.black,
 	blog1: {
-		...Object.fromEntries(
-			Object.entries(blog1Raw).map(([semantic, raw]) => [semantic, flatColors[raw]]),
-		),
-		...Object.fromEntries(
-			Object.entries(blog1FormRaw).map(([semantic, raw]) => [semantic, flatColors[raw]]),
-		),
-	} as { [K in keyof typeof blog1Raw | keyof typeof blog1FormRaw]: `var(--${string})` },
+		...mapToVars(blog1Raw),
+		...mapToVars(blog1FormRaw),
+	},
 }
