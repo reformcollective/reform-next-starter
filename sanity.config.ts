@@ -6,10 +6,10 @@ import { assist } from "@sanity/assist"
 import { visionTool } from "@sanity/vision"
 import { env } from "app/env"
 import gsap from "gsap/all"
-import { singletonPlugin } from "library/sanity/singletonPlugin"
+import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
+import { structureTool } from "sanity/structure"
 import { defineConfig, type PluginOptions } from "sanity"
 import { presentationTool } from "sanity/presentation"
-import { structureTool } from "sanity/structure"
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
 import { linkField } from "sanity-plugin-link-field"
 import { media } from "sanity-plugin-media"
@@ -120,61 +120,28 @@ export default defineConfig({
 		 */
 		structureTool({
 			title: "All Content",
-			structure: (S) => {
-				const singletonItems = singletons.map((typeDef) =>
-					S.listItem()
-						.title(typeDef.title ?? "Untitled")
-						.icon(typeDef.icon)
-						.child(S.editor().id(typeDef.name).schemaType(typeDef.name).documentId(typeDef.name)),
-				)
-
-				const blog1Item = S.listItem()
-					.title("Blog 1")
-					.child(
-						S.list()
+			structure: pageStructure(singletons, [
+				{
+					item: (S) =>
+						S.listItem()
 							.title("Blog 1")
-							.items([
-								S.listItem()
-									.title("Hub Settings")
-									.child(S.editor().id("blog1Hub").schemaType("blog1Hub").documentId("blog1Hub")),
-								S.documentTypeListItem("blog1Post").title("Posts"),
-								S.documentTypeListItem("blog1Author").title("Authors"),
-								S.documentTypeListItem("blog1Category").title("Categories"),
-							]),
-					)
-
-				const allHiddenNames = [
-					...singletons.map((s) => s.name),
-					"blog1Hub",
-					"blog1Post",
-					"blog1Author",
-					"blog1Category",
-				]
-
-				const nonSingletonItems = S.documentTypeListItems().filter(
-					(listItem) => !allHiddenNames.includes(listItem.getId() ?? ""),
-				)
-				const middleItems = ["media.tag", "assist.instruction.context"]
-					.map((id) => nonSingletonItems.find((item) => item.getId() === id))
-					.filter(Boolean)
-				const hiddenItems = ["mux.videoAsset"].map((id) =>
-					nonSingletonItems.find((item) => item.getId() === id),
-				)
-				const restOfItems = nonSingletonItems.filter(
-					(item) => !middleItems.includes(item) && !hiddenItems.includes(item),
-				)
-
-				return S.list()
-					.title("Content Types")
-					.items([
-						...singletonItems,
-						blog1Item,
-						S.divider(),
-						...middleItems,
-						S.divider(),
-						...restOfItems,
-					])
-			},
+							.child(
+								S.list()
+									.title("Blog 1")
+									.items([
+										S.listItem()
+											.title("Hub Settings")
+											.child(
+												S.editor().id("blog1Hub").schemaType("blog1Hub").documentId("blog1Hub"),
+											),
+										S.documentTypeListItem("blog1Post").title("Posts"),
+										S.documentTypeListItem("blog1Author").title("Authors"),
+										S.documentTypeListItem("blog1Category").title("Categories"),
+									]),
+							),
+					hiddenTypes: ["blog1Hub", "blog1Post", "blog1Author", "blog1Category"],
+				},
+			]),
 		}),
 
 		/**
