@@ -1,7 +1,7 @@
 import { DesktopIcon } from "@sanity/icons"
 import { redirect, universalImage } from "library/sanity/reusables"
 import { siteURL } from "library/siteURL"
-import { styled } from "library/styled"
+import type { ReactNode } from "react"
 import { defineField, defineType } from "sanity"
 import * as sections from "./sections"
 
@@ -20,11 +20,17 @@ const groups = Array.from(groupNames).map((name) => ({
 		.filter((section) => section !== undefined),
 }))
 
-const Code = styled("code", {
-	border: "1px solid rgb(from currentcolor r g b / 20%)",
-	borderRadius: "4px !important",
-	padding: "0 4px",
-})
+const Code = ({ children }: { children: ReactNode }) => (
+	<code
+		style={{
+			border: "1px solid rgb(from currentcolor r g b / 20%)",
+			borderRadius: "4px",
+			padding: "0 4px",
+		}}
+	>
+		{children}
+	</code>
+)
 
 export const pageMetadata = [
 	defineField({

@@ -26,7 +26,7 @@
 import { colors } from "app/styles/colors.css"
 import { sleep } from "library/functions"
 import { usePageTransition } from "library/link/usePageTransition"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { useRef } from "react"
 
 const DURATION = 500

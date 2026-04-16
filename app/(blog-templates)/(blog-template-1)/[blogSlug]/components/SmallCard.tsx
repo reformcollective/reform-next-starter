@@ -1,7 +1,7 @@
 import { colors } from "app/styles/colors.css"
 import textStyles, { clampText } from "app/styles/text"
 import UniversalLink from "library/link"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 import type { Card, RecentPost } from "../types"
 

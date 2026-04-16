@@ -1,4 +1,4 @@
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 import type { PostAuthor } from "../types"
 

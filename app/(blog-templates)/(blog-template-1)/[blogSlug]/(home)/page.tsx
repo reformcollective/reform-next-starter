@@ -1,6 +1,6 @@
 import { colors } from "app/styles/colors.css"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { siteURL } from "library/siteURL"
 import type { Metadata } from "next"
 import { defineQuery } from "next-sanity"

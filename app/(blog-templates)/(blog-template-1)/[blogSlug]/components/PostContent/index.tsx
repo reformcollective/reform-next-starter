@@ -2,7 +2,7 @@ import BlogRich from "app/(blog-templates)/(blog-template-1)/[blogSlug]/BlogRich
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import UniversalImage from "library/UniversalImage"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import TimeSVG from "./time.inline.svg"
 import CalendarSVG from "./date.inline.svg"
 import RelatedPosts from "../RelatedPosts"

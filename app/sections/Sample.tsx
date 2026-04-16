@@ -1,7 +1,7 @@
 import type { GetSectionType } from "page"
 import { VideoEmbed } from "library/videos/VideoEmbed"
 import { sleep } from "library/functions"
-import { css, fresponsive, styled } from "library/styled/alpha"
+import { css, fresponsive, styled } from "library/styled"
 
 export default async function SampleSection(props: GetSectionType<"sample">) {
 	const { title, text, sampleVideo } = props

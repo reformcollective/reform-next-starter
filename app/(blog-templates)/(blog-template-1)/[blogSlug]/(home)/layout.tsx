@@ -1,4 +1,4 @@
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 
 export default function BlogHomeLayout({ children }: { children: React.ReactNode }) {
 	return <Wrapper>{children}</Wrapper>

@@ -8,7 +8,7 @@ import { DisplayDate } from "library/DisplayDate"
 import { InfiniteSideScroll } from "library/InfiniteSideScroll"
 import UniversalLink from "library/link"
 import StaticImage from "library/StaticImage"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { useState } from "react"
 
 export default function DesignPage() {

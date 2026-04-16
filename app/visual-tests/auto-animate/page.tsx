@@ -2,9 +2,8 @@
 
 import AutoAnimate from "library/AutoAnimate"
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled/alpha"
-import { Fragment, useEffect, useState } from "react"
-import { attrs } from "library/styled"
+import { css, fresponsive, styled } from "library/styled"
+import { type ComponentProps, Fragment, useEffect, useState } from "react"
 
 const BaseWrapper = styled(
 	AutoAnimate,
@@ -12,21 +11,35 @@ const BaseWrapper = styled(
 		outline: 1px solid red;
 	`),
 )
-const Animate = attrs(BaseWrapper, {
-	duration: 3,
-	skipFirstAnimation: false,
-})
+
+function Animate(
+	props: Omit<ComponentProps<typeof BaseWrapper>, "duration" | "skipFirstAnimation">,
+) {
+	return <BaseWrapper duration={3} skipFirstAnimation={false} {...props} />
+}
+
 const OpacityWrapper = styled(
 	AutoAnimate,
 	fresponsive(css`
 		outline: 1px solid green;
 	`),
 )
-const OpacityAnimate = attrs(OpacityWrapper, {
-	duration: 3,
-	skipFirstAnimation: false,
-	parameters: { yPercent: undefined, opacity: 0 },
-})
+
+function OpacityAnimate(
+	props: Omit<
+		ComponentProps<typeof OpacityWrapper>,
+		"duration" | "skipFirstAnimation" | "parameters"
+	>,
+) {
+	return (
+		<OpacityWrapper
+			duration={3}
+			skipFirstAnimation={false}
+			parameters={{ yPercent: undefined, opacity: 0 }}
+			{...props}
+		/>
+	)
+}
 
 export default function AutoTests() {
 	const [flipper, setFlipper] = useState(false)

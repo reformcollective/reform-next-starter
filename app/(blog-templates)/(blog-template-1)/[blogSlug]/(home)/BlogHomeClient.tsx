@@ -13,7 +13,7 @@ import SmallCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/compone
 import { useHeaderTheme } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/HeaderTheme"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { useMedia } from "library/useMedia"
 import { useSearchResults } from "library/useSearchResults"
 import { getResponsivePixels } from "library/viewportUtils"

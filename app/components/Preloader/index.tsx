@@ -43,7 +43,7 @@
 
 import { usePreloader } from "library/link/usePreloader"
 import { useRef } from "react"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { colors } from "app/styles/colors.css"
 import { preloaderExit, logoPulse, logoOutro } from "./animations.css"
 import LogoSVG from "./images/logo.inline.svg"
