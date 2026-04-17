@@ -1,7 +1,7 @@
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import type { ComponentProps } from "react"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 
 type KickerProps = ComponentProps<"span"> & {
 	size?: "large" | "medium" | "tag"

@@ -2,7 +2,7 @@
 
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { useBlogCategory } from "./SearchBar"
 import type { Card } from "../types"
 

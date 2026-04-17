@@ -1,5 +1,5 @@
 import { foundation } from "library/layers.css"
-import { compileTime, css } from "library/styled/alpha"
+import { compileTime, css } from "library/styled"
 
 const style = css`
 	@layer ${foundation} {

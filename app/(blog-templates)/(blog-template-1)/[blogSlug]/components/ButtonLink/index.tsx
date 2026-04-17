@@ -2,7 +2,7 @@ import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import type { UniversalLinkProps } from "library/link"
 import UniversalLink from "library/link"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import ArrowIcon from "./Arrow.inline.svg"
 
 export default function ButtonLink({

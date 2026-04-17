@@ -3,7 +3,7 @@
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import UniversalLink from "library/link"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import CaretSVG from "../icons/caret.inline.svg"
 import type { Post } from "../types"
 import Kicker from "./Kicker"

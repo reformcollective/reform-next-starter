@@ -6,7 +6,7 @@ import ButtonLink from "./ButtonLink"
 import { colors } from "app/styles/colors.css"
 import textStyles, { clampText } from "app/styles/text"
 import UniversalImage from "library/UniversalImage"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import type { FeaturedCard } from "../types"
 
 export default function LargeCard({ data }: { data: FeaturedCard }) {

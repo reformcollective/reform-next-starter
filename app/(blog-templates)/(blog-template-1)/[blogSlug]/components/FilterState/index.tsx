@@ -3,7 +3,7 @@
 import type { ReactNode } from "react"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import CaretSVG from "../../icons/caret.inline.svg"
 import ClearFilterSVG from "./clear-filter.inline.svg"
 import { useBlogCategory, useBlogQuery, useBlogShowAll } from "../SearchBar"

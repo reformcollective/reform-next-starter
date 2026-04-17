@@ -2,7 +2,7 @@
 
 import nativeSmoothPin from "library/nativeSmoothPin"
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled/alpha"
+import { css, fresponsive, styled } from "library/styled"
 
 const sizeOrder: Array<"square" | "100vh" | "120vh"> = ["square", "100vh", "120vh"]
 const topOrder: Array<"zero" | "neg" | "pos"> = ["zero", "neg", "pos"]

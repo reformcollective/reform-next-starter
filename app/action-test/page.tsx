@@ -4,7 +4,7 @@ import * as React from "react"
 import { Field } from "@base-ui/react/field"
 import { Form } from "@base-ui/react/form"
 import { Button } from "@base-ui/react/button"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { colors } from "app/styles/colors.css"
 import { submitForm, type FormState } from "./actions"
 
