@@ -30,9 +30,6 @@ const nextConfig: NextConfig = {
 	reactCompiler: { panicThreshold: "all_errors" },
 
 	turbopack: {
-		// turbopack must be able to resolve packages from pnpm's global store
-		root: "/",
-
 		rules: {
 			// importing inline SVGs as React components
 			// SVGs not caught by this rule will be imported using next image (raster)
