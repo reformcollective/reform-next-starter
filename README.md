@@ -7,7 +7,7 @@ Remove each item from the list as you complete it.
 
 1. Clone using the template in GitHub
 1. Copy the starters `.env` file to your own `.env` file (you'll update this during sanity setup or ejection)
-1. Update all existing packages with `pnpm dlx npm-check-updates -c 1 --deep -u` (feel free to update the starter repository as well)
+1. Update all existing packages with `pnpm update` (or `pnpm update --latest` if you want to include breaking changes) (feel free to update the starter repository as well)
 1. Update the README.md to add project-specific image and name below
 1. Delete the `app/visual-tests` folder
 
