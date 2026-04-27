@@ -1,10 +1,10 @@
-export const mobileBreakpoint = 500
+export const mobileBreakpoint = 700
 export const mobileDesignSize = 375
 
 export const tabletBreakpoint = 1024
 export const tabletDesignSize = 1024
 
-export const desktopBreakpoint = 1440
+export const desktopBreakpoint = 1600
 export const desktopDesignSize = 1440
 
 const media = {
