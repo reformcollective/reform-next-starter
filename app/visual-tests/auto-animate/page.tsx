@@ -154,6 +154,88 @@ export default function AutoTests() {
 						: "long text that will not wrap!"}
 				</Animate>
 			</RestrictWidth>
+
+			<h2>fixed size</h2>
+			<FixedArea>
+				<FillAnimate fill>
+					<Filler key={flipper ? "a" : "b"}>
+						<FillImage
+							alt=""
+							src={flipper ? "https://picsum.photos/1920/1080" : "https://picsum.photos/1080/1920"}
+						/>
+					</Filler>
+				</FillAnimate>
+			</FixedArea>
+
+			<h2>width change</h2>
+			<Animate
+				parameters={{ yPercent: undefined }}
+				toParameters={{ xPercent: 100 }}
+				fromParameters={{ xPercent: -100 }}
+			>
+				<NonFillImage
+					alt=""
+					key={flipper ? "a" : "b"}
+					style={{ height: 400 }}
+					src={flipper ? "https://picsum.photos/1920/1080" : "https://picsum.photos/1080/1920"}
+				/>
+			</Animate>
+			<Animate
+				parameters={{ yPercent: undefined }}
+				toParameters={{ xPercent: 100 }}
+				fromParameters={{ xPercent: -100 }}
+				alignment="center"
+			>
+				<NonFillImage
+					alt=""
+					style={{ height: 400 }}
+					key={flipper ? "a" : "b"}
+					src={flipper ? "https://picsum.photos/1920/1080" : "https://picsum.photos/1080/1920"}
+				/>
+			</Animate>
+			<Animate
+				parameters={{ yPercent: undefined }}
+				toParameters={{ xPercent: 100 }}
+				fromParameters={{ xPercent: -100 }}
+				alignment="end"
+			>
+				<NonFillImage
+					alt=""
+					style={{ height: 400 }}
+					key={flipper ? "a" : "b"}
+					src={flipper ? "https://picsum.photos/1920/1080" : "https://picsum.photos/1080/1920"}
+				/>
+			</Animate>
+			<h2>height change</h2>
+			<Row>
+				<div style={{ width: 400 }}>
+					<Animate>
+						<NonFillImage
+							alt=""
+							key={flipper ? "a" : "b"}
+							src={flipper ? "https://picsum.photos/1920/1080" : "https://picsum.photos/1080/1920"}
+						/>
+					</Animate>
+				</div>
+				<div style={{ width: 400 }}>
+					<Animate alignment="center">
+						<NonFillImage
+							alt=""
+							key={flipper ? "a" : "b"}
+							src={flipper ? "https://picsum.photos/1920/1080" : "https://picsum.photos/1080/1920"}
+						/>
+					</Animate>
+				</div>
+				<div style={{ width: 400 }}>
+					<Animate alignment="end">
+						<NonFillImage
+							alt=""
+							key={flipper ? "a" : "b"}
+							src={flipper ? "https://picsum.photos/1920/1080" : "https://picsum.photos/1080/1920"}
+						/>
+					</Animate>
+				</div>
+			</Row>
 		</Wrapper>
 	)
 }
@@ -174,6 +256,7 @@ const Wrapper = styled(
 		align-items: center;
 		gap: 40px;
 		padding: 100px;
+		grid-column: main;
 	`),
 )
 
@@ -199,5 +282,47 @@ const PurpleBox = styled(
 	"div",
 	fresponsive(css`
 		border: 1px solid purple;
+	`),
+)
+
+const FixedArea = styled(
+	"div",
+	fresponsive(css`
+		width: 500px;
+		height: 500px;
+		background: purple;
+	`),
+)
+
+const FillAnimate = styled(
+	Animate,
+	fresponsive(css`
+		width: 100%;
+		height: 100%;
+	`),
+)
+
+const Filler = styled(
+	"div",
+	fresponsive(css`
+		width: 100%;
+		height: 100%;
+		border: 10px solid yellow;
+	`),
+)
+
+const FillImage = styled("img", [
+	fresponsive(css`
+		width: 100%;
+		height: 100%;
+		aspect-ratio: unset;
+	`),
+])
+
+const NonFillImage = styled(
+	"img",
+	fresponsive(css`
+		border: 10px solid green;
+		opacity: 0.8;
 	`),
 )
