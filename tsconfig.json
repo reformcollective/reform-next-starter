@@ -6,6 +6,7 @@
 		"jsx": "preserve",
 		"incremental": true,
 		"plugins": [{ "name": "next" }],
+		"noErrorTruncation": true,
 		"paths": {
 			"*": ["./*"],
 			"page": ["./app/[[...slug]]/page"],

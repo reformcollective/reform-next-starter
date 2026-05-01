@@ -25,7 +25,7 @@ export const documentPaths = defineDocumentPaths({
  * @see app/sitemap.ts
  * @see app/[[...slug]]/page.tsx
  */
-export const documentPathProjection = <T>(document: T) =>
+export const documentPathProjection = <T extends string>(document: T) =>
 	`
 	select(
 	  !defined(${document}) => null,

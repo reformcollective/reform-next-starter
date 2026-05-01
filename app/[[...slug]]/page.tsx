@@ -1,22 +1,18 @@
+import SampleSection from "app/sections/Sample"
 import { EagerImages } from "library/StaticImage"
-import { videoField } from "library/sanity/assetMetadata"
+import { imageField, linkField, videoField } from "library/sanity/assetMetadata"
+import { createSanityDataAttribute } from "library/sanity/createSanityDataAttribute"
+import { resolveDocumentTitle, resolveProductionUrl } from "library/sanity/document-helpers"
+import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { Redirect } from "library/sanity/redirect"
 import { siteURL } from "library/siteURL"
 import type { Metadata } from "next"
-import { notFound } from "next/navigation"
 import { defineQuery } from "next-sanity"
+import { notFound } from "next/navigation"
 import { Fragment } from "react"
-import { sanityFetch } from "sanity/lib/live"
-import {
-	resolveDocumentLocation,
-	resolveDocumentTitle,
-	resolveProductionUrl,
-} from "library/sanity/document-helpers"
-import { documentPathProjection } from "sanity/lib/slug-resolver"
-import SampleSection from "app/sections/Sample"
-import { resolveOpenGraphImage } from "library/sanity/opengraph"
-import { createSanityDataAttribute } from "library/sanity/createSanityDataAttribute"
 import type { MainPageQueryResult } from "sanity.types"
+import { sanityFetch } from "sanity/lib/live"
+import { documentPathProjection } from "sanity/lib/slug-resolver"
 
 type PageSection = NonNullable<NonNullable<MainPageQueryResult>["sections"]>[number]
 type SectionTypes = PageSection["_type"]
@@ -38,7 +34,9 @@ const mainPageQuery = defineQuery(`
 		sections[] {
 			...,
 			_type == "sample" => {
-				${videoField("sampleVideo")}
+				${videoField("sampleVideo")},
+				${imageField("sampleImage")},
+				${linkField("sampleLink")}
 			}
 		}
 	}

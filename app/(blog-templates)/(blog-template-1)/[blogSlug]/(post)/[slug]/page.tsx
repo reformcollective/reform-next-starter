@@ -7,6 +7,7 @@ import type { Metadata, ResolvingMetadata } from "next"
 import { notFound } from "next/navigation"
 import { defineQuery } from "next-sanity"
 import { sanityFetch } from "sanity/lib/live"
+import { imageField, videoField } from "library/sanity/assetMetadata"
 
 export const dynamic = "force-static"
 export const dynamicParams = false
@@ -21,13 +22,7 @@ const postFragment = `{
 	"slug": slug.current,
 	"author": author->name,
 	articleTextPreview,
-	mainImage {
-		...,
-		"data": {
-			"lqip": asset->metadata.lqip,
-			"aspectRatio": asset->metadata.dimensions.aspectRatio
-		}
-	},
+	${imageField("mainImage")},
 	"categories": categories[]->title,
 	publishedAt
 }`
@@ -40,44 +35,16 @@ const singlePostQuery = defineQuery(`
 		"author": author-> {
 			name,
 			company,
-			image {
-				...,
-				"data": {
-					"lqip": asset->metadata.lqip,
-					"aspectRatio": asset->metadata.dimensions.aspectRatio
-				}
-			}
+			${imageField("image")}
 		},
 		articleTextPreview,
-		mainImage {
-			...,
-			"data": {
-				"lqip": asset->metadata.lqip,
-				"aspectRatio": asset->metadata.dimensions.aspectRatio
-			}
-		},
+		${imageField("mainImage")},
 		"categories": categories[]->title,
 		publishedAt,
 		body[] {
 			...,
-			_type == "image" => {
-				"data": {
-					"lqip": asset->metadata.lqip,
-					"aspectRatio": asset->metadata.dimensions.aspectRatio
-				}
-			},
-			_type == "video" => {
-				"muxVideo": muxVideo {
-					...,
-					"data": asset-> {
-						playbackId,
-						"videoThumbnailUrl": select(
-							defined(thumbTime) => "https://image.mux.com/" + playbackId + "/thumbnail.jpg?time=" + string(thumbTime),
-							"https://image.mux.com/" + playbackId + "/thumbnail.jpg"
-						)
-					}
-				}
-			}
+			${imageField('_type == "image" =>')},
+			${videoField('_type == "video" =>')}
 		},
 		"relatedPosts": *[_type == "blog1Post" && slug.current != $slug && count((categories[]->title)[@ in ^.categories[]->title]) > 0] | order(publishedAt desc) [0...3] ${postFragment},
 		"recentPosts": *[_type == "blog1Post" && slug.current != $slug] | order(publishedAt desc) [0...3] ${postFragment}
