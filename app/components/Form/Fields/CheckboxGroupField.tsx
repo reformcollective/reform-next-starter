@@ -7,7 +7,7 @@ import { Field } from "@base-ui/react/field"
 import type { FieldRoot } from "@base-ui/react/field"
 import type { Form } from "@base-ui/react/form"
 import { Fieldset } from "@base-ui/react/fieldset"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { colors } from "app/styles/colors.css"
 
 interface Option {

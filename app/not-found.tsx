@@ -1,4 +1,4 @@
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 

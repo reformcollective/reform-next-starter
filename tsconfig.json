@@ -8,7 +8,9 @@
 		"plugins": [{ "name": "next" }],
 		"paths": {
 			"*": ["./*"],
-			"page": ["./app/[[...slug]]/page"]
+			"page": ["./app/[[...slug]]/page"],
+			"images/*": ["./app/images/*"],
+			"library/*": ["./library/*"]
 		}
 	},
 	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts"],

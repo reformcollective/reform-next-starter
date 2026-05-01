@@ -94,7 +94,7 @@ export async function generateMetadata({
 		alternates: {
 			canonical: pageUrl,
 		},
-		metadataBase: new URL(siteURL),
+		metadataBase: siteURL,
 	}
 }
 

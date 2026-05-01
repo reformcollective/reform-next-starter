@@ -36,6 +36,7 @@ const slugResolver: SchemaResolver<Schemas> = {
  * take a document and return the locations from the slug resolver
  */
 const resolveDocument = (document: any) => {
+	if (!document?._type) return undefined
 	const resolver = slugResolver[document._type as keyof typeof slugResolver]
 	if (!resolver) return undefined
 
