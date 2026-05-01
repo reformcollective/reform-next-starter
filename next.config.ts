@@ -33,8 +33,9 @@ const nextConfig: NextConfig = {
 		// turbopack must be able to resolve packages from pnpm's global store
 		root: "/",
 
-		// importing inline SVGs as React components
 		rules: {
+			// importing inline SVGs as React components
+			// SVGs not caught by this rule will be imported using next image (raster)
 			"*.inline.svg": {
 				loaders: [{ loader: "@svgr/webpack", options: { ssr: true } }],
 
