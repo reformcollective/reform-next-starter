@@ -139,7 +139,7 @@ const SwitchThumb = styled(Switch.Thumb, [
 		box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
 		transition: translate 125ms ease;
 		translate: 0 0;
-		
+
 		[data-checked] & {
 			translate: 20px 0;
 		}

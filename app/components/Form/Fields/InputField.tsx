@@ -157,8 +157,8 @@ const Label = styled(
 	Field.Label,
 	[
 		f.responsive(css`
-		color: ${colors.black};
-	`),
+			color: ${colors.black};
+		`),
 	],
 	"InputLabel",
 )
@@ -188,31 +188,31 @@ const Control = styled(
 	Field.Control,
 	[
 		f.responsive(css`
-		box-sizing: border-box;
-		padding: 0 16px;
-		padding-right: 40px;
-		margin: 0;
-		border: 1px solid #e5e7eb;
-		width: 100%;
-		height: 48px;
-		border-radius: 8px;
-		font-family: inherit;
-		background-color: transparent;
-		color: ${colors.black};
+			box-sizing: border-box;
+			padding: 0 16px;
+			padding-right: 40px;
+			margin: 0;
+			border: 1px solid #e5e7eb;
+			width: 100%;
+			height: 48px;
+			border-radius: 8px;
+			font-family: inherit;
+			background-color: transparent;
+			color: ${colors.black};
 
-		&::placeholder {
-			color: #9ca3af;
-		}
+			&::placeholder {
+				color: #9ca3af;
+			}
 
-		&:focus {
-			outline: 2px solid ${colors.blue};
-			outline-offset: -1px;
-		}
+			&:focus {
+				outline: 2px solid ${colors.blue};
+				outline-offset: -1px;
+			}
 
-		[data-invalid] & {
-			border-color: ${colors.red};
-		}
-	`),
+			[data-invalid] & {
+				border-color: ${colors.red};
+			}
+		`),
 	],
 	"InputControl",
 )
@@ -249,8 +249,8 @@ const ErrorIcon = styled(
 	"span",
 	[
 		f.responsive(css`
-		color: ${colors.red};
-	`),
+			color: ${colors.red};
+		`),
 	],
 	"InputErrorIcon",
 )

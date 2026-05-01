@@ -79,8 +79,7 @@ const Wrapper = styled("div", [
 
 		&[data-ready] {
 			/* delayed to start after the logo outro finishes */
-			animation: ${preloaderExit} 0.5s 0.5s cubic-bezier(0.76, 0, 0.24, 1)
-				forwards;
+			animation: ${preloaderExit} 0.5s 0.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
 			pointer-events: none;
 		}
 	`),

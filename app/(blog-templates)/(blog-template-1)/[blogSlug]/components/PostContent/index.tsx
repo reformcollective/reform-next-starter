@@ -194,11 +194,7 @@ const ArticleImage = styled(UniversalImage, [
 		border-radius: 12px;
 		overflow: clip;
 	`),
-	f.small(
-		css`
-			
-		`,
-	),
+	f.small(css``),
 ])
 
 const Title = styled("h1", [

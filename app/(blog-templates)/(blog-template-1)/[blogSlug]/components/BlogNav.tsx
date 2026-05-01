@@ -45,11 +45,11 @@ const Categories = styled("div", [
 		width: 100%;
 		overflow: scroll;
 		mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
-		
+
 		&::-webkit-scrollbar {
 			display: none;
 		}
-		
+
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 	`),

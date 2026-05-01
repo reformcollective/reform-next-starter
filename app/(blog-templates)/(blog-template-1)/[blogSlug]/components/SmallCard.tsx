@@ -54,7 +54,7 @@ const Wrapper = styled(UniversalLink, [
 	f.responsive(css`
 		display: grid;
 		position: relative;
-		
+
 		&:hover .card-image {
 			transform: scale(1.1);
 		}
@@ -66,13 +66,7 @@ const Wrapper = styled(UniversalLink, [
 	`),
 ])
 
-const Title = styled("div", [
-	f.responsive(
-		css`
-			
-		`,
-	),
-])
+const Title = styled("div", [f.responsive(css``)])
 
 const TitleText = styled("div", [
 	f.responsive(css`

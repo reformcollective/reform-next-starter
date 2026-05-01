@@ -213,13 +213,13 @@ const Popup = styled(Select.Popup, [
 		transition:
 			transform 150ms,
 			opacity 150ms;
-		
+
 		&[data-starting-style],
 		&[data-ending-style] {
 			opacity: 0;
 			transform: scale(0.9);
 		}
-		
+
 		&[data-side="none"] {
 			transition: none;
 			transform: none;

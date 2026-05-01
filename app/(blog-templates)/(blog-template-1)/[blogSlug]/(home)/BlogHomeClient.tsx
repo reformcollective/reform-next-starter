@@ -160,7 +160,7 @@ const StickyWrapper = styled("div", [
 		display: flex;
 		flex-direction: column;
 		gap: 42px;
-		
+
 		.extra-margin {
 			margin-right: 15px;
 		}

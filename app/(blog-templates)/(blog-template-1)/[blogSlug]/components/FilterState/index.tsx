@@ -206,7 +206,7 @@ const ClearIcon = styled(ClearFilterSVG, [
 		height: 24px;
 		flex-shrink: 0;
 		transform: translateY(-1px);
-		
+
 		path {
 			transition:
 				fill 0.15s ease,

@@ -61,7 +61,7 @@ const Wrapper = styled("div", [
 		margin-bottom: 0;
 		cursor: pointer;
 		position: relative;
-		
+
 		&:hover .card-image {
 			transform: scale(1.05);
 		}

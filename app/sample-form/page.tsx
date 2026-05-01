@@ -449,7 +449,9 @@ const SegmentedButton = styled("label", [
 		background: white;
 		cursor: pointer;
 		border-right: 1px solid #d1d5db;
-		transition: background 100ms, color 100ms;
+		transition:
+			background 100ms,
+			color 100ms;
 
 		&:last-child {
 			border-right: none;
@@ -560,11 +562,11 @@ const ResultsRow = styled("div", [
 		gap: 16px;
 		padding: 10px 14px;
 		border-bottom: 1px solid #f3f4f6;
-		
+
 		&:last-child {
 			border-bottom: none;
 		}
-		
+
 		&:nth-child(even) {
 			background: #f9fafb;
 		}
