@@ -80,7 +80,7 @@
 			"onFail": "download"
 		}
 	},
-	"packageManager": "pnpm@11.0.0-rc.2",
+	"packageManager": "pnpm@11.0.3",
 	"wireit": {
 		"dev": {
 			"command": "next dev",

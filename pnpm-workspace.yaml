@@ -11,8 +11,8 @@ allowBuilds:
   vue-demi: true
 ignoreWorkspaceRootCheck: true
 overrides:
-  "@types/react": "$@types/react"
-  "@types/react-dom": "$@types/react-dom"
   gsap: "$gsap"
   react: "$react"
   react-dom: "$react-dom"
+  "@types/react": "$@types/react"
+  "@types/react-dom": "$@types/react-dom"
