@@ -31,7 +31,7 @@ import {
 	getLinkableTypes,
 	resolveDocumentLocations,
 	resolveProductionUrl,
-} from "sanity/lib/slug-resolver"
+} from "library/sanity/document-helpers"
 import { siteURL } from "library/siteURL"
 import { codeInput } from "@sanity/code-input"
 

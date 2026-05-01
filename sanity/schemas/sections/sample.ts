@@ -1,4 +1,4 @@
-import { createSectionPreview } from "library/sanity/reusables"
+import { createSectionPreview, universalImage, universalLink } from "library/sanity/reusables"
 import { defineArrayMember, defineField } from "sanity"
 import preview from "./preview/sample.png"
 
@@ -25,6 +25,14 @@ export const sample = defineArrayMember({
 			name: "sampleVideo",
 			title: "Sample Video",
 			type: "video",
+		}),
+		universalImage({
+			name: "sampleImage",
+			title: "Sample Image",
+		}),
+		universalLink({
+			name: "sampleLink",
+			title: "Sample Link",
 		}),
 	],
 })
