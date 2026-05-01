@@ -80,7 +80,7 @@ export async function generateMetadata({ params }: PageProps<"/[[...slug]]">): P
 
 	const canonicalUrl = resolveProductionUrl(relevantPage)
 	const canonicalTitle = resolveDocumentTitle(relevantPage) || settings?.defaultTitle
-	const canonicalDescription = relevantPage.description || settings?.defaultDescription
+	const canonicalDescription = relevantPage?.description || settings?.defaultDescription
 
 	const image = relevantPage?.ogImage
 		? resolveOpenGraphImage(relevantPage.ogImage)

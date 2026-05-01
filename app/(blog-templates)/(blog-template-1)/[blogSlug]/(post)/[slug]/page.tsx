@@ -25,7 +25,7 @@ const postFragment = `{
 	${imageField("mainImage")},
 	"categories": categories[]->title,
 	publishedAt
-}`
+}` as const
 
 const singlePostQuery = defineQuery(`
 	*[_type == "blog1Post" && slug.current == $slug][0] {
