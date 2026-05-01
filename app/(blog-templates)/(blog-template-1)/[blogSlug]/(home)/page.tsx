@@ -7,6 +7,7 @@ import { defineQuery } from "next-sanity"
 import { Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import { BlogHomeClient } from "./BlogHomeClient"
+import { imageField } from "library/sanity/assetMetadata"
 
 export const dynamic = "force-static"
 export const dynamicParams = false
@@ -30,13 +31,7 @@ const allPostsQuery = defineQuery(`
 		"slug": slug.current,
 		"author": author->name,
 		articleTextPreview,
-		mainImage {
-			...,
-			"data": {
-				"lqip": asset->metadata.lqip,
-				"aspectRatio": asset->metadata.dimensions.aspectRatio
-			}
-		},
+		${imageField("mainImage")},
 		"categories": categories[]->title,
 		publishedAt
 	}
@@ -50,26 +45,14 @@ const blogHubQuery = defineQuery(`
 		description,
 		noIndex,
 		searchMode,
-		ogImage {
-			...,
-			"data": {
-				"lqip": asset->metadata.lqip,
-				"aspectRatio": asset->metadata.dimensions.aspectRatio
-			}
-		},
+		${imageField("ogImage")},
 		"featuredPost": featuredPost-> {
 			_id,
 			title,
 			"slug": slug.current,
 			"author": author->name,
 			articleTextPreview,
-			mainImage {
-				...,
-				"data": {
-					"lqip": asset->metadata.lqip,
-					"aspectRatio": asset->metadata.dimensions.aspectRatio
-				}
-			},
+			${imageField("mainImage")},
 			"categories": categories[]->title,
 			publishedAt
 		}

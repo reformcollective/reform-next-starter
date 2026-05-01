@@ -166,9 +166,6 @@ importers:
       '@eslint/css-tree':
         specifier: ^3
         version: 3.6.9
-      '@mux/blurup':
-        specifier: ^1
-        version: 1.0.2
       '@mux/mux-video-react':
         specifier: ^0.29
         version: 0.29.2(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -2402,9 +2399,6 @@ packages:
     peerDependenciesMeta:
       markdown-it:
         optional: true
-
-  '@mux/blurup@1.0.2':
-    resolution: {integrity: sha512-MKn4yyXmmP2YM7CxmJgWq/COsK/YD/+y6pL56lIPHHF/QjFoW3iEpA7rYFy1/BcU0IwJ1ppLRNjksGFOhmIYKQ==}
 
   '@mux/mux-data-google-ima@0.2.8':
     resolution: {integrity: sha512-0ZEkHdcZ6bS8QtcjFcoJeZxJTpX7qRIledf4q1trMWPznugvtajCjCM2kieK/pzkZj1JM6liDRFs1PJSfVUs2A==}
@@ -6883,11 +6877,6 @@ packages:
   ignore@7.0.5:
     resolution: {integrity: sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg==}
     engines: {node: '>= 4'}
-
-  image-dimensions@2.5.0:
-    resolution: {integrity: sha512-CKZPHjAEtSg9lBV9eER0bhNn/yrY7cFEQEhkwjLhqLY+Na8lcP1pEyWsaGMGc8t2qbKWA/tuqbhFQpOKGN72Yw==}
-    engines: {node: '>=18'}
-    hasBin: true
 
   image-ssim@0.2.0:
     resolution: {integrity: sha512-W7+sO6/yhxy83L0G7xR8YAc5Z5QFtYEXXRV6EaE8tuYBZJnA3gVgp3q7X7muhLZVodeb9UfvjSbwt9VJwjIYAg==}
@@ -13331,10 +13320,6 @@ snapshots:
     optionalDependencies:
       markdown-it: 14.1.1
 
-  '@mux/blurup@1.0.2':
-    dependencies:
-      image-dimensions: 2.5.0
-
   '@mux/mux-data-google-ima@0.2.8':
     dependencies:
       mux-embed: 5.9.0
@@ -18870,8 +18855,6 @@ snapshots:
   ignore@5.3.2: {}
 
   ignore@7.0.5: {}
-
-  image-dimensions@2.5.0: {}
 
   image-ssim@0.2.0: {}
 

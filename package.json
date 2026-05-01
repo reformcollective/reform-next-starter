@@ -128,7 +128,9 @@
 				"sanity/**/*",
 				"sanity.config.ts",
 				"app/**/*.ts",
-				"app/**/*.tsx"
+				"app/**/*.tsx",
+				"library/**/*.ts",
+				"library/**/*.tsx"
 			],
 			"output": [
 				"schema.json",

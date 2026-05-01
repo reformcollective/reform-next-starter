@@ -1,5 +1,6 @@
 "use server"
 
+import { imageField } from "library/sanity/assetMetadata"
 import { defineQuery } from "next-sanity"
 import { sanityFetch } from "sanity/lib/live"
 
@@ -10,13 +11,7 @@ const allPostsServerQuery = defineQuery(`
 		"slug": slug.current,
 		"author": author->name,
 		articleTextPreview,
-		mainImage {
-			...,
-			"data": {
-				"lqip": asset->metadata.lqip,
-				"aspectRatio": asset->metadata.dimensions.aspectRatio
-			}
-		},
+		${imageField("mainImage")},
 		"categories": categories[]->title,
 		publishedAt
 	}
@@ -31,13 +26,7 @@ const searchedPostsQuery = `
 		"slug": slug.current,
 		"author": author->name,
 		articleTextPreview,
-		mainImage {
-			...,
-			"data": {
-				"lqip": asset->metadata.lqip,
-				"aspectRatio": asset->metadata.dimensions.aspectRatio
-			}
-		},
+		${imageField("mainImage")},
 		"categories": categories[]->title,
 		publishedAt
 	}

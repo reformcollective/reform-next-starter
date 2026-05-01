@@ -3,7 +3,7 @@ import textStyles, { clampText } from "app/styles/text"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
-import type { Card, RecentPost } from "../types"
+import type { Card } from "../types"
 
 export default function SmallCard({ data }: { data: Card }) {
 	const { slug, mainImage, title, publishedAt } = data
