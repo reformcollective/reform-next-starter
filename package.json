@@ -80,25 +80,7 @@
 			"onFail": "download"
 		}
 	},
-	"packageManager": "pnpm@10.28.2",
-	"pnpm": {
-		"overrides": {
-			"react": "$react",
-			"react-dom": "$react-dom",
-			"@types/react": "$@types/react",
-			"@types/react-dom": "$@types/react-dom",
-			"gsap": "$gsap"
-		},
-		"onlyBuiltDependencies": [
-			"@parcel/watcher",
-			"@swc/core",
-			"esbuild",
-			"lefthook",
-			"puppeteer",
-			"sharp",
-			"vue-demi"
-		]
-	},
+	"packageManager": "pnpm@11.0.3",
 	"wireit": {
 		"dev": {
 			"command": "next dev",
