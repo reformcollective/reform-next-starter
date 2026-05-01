@@ -3,9 +3,12 @@ import { VideoEmbed } from "library/videos/VideoEmbed"
 import { sleep } from "library/functions"
 import { css, fresponsive, styled } from "library/styled"
 
-export default async function SampleSection(props: GetSectionType<"sample">) {
-	const { title, text, sampleVideo } = props
-
+export default async function SampleSection({
+	title,
+	text,
+	sampleVideo,
+	generateSanityDataAttribute,
+}: GetSectionType<"sample">) {
 	/**
 	 * artificially delay so we can see the loading state
 	 * in sanity studio
@@ -16,6 +19,7 @@ export default async function SampleSection(props: GetSectionType<"sample">) {
 		<Wrapper>
 			<h1>{title}</h1>
 			<p>{text}</p>
+			<div data-sanity={generateSanityDataAttribute("title")}>example of a data sanity prop</div>
 			{sampleVideo && <VideoEmbed video={sampleVideo} />}
 		</Wrapper>
 	)
@@ -23,8 +27,9 @@ export default async function SampleSection(props: GetSectionType<"sample">) {
 
 const Wrapper = styled("div", [
 	fresponsive(css`
+		grid-column: main;
 		display: grid;
-		gap: 40px;
+		gap: 12px;
 		min-height: 60vh;
 	`),
 ])
