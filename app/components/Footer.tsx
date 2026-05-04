@@ -1,5 +1,5 @@
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled/alpha"
+import { css, fresponsive, styled } from "library/styled"
 import type { FooterQueryResult } from "sanity.types"
 
 export default function Footer({ footerText }: NonNullable<FooterQueryResult>) {
@@ -11,6 +11,9 @@ export default function Footer({ footerText }: NonNullable<FooterQueryResult>) {
 				<p>{footerText}</p>
 				<UniversalLink href="/" style={{ textDecoration: "underline" }}>
 					Go to Home
+				</UniversalLink>
+				<UniversalLink href="/visual-tests" style={{ textDecoration: "underline" }}>
+					Go to Visual Tests
 				</UniversalLink>
 			</Content>
 		</Wrapper>

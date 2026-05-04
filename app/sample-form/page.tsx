@@ -2,7 +2,7 @@
 
 import { useRef, useState, type FormEvent } from "react"
 import type { FieldRoot } from "@base-ui/react/field"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { Form } from "@base-ui/react/form"
 import { Button } from "@base-ui/react/button"
 import { colors } from "app/styles/colors.css"

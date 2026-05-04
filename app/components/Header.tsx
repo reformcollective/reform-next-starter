@@ -1,6 +1,6 @@
 "use client"
 
-import { css, fresponsive, styled } from "library/styled/alpha"
+import { css, fresponsive, styled } from "library/styled"
 import useAutoHideHeader from "library/useAutoHideHeader"
 import { useRef } from "react"
 import type { HeaderQueryResult } from "sanity.types"
@@ -31,5 +31,6 @@ const Wrapper = styled(
 		background-color: rebeccapurple;
 		color: white;
 		view-transition-name: header;
+		z-index: 1000;
 	`),
 )

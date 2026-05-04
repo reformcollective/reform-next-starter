@@ -289,7 +289,7 @@ const Divider = styled(
 	"div",
 	fresponsive(css`
 		height: 2px;
-		background: currentColor;
+		background: currentcolor;
 		opacity: 0.15;
 		margin: 40px 40px 0;
 	`),
