@@ -1,7 +1,7 @@
 import SampleSection from "app/sections/Sample"
 import { EagerImages } from "library/StaticImage"
 import { imageField, linkField, videoField } from "library/sanity/assetMetadata"
-import { createSanityDataAttribute } from "library/sanity/createSanityDataAttribute"
+import type { SanityDataAttributeContext } from "library/sanity/getSanityDataAttribute"
 import { resolveDocumentTitle, resolveProductionUrl } from "library/sanity/document-helpers"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { Redirect } from "library/sanity/redirect"
@@ -19,7 +19,7 @@ type SectionTypes = PageSection["_type"]
 
 type WithExtraProps<T> = T & {
 	pageTitle: string
-	generateSanityDataAttribute: (property: keyof T) => string
+	sanityDataAttribute: SanityDataAttributeContext
 }
 
 export type GetSectionType<T extends SectionTypes> = WithExtraProps<
@@ -132,21 +132,13 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 			{sections.map((section, index: number) => {
 				const Wrapper = index === 0 ? EagerImages : Fragment
 
-				/**
-				 * @param path path to the property on the object. for example, if you were rendering
-				 * mySection.myObject.myImage you would pass "myObject.myImage"
-				 * @returns the data attribute for the data-sanity prop
-				 */
-				const dataAttributeCreator = (path: string) =>
-					createSanityDataAttribute({
-						documentId: relevantPage._id,
-						documentType: relevantPage._type,
-						path: `sections[${index}].${path}`,
-					})
-
 				const sectionContext = {
 					pageTitle,
-					generateSanityDataAttribute: dataAttributeCreator,
+					sanityDataAttribute: {
+						documentId: relevantPage._id,
+						documentType: relevantPage._type,
+						pathPrefix: `sections[${index}]`,
+					},
 				}
 
 				switch (section._type) {
