@@ -3,9 +3,11 @@
  */
 
 import { assist } from "@sanity/assist"
+import { RocketIcon } from "@sanity/icons"
 import { visionTool } from "@sanity/vision"
 import { env } from "app/env"
 import gsap from "gsap/all"
+import { staticLinkType } from "library/link/staticLinkType"
 import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
 import { structureTool } from "sanity/structure"
 import { defineConfig, type PluginOptions } from "sanity"
@@ -21,7 +23,6 @@ import settings from "sanity/schemas/singletons/settings"
 
 import { video, youtube } from "library/sanity/reusables"
 import page from "sanity/schemas/sanityPage"
-import { RocketIcon } from "node_modules/@sanity/icons/dist"
 import { blog1AuthorType } from "sanity/schemas/blog/blog-1/authorType"
 import { blog1BlockContentType } from "sanity/schemas/blog/blog-1/blockContentType"
 import { blog1CategoryType } from "sanity/schemas/blog/blog-1/categoryType"
@@ -172,6 +173,7 @@ export default defineConfig({
 		 */
 		linkField({
 			linkableSchemaTypes: getLinkableTypes(),
+			customLinkTypes: [staticLinkType()],
 		}),
 		/**
 		 * our custom singleton plugin
