@@ -47,7 +47,7 @@ export function BlogHomeClient({ allCards, featuredCaseStudy, searchMode }: Blog
 
 	// server-side search state
 	const [serverResults, setServerResults] = useState<Card[]>([])
-	const [isPending, startTransition] = useTransition()
+	const [, startTransition] = useTransition()
 
 	useHeaderTheme("dark")
 

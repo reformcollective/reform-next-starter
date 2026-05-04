@@ -1,4 +1,7 @@
+"use client"
+
 import type { GetSectionType } from "page"
+import { getSanityDataAttribute } from "library/sanity/getSanityDataAttribute"
 import { VideoEmbed } from "library/videos/VideoEmbed"
 import { sleep } from "library/functions"
 import { css, fresponsive, styled } from "library/styled"
@@ -7,7 +10,7 @@ export default async function SampleSection({
 	title,
 	text,
 	sampleVideo,
-	generateSanityDataAttribute,
+	sanityDataAttribute,
 }: GetSectionType<"sample">) {
 	/**
 	 * artificially delay so we can see the loading state
@@ -19,7 +22,9 @@ export default async function SampleSection({
 		<Wrapper>
 			<h1>{title}</h1>
 			<p>{text}</p>
-			<div data-sanity={generateSanityDataAttribute("title")}>example of a data sanity prop</div>
+			<div data-sanity={getSanityDataAttribute(sanityDataAttribute, "title")}>
+				example of a data sanity prop
+			</div>
 			{sampleVideo && <VideoEmbed video={sampleVideo} />}
 		</Wrapper>
 	)
