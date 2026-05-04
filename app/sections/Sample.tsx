@@ -64,7 +64,7 @@ const Wrapper = styled("div", [
 			grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
 		}
 		
-		@media (max-width: 700px) {
+		@media (width <= 700px) {
 			grid-template-columns: minmax(0, 1fr);
 			padding: 48px 0;
 		
@@ -93,7 +93,7 @@ const Title = styled("h1", [
 		letter-spacing: 0;
 		color: #111;
 		
-		@media (max-width: 700px) {
+		@media (width <= 700px) {
 			font-size: 42px;
 		}
 	`),
@@ -107,7 +107,7 @@ const Text = styled("p", [
 		line-height: 1.45;
 		color: #444;
 		
-		@media (max-width: 700px) {
+		@media (width <= 700px) {
 			font-size: 17px;
 		}
 	`),

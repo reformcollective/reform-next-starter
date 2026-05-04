@@ -1,7 +1,10 @@
 import SampleSection from "app/sections/Sample"
 import { EagerImages } from "library/StaticImage"
 import { imageField, linkField, videoField } from "library/sanity/assetMetadata"
-import type { SanityDataAttributeContext } from "library/sanity/getSanityDataAttribute"
+import {
+	getSanityDataAttribute,
+	type SanityDataAttributeContext,
+} from "library/sanity/getSanityDataAttribute"
 import { resolveDocumentTitle, resolveProductionUrl } from "library/sanity/document-helpers"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { Redirect } from "library/sanity/redirect"
@@ -126,9 +129,21 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 	const sections: PageSection[] = relevantPage.sections
 	if (!pageTitle) notFound()
 
+	const pageDataAttribute = getSanityDataAttribute(
+		{
+			documentId: relevantPage._id,
+			documentType: "page",
+			pathPrefix: "",
+		},
+		"sections",
+	)
+
 	return (
 		<>
 			{relevantPage.noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
+			{/* Register this page document with Presentation Tool's "Documents on this page" panel.
+			    Without this, pages whose sections have no text (e.g. image-only) are invisible to the panel. */}
+			<div hidden data-sanity={pageDataAttribute} />
 			{sections.map((section, index: number) => {
 				const Wrapper = index === 0 ? EagerImages : Fragment
 
