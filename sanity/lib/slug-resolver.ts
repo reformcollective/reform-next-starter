@@ -13,6 +13,10 @@ export const documentPaths = defineDocumentPaths({
 		path: document.slug?.current === "home" ? "/" : `/${document.slug?.current}`,
 		title: document.title ?? "Untitled Page",
 	}),
+	blog1Hub: (document) => ({
+		path: document.slug?.current ? `/${document.slug.current}` : null,
+		title: document.title ?? "Blog",
+	}),
 })
 
 /**
@@ -32,6 +36,11 @@ export const documentPathProjection = <T extends string>(document: T) =>
 		${document}._type == "page" => select(
 			${document}.slug.current == "home" => "/",
 			"/" + ${document}.slug.current
+		),
+		${document}._type == "blog1Hub" => "/" + ${document}.slug.current,
+		${document}._type == "blog1Post" => select(
+			defined(*[_type == "blog1Hub"][0].slug.current) =>
+				"/" + *[_type == "blog1Hub"][0].slug.current + "/" + ${document}.slug.current
 		)
 	)
 ` as const
