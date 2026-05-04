@@ -1,4 +1,5 @@
 import type { NextConfig } from "next"
+
 import { serverSiteURL } from "./library/siteURL/determine"
 import { withVanillaSplit } from "./library/vanilla/withVanillaSplit"
 

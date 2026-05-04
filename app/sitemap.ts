@@ -1,7 +1,8 @@
-import { globSync } from "node:fs"
-import { siteURL } from "library/siteURL"
 import type { MetadataRoute } from "next"
+
+import { siteURL } from "library/siteURL"
 import { defineQuery } from "next-sanity"
+import { globSync } from "node:fs"
 import { sanityFetch } from "sanity/lib/live"
 
 const sitemapPageQuery = defineQuery(`

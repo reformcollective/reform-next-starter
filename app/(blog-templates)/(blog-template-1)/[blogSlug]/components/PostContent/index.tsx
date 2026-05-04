@@ -1,14 +1,16 @@
 import BlogRich from "app/(blog-templates)/(blog-template-1)/[blogSlug]/BlogRich"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
-import UniversalImage from "library/UniversalImage"
-import { css, f, styled } from "library/styled"
-import TimeSVG from "./time.inline.svg"
-import CalendarSVG from "./date.inline.svg"
-import RelatedPosts from "../RelatedPosts"
-import BlogNav from "../BlogNav"
 import getReadTime from "app/utils/getReadTime"
+import { css, f, styled } from "library/styled"
+import UniversalImage from "library/UniversalImage"
+
 import type { Post, RecentPosts } from "../../types"
+
+import BlogNav from "../BlogNav"
+import RelatedPosts from "../RelatedPosts"
+import CalendarSVG from "./date.inline.svg"
+import TimeSVG from "./time.inline.svg"
 
 export default function PostContent({
 	post,
@@ -194,11 +196,7 @@ const ArticleImage = styled(UniversalImage, [
 		border-radius: 12px;
 		overflow: clip;
 	`),
-	f.small(
-		css`
-			
-		`,
-	),
+	f.small(css``),
 ])
 
 const Title = styled("h1", [

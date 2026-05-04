@@ -1,10 +1,11 @@
 "use client"
 
 import type { GetSectionType } from "page"
-import { getSanityDataAttribute } from "library/sanity/getSanityDataAttribute"
-import { VideoEmbed } from "library/videos/VideoEmbed"
+
 import { sleep } from "library/functions"
+import { getSanityDataAttribute } from "library/sanity/getSanityDataAttribute"
 import { css, fresponsive, styled } from "library/styled"
+import { VideoEmbed } from "library/videos/VideoEmbed"
 
 export default async function SampleSection({
 	title,

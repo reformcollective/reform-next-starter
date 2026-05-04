@@ -1,5 +1,7 @@
 "use client"
 
+import type { ReactNode } from "react"
+
 import BlockquoteWithAttribution from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/BlockquoteWithAttribution"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
@@ -8,7 +10,7 @@ import { TypedPortableText } from "library/sanity/PortableText"
 import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 import { VideoEmbed } from "library/videos/VideoEmbed"
-import type { ReactNode } from "react"
+
 import type { BlogBodyBlock } from "./types"
 
 export default function BlogRich({

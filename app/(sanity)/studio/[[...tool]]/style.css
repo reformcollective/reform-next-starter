@@ -6,6 +6,10 @@ html {
 	background: #13141b;
 }
 
+body {
+	margin: 0;
+}
+
 /*
 	Revert all the styles of the "User-Agent-Stylesheet", except for the 'display' property
 	Sanity Studio does not need the reset styles, as it already has its own design system.

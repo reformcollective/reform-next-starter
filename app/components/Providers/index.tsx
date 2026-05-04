@@ -1,6 +1,7 @@
 "use client"
 
 import Userback from "@userback/widget"
+import { ProjectStyles } from "app/styles/project"
 import gsap, { ScrollTrigger } from "gsap/all"
 import { browserData, isBrowser } from "library/deviceDetection"
 import { PageTransitionProvider } from "library/link/usePageTransition"
@@ -8,7 +9,6 @@ import { ResetStyles } from "library/reset"
 import { ScreenProvider } from "library/ScreenContext"
 import { SmoothScrollStyle } from "library/Scroll"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
-import { ProjectStyles } from "app/styles/project"
 
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.defaults({
