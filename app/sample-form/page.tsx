@@ -96,7 +96,8 @@ export default function SampleForm() {
 	const vowelidate = (value: unknown) => {
 		const isEmpty = value === undefined || value === null || value === ""
 		if (isEmpty) return "We need to know your vowels!"
-		const hasVowel = /[aeiouAEIOU]/.test(String(value))
+		if (typeof value !== "string") return "Must contain at least one vowel"
+		const hasVowel = /[aeiouAEIOU]/.test(value)
 		return hasVowel ? null : "Must contain at least one vowel"
 	}
 

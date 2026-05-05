@@ -2,12 +2,12 @@
 
 import AutoAnimate from "library/AutoAnimate"
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled"
+import { css, f, styled } from "library/styled"
 import { type ComponentProps, Fragment, useEffect, useState } from "react"
 
 const BaseWrapper = styled(
 	AutoAnimate,
-	fresponsive(css`
+	f.responsive(css`
 		outline: 1px solid red;
 	`),
 )
@@ -20,7 +20,7 @@ function Animate(
 
 const OpacityWrapper = styled(
 	AutoAnimate,
-	fresponsive(css`
+	f.responsive(css`
 		outline: 1px solid green;
 	`),
 )
@@ -160,7 +160,7 @@ export default function AutoTests() {
 
 const RestrictWidth = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		max-width: 500px;
 		border: 1px solid orange;
 	`),
@@ -168,7 +168,7 @@ const RestrictWidth = styled(
 
 const Wrapper = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -179,7 +179,7 @@ const Wrapper = styled(
 
 const Row = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		display: flex;
 		min-height: 200px;
 		gap: 40px;
@@ -189,7 +189,7 @@ const Row = styled(
 
 const Tall = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		height: 200px;
 		border: 1px solid blue;
 	`),
@@ -197,7 +197,7 @@ const Tall = styled(
 
 const PurpleBox = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		border: 1px solid purple;
 	`),
 )

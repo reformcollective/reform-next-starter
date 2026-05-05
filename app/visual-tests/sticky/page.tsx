@@ -2,7 +2,7 @@
 
 import nativeSmoothPin from "library/nativeSmoothPin"
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled"
+import { css, f, styled } from "library/styled"
 
 const sizeOrder: Array<"square" | "100vh" | "120vh"> = ["square", "100vh", "120vh"]
 const topOrder: Array<"zero" | "neg" | "pos"> = ["zero", "neg", "pos"]
@@ -64,7 +64,7 @@ export default function StickyVisualTestPage() {
 
 const Wrapper = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		grid-column: main;
 		display: flex;
 		flex-direction: column;
@@ -75,7 +75,7 @@ const Wrapper = styled(
 
 const Group = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
@@ -84,7 +84,7 @@ const Group = styled(
 
 const GroupLabel = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		font-size: 0.875rem;
 		font-weight: 600;
 		color: #444;
@@ -93,7 +93,7 @@ const GroupLabel = styled(
 
 const Row = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		gap: 16px;
@@ -102,7 +102,7 @@ const Row = styled(
 
 const StickyColumn = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		height: 200vh;
 		display: flex;
 		flex-direction: column;
@@ -115,7 +115,7 @@ const StickyColumn = styled(
 
 const StickyElement = styled("div", {
 	base: [
-		fresponsive(css`
+		f.responsive(css`
 			position: sticky;
 			padding: 16px;
 			background: #e0e0ff;
@@ -152,7 +152,7 @@ const StickyElement = styled("div", {
 			top,
 			goopType,
 			base: [
-				fresponsive(css`
+				f.responsive(css`
           ${
 						top === "neg"
 							? css`

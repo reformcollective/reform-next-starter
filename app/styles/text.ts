@@ -95,7 +95,7 @@ const textStyles = {
 	 * if you need to add one-off styles, do that here!
 	 */
 	custom: {},
-	// don't wrap these in a fresponsive or unresponsive call!
+	// don't wrap these in an f.responsive or f.unresponsive call!
 	// that should happen at the component level
 	h1: createStyle({
 		fontFamily: geist,

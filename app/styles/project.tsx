@@ -17,6 +17,7 @@ const style = css`
 	}
 `
 
+// oxlint-disable-next-line typescript-eslint(await-thenable)
 const compiledStyle = await compileTime(() => style)
 
 export const ProjectStyles = () => <style>{compiledStyle}</style>

@@ -17,9 +17,9 @@ export function FilterState() {
 	const isActive = Boolean(query) || hasCategories
 
 	const clearAll = () => {
-		setQuery(null)
-		setCategories(null)
-		setShowAll(null)
+		void setQuery(null)
+		void setCategories(null)
+		void setShowAll(null)
 	}
 
 	const clearLabel =
