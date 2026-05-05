@@ -1,5 +1,6 @@
+import { compileTime } from "library/compile-time"
 import { foundation } from "library/layers.css"
-import { compileTime, css } from "library/styled"
+import { css } from "library/styled"
 
 const style = css`
 	@layer ${foundation} {
@@ -16,6 +17,6 @@ const style = css`
 	}
 `
 
-const compiledStyle = compileTime(() => style)
+const compiledStyle = await compileTime(async () => style)
 
 export const ProjectStyles = () => <style>{compiledStyle}</style>
