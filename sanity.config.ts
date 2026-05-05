@@ -4,9 +4,11 @@
 
 import { assist } from "@sanity/assist"
 import { codeInput } from "@sanity/code-input"
+import { RocketIcon } from "@sanity/icons"
 import { visionTool } from "@sanity/vision"
 import { env } from "app/env"
 import gsap from "gsap/all"
+import { staticLinkType } from "library/link/staticLinkType"
 import {
 	getLinkableTypes,
 	resolveDocumentLocations,
@@ -15,7 +17,6 @@ import {
 import { video, youtube } from "library/sanity/reusables"
 import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
 import { siteURL } from "library/siteURL"
-import { RocketIcon } from "node_modules/@sanity/icons/dist"
 import { defineConfig, type PluginOptions } from "sanity"
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
 import { linkField } from "sanity-plugin-link-field"
@@ -171,6 +172,7 @@ export default defineConfig({
 		 */
 		linkField({
 			linkableSchemaTypes: getLinkableTypes(),
+			customLinkTypes: [staticLinkType()],
 		}),
 		/**
 		 * our custom singleton plugin
