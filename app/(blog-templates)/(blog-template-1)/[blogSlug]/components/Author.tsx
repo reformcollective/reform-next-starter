@@ -1,5 +1,6 @@
 import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
+
 import type { PostAuthor } from "../types"
 
 export function AuthorLink({ author }: { author: PostAuthor | null | undefined }) {

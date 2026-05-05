@@ -1,19 +1,20 @@
+import type { Metadata } from "next"
+import type { MainPageQueryResult } from "sanity.types"
+
 import SampleSection from "app/sections/Sample"
-import { EagerImages } from "library/StaticImage"
 import { imageField, linkField, videoField } from "library/sanity/assetMetadata"
+import { resolveDocumentTitle, resolveProductionUrl } from "library/sanity/document-helpers"
 import {
 	getSanityDataAttribute,
 	type SanityDataAttributeContext,
 } from "library/sanity/getSanityDataAttribute"
-import { resolveDocumentTitle, resolveProductionUrl } from "library/sanity/document-helpers"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { Redirect } from "library/sanity/redirect"
 import { siteURL } from "library/siteURL"
-import type { Metadata } from "next"
+import { EagerImages } from "library/StaticImage"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
 import { Fragment } from "react"
-import type { MainPageQueryResult } from "sanity.types"
 import { sanityFetch } from "sanity/lib/live"
 import { documentPathProjection } from "sanity/lib/slug-resolver"
 

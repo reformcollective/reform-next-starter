@@ -1,10 +1,11 @@
 import type { GetSectionType } from "page"
+
 import UniversalLink from "library/link"
 import { isRouteDefined } from "library/link/resolve"
 import { getSanityDataAttribute } from "library/sanity/getSanityDataAttribute"
+import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 import { VideoEmbed } from "library/videos/VideoEmbed"
-import { css, f, styled } from "library/styled"
 
 export default async function SampleSection({
 	title,
@@ -59,15 +60,15 @@ const Wrapper = styled("div", [
 		align-items: center;
 		min-height: 60vh;
 		padding: 72px 0;
-		
+
 		&[data-has-media="true"] {
 			grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
 		}
-		
+
 		@media (width <= 700px) {
 			grid-template-columns: minmax(0, 1fr);
 			padding: 48px 0;
-		
+
 			&[data-has-media="true"] {
 				grid-template-columns: minmax(0, 1fr);
 			}
@@ -92,7 +93,7 @@ const Title = styled("h1", [
 		font-weight: 700;
 		letter-spacing: 0;
 		color: #111;
-		
+
 		@media (width <= 700px) {
 			font-size: 42px;
 		}
@@ -106,7 +107,7 @@ const Text = styled("p", [
 		font-size: 20px;
 		line-height: 1.45;
 		color: #444;
-		
+
 		@media (width <= 700px) {
 			font-size: 17px;
 		}
@@ -130,7 +131,7 @@ const Link = styled(UniversalLink, [
 		transition:
 			background 160ms ease,
 			color 160ms ease;
-		
+
 		&:hover {
 			color: #111;
 			background: transparent;

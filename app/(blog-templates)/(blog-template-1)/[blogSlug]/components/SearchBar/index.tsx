@@ -1,12 +1,13 @@
 "use client"
 
+import { useDebounceFn } from "ahooks"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
-import SearchIcon from "./search.inline.svg"
 import { css, f, styled } from "library/styled"
-import { useDebounceFn } from "ahooks"
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs"
 import { useEffect, useState } from "react"
+
+import SearchIcon from "./search.inline.svg"
 
 export const useBlogQuery = () => {
 	return useQueryState("query", parseAsString.withDefault(""))

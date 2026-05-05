@@ -1,13 +1,15 @@
-import { colors } from "app/styles/colors.css"
-import { resolveOpenGraphImage } from "library/sanity/opengraph"
-import { css, f, styled } from "library/styled"
-import { siteURL } from "library/siteURL"
 import type { Metadata } from "next"
+
+import { colors } from "app/styles/colors.css"
+import { imageField } from "library/sanity/assetMetadata"
+import { resolveOpenGraphImage } from "library/sanity/opengraph"
+import { siteURL } from "library/siteURL"
+import { css, f, styled } from "library/styled"
 import { defineQuery } from "next-sanity"
 import { Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
+
 import { BlogHomeClient } from "./BlogHomeClient"
-import { imageField } from "library/sanity/assetMetadata"
 
 export const dynamic = "force-static"
 export const dynamicParams = false

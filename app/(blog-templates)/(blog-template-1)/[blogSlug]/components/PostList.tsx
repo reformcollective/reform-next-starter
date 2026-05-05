@@ -1,9 +1,11 @@
 "use client"
 
 import { useSearchResults } from "library/useSearchResults"
+
+import type { RecentPosts } from "../types"
+
 import { useBlogQuery } from "./SearchBar"
 import SmallCard from "./SmallCard"
-import type { RecentPosts } from "../types"
 
 export function PostList({ posts }: { posts: RecentPosts }) {
 	const [searchQuery] = useBlogQuery()

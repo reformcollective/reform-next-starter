@@ -1,12 +1,13 @@
 "use client"
 
-import { useRef, useState, type RefObject } from "react"
-import { Combobox } from "@base-ui/react/combobox"
-import { Field } from "@base-ui/react/field"
 import type { FieldRoot } from "@base-ui/react/field"
 import type { Form } from "@base-ui/react/form"
-import { css, f, styled } from "library/styled"
+
+import { Combobox } from "@base-ui/react/combobox"
+import { Field } from "@base-ui/react/field"
 import { colors } from "app/styles/colors.css"
+import { css, f, styled } from "library/styled"
+import { useRef, useState, type RefObject } from "react"
 
 interface ComboboxFieldCommonProps {
 	/** Identifies the field when a form is submitted. */
@@ -309,7 +310,7 @@ const ChipRemove = styled(Combobox.ChipRemove, [
 		font-size: 14px;
 		line-height: 1;
 		padding: 4px;
-		
+
 		@media (hover: hover) {
 			&:hover {
 				background: #d1d5db;
@@ -411,7 +412,7 @@ const List = styled(Combobox.List, [
 		scroll-padding-block: 8px;
 		outline: none;
 		max-height: min(23rem, var(--available-height));
-		
+
 		&[data-empty] {
 			padding: 0;
 		}

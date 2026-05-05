@@ -1,3 +1,4 @@
 {
-	"ignorePatterns": ["library/**"]
+	"ignorePatterns": ["library/**"],
+	"options": { "typeAware": true }
 }

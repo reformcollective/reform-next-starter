@@ -1,8 +1,10 @@
+import type { ReactNode } from "react"
+
 import { DesktopIcon } from "@sanity/icons"
 import { redirect, universalImage } from "library/sanity/reusables"
 import { siteURL } from "library/siteURL"
-import type { ReactNode } from "react"
 import { defineField, defineType } from "sanity"
+
 import * as sections from "./sections"
 
 const allSections = Object.values(sections)

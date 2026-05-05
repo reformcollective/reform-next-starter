@@ -1,8 +1,9 @@
 "use client"
 
-import LargeCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/LargeCard"
 import { Categories } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/Categories"
 import { FilterState } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/FilterState"
+import { useHeaderTheme } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/HeaderTheme"
+import LargeCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/LargeCard"
 import {
 	useBlogCategory,
 	useBlogQuery,
@@ -10,7 +11,6 @@ import {
 	SearchBar,
 } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/SearchBar"
 import SmallCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/SmallCard"
-import { useHeaderTheme } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/HeaderTheme"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled"
@@ -19,8 +19,10 @@ import { useSearchResults } from "library/useSearchResults"
 import { getResponsivePixels } from "library/viewportUtils"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useRef, useState, useTransition } from "react"
-import { searchPosts } from "./actions"
+
 import type { Card, FeaturedCard } from "../types"
+
+import { searchPosts } from "./actions"
 
 const PAGE_SIZE = 8
 
@@ -160,7 +162,7 @@ const StickyWrapper = styled("div", [
 		display: flex;
 		flex-direction: column;
 		gap: 42px;
-		
+
 		.extra-margin {
 			margin-right: 15px;
 		}

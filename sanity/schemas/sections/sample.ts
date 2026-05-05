@@ -1,5 +1,6 @@
 import { createSectionPreview, universalImage, universalLink } from "library/sanity/reusables"
 import { defineArrayMember, defineField } from "sanity"
+
 import preview from "./preview/sample.png"
 
 export const sample = defineArrayMember({

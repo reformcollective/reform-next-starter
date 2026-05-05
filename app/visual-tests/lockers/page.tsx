@@ -157,7 +157,7 @@ const Wrapper = styled(
 		align-items: center;
 		gap: 40px;
 		padding: 100px;
-		
+
 		button,
 		a {
 			cursor: pointer;

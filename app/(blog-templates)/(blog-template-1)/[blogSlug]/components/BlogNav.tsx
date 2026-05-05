@@ -4,10 +4,12 @@ import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled"
-import CaretSVG from "../icons/caret.inline.svg"
+
 import type { Post } from "../types"
-import Kicker from "./Kicker"
+
+import CaretSVG from "../icons/caret.inline.svg"
 import { useHeaderTheme } from "./HeaderTheme"
+import Kicker from "./Kicker"
 
 export default function BlogNav({ categories }: { categories: Post["categories"] }) {
 	useHeaderTheme("dark")
@@ -45,11 +47,11 @@ const Categories = styled("div", [
 		width: 100%;
 		overflow: scroll;
 		mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
-		
+
 		&::-webkit-scrollbar {
 			display: none;
 		}
-		
+
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 	`),

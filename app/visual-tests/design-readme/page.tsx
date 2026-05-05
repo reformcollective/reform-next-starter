@@ -201,11 +201,11 @@ const SnapWrap = styled("div", {
 			& :first-child {
 				margin-left: 50%;
 			}
-			
+
 			& :last-child {
 				margin-right: 50%;
 			}
-			
+
 			&::-webkit-scrollbar {
 				display: none;
 			}

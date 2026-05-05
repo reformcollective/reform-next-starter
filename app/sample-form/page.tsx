@@ -1,12 +1,9 @@
 "use client"
 
-import { useRef, useState, type FormEvent } from "react"
 import type { FieldRoot } from "@base-ui/react/field"
-import { css, f, styled } from "library/styled"
-import { Form } from "@base-ui/react/form"
+
 import { Button } from "@base-ui/react/button"
-import { colors } from "app/styles/colors.css"
-import ClientOnly from "library/ClientOnly"
+import { Form } from "@base-ui/react/form"
 import {
 	CheckboxField,
 	CheckboxGroupField,
@@ -19,6 +16,10 @@ import {
 	SwitchField,
 	TextAreaField,
 } from "app/components/Form/Fields"
+import { colors } from "app/styles/colors.css"
+import ClientOnly from "library/ClientOnly"
+import { css, f, styled } from "library/styled"
+import { useRef, useState, type FormEvent } from "react"
 
 const COUNTRIES_TO_VISIT = [
 	"Argentina",
@@ -96,7 +97,7 @@ export default function SampleForm() {
 	const vowelidate = (value: unknown) => {
 		const isEmpty = value === undefined || value === null || value === ""
 		if (isEmpty) return "We need to know your vowels!"
-		const hasVowel = /[aeiouAEIOU]/.test(String(value))
+		const hasVowel = typeof value === "string" && /[aeiouAEIOU]/.test(value)
 		return hasVowel ? null : "Must contain at least one vowel"
 	}
 
@@ -449,7 +450,9 @@ const SegmentedButton = styled("label", [
 		background: white;
 		cursor: pointer;
 		border-right: 1px solid #d1d5db;
-		transition: background 100ms, color 100ms;
+		transition:
+			background 100ms,
+			color 100ms;
 
 		&:last-child {
 			border-right: none;
@@ -560,11 +563,11 @@ const ResultsRow = styled("div", [
 		gap: 16px;
 		padding: 10px 14px;
 		border-bottom: 1px solid #f3f4f6;
-		
+
 		&:last-child {
 			border-bottom: none;
 		}
-		
+
 		&:nth-child(even) {
 			background: #f9fafb;
 		}
