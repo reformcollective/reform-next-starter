@@ -1,6 +1,7 @@
 import { DocumentTextIcon } from "@sanity/icons"
 import { universalImage } from "library/sanity/reusables"
 import { defineArrayMember, defineField, defineType } from "sanity"
+
 import { ReadTimeInput } from "./ReadTimeInput"
 
 export const blog1PostType = defineType({

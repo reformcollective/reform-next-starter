@@ -1,6 +1,7 @@
+import type { MetadataRoute } from "next"
+
 import { listStaticRoutes } from "library/list-pages"
 import { siteURL } from "library/siteURL"
-import type { MetadataRoute } from "next"
 import { defineQuery } from "next-sanity"
 import { sanityFetch } from "sanity/lib/live"
 import { documentPathProjection } from "sanity/lib/slug-resolver"

@@ -1,7 +1,8 @@
+import type { ReactNode } from "react"
+
 import { ImageIcon } from "@sanity/icons"
 import { universalImage } from "library/sanity/reusables"
 import { defineType, defineArrayMember, defineField } from "sanity"
-import type { ReactNode } from "react"
 
 // h6Sans: 40px, weight 600, letter-spacing -5%
 const H1 = ({ children }: { children: ReactNode }) => (

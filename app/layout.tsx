@@ -1,16 +1,17 @@
+import type { Metadata } from "next"
+
 import Footer from "app/components/Footer"
 import Header from "app/components/Header"
+import { Preloader } from "app/components/Preloader"
 import GlobalProviders from "app/components/Providers"
+import { desktopDesignSize, mobileDesignSize } from "app/styles/media"
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
 import { siteURL } from "library/siteURL"
 import { css, f, styled } from "library/styled"
-import type { Metadata } from "next"
-import { defineQuery, stegaClean } from "next-sanity"
-import SanityLive, { sanityFetch } from "sanity/lib/live"
 import "app/styles/colors.css"
-import { desktopDesignSize, mobileDesignSize } from "app/styles/media"
-import { Preloader } from "app/components/Preloader"
+import { defineQuery, stegaClean } from "next-sanity"
 import { Suspense, lazy } from "react"
+import SanityLive, { sanityFetch } from "sanity/lib/live"
 
 const PageTransition = lazy(() => import("app/components/PageTransition"))
 

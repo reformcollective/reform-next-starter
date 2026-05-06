@@ -1,12 +1,13 @@
 "use client"
 
-import type { RefObject } from "react"
-import { Field } from "@base-ui/react/field"
 import type { FieldRoot } from "@base-ui/react/field"
 import type { Form } from "@base-ui/react/form"
+import type { RefObject } from "react"
+
+import { Field } from "@base-ui/react/field"
 import { Select } from "@base-ui/react/select"
-import { css, f, styled } from "library/styled"
 import { colors } from "app/styles/colors.css"
+import { css, f, styled } from "library/styled"
 
 interface Option {
 	value: string | null
@@ -213,13 +214,13 @@ const Popup = styled(Select.Popup, [
 		transition:
 			transform 150ms,
 			opacity 150ms;
-		
+
 		&[data-starting-style],
 		&[data-ending-style] {
 			opacity: 0;
 			transform: scale(0.9);
 		}
-		
+
 		&[data-side="none"] {
 			transition: none;
 			transform: none;

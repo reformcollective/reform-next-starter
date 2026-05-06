@@ -1,12 +1,14 @@
 "use client"
 
 import type { ReactNode } from "react"
+
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled"
+
 import CaretSVG from "../../icons/caret.inline.svg"
-import ClearFilterSVG from "./clear-filter.inline.svg"
 import { useBlogCategory, useBlogQuery, useBlogShowAll } from "../SearchBar"
+import ClearFilterSVG from "./clear-filter.inline.svg"
 
 export function FilterState() {
 	const [query, setQuery] = useBlogQuery()
@@ -17,9 +19,9 @@ export function FilterState() {
 	const isActive = Boolean(query) || hasCategories
 
 	const clearAll = () => {
-		setQuery(null)
-		setCategories(null)
-		setShowAll(null)
+		void setQuery(null)
+		void setCategories(null)
+		void setShowAll(null)
 	}
 
 	const clearLabel =
@@ -206,7 +208,7 @@ const ClearIcon = styled(ClearFilterSVG, [
 		height: 24px;
 		flex-shrink: 0;
 		transform: translateY(-1px);
-		
+
 		path {
 			transition:
 				fill 0.15s ease,

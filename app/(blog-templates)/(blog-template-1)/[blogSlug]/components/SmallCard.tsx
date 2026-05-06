@@ -3,6 +3,7 @@ import textStyles, { clampText } from "app/styles/text"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
+
 import type { Card } from "../types"
 
 export default function SmallCard({ data }: { data: Card }) {
@@ -54,7 +55,7 @@ const Wrapper = styled(UniversalLink, [
 	f.responsive(css`
 		display: grid;
 		position: relative;
-		
+
 		&:hover .card-image {
 			transform: scale(1.1);
 		}
@@ -66,13 +67,7 @@ const Wrapper = styled(UniversalLink, [
 	`),
 ])
 
-const Title = styled("div", [
-	f.responsive(
-		css`
-			
-		`,
-	),
-])
+const Title = styled("div", [f.responsive(css``)])
 
 const TitleText = styled("div", [
 	f.responsive(css`

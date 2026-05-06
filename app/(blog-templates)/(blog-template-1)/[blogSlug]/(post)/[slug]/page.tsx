@@ -1,13 +1,14 @@
+import type { Metadata, ResolvingMetadata } from "next"
+
 import PostContent from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/PostContent"
 import { colors } from "app/styles/colors.css"
-import { resolveOpenGraphImage } from "library/sanity/opengraph"
-import { css, f, styled } from "library/styled"
-import { siteURL } from "library/siteURL"
-import type { Metadata, ResolvingMetadata } from "next"
-import { notFound } from "next/navigation"
-import { defineQuery } from "next-sanity"
-import { sanityFetch } from "sanity/lib/live"
 import { imageField, videoField } from "library/sanity/assetMetadata"
+import { resolveOpenGraphImage } from "library/sanity/opengraph"
+import { siteURL } from "library/siteURL"
+import { css, f, styled } from "library/styled"
+import { defineQuery } from "next-sanity"
+import { notFound } from "next/navigation"
+import { sanityFetch } from "sanity/lib/live"
 
 export const dynamic = "force-static"
 export const dynamicParams = false

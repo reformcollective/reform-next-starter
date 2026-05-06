@@ -1,12 +1,13 @@
 "use client"
 
-import { type RefObject } from "react"
-import { Switch } from "@base-ui/react/switch"
-import { Field } from "@base-ui/react/field"
 import type { FieldRoot } from "@base-ui/react/field"
 import type { Form } from "@base-ui/react/form"
-import { css, f, styled } from "library/styled"
+
+import { Field } from "@base-ui/react/field"
+import { Switch } from "@base-ui/react/switch"
 import { colors } from "app/styles/colors.css"
+import { css, f, styled } from "library/styled"
+import { type RefObject } from "react"
 
 interface SwitchFieldProps {
 	/** Identifies the field when a form is submitted. */
@@ -139,7 +140,7 @@ const SwitchThumb = styled(Switch.Thumb, [
 		box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
 		transition: translate 125ms ease;
 		translate: 0 0;
-		
+
 		[data-checked] & {
 			translate: 20px 0;
 		}

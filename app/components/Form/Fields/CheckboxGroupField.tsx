@@ -1,14 +1,15 @@
 "use client"
 
-import { useRef, type RefObject } from "react"
+import type { FieldRoot } from "@base-ui/react/field"
+import type { Form } from "@base-ui/react/form"
+
 import { Checkbox } from "@base-ui/react/checkbox"
 import { CheckboxGroup } from "@base-ui/react/checkbox-group"
 import { Field } from "@base-ui/react/field"
-import type { FieldRoot } from "@base-ui/react/field"
-import type { Form } from "@base-ui/react/form"
 import { Fieldset } from "@base-ui/react/fieldset"
-import { css, f, styled } from "library/styled"
 import { colors } from "app/styles/colors.css"
+import { css, f, styled } from "library/styled"
+import { useRef, type RefObject } from "react"
 
 interface Option {
 	value: string | null
