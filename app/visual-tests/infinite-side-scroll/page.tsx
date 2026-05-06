@@ -184,30 +184,30 @@ const Wrapper = styled(
 		flex-direction: column;
 		gap: 20px;
 		padding: 100px 0;
-		
+
 		& h2 {
 			padding: 0 40px;
 			margin-top: 20px;
 		}
-		
+
 		& p {
 			padding: 0 40px;
 			opacity: 0.6;
 			font-size: 14px;
 		}
-		
+
 		& h1 {
 			padding: 0 40px;
 		}
-		
+
 		& a {
 			padding: 0 40px;
 		}
-		
+
 		& .track {
 			gap: 20px;
 		}
-		
+
 		& .buttons {
 			display: flex;
 			justify-content: center;
