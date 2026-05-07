@@ -1,13 +1,15 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import ButtonLink from "./ButtonLink"
 import { colors } from "app/styles/colors.css"
 import textStyles, { clampText } from "app/styles/text"
-import UniversalImage from "library/UniversalImage"
 import { css, f, styled } from "library/styled"
+import UniversalImage from "library/UniversalImage"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+
 import type { FeaturedCard } from "../types"
+
+import ButtonLink from "./ButtonLink"
 
 export default function LargeCard({ data }: { data: FeaturedCard }) {
 	const router = useRouter()
@@ -61,7 +63,7 @@ const Wrapper = styled("div", [
 		margin-bottom: 0;
 		cursor: pointer;
 		position: relative;
-		
+
 		&:hover .card-image {
 			transform: scale(1.05);
 		}

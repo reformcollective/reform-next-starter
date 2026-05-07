@@ -39,7 +39,7 @@ const Wrapper = styled(
 		padding: 100px;
 		background: #eff;
 		color: black;
-		
+
 		p {
 			opacity: 0.5;
 		}

@@ -13,4 +13,7 @@ export default defineCliConfig({
 	vite: {
 		plugins: [tsconfigPaths()],
 	},
+	typegen: {
+		path: ["app/**/*.{ts,tsx,js,jsx}", "library/**/*.{ts,tsx,js,jsx}"],
+	},
 })

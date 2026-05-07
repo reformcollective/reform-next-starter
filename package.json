@@ -36,7 +36,7 @@
 		"@types/node": "^25.0.10",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
-		"@typescript/native-preview": "7.0.0-dev.20260106.1",
+		"@typescript/native-preview": "^7.0.0-dev.20260106.1",
 		"@userback/widget": "^0.3.12",
 		"@vanilla-extract/css": "^1.17.0",
 		"@vanilla-extract/dynamic": "^2.1.5",
@@ -45,12 +45,12 @@
 		"gsap": "^3.14.2",
 		"lefthook": "^2.0.15",
 		"lenis": "^1.3.17",
-		"next": "16.1.5",
+		"next": "^16.1.5",
 		"next-sanity": "^12.0.14",
 		"nuqs": "^2.8.6",
-		"oxfmt": "^0.27.0",
-		"oxlint": "^1.42.0",
-		"oxlint-tsgolint": "^0.11.2",
+		"oxfmt": "^0.44.0",
+		"oxlint": "^1.60.0",
+		"oxlint-tsgolint": "^0.20.0",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
 		"react-player": "^3.4.0",
@@ -61,7 +61,6 @@
 		"sanity-plugin-mux-input": "^2.14.0",
 		"server-only": "^0.0.1",
 		"stylelint": "^17.0.0",
-		"stylelint-config-reform-collective": "github:reformcollective/stylelint-config-reform#migration",
 		"svgo": "^4.0.0",
 		"typescript": "^5.9.3",
 		"unlighthouse": "^0.17.4",
@@ -71,7 +70,7 @@
 	},
 	"devDependencies": {},
 	"stylelint": {
-		"extends": "stylelint-config-reform-collective"
+		"extends": "./library/config/stylelint.config.js"
 	},
 	"devEngines": {
 		"runtime": {
@@ -130,7 +129,8 @@
 				"app/**/*.ts",
 				"app/**/*.tsx",
 				"library/**/*.ts",
-				"library/**/*.tsx"
+				"library/**/*.tsx",
+				"sanity.cli.ts"
 			],
 			"output": [
 				"schema.json",
@@ -159,7 +159,7 @@
 			"command": "stylelint . --fix"
 		},
 		"oxlint": {
-			"command": "oxlint --fix --type-aware --type-check",
+			"command": "oxlint --fix",
 			"dependencies": [
 				"typegen"
 			]

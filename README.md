@@ -7,7 +7,7 @@ Remove each item from the list as you complete it.
 
 1. Clone using the template in GitHub
 1. Copy the starters `.env` file to your own `.env` file (you'll update this during sanity setup or ejection)
-1. Update all existing packages with `pnpm dlx npm-check-updates -c 1 --deep -u` (feel free to update the starter repository as well)
+1. Update all existing packages with `pnpm update --latest --recursive` (feel free to update the starter repository as well)
 1. Update the README.md to add project-specific image and name below
 1. Delete the `app/visual-tests` folder
 
@@ -44,8 +44,6 @@ If this project is using a CMS, set up a new project in Sanity. If we're not sur
 
 ### Setting up Sanity
 
-1. Enable studio access for `https://localhost:3000/studio` under the `Studios` tab
-1. Ensure CORS access is enabled under the `API` tab (Sanity should do this for you when you add the studio)
 1. You'll need the following variables in your `.env` file:
    - `NEXT_PUBLIC_SANITY_PROJECT_ID` is your project ID, for example `m85xxx23`
    - `NEXT_PUBLIC_SANITY_DATASET` is your dataset name, for a new project this is `production` (if we're working on updates while the site is live we'll use `development`)

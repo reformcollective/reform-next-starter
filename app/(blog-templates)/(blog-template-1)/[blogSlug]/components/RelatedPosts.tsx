@@ -1,10 +1,12 @@
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled"
+import { Suspense } from "react"
+
+import type { RecentPosts } from "../types"
+
 import Kicker from "./Kicker"
 import { PostList } from "./PostList"
-import { Suspense } from "react"
-import type { RecentPosts } from "../types"
 
 export default function RelatedPosts({ recentPosts }: { recentPosts: RecentPosts }) {
 	return (

@@ -3,38 +3,37 @@
  */
 
 import { assist } from "@sanity/assist"
+import { codeInput } from "@sanity/code-input"
 import { RocketIcon } from "@sanity/icons"
 import { visionTool } from "@sanity/vision"
 import { env } from "app/env"
 import gsap from "gsap/all"
 import { staticLinkType } from "library/link/staticLinkType"
-import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
-import { structureTool } from "sanity/structure"
-import { defineConfig, type PluginOptions } from "sanity"
-import { presentationTool } from "sanity/presentation"
-import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
-import { linkField } from "sanity-plugin-link-field"
-import { media } from "sanity-plugin-media"
-import { muxInput } from "sanity-plugin-mux-input"
-import { apiVersion, dataset, projectId, studioUrl } from "sanity/lib/api"
-import footer from "sanity/schemas/singletons/footer"
-import header from "sanity/schemas/singletons/header"
-import settings from "sanity/schemas/singletons/settings"
-
-import { video, youtube } from "library/sanity/reusables"
-import page from "sanity/schemas/sanityPage"
-import { blog1AuthorType } from "sanity/schemas/blog/blog-1/authorType"
-import { blog1BlockContentType } from "sanity/schemas/blog/blog-1/blockContentType"
-import { blog1CategoryType } from "sanity/schemas/blog/blog-1/categoryType"
-import { blog1PostType } from "sanity/schemas/blog/blog-1/postType"
-import { blog1Hub } from "sanity/schemas/singletons/blog-1"
 import {
 	getLinkableTypes,
 	resolveDocumentLocations,
 	resolveProductionUrl,
 } from "library/sanity/document-helpers"
+import { video, youtube } from "library/sanity/reusables"
+import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
 import { siteURL } from "library/siteURL"
-import { codeInput } from "@sanity/code-input"
+import { defineConfig, type PluginOptions } from "sanity"
+import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
+import { linkField } from "sanity-plugin-link-field"
+import { media } from "sanity-plugin-media"
+import { muxInput } from "sanity-plugin-mux-input"
+import { apiVersion, dataset, projectId, studioUrl } from "sanity/lib/api"
+import { presentationTool } from "sanity/presentation"
+import { blog1AuthorType } from "sanity/schemas/blog/blog-1/authorType"
+import { blog1BlockContentType } from "sanity/schemas/blog/blog-1/blockContentType"
+import { blog1CategoryType } from "sanity/schemas/blog/blog-1/categoryType"
+import { blog1PostType } from "sanity/schemas/blog/blog-1/postType"
+import page from "sanity/schemas/sanityPage"
+import { blog1Hub } from "sanity/schemas/singletons/blog-1"
+import footer from "sanity/schemas/singletons/footer"
+import header from "sanity/schemas/singletons/header"
+import settings from "sanity/schemas/singletons/settings"
+import { structureTool } from "sanity/structure"
 
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()

@@ -41,10 +41,11 @@
  *   - Add more animated elements and use stopAnimations/slowAnimations to coordinate them
  */
 
-import { usePreloader } from "library/link/usePreloader"
-import { useRef } from "react"
-import { css, f, styled } from "library/styled"
 import { colors } from "app/styles/colors.css"
+import { usePreloader } from "library/link/usePreloader"
+import { css, f, styled } from "library/styled"
+import { useRef } from "react"
+
 import { preloaderExit, logoPulse, logoOutro } from "./animations.css"
 import LogoSVG from "./images/logo.inline.svg"
 
@@ -79,8 +80,7 @@ const Wrapper = styled("div", [
 
 		&[data-ready] {
 			/* delayed to start after the logo outro finishes */
-			animation: ${preloaderExit} 0.5s 0.5s cubic-bezier(0.76, 0, 0.24, 1)
-				forwards;
+			animation: ${preloaderExit} 0.5s 0.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
 			pointer-events: none;
 		}
 	`),

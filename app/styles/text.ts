@@ -1,5 +1,6 @@
 import { createStyleString } from "@capsizecss/core"
 import { css } from "library/styled"
+
 import { geist } from "./fonts/typography"
 
 /**

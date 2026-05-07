@@ -1,12 +1,13 @@
 "use client"
 
-import { type RefObject } from "react"
-import { NumberField as BaseNumberField } from "@base-ui/react/number-field"
-import { Field } from "@base-ui/react/field"
 import type { FieldRoot } from "@base-ui/react/field"
 import type { Form } from "@base-ui/react/form"
-import { css, f, styled } from "library/styled"
+
+import { Field } from "@base-ui/react/field"
+import { NumberField as BaseNumberField } from "@base-ui/react/number-field"
 import { colors } from "app/styles/colors.css"
+import { css, f, styled } from "library/styled"
+import { type RefObject } from "react"
 
 interface NumberFieldProps {
 	/** Identifies the field when a form is submitted. */

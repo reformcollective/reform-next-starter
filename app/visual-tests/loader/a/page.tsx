@@ -81,7 +81,7 @@ const Wrapper = styled(
 		padding: 100px;
 		background: #ffe;
 		color: black;
-		
+
 		p {
 			opacity: 0.5;
 		}

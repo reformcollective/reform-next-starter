@@ -1,7 +1,7 @@
 "use client"
 
-import nativeSmoothPin from "library/nativeSmoothPin"
 import UniversalLink from "library/link"
+import nativeSmoothPin from "library/nativeSmoothPin"
 import { css, f, styled } from "library/styled"
 
 const sizeOrder: Array<"square" | "100vh" | "120vh"> = ["square", "100vh", "120vh"]
@@ -153,23 +153,21 @@ const StickyElement = styled("div", {
 			goopType,
 			base: [
 				f.responsive(css`
-          ${
-						top === "neg"
-							? css`
-									*:has(> &) {
-										border: 2px solid red;
-										container-type: size;
-									}
-								`
-							: ""
-					}
+					${top === "neg"
+						? css`
+								*:has(> &) {
+									border: 2px solid red;
+									container-type: size;
+								}
+							`
+						: ""}
 
-          ${nativeSmoothPin({
+					${nativeSmoothPin({
 						top: topStr[top],
 						goopType,
 						containerAware: top === "neg",
 					})}
-        `),
+				`),
 			],
 		})),
 	),
