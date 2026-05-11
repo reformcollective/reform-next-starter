@@ -169,6 +169,7 @@ const RestrictWidth = styled(
 const Wrapper = styled(
 	"div",
 	fresponsive(css`
+		grid-column: main;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
