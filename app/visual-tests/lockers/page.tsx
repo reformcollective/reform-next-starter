@@ -3,7 +3,7 @@
 import { ScrollSmoother } from "gsap/all"
 import UniversalLink from "library/link"
 import { useScrollLock } from "library/Scroll"
-import { css, styled, unresponsive } from "library/styled"
+import { css, f, styled } from "library/styled"
 import { useState } from "react"
 
 const useScrollLockToggler = (type: "lock" | "unlock") => {
@@ -151,7 +151,7 @@ export default function ScrollLock() {
 
 const Wrapper = styled(
 	"div",
-	unresponsive(css`
+	f.unresponsive(css`
 		display: flex;
 		flex-direction: column;
 		align-items: center;

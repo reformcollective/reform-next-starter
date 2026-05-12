@@ -2,7 +2,7 @@
 
 import UniversalLink from "library/link"
 import { loader } from "library/link/loader"
-import { css, fresponsive, styled } from "library/styled"
+import { css, f, styled } from "library/styled"
 import { useEffect, useState } from "react"
 
 export default function Loader() {
@@ -73,7 +73,7 @@ export default function Loader() {
 
 const Wrapper = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		display: flex;
 		flex-direction: column;
 		align-items: center;

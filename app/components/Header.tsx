@@ -2,7 +2,7 @@
 
 import type { HeaderQueryResult } from "sanity.types"
 
-import { css, fresponsive, styled } from "library/styled"
+import { css, f, styled } from "library/styled"
 import useAutoHideHeader from "library/useAutoHideHeader"
 import { useRef } from "react"
 
@@ -20,7 +20,7 @@ export default function Header({ headerText }: NonNullable<HeaderQueryResult>) {
 
 const Wrapper = styled(
 	"header",
-	fresponsive(css`
+	f.responsive(css`
 		display: grid;
 		grid-column: fullbleed;
 		grid-row: header;
