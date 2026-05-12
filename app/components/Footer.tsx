@@ -1,7 +1,7 @@
 import type { FooterQueryResult } from "sanity.types"
 
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled"
+import { css, f, styled } from "library/styled"
 
 export default function Footer({ footerText }: NonNullable<FooterQueryResult>) {
 	return (
@@ -23,7 +23,7 @@ export default function Footer({ footerText }: NonNullable<FooterQueryResult>) {
 
 const Wrapper = styled(
 	"footer",
-	fresponsive(css`
+	f.responsive(css`
 		background-color: rebeccapurple;
 		color: white;
 		display: grid;
@@ -37,7 +37,7 @@ const Wrapper = styled(
 
 const Content = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		text-align: center;
 		display: flex;
 		flex-direction: column;

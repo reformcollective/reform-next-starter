@@ -61,7 +61,7 @@ export async function generateStaticParams() {
 		perspective: "published",
 		disableStega: true,
 	})
-	return data.map((item) => ({
+	return data.map((item: { path?: string | null }) => ({
 		slug: item.path === "/" ? undefined : item.path?.replace(/^\/+/, "").split("/"),
 	}))
 }

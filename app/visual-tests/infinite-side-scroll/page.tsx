@@ -2,7 +2,7 @@
 
 import { InfiniteSideScroll } from "library/InfiniteSideScroll"
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled/alpha"
 import { useEffect, useState } from "react"
 
 const ITEMS = ["A", "B", "C", "D", "E"]
@@ -179,7 +179,7 @@ export default function InfiniteSideScrollTests() {
 
 const Wrapper = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		display: flex;
 		flex-direction: column;
 		gap: 20px;
@@ -219,7 +219,7 @@ const Wrapper = styled(
 
 const Item = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		width: 300px;
 		height: 200px;
 		background: orange;
@@ -234,28 +234,28 @@ const Item = styled(
 
 const ReversedItem = styled(
 	Item,
-	fresponsive(css`
+	f.responsive(css`
 		background: tomato;
 	`),
 )
 
 const GreenItem = styled(
 	Item,
-	fresponsive(css`
+	f.responsive(css`
 		background: mediumseagreen;
 	`),
 )
 
 const PurpleItem = styled(
 	Item,
-	fresponsive(css`
+	f.responsive(css`
 		background: mediumpurple;
 	`),
 )
 
 const Btn = styled(
 	"button",
-	fresponsive(css`
+	f.responsive(css`
 		width: 60px;
 		height: 60px;
 		border-radius: 50%;
@@ -270,14 +270,14 @@ const Btn = styled(
 
 const Spacer = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		height: 100px;
 	`),
 )
 
 const SizeShiftItem = styled(
 	Item,
-	fresponsive(css`
+	f.responsive(css`
 		background: steelblue;
 		transition:
 			width 0.6s ease,
@@ -287,7 +287,7 @@ const SizeShiftItem = styled(
 
 const Divider = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		height: 2px;
 		background: currentcolor;
 		opacity: 0.15;
@@ -297,7 +297,7 @@ const Divider = styled(
 
 const TealItem = styled(
 	Item,
-	fresponsive(css`
+	f.responsive(css`
 		background: cadetblue;
 	`),
 )
@@ -310,7 +310,7 @@ const TealItem = styled(
  */
 const FlexGapWrapper = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		& .track {
 			gap: 60px !important;
 		}
@@ -322,7 +322,7 @@ const FlexGapWrapper = styled(
  */
 const MarginLeftWrapper = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		& .track {
 			gap: 0 !important;
 		}
@@ -331,7 +331,7 @@ const MarginLeftWrapper = styled(
 
 const MarginLeftItem = styled(
 	TealItem,
-	fresponsive(css`
+	f.responsive(css`
 		margin-left: 60px;
 	`),
 )
@@ -341,7 +341,7 @@ const MarginLeftItem = styled(
  */
 const MarginRightWrapper = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		& .track {
 			gap: 0 !important;
 		}
@@ -350,7 +350,7 @@ const MarginRightWrapper = styled(
 
 const MarginRightItem = styled(
 	TealItem,
-	fresponsive(css`
+	f.responsive(css`
 		margin-right: 60px;
 	`),
 )
@@ -361,7 +361,7 @@ const MarginRightItem = styled(
  */
 const GridGapWrapper = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		& .track {
 			display: grid !important;
 			grid-auto-flow: column;

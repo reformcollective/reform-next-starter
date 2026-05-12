@@ -1,6 +1,6 @@
 import { sleep } from "library/functions"
 import UniversalLink from "library/link"
-import { css, fresponsive, styled } from "library/styled"
+import { css, f, styled } from "library/styled"
 
 export default async function LoaderB() {
 	await sleep(1000)
@@ -31,7 +31,7 @@ export default async function LoaderB() {
 
 const Wrapper = styled(
 	"div",
-	fresponsive(css`
+	f.responsive(css`
 		display: flex;
 		flex-direction: column;
 		align-items: center;
