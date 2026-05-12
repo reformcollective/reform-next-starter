@@ -175,6 +175,9 @@ importers:
       '@vanilla-extract/css':
         specifier: ^1.20.1
         version: 1.20.1(babel-plugin-macros@3.1.0)
+      '@vanilla-extract/dynamic':
+        specifier: ^2
+        version: 2.1.5
       '@vanilla-extract/next-plugin':
         specifier: ^2.5.1
         version: 2.5.2(@swc/helpers@0.5.18)(@types/node@25.5.2)(babel-plugin-macros@3.1.0)(jiti@2.6.1)(lightningcss@1.31.1)(next@16.1.5(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.0)(yaml@2.8.3)
