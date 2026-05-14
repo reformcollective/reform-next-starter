@@ -44,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	// 3) Combine, dedupe, and build absolute URLs safely
 	const allPaths = Array.from(new Set([...fileRoutes, ...cmsRoutes]))
 
-	return allPaths.map((path) => ({
+	return allPaths.map((path: string) => ({
 		url: new URL(path, siteURL).toString(),
 	}))
 }
