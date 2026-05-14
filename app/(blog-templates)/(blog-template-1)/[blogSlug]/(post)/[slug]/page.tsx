@@ -7,11 +7,15 @@ import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { siteURL } from "library/siteURL"
 import { css, f, styled } from "library/styled"
 import { defineQuery } from "next-sanity"
+import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
-import { sanityFetch } from "sanity/lib/live"
-
-export const dynamic = "force-static"
-export const dynamicParams = false
+import { Suspense } from "react"
+import {
+	getDynamicFetchOptions,
+	sanityFetch,
+	sanityFetchStaticParams,
+	type DynamicFetchOptions,
+} from "sanity/lib/live"
 
 const postSlugsQuery = defineQuery(`
 	*[_type == "blog1Post" && defined(slug.current)]{"slug": slug.current}
@@ -53,10 +57,8 @@ const singlePostQuery = defineQuery(`
 `)
 
 export async function generateStaticParams() {
-	const { data } = await sanityFetch({
+	const data = await sanityFetchStaticParams({
 		query: postSlugsQuery,
-		perspective: "published",
-		disableStega: true,
 	})
 	return data
 }
@@ -66,7 +68,8 @@ export async function generateMetadata(
 	parent: ResolvingMetadata,
 ): Promise<Metadata> {
 	const { blogSlug, slug } = await params
-	const { data: post } = await sanityFetch({ query: singlePostQuery, params: { slug } })
+	const { perspective } = await getDynamicFetchOptions()
+	const post = await cachedPostMetadata({ slug, perspective })
 
 	const title = post?.title || (await parent).title
 	const description = post?.articleTextPreview || (await parent).description
@@ -93,13 +96,53 @@ export async function generateMetadata(
 	}
 }
 
-export default async function PostPage({ params }: PageProps<"/[blogSlug]/[slug]">) {
-	const { slug } = await params
+async function cachedPostMetadata({
+	slug,
+	perspective,
+}: { slug: string } & Pick<DynamicFetchOptions, "perspective">) {
+	"use cache"
 
 	const { data: post } = await sanityFetch({
 		query: singlePostQuery,
 		params: { slug },
-		disableStega: true,
+		perspective,
+		stega: false,
+	})
+	return post
+}
+
+export default async function PostPage({ params }: PageProps<"/[blogSlug]/[slug]">) {
+	const { isEnabled: isDraftMode } = await draftMode()
+	if (isDraftMode) {
+		return (
+			<Suspense fallback={null}>
+				<DynamicPostPage params={params} />
+			</Suspense>
+		)
+	}
+
+	const { slug } = await params
+	return <CachedPostPage slug={slug} perspective="published" stega={false} />
+}
+
+async function DynamicPostPage({ params }: Pick<PageProps<"/[blogSlug]/[slug]">, "params">) {
+	const { slug } = await params
+	const { perspective, stega } = await getDynamicFetchOptions()
+	return <CachedPostPage slug={slug} perspective={perspective} stega={stega} />
+}
+
+async function CachedPostPage({
+	slug,
+	perspective,
+	stega,
+}: { slug: string } & Pick<DynamicFetchOptions, "perspective" | "stega">) {
+	"use cache"
+
+	const { data: post } = await sanityFetch({
+		query: singlePostQuery,
+		params: { slug },
+		perspective,
+		stega,
 	})
 
 	if (!post) return notFound()

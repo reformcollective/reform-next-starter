@@ -10,8 +10,13 @@ import { siteURL } from "library/siteURL"
 import { css, f, styled } from "library/styled"
 import "app/styles/colors.css"
 import { defineQuery, stegaClean } from "next-sanity"
+import { draftMode } from "next/headers"
 import { Suspense, lazy } from "react"
-import SanityLive, { sanityFetch } from "sanity/lib/live"
+import SanityLive, {
+	getDynamicFetchOptions,
+	sanityFetch,
+	type DynamicFetchOptions,
+} from "sanity/lib/live"
 
 const PageTransition = lazy(() => import("app/components/PageTransition"))
 
@@ -23,12 +28,8 @@ export const metadata: Metadata = {
 	metadataBase: siteURL,
 }
 
-export * from "library/segmentDefaults"
-
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-	const { data: headerData } = await sanityFetch({ query: headerQuery })
-	const { data: footerData } = await sanityFetch({ query: footerQuery })
-	const { data: settings } = await sanityFetch({ query: settingsQuery })
+	const { isEnabled: isDraftMode } = await draftMode()
 
 	return (
 		<html lang="en">
@@ -39,24 +40,93 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 						<Suspense>
 							<PageTransition />
 						</Suspense>
-						<SanityLive />
-						{headerData && <Header {...headerData} />}
+						<SanityLive includeDrafts={isDraftMode} />
+						{isDraftMode ? (
+							<Suspense fallback={null}>
+								<DynamicHeader />
+							</Suspense>
+						) : (
+							<CachedHeader perspective="published" stega={false} />
+						)}
 						{children}
-						{footerData && <Footer {...footerData} />}
+						{isDraftMode ? (
+							<Suspense fallback={null}>
+								<DynamicFooter />
+							</Suspense>
+						) : (
+							<CachedFooter perspective="published" stega={false} />
+						)}
 					</PageRoot>
 				</GlobalProviders>
-				{settings?.tags?.map(
-					(tag: { _key: string; embed?: string }) =>
-						tag.embed && (
-							<div
-								key={tag._key}
-								// biome-ignore lint/security/noDangerouslySetInnerHtml: embeds and scripts
-								dangerouslySetInnerHTML={{ __html: stegaClean(tag.embed) }}
-							/>
-						),
+				{isDraftMode ? (
+					<Suspense fallback={null}>
+						<DynamicSettingsTags />
+					</Suspense>
+				) : (
+					<CachedSettingsTags perspective="published" stega={false} />
 				)}
 			</body>
 		</html>
+	)
+}
+
+async function DynamicHeader() {
+	const { perspective, stega } = await getDynamicFetchOptions()
+	return <CachedHeader perspective={perspective} stega={stega} />
+}
+
+async function CachedHeader({
+	perspective,
+	stega,
+}: Pick<DynamicFetchOptions, "perspective" | "stega">) {
+	"use cache"
+	const { data: headerData } = await sanityFetch({ query: headerQuery, perspective, stega })
+	return headerData ? (
+		<Suspense fallback={null}>
+			<Header {...headerData} />
+		</Suspense>
+	) : null
+}
+
+async function DynamicFooter() {
+	const { perspective, stega } = await getDynamicFetchOptions()
+	return <CachedFooter perspective={perspective} stega={stega} />
+}
+
+async function CachedFooter({
+	perspective,
+	stega,
+}: Pick<DynamicFetchOptions, "perspective" | "stega">) {
+	"use cache"
+	const { data: footerData } = await sanityFetch({ query: footerQuery, perspective, stega })
+	return footerData ? (
+		<Suspense fallback={null}>
+			<Footer {...footerData} />
+		</Suspense>
+	) : null
+}
+
+async function DynamicSettingsTags() {
+	const { perspective, stega } = await getDynamicFetchOptions()
+	return <CachedSettingsTags perspective={perspective} stega={stega} />
+}
+
+async function CachedSettingsTags({
+	perspective,
+	stega,
+}: Pick<DynamicFetchOptions, "perspective" | "stega">) {
+	"use cache"
+	const { data: settings } = await sanityFetch({ query: settingsQuery, perspective, stega })
+
+	return settings?.tags?.map(
+		(tag: { _key: string; embed?: string }) =>
+			tag.embed && (
+				<div
+					key={tag._key}
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: embeds and scripts
+					dangerouslySetInnerHTML={{ __html: stegaClean(tag.embed) }}
+				/>
+			),
 	)
 }
 

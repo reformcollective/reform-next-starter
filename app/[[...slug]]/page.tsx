@@ -13,9 +13,15 @@ import { Redirect } from "library/sanity/redirect"
 import { siteURL } from "library/siteURL"
 import { EagerImages } from "library/StaticImage"
 import { defineQuery } from "next-sanity"
+import { draftMode } from "next/headers"
 import { notFound } from "next/navigation"
-import { Fragment } from "react"
-import { sanityFetch } from "sanity/lib/live"
+import { Fragment, Suspense } from "react"
+import {
+	getDynamicFetchOptions,
+	sanityFetch,
+	sanityFetchStaticParams,
+	type DynamicFetchOptions,
+} from "sanity/lib/live"
 import { documentPathProjection } from "sanity/lib/slug-resolver"
 
 type PageSection = NonNullable<NonNullable<MainPageQueryResult>["sections"]>[number]
@@ -56,10 +62,8 @@ const mainPageSlugsQuery = defineQuery(`
 const mainPageSettingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
 export async function generateStaticParams() {
-	const { data } = await sanityFetch({
+	const data = await sanityFetchStaticParams({
 		query: mainPageSlugsQuery,
-		perspective: "published",
-		disableStega: true,
 	})
 	return data.map((item) => ({
 		slug: item.path === "/" ? undefined : item.path?.replace(/^\/+/, "").split("/"),
@@ -69,18 +73,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/[[...slug]]">): Promise<Metadata> {
 	const slug = (await params).slug
 	const pathname = slug ? `/${slug.join("/")}` : "/"
+	const { perspective } = await getDynamicFetchOptions()
 
-	const [{ data: relevantPage }, { data: settings }] = await Promise.all([
-		sanityFetch({
-			query: mainPageQuery,
-			params: { pathname },
-			disableStega: true,
-		}),
-		sanityFetch({
-			query: mainPageSettingsQuery,
-			disableStega: true,
-		}),
-	])
+	const { relevantPage, settings } = await cachedMainPageMetadata({ pathname, perspective })
 
 	const canonicalUrl = resolveProductionUrl(relevantPage)
 	const canonicalTitle = resolveDocumentTitle(relevantPage) || settings?.defaultTitle
@@ -113,14 +108,63 @@ export async function generateMetadata({ params }: PageProps<"/[[...slug]]">): P
 	}
 }
 
-export * from "library/segmentDefaults"
+async function cachedMainPageMetadata({
+	pathname,
+	perspective,
+}: { pathname: string } & Pick<DynamicFetchOptions, "perspective">) {
+	"use cache"
+
+	const [{ data: relevantPage }, { data: settings }] = await Promise.all([
+		sanityFetch({
+			query: mainPageQuery,
+			params: { pathname },
+			perspective,
+			stega: false,
+		}),
+		sanityFetch({
+			query: mainPageSettingsQuery,
+			perspective,
+			stega: false,
+		}),
+	])
+
+	return { relevantPage, settings }
+}
 
 export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">) {
+	const { isEnabled: isDraftMode } = await draftMode()
+	if (isDraftMode) {
+		return (
+			<Suspense fallback={null}>
+				<DynamicTemplatePage params={params} />
+			</Suspense>
+		)
+	}
+
 	const slug = (await params).slug
 	const pathname = slug ? `/${slug.join("/")}` : "/"
+	return <CachedTemplatePage pathname={pathname} perspective="published" stega={false} />
+}
+
+async function DynamicTemplatePage({ params }: Pick<PageProps<"/[[...slug]]">, "params">) {
+	const slug = (await params).slug
+	const pathname = slug ? `/${slug.join("/")}` : "/"
+	const { perspective, stega } = await getDynamicFetchOptions()
+	return <CachedTemplatePage pathname={pathname} perspective={perspective} stega={stega} />
+}
+
+async function CachedTemplatePage({
+	pathname,
+	perspective,
+	stega,
+}: { pathname: string } & Pick<DynamicFetchOptions, "perspective" | "stega">) {
+	"use cache"
+
 	const { data: relevantPage } = await sanityFetch({
 		query: mainPageQuery,
 		params: { pathname },
+		perspective,
+		stega,
 	})
 
 	if (!relevantPage) notFound()

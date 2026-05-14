@@ -1,8 +1,17 @@
 import { sleep } from "library/functions"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled"
+import { Suspense } from "react"
 
-export default async function LoaderB() {
+export default function LoaderB() {
+	return (
+		<Suspense fallback={null}>
+			<DelayedLoaderB />
+		</Suspense>
+	)
+}
+
+async function DelayedLoaderB() {
 	await sleep(1000)
 
 	return (

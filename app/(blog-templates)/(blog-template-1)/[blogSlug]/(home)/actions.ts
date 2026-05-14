@@ -38,7 +38,11 @@ type PostList = NonNullable<
 
 export async function searchPosts(query: string): Promise<PostList> {
 	if (!query.trim()) {
-		const { data } = await sanityFetch({ query: allPostsServerQuery })
+		const { data } = await sanityFetch({
+			query: allPostsServerQuery,
+			perspective: "published",
+			stega: false,
+		})
 		return data ?? []
 	}
 	// Append * to each term for prefix matching (e.g. "Uta" matches "Utah")
@@ -51,6 +55,8 @@ export async function searchPosts(query: string): Promise<PostList> {
 	const { data } = await sanityFetch({
 		query: searchedPostsQuery,
 		params: { searchQuery: wildcardQuery },
+		perspective: "published",
+		stega: false,
 	})
 	return (data ?? []) as PostList
 }

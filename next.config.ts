@@ -1,9 +1,14 @@
 import type { NextConfig } from "next"
 
+import { sanity } from "next-sanity/live/cache-life"
+
 import { serverSiteURL } from "./library/siteURL/determine"
 import { withVanillaSplit } from "./library/vanilla/withVanillaSplit"
 
 const nextConfig: NextConfig = {
+	cacheComponents: true,
+	cacheLife: { sanity },
+
 	redirects: async () => [{ source: "/home", destination: "/", permanent: false }],
 
 	// we check types manually using tsgo

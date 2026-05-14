@@ -32,11 +32,17 @@ interface SitemapDocument {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+	"use cache"
+
 	// 1) File-based static routes
 	const fileRoutes = await listStaticRoutes()
 
 	// 2) CMS routes
-	const { data: cmsDocuments } = await sanityFetch({ query: sitemapCmsQuery })
+	const { data: cmsDocuments } = await sanityFetch({
+		query: sitemapCmsQuery,
+		perspective: "published",
+		stega: false,
+	})
 	const cmsRoutes = cmsDocuments
 		.map((document: SitemapDocument) => document.path)
 		.filter((path): path is string => Boolean(path))
