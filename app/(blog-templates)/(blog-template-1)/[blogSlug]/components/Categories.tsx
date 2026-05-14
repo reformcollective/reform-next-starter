@@ -32,7 +32,7 @@ export function Categories({ items }: { items: Card[] }) {
 				<Pill
 					type="button"
 					data-selected={categories.length === 0}
-					onClick={() => setCategories(null)}
+					onClick={() => void setCategories(null)}
 				>
 					All
 				</Pill>

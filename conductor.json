@@ -1,0 +1,8 @@
+{
+	"scripts": {
+		"setup": "git submodule update --init\nMAIN=$(git worktree list --porcelain | head -1 | awk '{print $2}') && [ \"$(pwd)\" != \"$MAIN\" ] && ln -sf \"$MAIN/.env\" .env\npnpm install",
+		"remoteSetup": "git submodule update --init\nMAIN=$(git worktree list --porcelain | head -1 | awk '{print $2}') && [ \"$(pwd)\" != \"$MAIN\" ] && ln -sf \"$MAIN/.env\" .env\npnpm install",
+		"run": "pnpm dev",
+		"archive": "git submodule deinit --force --all"
+	}
+}
