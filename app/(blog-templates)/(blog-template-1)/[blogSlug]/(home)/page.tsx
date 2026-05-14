@@ -1,29 +1,30 @@
 import type { Metadata } from "next"
 
 import { colors } from "app/styles/colors.css"
+import { ensureStaticParams } from "library/next/ensureStaticParams"
 import { imageField } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { siteURL } from "library/siteURL"
 import { css, f, styled } from "library/styled"
 import { defineQuery } from "next-sanity"
+import { draftMode } from "next/headers"
 import { Suspense } from "react"
-import { sanityFetch } from "sanity/lib/live"
+import {
+	getDynamicFetchOptions,
+	sanityFetch,
+	sanityFetchStaticParams,
+	type DynamicFetchOptions,
+} from "sanity/lib/live"
 
 import { BlogHomeClient } from "./BlogHomeClient"
-
-export const dynamic = "force-static"
-export const dynamicParams = false
 
 const hubSlugQuery = defineQuery(`*[_type == "blog1Hub"][0]{"slug": slug.current}`)
 
 export async function generateStaticParams() {
-	const { data } = await sanityFetch({
+	const data = await sanityFetchStaticParams({
 		query: hubSlugQuery,
-		perspective: "published",
-		disableStega: true,
 	})
-	if (!data?.slug) return []
-	return [{ blogSlug: data.slug }]
+	return ensureStaticParams(data?.slug ? [{ blogSlug: data.slug }] : [], { blogSlug: "blog" })
 }
 
 const allPostsQuery = defineQuery(`
@@ -63,10 +64,8 @@ const blogHubQuery = defineQuery(`
 
 export async function generateMetadata({ params }: PageProps<"/[blogSlug]">): Promise<Metadata> {
 	const { blogSlug } = await params
-	const [{ data: blogHub }, { data: settings }] = await Promise.all([
-		sanityFetch({ query: blogHubQuery, disableStega: true }),
-		sanityFetch({ query: pageSettingsQuery, disableStega: true }),
-	])
+	const { perspective } = await getDynamicFetchOptions()
+	const { blogHub, settings } = await cachedBlogHomeMetadata({ perspective })
 
 	const title = blogHub?.title ?? settings?.defaultTitle
 	const description = blogHub?.description ?? settings?.defaultDescription
@@ -97,11 +96,47 @@ export async function generateMetadata({ params }: PageProps<"/[blogSlug]">): Pr
 	}
 }
 
+async function cachedBlogHomeMetadata({ perspective }: Pick<DynamicFetchOptions, "perspective">) {
+	"use cache"
+
+	const [{ data: blogHub }, { data: settings }] = await Promise.all([
+		sanityFetch({ query: blogHubQuery, perspective, stega: false }),
+		sanityFetch({ query: pageSettingsQuery, perspective, stega: false }),
+	])
+
+	return { blogHub, settings }
+}
+
 export default async function BlogHome() {
-	const { data: blogHub } = await sanityFetch({ query: blogHubQuery, disableStega: true })
+	const { isEnabled: isDraftMode } = await draftMode()
+	if (isDraftMode) {
+		return (
+			<Suspense fallback={<Inner>Loading blog...</Inner>}>
+				<DynamicBlogHome />
+			</Suspense>
+		)
+	}
+
+	return <CachedBlogHome perspective="published" stega={false} />
+}
+
+async function DynamicBlogHome() {
+	const { perspective, stega } = await getDynamicFetchOptions()
+	return <CachedBlogHome perspective={perspective} stega={stega} />
+}
+
+async function CachedBlogHome({
+	perspective,
+	stega,
+}: Pick<DynamicFetchOptions, "perspective" | "stega">) {
+	"use cache"
+
+	const { data: blogHub } = await sanityFetch({ query: blogHubQuery, perspective, stega })
 	const searchMode = blogHub?.searchMode === "server" ? "server" : "client"
 	const { data: allCards } =
-		searchMode === "client" ? await sanityFetch({ query: allPostsQuery }) : { data: [] }
+		searchMode === "client"
+			? await sanityFetch({ query: allPostsQuery, perspective, stega })
+			: { data: [] }
 
 	return (
 		<>
