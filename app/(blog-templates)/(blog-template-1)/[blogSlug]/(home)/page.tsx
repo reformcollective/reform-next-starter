@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 	const data = await sanityFetchStaticParams({
 		query: hubSlugQuery,
 	})
-	if (!data?.slug) return []
+	if (!data?.slug) return [{ blogSlug: "blog" }]
 	return [{ blogSlug: data.slug }]
 }
 

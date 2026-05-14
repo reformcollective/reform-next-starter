@@ -60,6 +60,8 @@ export async function generateStaticParams() {
 	const data = await sanityFetchStaticParams({
 		query: postSlugsQuery,
 	})
+	if (data.length === 0) return [{ slug: "__missing-post__" }]
+
 	return data
 }
 

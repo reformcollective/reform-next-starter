@@ -65,6 +65,8 @@ export async function generateStaticParams() {
 	const data = await sanityFetchStaticParams({
 		query: mainPageSlugsQuery,
 	})
+	if (data.length === 0) return [{ slug: undefined }]
+
 	return data.map((item) => ({
 		slug: item.path === "/" ? undefined : item.path?.replace(/^\/+/, "").split("/"),
 	}))
