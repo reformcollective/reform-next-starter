@@ -2,6 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next"
 
 import PostContent from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/PostContent"
 import { colors } from "app/styles/colors.css"
+import { ensureStaticParams } from "library/next/ensureStaticParams"
 import { imageField, videoField } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { siteURL } from "library/siteURL"
@@ -60,9 +61,7 @@ export async function generateStaticParams() {
 	const data = await sanityFetchStaticParams({
 		query: postSlugsQuery,
 	})
-	if (data.length === 0) return [{ slug: "__missing-post__" }]
-
-	return data
+	return ensureStaticParams(data, { slug: "__missing-post__" })
 }
 
 export async function generateMetadata(

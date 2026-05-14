@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { colors } from "app/styles/colors.css"
+import { ensureStaticParams } from "library/next/ensureStaticParams"
 import { imageField } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { siteURL } from "library/siteURL"
@@ -23,8 +24,7 @@ export async function generateStaticParams() {
 	const data = await sanityFetchStaticParams({
 		query: hubSlugQuery,
 	})
-	if (!data?.slug) return [{ blogSlug: "blog" }]
-	return [{ blogSlug: data.slug }]
+	return ensureStaticParams(data?.slug ? [{ blogSlug: data.slug }] : [], { blogSlug: "blog" })
 }
 
 const allPostsQuery = defineQuery(`

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import type { MainPageQueryResult } from "sanity.types"
 
 import SampleSection from "app/sections/Sample"
+import { ensureStaticParams } from "library/next/ensureStaticParams"
 import { imageField, linkField, videoField } from "library/sanity/assetMetadata"
 import { resolveDocumentTitle, resolveProductionUrl } from "library/sanity/document-helpers"
 import {
@@ -65,9 +66,7 @@ export async function generateStaticParams() {
 	const data = await sanityFetchStaticParams({
 		query: mainPageSlugsQuery,
 	})
-	if (data.length === 0) return [{ slug: undefined }]
-
-	return data.map((item) => ({
+	return ensureStaticParams(data, { _id: "__missing-page__", path: "/" }).map((item) => ({
 		slug: item.path === "/" ? undefined : item.path?.replace(/^\/+/, "").split("/"),
 	}))
 }
