@@ -2,7 +2,7 @@
 
 import { InfiniteSideScroll } from "library/InfiniteSideScroll"
 import UniversalLink from "library/link"
-import { css, f, styled } from "library/styled/alpha"
+import { css, f, styled } from "library/styled"
 import { useEffect, useState } from "react"
 
 const ITEMS = ["A", "B", "C", "D", "E"]
