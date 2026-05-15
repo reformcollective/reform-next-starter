@@ -1,6 +1,6 @@
-/// <reference types="unlighthouse" />
+import type { UserConfig } from "unlighthouse/config"
 
-export default defineUnlighthouseConfig({
+export default {
 	ci: {
 		buildStatic: true,
 		reporter: "jsonSimple",
@@ -11,4 +11,4 @@ export default defineUnlighthouseConfig({
 			seo: 0, // seo is often CMS driven
 		},
 	},
-})
+} satisfies UserConfig
