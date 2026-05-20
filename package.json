@@ -114,9 +114,29 @@
 		"generate-manifest": {
 			"command": "mkdir -p public/studio && sanity manifest extract --path public/studio/static",
 			"files": [
+				".env",
+				"app/env.ts",
+				"library/**/*.ts",
+				"library/**/*.tsx",
 				"sanity/**/*",
-				"sanity.config.ts"
+				"sanity.config.ts",
+				"sanity.cli.ts",
+				"tsconfig.json"
 			],
+			"env": {
+				"NEXT_PUBLIC_SANITY_DATASET": {
+					"external": true
+				},
+				"NEXT_PUBLIC_SANITY_PROJECT_ID": {
+					"external": true
+				},
+				"NODE_ENV": {
+					"external": true
+				},
+				"SANITY_AUTH_TOKEN": {
+					"external": true
+				}
+			},
 			"output": [
 				"public/studio/static/**/*"
 			]
@@ -124,14 +144,34 @@
 		"sanity-typegen": {
 			"command": "(sanity schema extract && sanity typegen generate) || (pnpm exec sanity schema validate)",
 			"files": [
+				".env",
 				"sanity/**/*",
 				"sanity.config.ts",
+				"sanity.cli.ts",
+				"tsconfig.json",
 				"app/**/*.ts",
 				"app/**/*.tsx",
+				"app/**/*.js",
+				"app/**/*.jsx",
 				"library/**/*.ts",
 				"library/**/*.tsx",
-				"sanity.cli.ts"
+				"library/**/*.js",
+				"library/**/*.jsx"
 			],
+			"env": {
+				"NEXT_PUBLIC_SANITY_DATASET": {
+					"external": true
+				},
+				"NEXT_PUBLIC_SANITY_PROJECT_ID": {
+					"external": true
+				},
+				"NODE_ENV": {
+					"external": true
+				},
+				"SANITY_AUTH_TOKEN": {
+					"external": true
+				}
+			},
 			"output": [
 				"schema.json",
 				"sanity.types.ts"
@@ -142,11 +182,14 @@
 			"files": [
 				"app/**/*.ts",
 				"app/**/*.tsx",
+				"library/siteURL/**/*.ts",
+				"library/vanilla/**/*.ts",
 				"next.config.ts",
 				"tsconfig.json"
 			],
 			"output": [
-				".next/types/**/*.ts"
+				".next/types/**/*.ts",
+				"next-env.d.ts"
 			]
 		},
 		"typegen": {
