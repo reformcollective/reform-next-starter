@@ -1,6 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next"
 
 import PostContent from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/PostContent"
+import { resolveMetaTitle } from "app/lib/metadata"
 import { colors } from "app/styles/colors.css"
 import { imageField, videoField } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
@@ -32,6 +33,7 @@ const singlePostQuery = defineQuery(`
 	*[_type == "blog1Post" && slug.current == $slug][0] {
 		_id,
 		title,
+		metaTitle,
 		"slug": slug.current,
 		"author": author-> {
 			name,
@@ -67,14 +69,19 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	const { blogSlug, slug } = await params
 	const { data: post } = await sanityFetch({ query: singlePostQuery, params: { slug } })
+	const parentMetadata = await parent
+	const parentTitle = typeof parentMetadata.title === "string" ? parentMetadata.title : undefined
 
-	const title = post?.title || (await parent).title
-	const description = post?.articleTextPreview || (await parent).description
+	const title = resolveMetaTitle({
+		title: post?.metaTitle || post?.title,
+		suffix: parentTitle,
+	})
+	const description = post?.articleTextPreview || parentMetadata.description
 	const imageData = post?.mainImage && resolveOpenGraphImage(post?.mainImage)
 	const newImage = imageData ? [imageData] : undefined
 
-	const opengraph = newImage ?? (await parent).openGraph?.images
-	const twitter = newImage ?? (await parent).twitter?.images
+	const opengraph = newImage ?? parentMetadata.openGraph?.images
+	const twitter = newImage ?? parentMetadata.twitter?.images
 
 	return {
 		title,

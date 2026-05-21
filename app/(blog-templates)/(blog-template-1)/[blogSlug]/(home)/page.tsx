@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import { resolveMetaTitle } from "app/lib/metadata"
 import { colors } from "app/styles/colors.css"
 import { imageField } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
@@ -44,6 +45,7 @@ const pageSettingsQuery = defineQuery(`*[_type == "settings"][0]`)
 const blogHubQuery = defineQuery(`
 	*[_type == "blog1Hub"][0] {
 		title,
+		metaTitle,
 		description,
 		noIndex,
 		searchMode,
@@ -68,7 +70,11 @@ export async function generateMetadata({ params }: PageProps<"/[blogSlug]">): Pr
 		sanityFetch({ query: pageSettingsQuery, disableStega: true }),
 	])
 
-	const title = blogHub?.title ?? settings?.defaultTitle
+	const title = resolveMetaTitle({
+		title: blogHub?.metaTitle || blogHub?.title,
+		separator: settings?.metaTitleSeparator,
+		suffix: settings?.defaultTitle,
+	})
 	const description = blogHub?.description ?? settings?.defaultDescription
 	const image = blogHub?.ogImage
 		? resolveOpenGraphImage(blogHub.ogImage)

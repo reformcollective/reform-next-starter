@@ -42,6 +42,12 @@ export const blog1Hub = defineType({
 			description:
 				"Leave blank to reuse the default, defined in Settings. This will be used when shared on socials, and by some search engines.",
 		}),
+		defineField({
+			name: "metaTitle",
+			title: "Meta Title",
+			type: "string",
+			description: "Optional. Overrides the page title used in browser tabs and search results.",
+		}),
 		universalImage({
 			name: "ogImage",
 			title: "Open Graph Image",
