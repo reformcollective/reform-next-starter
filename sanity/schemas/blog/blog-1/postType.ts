@@ -34,6 +34,12 @@ export const blog1PostType = defineType({
 				"A short description of the article. Used on the blog hub page and at the top of the article. Supports line breaks.",
 			validation: (Rule) => Rule.required(),
 		}),
+		defineField({
+			name: "metaTitle",
+			title: "Meta Title",
+			type: "string",
+			description: "Optional. Overrides the page title used in browser tabs and search results.",
+		}),
 		{
 			...universalImage({ name: "mainImage", title: "Main Image" }),
 		},

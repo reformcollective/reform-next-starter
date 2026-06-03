@@ -10,8 +10,24 @@ export default defineType({
 	fields: [
 		defineField({
 			name: "defaultTitle",
-			title: "Default Page Title",
+			title: "Title Suffix",
 			type: "string",
+			description: "Added after page-specific titles in browser tabs and search results.",
+		}),
+		defineField({
+			name: "metaTitleSeparator",
+			title: "Title Separator",
+			type: "string",
+			description: "Placed between the page title and title suffix.",
+			initialValue: "|",
+			options: {
+				list: [
+					{ title: "|", value: "|" },
+					{ title: "-", value: "-" },
+					{ title: ":", value: ":" },
+				],
+				layout: "radio",
+			},
 		}),
 		defineField({
 			name: "defaultDescription",

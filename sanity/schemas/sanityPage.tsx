@@ -88,6 +88,12 @@ export const pageMetadata = [
 			}),
 	}),
 	defineField({
+		name: "metaTitle",
+		title: "Meta Title",
+		type: "string",
+		description: "Optional. Overrides the page title used in browser tabs and search results.",
+	}),
+	defineField({
 		name: "description",
 		title: "Page Description",
 		type: "string",

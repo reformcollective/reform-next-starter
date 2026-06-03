@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import type { MainPageQueryResult } from "sanity.types"
 
+import { resolveMetaTitle } from "app/lib/metadata"
 import SampleSection from "app/sections/Sample"
 import { imageField, linkField, videoField } from "library/sanity/assetMetadata"
 import { resolveDocumentTitle, resolveProductionUrl } from "library/sanity/document-helpers"
@@ -33,6 +34,7 @@ export type GetSectionType<T extends SectionTypes> = WithExtraProps<
 const mainPageQuery = defineQuery(`
 	*[${documentPathProjection("@")} == $pathname][0] {
 		...,
+		metaTitle,
 		description,
 		ogImage,
 		sections[] {
@@ -83,7 +85,11 @@ export async function generateMetadata({ params }: PageProps<"/[[...slug]]">): P
 	])
 
 	const canonicalUrl = resolveProductionUrl(relevantPage)
-	const canonicalTitle = resolveDocumentTitle(relevantPage) || settings?.defaultTitle
+	const canonicalTitle = resolveMetaTitle({
+		title: relevantPage?.metaTitle || resolveDocumentTitle(relevantPage),
+		separator: settings?.metaTitleSeparator,
+		suffix: settings?.defaultTitle,
+	})
 	const canonicalDescription = relevantPage?.description || settings?.defaultDescription
 
 	const image = relevantPage?.ogImage
