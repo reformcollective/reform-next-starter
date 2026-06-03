@@ -56,7 +56,7 @@
 		"react-player": "^3.4.0",
 		"sanity": "^5.25.0",
 		"sanity-plugin-asset-source-unsplash": "^7.0.5",
-		"sanity-plugin-link-field": "^1.5.1",
+		"sanity-plugin-link-field": "file:library/vendor/sanity-plugin-link-field-pr35-91e3ddb.tgz",
 		"sanity-plugin-media": "^4.3.0",
 		"sanity-plugin-mux-input": "^2.19.0",
 		"server-only": "^0.0.1",
