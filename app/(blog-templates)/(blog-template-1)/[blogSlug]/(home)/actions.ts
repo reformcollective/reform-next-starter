@@ -1,17 +1,19 @@
 "use server"
 
-import { imageField } from "library/sanity/assetMetadata"
+import { assetMetadataFunctions } from "library/sanity/assetMetadata"
 import { defineQuery } from "next-sanity"
 import { sanityFetch } from "sanity/lib/live"
 
 const allPostsServerQuery = defineQuery(`
+	${assetMetadataFunctions}
+
 	*[_type == "blog1Post"] | order(publishedAt desc) {
 		_id,
 		title,
 		"slug": slug.current,
 		"author": author->name,
 		articleTextPreview,
-		${imageField("mainImage")},
+		"mainImage": reform::image(mainImage),
 		"categories": categories[]->title,
 		publishedAt
 	}
@@ -20,13 +22,15 @@ const allPostsServerQuery = defineQuery(`
 // groq-js does not infer $param from `match` expressions, so defineQuery cannot
 // be used here. The query and return type are correct at runtime.
 const searchedPostsQuery = `
+	${assetMetadataFunctions}
+
 	*[_type == "blog1Post" && [title, pt::text(body)] match $searchQuery] | order(publishedAt desc) {
 		_id,
 		title,
 		"slug": slug.current,
 		"author": author->name,
 		articleTextPreview,
-		${imageField("mainImage")},
+		"mainImage": reform::image(mainImage),
 		"categories": categories[]->title,
 		publishedAt
 	}
