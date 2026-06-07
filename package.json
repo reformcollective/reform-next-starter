@@ -10,9 +10,6 @@
 		"test": "wireit",
 		"lint": "wireit",
 		"format": "wireit",
-		"typegen": "wireit",
-		"typecheck": "wireit",
-		"generate-manifest": "wireit",
 		"pnpm:devPreinstall": "pnpm init-submodule && pnpm git-config",
 		"postinstall": "pnpm check-env",
 		"prepare": "lefthook install",
@@ -48,9 +45,9 @@
 		"next": "^16.2.6",
 		"next-sanity": "^12.4.5",
 		"nuqs": "^2.8.9",
-		"oxfmt": "^0.44.0",
-		"oxlint": "^1.64.0",
-		"oxlint-tsgolint": "^0.20.0",
+		"oxfmt": "^0.53.0",
+		"oxlint": "^1.68.0",
+		"oxlint-tsgolint": "^0.23.0",
 		"react": "^19.2.6",
 		"react-dom": "^19.2.6",
 		"react-player": "^3.4.0",
@@ -84,7 +81,7 @@
 		"dev": {
 			"command": "next dev",
 			"dependencies": [
-				"typegen"
+				"typegen:dev"
 			],
 			"service": true
 		},
@@ -101,58 +98,77 @@
 		"build": {
 			"dependencies": [
 				"build-next",
-				"typecheck",
 				"generate-manifest"
-			]
-		},
-		"typecheck": {
-			"command": "tsgo",
-			"dependencies": [
-				"typegen"
 			]
 		},
 		"generate-manifest": {
 			"command": "mkdir -p public/studio && sanity manifest extract --path public/studio/static",
 			"files": [
+				".env",
+				"app/env.ts",
+				"library/**/*.ts",
+				"library/**/*.tsx",
 				"sanity/**/*",
-				"sanity.config.ts"
+				"sanity.config.ts",
+				"sanity.cli.ts",
+				"tsconfig.json"
 			],
 			"output": [
 				"public/studio/static/**/*"
 			]
 		},
-		"sanity-typegen": {
+		"sanity-schema:dev": {
+			"command": "sanity schema extract --watch",
+			"service": true
+		},
+		"typegen:dev": {
+			"command": "sanity typegen generate --watch",
+			"dependencies": [
+				"sanity-schema:dev"
+			],
+			"service": true
+		},
+		"sanity-typegen:check": {
 			"command": "(sanity schema extract && sanity typegen generate) || (pnpm exec sanity schema validate)",
 			"files": [
+				".env",
 				"sanity/**/*",
 				"sanity.config.ts",
+				"sanity.cli.ts",
+				"tsconfig.json",
 				"app/**/*.ts",
 				"app/**/*.tsx",
+				"app/**/*.js",
+				"app/**/*.jsx",
 				"library/**/*.ts",
 				"library/**/*.tsx",
-				"sanity.cli.ts"
+				"library/**/*.js",
+				"library/**/*.jsx"
 			],
 			"output": [
 				"schema.json",
 				"sanity.types.ts"
 			]
 		},
-		"next-typegen": {
+		"next-typegen:check": {
 			"command": "next typegen",
 			"files": [
 				"app/**/*.ts",
 				"app/**/*.tsx",
+				"library/siteURL/**/*.ts",
+				"library/vanilla/**/*.ts",
 				"next.config.ts",
 				"tsconfig.json"
 			],
 			"output": [
-				".next/types/**/*.ts"
+				".next/types/**/*.ts",
+				"next-env.d.ts"
 			]
 		},
-		"typegen": {
+		"typegen:check": {
 			"dependencies": [
-				"next-typegen",
-				"sanity-typegen"
+				"next-typegen:check",
+				"sanity-typegen:check"
 			]
 		},
 		"stylelint": {
@@ -161,7 +177,7 @@
 		"oxlint": {
 			"command": "oxlint --fix",
 			"dependencies": [
-				"typegen"
+				"typegen:check"
 			]
 		},
 		"lint": {

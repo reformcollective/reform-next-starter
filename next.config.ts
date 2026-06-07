@@ -6,7 +6,7 @@ import { withVanillaSplit } from "./library/vanilla/withVanillaSplit"
 const nextConfig: NextConfig = {
 	redirects: async () => [{ source: "/home", destination: "/", permanent: false }],
 
-	// we check types manually using tsgo
+	// type-aware linting checks this separately from next build
 	typescript: { ignoreBuildErrors: true },
 
 	experimental: {
