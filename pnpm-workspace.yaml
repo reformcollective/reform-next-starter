@@ -10,10 +10,3 @@ allowBuilds:
   sharp: true
   vue-demi: true
 ignoreWorkspaceRootCheck: true
-enableGlobalVirtualStore: true
-overrides:
-  gsap: "$gsap"
-  react: "$react"
-  react-dom: "$react-dom"
-  "@types/react": "$@types/react"
-  "@types/react-dom": "$@types/react-dom"

@@ -11,7 +11,7 @@ import { css, f, styled } from "library/styled"
 import "app/styles/colors.css"
 import { defineQuery, stegaClean } from "next-sanity"
 import { Suspense, lazy } from "react"
-import SanityLive, { sanityFetch } from "sanity/lib/live"
+import { SanityRuntime, sanityFetch } from "sanity/lib/live"
 
 const PageTransition = lazy(() => import("app/components/PageTransition"))
 
@@ -39,7 +39,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 						<Suspense>
 							<PageTransition />
 						</Suspense>
-						<SanityLive />
+						<SanityRuntime />
 						{headerData && <Header {...headerData} />}
 						{children}
 						{footerData && <Footer {...footerData} />}
