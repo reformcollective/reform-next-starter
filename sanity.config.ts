@@ -173,6 +173,7 @@ export default defineConfig({
 		linkField({
 			linkableSchemaTypes: getLinkableTypes(),
 			customLinkTypes: [staticLinkType()],
+			enabledBuiltInLinkTypes: ["internal", "external", "email", "phone", "sms", "document"],
 		}),
 		/**
 		 * our custom singleton plugin

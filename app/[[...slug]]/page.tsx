@@ -3,7 +3,7 @@ import type { MainPageQueryResult } from "sanity.types"
 
 import { resolveMetaTitle } from "app/lib/metadata"
 import SampleSection from "app/sections/Sample"
-import { imageField, linkField, videoField } from "library/sanity/assetMetadata"
+import { assetMetadataFunctions } from "library/sanity/assetMetadata"
 import { resolveDocumentTitle, resolveProductionUrl } from "library/sanity/document-helpers"
 import {
 	getSanityDataAttribute,
@@ -32,6 +32,8 @@ export type GetSectionType<T extends SectionTypes> = WithExtraProps<
 >
 
 const mainPageQuery = defineQuery(`
+	${assetMetadataFunctions}
+
 	*[${documentPathProjection("@")} == $pathname][0] {
 		...,
 		metaTitle,
@@ -40,9 +42,9 @@ const mainPageQuery = defineQuery(`
 		sections[] {
 			...,
 			_type == "sample" => {
-				${videoField("sampleVideo")},
-				${imageField("sampleImage")},
-				${linkField("sampleLink")}
+				"sampleVideo": reform::video(sampleVideo),
+				"sampleImage": reform::image(sampleImage),
+				"sampleLink": reform::link(sampleLink)
 			}
 		}
 	}

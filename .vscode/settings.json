@@ -7,11 +7,6 @@
 			"delay": 5000,
 			"commands": ["typescript.restartTsServer"],
 			"files": ["**/tsconfig.json", "**/sanity.types.ts"]
-		},
-		{
-			"delay": 5000,
-			"commands": ["workbench.action.tasks.build"],
-			"files": ["**/sanity/schemas/**/*.ts", "**/sanity/schemas/**/*.tsx", "**/sanity.config.ts"]
 		}
 	],
 	"cSpell.enabled": true,

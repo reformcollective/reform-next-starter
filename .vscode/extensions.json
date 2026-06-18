@@ -16,8 +16,8 @@
 		// other utitlities
 		"Soulcode.vscode-unwanted-extensions", // notify about unwanted extensions
 		"naumovs.color-highlight", // highlight colors in the editor
-		"unpacksoftware.run-it", // restarts typescript after running sanity typegen
-		"actboy168.tasks" // adds a button to the status bar to run sanity typegen
+		"unpacksoftware.run-it", // restarts TypeScript when generated types change
+		"actboy168.tasks" // adds a button to the status bar for project tasks
 	],
 	"unwantedRecommendations": [
 		// built into VS Code

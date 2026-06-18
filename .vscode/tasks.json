@@ -2,33 +2,6 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Regenerate Sanity Types",
-			"type": "shell",
-			"command": "pnpm typegen || sleep 10",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"presentation": {
-				"reveal": "silent",
-				"clear": true,
-				"close": true
-			},
-			"options": {
-				"statusbar": {
-					"label": "Regenerate Sanity Types",
-					"icon": { "id": "play" },
-					"running": {
-						"label": "Generating Sanity Types...",
-						"icon": { "id": "terminal" }
-					}
-				}
-			},
-			"runOptions": {
-				"instanceLimit": 10
-			}
-		},
-		{
 			"label": "Development Server",
 			"type": "shell",
 			"command": "pnpm dev",

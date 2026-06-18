@@ -3,7 +3,7 @@
 		"oxlint": {
 			"initialization_options": {
 				"settings": {
-					"configPath": ".oxlintrc.json",
+					"configPath": "./oxlint.config.ts",
 					"run": "onType"
 				}
 			}
@@ -11,7 +11,7 @@
 		"oxfmt": {
 			"initialization_options": {
 				"settings": {
-					"fmt.configPath": ".oxfmtrc.json",
+					"configPath": "./oxfmt.config.ts",
 					"run": "onSave"
 				}
 			}

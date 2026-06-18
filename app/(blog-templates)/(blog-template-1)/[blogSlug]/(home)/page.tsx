@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 
 import { resolveMetaTitle } from "app/lib/metadata"
 import { colors } from "app/styles/colors.css"
-import { imageField } from "library/sanity/assetMetadata"
+import { assetMetadataFunctions } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { siteURL } from "library/siteURL"
 import { css, f, styled } from "library/styled"
@@ -28,13 +28,15 @@ export async function generateStaticParams() {
 }
 
 const allPostsQuery = defineQuery(`
+	${assetMetadataFunctions}
+
 	*[_type == "blog1Post"] | order(publishedAt desc) {
 		_id,
 		title,
 		"slug": slug.current,
 		"author": author->name,
 		articleTextPreview,
-		${imageField("mainImage")},
+		"mainImage": reform::image(mainImage),
 		"categories": categories[]->title,
 		publishedAt
 	}
@@ -43,20 +45,22 @@ const allPostsQuery = defineQuery(`
 const pageSettingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
 const blogHubQuery = defineQuery(`
+	${assetMetadataFunctions}
+
 	*[_type == "blog1Hub"][0] {
 		title,
 		metaTitle,
 		description,
 		noIndex,
 		searchMode,
-		${imageField("ogImage")},
+		"ogImage": reform::image(ogImage),
 		"featuredPost": featuredPost-> {
 			_id,
 			title,
 			"slug": slug.current,
 			"author": author->name,
 			articleTextPreview,
-			${imageField("mainImage")},
+			"mainImage": reform::image(mainImage),
 			"categories": categories[]->title,
 			publishedAt
 		}

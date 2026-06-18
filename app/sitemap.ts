@@ -33,7 +33,7 @@ interface SitemapDocument {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	// 1) File-based static routes
-	const fileRoutes = await listStaticRoutes()
+	const fileRoutes = listStaticRoutes()
 
 	// 2) CMS routes
 	const { data: cmsDocuments } = await sanityFetch({ query: sitemapCmsQuery })

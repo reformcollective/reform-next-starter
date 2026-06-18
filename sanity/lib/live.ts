@@ -1,4 +1,3 @@
-import { LibraryLive as SanityLive, libraryFetch as sanityFetch } from "library/sanity/live"
+import { libraryFetch as sanityFetch, LibraryRuntime as SanityRuntime } from "library/sanity/live"
 
-export { sanityFetch }
-export default SanityLive
+export { sanityFetch, SanityRuntime }

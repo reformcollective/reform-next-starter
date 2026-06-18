@@ -3,7 +3,7 @@ import type { Metadata, ResolvingMetadata } from "next"
 import PostContent from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/PostContent"
 import { resolveMetaTitle } from "app/lib/metadata"
 import { colors } from "app/styles/colors.css"
-import { imageField, videoField } from "library/sanity/assetMetadata"
+import { assetMetadataFunctions } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { siteURL } from "library/siteURL"
 import { css, f, styled } from "library/styled"
@@ -24,12 +24,14 @@ const postFragment = `{
 	"slug": slug.current,
 	"author": author->name,
 	articleTextPreview,
-	${imageField("mainImage")},
+	"mainImage": reform::image(mainImage),
 	"categories": categories[]->title,
 	publishedAt
 }` as const
 
 const singlePostQuery = defineQuery(`
+	${assetMetadataFunctions}
+
 	*[_type == "blog1Post" && slug.current == $slug][0] {
 		_id,
 		title,
@@ -38,16 +40,16 @@ const singlePostQuery = defineQuery(`
 		"author": author-> {
 			name,
 			company,
-			${imageField("image")}
+			"image": reform::image(image)
 		},
 		articleTextPreview,
-		${imageField("mainImage")},
+		"mainImage": reform::image(mainImage),
 		"categories": categories[]->title,
 		publishedAt,
 		body[] {
 			...,
-			${imageField('_type == "image" =>')},
-			${videoField('_type == "video" =>')}
+			_type == "image" => reform::image(@),
+			_type == "video" => reform::video(@)
 		},
 		"relatedPosts": *[_type == "blog1Post" && slug.current != $slug && count((categories[]->title)[@ in ^.categories[]->title]) > 0] | order(publishedAt desc) [0...3] ${postFragment},
 		"recentPosts": *[_type == "blog1Post" && slug.current != $slug] | order(publishedAt desc) [0...3] ${postFragment}
