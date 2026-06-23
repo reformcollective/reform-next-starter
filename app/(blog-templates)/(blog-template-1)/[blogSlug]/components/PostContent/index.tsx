@@ -169,9 +169,9 @@ const AuthorName = styled("div", [
 const MetaItem = styled("div", [
 	f.responsive(css`
 		${textStyles.blog1.p3};
-		color: ${colors.blog1.primary700};
 		display: flex;
 		align-items: center;
+		color: ${colors.blog1.primary700};
 		gap: 6px;
 	`),
 ])
@@ -196,15 +196,14 @@ const ArticleImage = styled(UniversalImage, [
 		border-radius: 12px;
 		aspect-ratio: 826 / 413;
 	`),
-	f.small(css``),
 ])
 
 const Title = styled("h1", [
 	f.responsive(css`
 		${textStyles.blog1.h5Sans};
-		color: ${colors.blog1.primary800};
-		padding-right: 154px;
 		padding-top: 32px;
+		padding-right: 154px;
+		color: ${colors.blog1.primary800};
 	`),
 	f.small(css`
 		${textStyles.blog1.h8Sans};
@@ -215,8 +214,8 @@ const Title = styled("h1", [
 const Description = styled("div", [
 	f.responsive(css`
 		${textStyles.blog1.p1};
-		color: ${colors.blog1.baseDark200};
 		padding-right: 154px;
+		color: ${colors.blog1.baseDark200};
 		white-space: pre-line;
 	`),
 	f.small(css`
@@ -242,11 +241,11 @@ const BottomContent = styled("div", [
 const TopSide = styled("div", [
 	f.responsive(css`
 		${textStyles.blog1.p2};
-		color: ${colors.blog1.primary800};
-		padding-bottom: 24px;
-		margin-bottom: 24px;
-		border-bottom: 1px solid ${colors.blog1.secondary400};
 		width: 100%;
+		padding-bottom: 24px;
+		border-bottom: 1px solid ${colors.blog1.secondary400};
+		margin-bottom: 24px;
+		color: ${colors.blog1.primary800};
 	`),
 	f.small(css`
 		padding-bottom: 14px;

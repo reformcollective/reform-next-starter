@@ -71,8 +71,8 @@ const Row = styled("div", [
 const Inner = styled("div", [
 	f.responsive(css`
 		display: flex;
-		gap: 20px;
 		align-items: center;
+		gap: 20px;
 		${textStyles.blog1.p2};
 	`),
 	f.small(css`
@@ -129,8 +129,8 @@ const StyledUniversalLink = styled(UniversalLink, [
 	f.responsive(css`
 		${textStyles.blog1.p2};
 		color: ${colors.blog1.primary700};
-		opacity: 0.5;
 		cursor: pointer;
+		opacity: 0.5;
 		transition:
 			color 0.3s ease,
 			opacity 0.3s ease;

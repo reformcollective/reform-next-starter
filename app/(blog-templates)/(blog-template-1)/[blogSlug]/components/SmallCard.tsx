@@ -67,18 +67,18 @@ const Wrapper = styled(UniversalLink, [
 	`),
 ])
 
-const Title = styled("div", [f.responsive(css``)])
+const Title = styled("div", [])
 
 const TitleText = styled("div", [
 	f.responsive(css`
 		${clampText(2)};
 		${textStyles.blog1.p1};
-		color: ${colors.blog1.baseDark100};
-		padding-top: 2px;
-		margin-top: -2px;
-		padding-bottom: 5px;
-		margin-bottom: -5px;
 		height: 2lh;
+		padding-top: 2px;
+		padding-bottom: 5px;
+		margin-top: -2px;
+		margin-bottom: -5px;
+		color: ${colors.blog1.baseDark100};
 
 		/* Capsize not playing nice with clamp */
 		&::after {
@@ -91,9 +91,9 @@ const TitleText = styled("div", [
 const PublishDate = styled("div", [
 	f.responsive(css`
 		${textStyles.blog1.p3};
+		margin: 26px 0 14px;
 		color: ${colors.blog1.baseDark200};
 		opacity: 0.5;
-		margin: 26px 0 14px;
 	`),
 ])
 

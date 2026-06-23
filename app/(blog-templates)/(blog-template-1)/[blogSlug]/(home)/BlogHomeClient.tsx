@@ -242,8 +242,8 @@ const NotFoundDescription = styled("p", [
 	f.responsive(css`
 		${textStyles.blog1.p2};
 		width: 317px;
-		text-align: center;
 		margin-top: 60px;
+		text-align: center;
 	`),
 	f.small(css`
 		${textStyles.blog1.p3};
@@ -279,10 +279,10 @@ const CardGroup = styled("div", [
 const LoadMoreButton = styled("button", [
 	f.responsive(css`
 		${textStyles.blog1.p2};
-		margin-top: 84px;
 		padding: 24px;
-		border-radius: 10px;
 		border: 1px solid transparent;
+		border-radius: 10px;
+		margin-top: 84px;
 		background: ${colors.blog1.secondary400};
 		color: ${colors.blog1.primary900};
 		cursor: pointer;

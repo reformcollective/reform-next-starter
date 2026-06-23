@@ -103,10 +103,10 @@ const Image = styled(UniversalImage, [
 const Title = styled("div", [
 	f.responsive(css`
 		${textStyles.blog1.h8Sans};
-		color: ${colors.blog1.baseDark200};
-		margin: 20px 0 42px;
-		${clampText(4)};
 		max-height: 4lh;
+		margin: 20px 0 42px;
+		color: ${colors.blog1.baseDark200};
+		${clampText(4)};
 
 		&::after {
 			display: none;
@@ -136,9 +136,9 @@ const Details = styled("div", [
 const Description = styled("div", [
 	f.responsive(css`
 		${textStyles.blog1.p2};
+		max-height: 4lh;
 		color: ${colors.blog1.baseDark200};
 		${clampText(4)};
-		max-height: 4lh;
 	`),
 	f.small(css`
 		${textStyles.blog1.p1};

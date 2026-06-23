@@ -65,10 +65,10 @@ const CategoryHeader = styled("div", [
 		${textStyles.blog1.p2};
 		display: flex;
 		align-items: center;
-		gap: 10px;
-		margin-bottom: 24px;
 		padding-bottom: 24px;
 		border-bottom: 1px solid ${colors.blog1.secondary400};
+		margin-bottom: 24px;
+		gap: 10px;
 	`),
 ])
 
@@ -84,8 +84,8 @@ const Pill = styled("button", [
 	f.responsive(css`
 		${textStyles.blog1.p3};
 		padding: 12px 14px;
-		border-radius: 999px;
 		border: 1px solid transparent;
+		border-radius: 999px;
 		background: ${colors.blog1.secondary400};
 		color: ${colors.blog1.primary700};
 		cursor: pointer;

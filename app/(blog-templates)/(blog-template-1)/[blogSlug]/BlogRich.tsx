@@ -122,14 +122,14 @@ const StyledH2 = styled("h2", [
 const StyledBlockQuote = styled("blockquote", [
 	f.responsive(css`
 		${textStyles.blog1.p1};
-		color: ${colors.blog1.primary800};
 		display: flex;
 		flex-direction: column;
-		padding: 40px;
 		align-items: flex-start;
-		gap: 30px;
+		padding: 40px;
 		border-radius: 20px;
 		background: ${colors.blog1.primary100};
+		color: ${colors.blog1.primary800};
+		gap: 30px;
 
 		em {
 			font-style: normal;
@@ -139,10 +139,10 @@ const StyledBlockQuote = styled("blockquote", [
 
 const StyledUl = styled("ul", [
 	f.responsive(css`
-		list-style: disc;
-		padding-inline-start: 2.3ch;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
+		list-style: disc;
+		padding-inline-start: 2.3ch;
 		${textStyles.blog1.p2};
 	`),
 ])

@@ -76,13 +76,13 @@ const Row = styled("div", [
 
 const Input = styled("input", [
 	f.responsive(css`
-		padding: 21px 0 21px 48px;
-		height: 40px;
 		width: 100%;
+		height: 40px;
+		padding: 21px 0 21px 48px;
 		${textStyles.blog1.p2};
-		background: ${colors.blog1.secondary400};
-		border-radius: 10px;
 		border: 1px solid transparent;
+		border-radius: 10px;
+		background: ${colors.blog1.secondary400};
 		transition: border-color 0.3s ease;
 
 		&::placeholder {

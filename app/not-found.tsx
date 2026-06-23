@@ -8,11 +8,11 @@ export default function NotFound() {
 
 const Main = styled("div", [
 	f.responsive(css`
+		padding: 100px 0;
+		background: ${colors.white};
+		color: black;
 		grid-column: main;
 		text-align: center;
-		padding: 100px 0;
-		color: black;
-		background: ${colors.white};
 		${textStyles.h1}
 	`),
 	f.mobile(css`

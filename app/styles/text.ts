@@ -78,9 +78,9 @@ export const clampText = (lines: number) => css`
 	overflow: hidden;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: ${lines};
-	text-overflow: ellipsis;
 	/* stylelint-disable-next-line property-no-vendor-prefix  */
 	-webkit-text-overflow: ellipsis;
+	text-overflow: ellipsis;
 `
 
 const sampleMetrics = {

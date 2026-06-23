@@ -175,11 +175,11 @@ const ClearButton = styled("button", [
 	f.responsive(css`
 		${textStyles.blog1.p2};
 		display: flex;
-		align-items: center;
-		gap: 8px;
-		color: ${colors.blog1.primary700};
 		flex-shrink: 0;
+		align-items: center;
+		color: ${colors.blog1.primary700};
 		cursor: pointer;
+		gap: 8px;
 		transition: color 0.15s ease;
 
 		&:active {
