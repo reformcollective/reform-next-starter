@@ -72,7 +72,7 @@
 			"onFail": "download"
 		}
 	},
-	"packageManager": "pnpm@11.8.0",
+	"packageManager": "pnpm@11.9.0",
 	"wireit": {
 		"dev": {
 			"command": "next dev",
@@ -178,7 +178,6 @@
 		},
 		"lint": {
 			"dependencies": [
-				"./library:lint",
 				"stylelint",
 				"oxlint"
 			]
@@ -188,7 +187,6 @@
 		},
 		"format": {
 			"dependencies": [
-				"./library:format",
 				"oxfmt"
 			]
 		},
