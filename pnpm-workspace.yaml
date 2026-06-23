@@ -9,6 +9,8 @@ allowBuilds:
   puppeteer: true
   sharp: true
   vue-demi: true
+  stylelint-plugin-use-baseline@https://codeload.github.com/RJWadley/stylelint-plugin-use-baseline/tar.gz/60d08211b4e801e0f0e3370cbed7905c62ba4b94: true
+  stylelint-plugin-use-baseline: true
 ignoreWorkspaceRootCheck: true
 resolutionMode: time-based
 minimumReleaseAgeStrict: true

@@ -47,11 +47,20 @@ export default function BlogRich({
 						h1: ({ children }: { children: ReactNode }) => <StyledH1>{children}</StyledH1>,
 						h2: ({ children }: { children: ReactNode }) => <StyledH2>{children}</StyledH2>,
 						blockquote: ({ children }: { children: ReactNode }) => (
-							<StyledBlockQuote>{children}</StyledBlockQuote>
+							<StyledBlockQuote>
+								<BlockQuoteText>{children}</BlockQuoteText>
+							</StyledBlockQuote>
 						),
 					},
 					list: {
 						bullet: ({ children }: { children: ReactNode }) => <StyledUl>{children}</StyledUl>,
+					},
+					listItem: {
+						bullet: ({ children }: { children: ReactNode }) => (
+							<StyledLi>
+								<ListText>{children}</ListText>
+							</StyledLi>
+						),
 					},
 					marks: {
 						strong: ({ children }: { children: ReactNode }) => (
@@ -121,7 +130,6 @@ const StyledH2 = styled("h2", [
 
 const StyledBlockQuote = styled("blockquote", [
 	f.responsive(css`
-		${textStyles.blog1.p1};
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -137,12 +145,29 @@ const StyledBlockQuote = styled("blockquote", [
 	`),
 ])
 
+const BlockQuoteText = styled("span", [
+	f.responsive(css`
+		${textStyles.blog1.p1};
+	`),
+])
+
 const StyledUl = styled("ul", [
 	f.responsive(css`
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		list-style: disc;
 		padding-inline-start: 2.3ch;
+	`),
+])
+
+const StyledLi = styled("li", [
+	f.responsive(css`
+		display: list-item;
+	`),
+])
+
+const ListText = styled("span", [
+	f.responsive(css`
 		${textStyles.blog1.p2};
 	`),
 ])

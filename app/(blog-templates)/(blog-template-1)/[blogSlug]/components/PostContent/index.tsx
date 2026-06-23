@@ -51,12 +51,18 @@ export default function PostContent({
 						<TextContent>
 							{readTime && (
 								<MetaItem>
-									<Time /> Read Time: <Green>{readTime}</Green>
+									<Time />
+									<MetaText>
+										Read Time: <Green>{readTime}</Green>
+									</MetaText>
 								</MetaItem>
 							)}
 							{formattedDate && (
 								<MetaItem>
-									<Calendar /> Date: <Green>{formattedDate}</Green>
+									<Calendar />
+									<MetaText>
+										Date: <Green>{formattedDate}</Green>
+									</MetaText>
 								</MetaItem>
 							)}
 						</TextContent>
@@ -82,12 +88,18 @@ export default function PostContent({
 							<TextContent>
 								{readTime && (
 									<MetaItem>
-										<Time /> Read Time: <Green>{readTime}</Green>
+										<Time />
+										<MetaText>
+											Read Time: <Green>{readTime}</Green>
+										</MetaText>
 									</MetaItem>
 								)}
 								{formattedDate && (
 									<MetaItem>
-										<Calendar /> Date: <Green>{formattedDate}</Green>
+										<Calendar />
+										<MetaText>
+											Date: <Green>{formattedDate}</Green>
+										</MetaText>
 									</MetaItem>
 								)}
 							</TextContent>
@@ -168,11 +180,16 @@ const AuthorName = styled("div", [
 
 const MetaItem = styled("div", [
 	f.responsive(css`
-		${textStyles.blog1.p3};
 		display: flex;
 		align-items: center;
 		color: ${colors.blog1.primary700};
 		gap: 6px;
+	`),
+])
+
+const MetaText = styled("span", [
+	f.responsive(css`
+		${textStyles.blog1.p3};
 	`),
 ])
 

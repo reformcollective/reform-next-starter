@@ -63,12 +63,9 @@ const Wrapper = styled("div", [
 const CategoryHeader = styled("div", [
 	f.responsive(css`
 		${textStyles.blog1.p2};
-		display: flex;
-		align-items: center;
 		padding-bottom: 24px;
 		border-bottom: 1px solid ${colors.blog1.secondary400};
 		margin-bottom: 24px;
-		gap: 10px;
 	`),
 ])
 

@@ -49,7 +49,6 @@ const Related = styled("div", [
 
 const RelatedHeading = styled("div", [
 	f.responsive(css`
-		display: grid;
 		margin: 28px 0 54px;
 		${textStyles.blog1.h4Sans};
 		color: ${colors.blog1.primary800};

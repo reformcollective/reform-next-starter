@@ -16,14 +16,16 @@ export default function BlogNav({ categories }: { categories: Post["categories"]
 	return (
 		<BlogNavWrapper>
 			<BreadCrumbs>
-				<StyledUniversalLink href="/blog-1">Blog Home</StyledUniversalLink>
+				<StyledUniversalLink href="/blog-1">
+					<CrumbText>Blog Home</CrumbText>
+				</StyledUniversalLink>
 				<Caret />
-				<span>Article</span>
+				<CrumbText>Article</CrumbText>
 			</BreadCrumbs>
 			{categories && categories.length > 0 && (
 				<Categories>
 					<Inner>
-						{categories.length > 1 ? "Categories:" : "Category:"}
+						<InnerLabel>{categories.length > 1 ? "Categories:" : "Category:"}</InnerLabel>
 						<Row>
 							{categories.filter(Boolean).map((category: string) => (
 								<Kicker size="tag" variant="light" key={category}>
@@ -73,12 +75,17 @@ const Inner = styled("div", [
 		display: flex;
 		align-items: center;
 		gap: 20px;
-		${textStyles.blog1.p2};
 	`),
 	f.small(css`
 		width: auto;
 		gap: 0;
 		white-space: nowrap;
+	`),
+])
+
+const InnerLabel = styled("span", [
+	f.responsive(css`
+		${textStyles.blog1.p2};
 	`),
 ])
 
@@ -109,11 +116,19 @@ const BreadCrumbs = styled("div", [
 		display: flex;
 		align-items: center;
 		color: ${colors.blog1.primary700};
-		${textStyles.blog1.p2};
 	`),
 	f.small(css`
 		justify-content: flex-start;
 		gap: unset;
+	`),
+])
+
+const CrumbText = styled("span", [
+	f.responsive(css`
+		${textStyles.blog1.p2};
+	`),
+	f.small(css`
+		${textStyles.blog1.p3};
 	`),
 ])
 
@@ -127,7 +142,6 @@ const Caret = styled(CaretSVG, [
 
 const StyledUniversalLink = styled(UniversalLink, [
 	f.responsive(css`
-		${textStyles.blog1.p2};
 		color: ${colors.blog1.primary700};
 		cursor: pointer;
 		opacity: 0.5;
@@ -144,8 +158,5 @@ const StyledUniversalLink = styled(UniversalLink, [
 			color: ${colors.blog1.primary400};
 			opacity: 1;
 		}
-	`),
-	f.small(css`
-		${textStyles.blog1.p3};
 	`),
 ])
