@@ -128,3 +128,10 @@ body {
 	all: revert;
 	display: revert;
 }
+
+.test {
+	grid-column: main;
+	text-align: center;
+	padding: 100px 0;
+	color: black;
+}

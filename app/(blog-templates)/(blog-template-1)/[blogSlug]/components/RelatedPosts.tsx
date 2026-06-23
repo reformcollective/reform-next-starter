@@ -36,14 +36,14 @@ const Related = styled("div", [
 	f.responsive(css`
 		position: relative;
 		display: grid;
-		grid-column: main;
-		grid-template-columns: 1fr 1fr 1fr;
 		margin: 0 auto;
 		gap: 28px;
+		grid-column: main;
+		grid-template-columns: 1fr 1fr 1fr;
 	`),
 	f.small(css`
-		grid-template-columns: 1fr;
 		gap: 52px;
+		grid-template-columns: 1fr;
 	`),
 ])
 
@@ -65,12 +65,12 @@ const RelatedWrapper = styled("div", [
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		grid-column: main;
 		padding: 126px 48px;
+		grid-column: main;
 	`),
 	f.small(css`
-		grid-column: fullbleed;
 		width: 100%;
 		padding: 126px 14px;
+		grid-column: fullbleed;
 	`),
 ])

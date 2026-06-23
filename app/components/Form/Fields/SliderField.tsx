@@ -137,20 +137,20 @@ export function SliderField(props: SliderFieldProps) {
 const StyledFieldRoot = styled(Field.Root, [
 	f.responsive(css`
 		display: flex;
+		width: 100%;
 		flex-direction: column;
 		align-items: start;
 		gap: 6px;
-		width: 100%;
 	`),
 ])
 
 const SliderRoot = styled(Slider.Root, [
 	f.responsive(css`
 		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		border: none;
 		width: 100%;
+		flex-direction: column;
+		border: none;
+		gap: 12px;
 	`),
 ])
 
@@ -177,8 +177,8 @@ const ValueText = styled("span", [
 const Control = styled("div", [
 	f.responsive(css`
 		display: flex;
-		align-items: center;
 		height: 20px;
+		align-items: center;
 	`),
 ])
 
@@ -206,9 +206,9 @@ const Thumb = styled(Slider.Thumb, [
 		position: absolute;
 		width: 18px;
 		height: 18px;
+		border: 2px solid ${colors.blue};
 		border-radius: 50%;
 		background: white;
-		border: 2px solid ${colors.blue};
 		cursor: pointer;
 		transform: translateX(-50%);
 

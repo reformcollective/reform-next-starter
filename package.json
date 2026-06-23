@@ -63,7 +63,7 @@
 	},
 	"devDependencies": {},
 	"stylelint": {
-		"extends": "./library/config/stylelint.config.js"
+		"extends": "./library/config/ultracite-stylelint.ts"
 	},
 	"devEngines": {
 		"runtime": {

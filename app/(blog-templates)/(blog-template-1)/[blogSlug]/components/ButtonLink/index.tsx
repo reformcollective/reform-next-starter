@@ -30,11 +30,11 @@ export default function ButtonLink({
 const Wrapper = styled(UniversalLink, {
 	base: [
 		f.responsive(css`
-			color: ${colors.blog1.primary200};
-			text-decoration: none;
-			cursor: pointer;
 			display: inline-flex;
 			align-items: center;
+			color: ${colors.blog1.primary200};
+			cursor: pointer;
+			text-decoration: none;
 
 			&:hover svg {
 				transform: translateX(5px);
@@ -101,7 +101,7 @@ const Arrow = styled(ArrowIcon, [
 	f.responsive(css`
 		width: 11px;
 		height: auto;
-		transition: transform 0.3s ease-out;
 		margin-left: 8px;
+		transition: transform 0.3s ease-out;
 	`),
 ])

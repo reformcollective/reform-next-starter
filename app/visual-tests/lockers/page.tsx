@@ -155,15 +155,15 @@ const Wrapper = styled(
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 40px;
 		padding: 100px;
+		gap: 40px;
 
 		button,
 		a {
-			cursor: pointer;
-			border: 1px solid gray;
 			padding: 10px 20px;
+			border: 1px solid gray;
 			border-radius: 5px;
+			cursor: pointer;
 		}
 	`),
 )

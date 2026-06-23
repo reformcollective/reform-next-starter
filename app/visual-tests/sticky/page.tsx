@@ -65,11 +65,11 @@ export default function StickyVisualTestPage() {
 const Wrapper = styled(
 	"div",
 	f.responsive(css`
-		grid-column: main;
 		display: flex;
 		flex-direction: column;
-		gap: 32px;
 		padding: 24px;
+		gap: 32px;
+		grid-column: main;
 	`),
 )
 
@@ -85,9 +85,9 @@ const Group = styled(
 const GroupLabel = styled(
 	"div",
 	f.responsive(css`
+		color: #444;
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: #444;
 	`),
 )
 
@@ -95,21 +95,21 @@ const Row = styled(
 	"div",
 	f.responsive(css`
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
 		gap: 16px;
+		grid-template-columns: 1fr 1fr 1fr;
 	`),
 )
 
 const StickyColumn = styled(
 	"div",
 	f.responsive(css`
-		height: 200vh;
 		display: flex;
+		height: 200vh;
 		flex-direction: column;
-		outline: 1px solid #888;
-		background: #f5f5f5;
-		border-radius: 8px;
 		padding: 12px;
+		border-radius: 8px;
+		background: #f5f5f5;
+		outline: 1px solid #888;
 	`),
 )
 
@@ -117,15 +117,15 @@ const StickyElement = styled("div", {
 	base: [
 		f.responsive(css`
 			position: sticky;
-			padding: 16px;
-			background: #e0e0ff;
-			border: 2px solid #666;
-			border-radius: 6px;
-			font-weight: 600;
-			font-size: 1.25rem;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			padding: 16px;
+			border: 2px solid #666;
+			border-radius: 6px;
+			background: #e0e0ff;
+			font-size: 1.25rem;
+			font-weight: 600;
 			text-align: center;
 		`),
 	],

@@ -57,12 +57,12 @@ export default function LargeCard({ data }: { data: FeaturedCard }) {
 
 const Wrapper = styled("div", [
 	f.responsive(css`
+		position: relative;
 		display: flex;
-		gap: 0;
 		padding: 42px;
 		margin-bottom: 0;
 		cursor: pointer;
-		position: relative;
+		gap: 0;
 
 		&:hover .card-image {
 			transform: scale(1.05);
@@ -80,8 +80,8 @@ const ImageWrapper = styled("div", [
 		overflow: clip;
 		width: 904.5px;
 		height: 452.25px;
-		border-radius: 10px;
 		flex-shrink: 0;
+		border-radius: 10px;
 	`),
 	f.small(css`
 		width: 100%;
@@ -109,8 +109,8 @@ const Title = styled("div", [
 		max-height: 4lh;
 
 		&::after {
-			content: "";
 			display: none;
+			content: "";
 		}
 	`),
 	f.small(css`
@@ -121,10 +121,10 @@ const Title = styled("div", [
 const Details = styled("div", [
 	f.responsive(css`
 		display: flex;
+		width: 427.5px;
 		flex-direction: column;
 		justify-content: space-between;
 		padding: 28px 0 28px 28px;
-		width: 427.5px;
 	`),
 	f.small(css`
 		width: 100%;

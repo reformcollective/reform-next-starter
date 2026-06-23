@@ -134,27 +134,27 @@ const Description = styled(Field.Description, [
 const Group = styled(BaseNumberField.Group, [
 	f.responsive(css`
 		display: flex;
+		width: fit-content;
 		align-items: center;
 		border: 1px solid #e5e7eb;
 		border-radius: 6px;
-		width: fit-content;
 	`),
 ])
 
 const NumberInput = styled(BaseNumberField.Input, [
 	f.responsive(css`
-		box-sizing: border-box;
+		z-index: 10;
 		width: 56px;
 		height: 40px;
+		box-sizing: border-box;
 		border: none;
-		border-left: 1px solid #e5e7eb;
 		border-right: 1px solid #e5e7eb;
-		text-align: center;
+		border-left: 1px solid #e5e7eb;
+		background: transparent;
+		color: ${colors.black};
 		font-family: inherit;
 		font-size: 16px;
-		color: ${colors.black};
-		background: transparent;
-		z-index: 10;
+		text-align: center;
 
 		&:focus {
 			outline: 2px solid ${colors.blue};
@@ -166,15 +166,15 @@ const NumberInput = styled(BaseNumberField.Input, [
 const buttonStyles = [
 	f.responsive(css`
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 40px;
 		height: 40px;
+		align-items: center;
+		justify-content: center;
 		border: none;
 		background: #f9fafb;
+		color: ${colors.black};
 		cursor: pointer;
 		font-size: 18px;
-		color: ${colors.black};
 
 		@media (hover: hover) {
 			&:hover {

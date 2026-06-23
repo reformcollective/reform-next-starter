@@ -35,10 +35,10 @@ const Wrapper = styled(
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 40px;
 		padding: 100px;
 		background: #eff;
 		color: black;
+		gap: 40px;
 
 		p {
 			opacity: 0.5;

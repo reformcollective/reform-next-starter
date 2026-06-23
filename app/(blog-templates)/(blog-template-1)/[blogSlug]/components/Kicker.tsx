@@ -27,11 +27,11 @@ const Wrapper = styled("span", {
 	base: [
 		f.responsive(css`
 			display: inline-flex;
-			justify-content: center;
-			align-items: center;
-			gap: 8px;
-			border-radius: 99vw;
 			width: fit-content;
+			align-items: center;
+			justify-content: center;
+			border-radius: 99vw;
+			gap: 8px;
 		`),
 	],
 	variants: {

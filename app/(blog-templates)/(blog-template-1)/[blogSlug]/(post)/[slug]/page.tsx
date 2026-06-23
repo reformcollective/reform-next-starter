@@ -127,9 +127,9 @@ export default async function PostPage({ params }: PageProps<"/[blogSlug]/[slug]
 
 const Wrapper = styled("div", [
 	f.responsive(css`
-		grid-column: fullbleed;
 		display: grid;
-		grid-template-columns: subgrid;
 		background: ${colors.blog1.primary700};
+		grid-column: fullbleed;
+		grid-template-columns: subgrid;
 	`),
 ])

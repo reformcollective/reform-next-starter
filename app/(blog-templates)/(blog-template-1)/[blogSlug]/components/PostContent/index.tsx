@@ -105,16 +105,16 @@ export default function PostContent({
 const Wrapper = styled("div", [
 	f.responsive(css`
 		position: relative;
-		grid-column: main;
 		display: flex;
 		flex-direction: column;
-		background: ${colors.blog1.secondary200};
 		border-radius: 16px;
 		margin-top: 106px;
+		background: ${colors.blog1.secondary200};
+		grid-column: main;
 	`),
 	f.small(css`
-		grid-column: fullbleed;
 		width: 100%;
+		grid-column: fullbleed;
 	`),
 ])
 
@@ -124,8 +124,8 @@ const AuthorSidebar = styled("div", [
 		top: 120px;
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
 		align-self: start;
+		gap: 12px;
 	`),
 	f.small(css`
 		display: none;
@@ -137,10 +137,10 @@ const AuthorSidebarMobile = styled(AuthorSidebar, [
 		display: none;
 	`),
 	f.small(css`
-		display: flex;
-		flex-direction: column;
 		top: unset;
+		display: flex;
 		width: 100%;
+		flex-direction: column;
 		align-items: flex-start;
 		gap: unset;
 	`),
@@ -148,10 +148,10 @@ const AuthorSidebarMobile = styled(AuthorSidebar, [
 
 const AuthorPhoto = styled(UniversalImage, [
 	f.responsive(css`
+		overflow: clip;
 		width: 48px;
 		height: 48px;
 		border-radius: 10px;
-		overflow: clip;
 	`),
 	f.small(css`
 		width: 46px;
@@ -179,9 +179,9 @@ const MetaItem = styled("div", [
 const MainContent = styled("div", [
 	f.responsive(css`
 		display: flex;
+		min-width: 0;
 		flex-direction: column;
 		gap: 32px;
-		min-width: 0;
 		overflow-wrap: break-word;
 	`),
 	f.small(css`
@@ -191,10 +191,10 @@ const MainContent = styled("div", [
 
 const ArticleImage = styled(UniversalImage, [
 	f.responsive(css`
-		width: 100%;
-		aspect-ratio: 826 / 413;
-		border-radius: 12px;
 		overflow: clip;
+		width: 100%;
+		border-radius: 12px;
+		aspect-ratio: 826 / 413;
 	`),
 	f.small(css``),
 ])
@@ -228,14 +228,14 @@ const Description = styled("div", [
 const BottomContent = styled("div", [
 	f.responsive(css`
 		display: grid;
-		grid-template-columns: 337px auto;
-		gap: 168px;
 		padding: 42px 42px 84px;
+		gap: 168px;
+		grid-template-columns: 337px auto;
 	`),
 	f.small(css`
-		grid-template-columns: 1fr;
-		gap: 28px;
 		padding: 14px;
+		gap: 28px;
+		grid-template-columns: 1fr;
 	`),
 ])
 
@@ -257,8 +257,8 @@ const TopSide = styled("div", [
 const Author = styled("div", [
 	f.responsive(css`
 		display: flex;
-		gap: 12px;
 		align-items: center;
+		gap: 12px;
 	`),
 ])
 
@@ -267,8 +267,8 @@ const TextContent = styled("div", [
 		css`
 			display: flex;
 			flex-direction: column;
-			gap: 10px;
 			color: ${colors.blog1.primary800};
+			gap: 10px;
 		`,
 	),
 ])
@@ -284,8 +284,8 @@ const Details = styled("div", [
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
 		margin-top: 108px;
+		gap: 16px;
 	`),
 	f.small(css`
 		width: 100%;
@@ -296,9 +296,9 @@ const Details = styled("div", [
 
 const Time = styled(TimeSVG, [
 	f.responsive(css`
+		bottom: 2px;
 		width: 16px;
 		height: 16px;
-		bottom: 2px;
 		transform: translateY(-1px);
 	`),
 	f.small(css`
@@ -314,8 +314,8 @@ const Calendar = styled(CalendarSVG, [
 		transform: translateY(-1px);
 	`),
 	f.small(css`
-		left: -2px;
 		bottom: 2px;
+		left: -2px;
 		transform: translateX(-2px) translateY(-1px);
 	`),
 ])

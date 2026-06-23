@@ -222,11 +222,11 @@ const Description = styled(Field.Description, [
 const InputRow = styled("div", [
 	f.responsive(css`
 		display: flex;
+		overflow: hidden;
+		width: 100%;
 		align-items: center;
 		border: 1px solid #e5e7eb;
 		border-radius: 8px;
-		width: 100%;
-		overflow: hidden;
 
 		&:focus-within {
 			outline: 2px solid ${colors.blue};
@@ -244,14 +244,14 @@ const InputRow = styled("div", [
 const MultiInputRow = styled("div", [
 	f.responsive(css`
 		display: flex;
+		width: 100%;
+		box-sizing: border-box;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 2px;
+		padding: 4px 6px;
 		border: 1px solid #e5e7eb;
 		border-radius: 6px;
-		width: 100%;
-		padding: 4px 6px;
-		box-sizing: border-box;
+		gap: 2px;
 
 		&:focus-within {
 			outline: 2px solid ${colors.blue};
@@ -274,14 +274,14 @@ const Chip = styled(Combobox.Chip, [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
+		padding: 3px 3px 3px 8px;
+		border-radius: 6px;
 		background-color: #e5e7eb;
 		color: ${colors.black};
-		border-radius: 6px;
-		padding: 3px 3px 3px 8px;
-		gap: 4px;
-		outline: 0;
 		cursor: default;
 		font-size: 14px;
+		gap: 4px;
+		outline: 0;
 
 		&:focus-within {
 			background-color: ${colors.blue};
@@ -302,14 +302,14 @@ const ChipRemove = styled(Combobox.ChipRemove, [
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		padding: 4px;
 		border: none;
 		border-radius: 4px;
 		background: transparent;
-		cursor: pointer;
 		color: inherit;
+		cursor: pointer;
 		font-size: 14px;
 		line-height: 1;
-		padding: 4px;
 
 		@media (hover: hover) {
 			&:hover {
@@ -323,15 +323,15 @@ const ChipRemove = styled(Combobox.ChipRemove, [
 
 const ComboboxInput = styled(Combobox.Input, [
 	f.responsive(css`
-		flex: 1;
-		box-sizing: border-box;
-		padding: 0 16px;
 		height: 48px;
+		box-sizing: border-box;
+		flex: 1;
+		padding: 0 16px;
 		border: none;
-		outline: none;
-		font-family: inherit;
 		background: transparent;
 		color: ${colors.black};
+		font-family: inherit;
+		outline: none;
 
 		&::placeholder {
 			color: #9ca3af;
@@ -341,14 +341,14 @@ const ComboboxInput = styled(Combobox.Input, [
 
 const MultiInput = styled(Combobox.Input, [
 	f.responsive(css`
-		flex: 1;
 		min-width: 48px;
 		height: 32px;
+		flex: 1;
+		padding-left: 6px;
 		border: none;
-		outline: none;
 		background: transparent;
 		color: ${colors.black};
-		padding-left: 6px;
+		outline: none;
 
 		&::placeholder {
 			color: #9ca3af;
@@ -359,21 +359,21 @@ const MultiInput = styled(Combobox.Input, [
 const ComboboxTrigger = styled(Combobox.Trigger, [
 	f.responsive(css`
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 40px;
 		height: 48px;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
 		border: none;
 		background: transparent;
 		cursor: pointer;
-		flex-shrink: 0;
 	`),
 ])
 
 const Chevron = styled("span", [
 	f.responsive(css`
-		font-size: 18px;
 		color: #6b7280;
+		font-size: 18px;
 	`),
 ])
 
@@ -381,19 +381,19 @@ const Chevron = styled("span", [
 
 const Popup = styled(Combobox.Popup, [
 	f.responsive(css`
-		background: white;
+		width: var(--anchor-width);
+		max-width: var(--available-width);
 		border-radius: 6px;
-		outline: 1px solid #e5e7eb;
+		background: white;
 		box-shadow:
 			0 10px 15px -3px rgb(0 0 0 / 10%),
 			0 4px 6px -4px rgb(0 0 0 / 10%);
 		color: ${colors.black};
-		width: var(--anchor-width);
-		max-width: var(--available-width);
+		outline: 1px solid #e5e7eb;
+		transform-origin: var(--transform-origin);
 		transition:
 			opacity 100ms,
 			transform 100ms;
-		transform-origin: var(--transform-origin);
 
 		&[data-starting-style],
 		&[data-ending-style] {
@@ -405,13 +405,13 @@ const Popup = styled(Combobox.Popup, [
 
 const List = styled(Combobox.List, [
 	f.responsive(css`
+		max-height: min(23rem, var(--available-height));
 		box-sizing: border-box;
+		outline: none;
 		overflow-y: auto;
 		overscroll-behavior: contain;
 		padding-block: 8px;
 		scroll-padding-block: 8px;
-		outline: none;
-		max-height: min(23rem, var(--available-height));
 
 		&[data-empty] {
 			padding: 0;
@@ -422,51 +422,51 @@ const List = styled(Combobox.List, [
 const Empty = styled(Combobox.Empty, [
 	f.responsive(css`
 		&:not(:empty) {
+			padding: 1rem;
 			color: #9ca3af;
 			line-height: 1rem;
-			padding: 1rem;
 		}
 	`),
 ])
 
 const Item = styled(Combobox.Item, [
 	f.responsive(css`
-		box-sizing: border-box;
 		display: grid;
-		grid-template-columns: 0.75rem 1fr;
-		gap: 8px;
+		box-sizing: border-box;
 		align-items: center;
-		padding-block: 8px;
-		padding-left: 16px;
 		padding-right: 32px;
-		cursor: default;
+		padding-left: 16px;
 		color: ${colors.black};
+		cursor: default;
+		gap: 8px;
+		grid-template-columns: 0.75rem 1fr;
 		outline: none;
+		padding-block: 8px;
 
 		&[data-highlighted] {
-			z-index: 0;
 			position: relative;
+			z-index: 0;
 			color: white;
 		}
 
 		&[data-highlighted]::before {
-			content: "";
-			z-index: -1;
 			position: absolute;
-			inset-block: 0;
-			inset-inline: 8px;
+			z-index: -1;
 			border-radius: 4px;
 			background-color: ${colors.black};
+			content: "";
+			inset-block: 0;
+			inset-inline: 8px;
 		}
 	`),
 ])
 
 const ItemIndicator = styled("span", [
 	f.responsive(css`
-		grid-column-start: 1;
 		display: flex;
 		align-items: center;
 		font-size: 12px;
+		grid-column-start: 1;
 	`),
 ])
 

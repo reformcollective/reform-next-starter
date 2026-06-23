@@ -30,13 +30,13 @@ export default function BlockquoteWithAttribution({
 const Wrapper = styled("div", [
 	f.responsive(css`
 		position: relative;
-		background: ${colors.blog1.secondary300};
-		border-radius: 10px;
-		border: 1px solid ${colors.blog1.secondary400};
-		padding: 70px 42px 70px 72px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		padding: 70px 42px 70px 72px;
+		border: 1px solid ${colors.blog1.secondary400};
+		border-radius: 10px;
+		background: ${colors.blog1.secondary300};
 		gap: 48px;
 	`),
 	f.small(css`
@@ -79,11 +79,11 @@ const Title = styled("div", [
 const VerticalLine = styled("div", [
 	f.responsive(css`
 		position: absolute;
+		left: 42px;
 		width: 2px;
 		height: calc(100% - 84px);
 		border-radius: 10px;
 		background: ${colors.blog1.tertiary400};
-		left: 42px;
 	`),
 	f.small(css`
 		left: 28px;

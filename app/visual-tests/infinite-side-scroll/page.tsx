@@ -182,8 +182,8 @@ const Wrapper = styled(
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
 		padding: 100px 0;
+		gap: 20px;
 
 		& h2 {
 			padding: 0 40px;
@@ -192,8 +192,8 @@ const Wrapper = styled(
 
 		& p {
 			padding: 0 40px;
-			opacity: 0.6;
 			font-size: 14px;
+			opacity: 0.6;
 		}
 
 		& h1 {
@@ -211,8 +211,8 @@ const Wrapper = styled(
 		& .buttons {
 			display: flex;
 			justify-content: center;
-			gap: 20px;
 			margin-top: 10px;
+			gap: 20px;
 		}
 	`),
 )
@@ -220,15 +220,15 @@ const Wrapper = styled(
 const Item = styled(
 	"div",
 	f.responsive(css`
+		display: grid;
 		width: 300px;
 		height: 200px;
-		background: orange;
+		flex-shrink: 0;
 		border-radius: 12px;
-		display: grid;
-		place-items: center;
+		background: orange;
 		font-size: 80px;
 		font-weight: bold;
-		flex-shrink: 0;
+		place-items: center;
 	`),
 )
 
@@ -256,14 +256,14 @@ const PurpleItem = styled(
 const Btn = styled(
 	"button",
 	f.responsive(css`
+		display: grid;
 		width: 60px;
 		height: 60px;
-		border-radius: 50%;
 		border: 2px solid black;
-		font-size: 24px;
-		cursor: pointer;
+		border-radius: 50%;
 		background: white;
-		display: grid;
+		cursor: pointer;
+		font-size: 24px;
 		place-items: center;
 	`),
 )
@@ -289,9 +289,9 @@ const Divider = styled(
 	"div",
 	f.responsive(css`
 		height: 2px;
+		margin: 40px 40px 0;
 		background: currentcolor;
 		opacity: 0.15;
-		margin: 40px 40px 0;
 	`),
 )
 
@@ -364,9 +364,9 @@ const GridGapWrapper = styled(
 	f.responsive(css`
 		& .track {
 			display: grid !important;
-			grid-auto-flow: column;
-			grid-auto-columns: 300px;
 			gap: 60px !important;
+			grid-auto-columns: 300px;
+			grid-auto-flow: column;
 		}
 	`),
 )

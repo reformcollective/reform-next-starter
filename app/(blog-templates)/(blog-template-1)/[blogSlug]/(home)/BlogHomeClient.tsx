@@ -132,8 +132,8 @@ export function BlogHomeClient({ allCards, featuredCaseStudy, searchMode }: Blog
 
 const BlogWrapper = styled("div", [
 	f.responsive(css`
-		grid-column: main;
 		margin: 0 auto;
+		grid-column: main;
 	`),
 	f.small(css`
 		width: 100%;
@@ -148,9 +148,9 @@ const Columns = styled("div", [
 		padding: 28px 42px 0;
 	`),
 	f.small(css`
-		padding: 42px 14px 14px;
 		width: 100%;
 		flex-direction: column;
+		padding: 42px 14px 14px;
 	`),
 ])
 
@@ -158,8 +158,8 @@ const StickyWrapper = styled("div", [
 	f.responsive(css`
 		position: sticky;
 		top: 120px;
-		width: 337px;
 		display: flex;
+		width: 337px;
 		flex-direction: column;
 		gap: 42px;
 
@@ -169,9 +169,9 @@ const StickyWrapper = styled("div", [
 	`),
 	f.small(css`
 		position: relative;
+		top: unset;
 		width: 100%;
 		gap: 30px;
-		top: unset;
 	`),
 ])
 
@@ -207,18 +207,18 @@ const Line = styled("hr", [
 	f.responsive(css`
 		position: absolute;
 		top: 0;
-		left: 42px;
 		right: 42px;
-		height: 1px;
+		left: 42px;
 		width: calc(100% - 84px);
+		height: 1px;
 		background: ${colors.blog1.secondary400};
 	`),
 	f.small(css`
 		position: relative;
-		margin: 0 0 42px;
-		width: 100%;
-		left: unset;
 		right: unset;
+		left: unset;
+		width: 100%;
+		margin: 0 0 42px;
 	`),
 ])
 
@@ -266,13 +266,13 @@ const Bottom = styled("div", [
 const CardGroup = styled("div", [
 	f.responsive(css`
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 42px 28px;
 		padding-bottom: 5px;
+		gap: 42px 28px;
+		grid-template-columns: 1fr 1fr;
 	`),
 	f.small(css`
-		grid-template-columns: 1fr;
 		gap: 36px;
+		grid-template-columns: 1fr;
 	`),
 ])
 
@@ -306,20 +306,20 @@ const LoadMoreButton = styled("button", [
 const NotFoundWrapper = styled("div", [
 	f.responsive(css`
 		display: flex;
+		width: 827px;
 		flex-direction: column;
 		align-items: center;
-		gap: 24px;
 		padding: 108px 106px;
-		width: 827px;
-		grid-column: 1 / -1;
-		background: ${colors.blog1.secondary100};
-		border-radius: 10px;
 		border: 1px solid ${colors.blog1.secondary400};
+		border-radius: 10px;
+		background: ${colors.blog1.secondary100};
+		gap: 24px;
+		grid-column: 1 / -1;
 	`),
 	f.small(css`
 		position: relative;
-		padding: 56px 28px;
 		width: 100%;
+		padding: 56px 28px;
 		gap: 56px;
 	`),
 ])

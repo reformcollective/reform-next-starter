@@ -62,23 +62,24 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 
 const PageRoot = styled("div", [
 	f.responsive(css`
-		/*  ensure modals, portals, etc. don't appear behind the page */
-		isolation: isolate;
+		display: grid;
 
 		/* layout grid setup */
 		min-height: 100svh;
-		display: grid;
 		grid-template: "header" auto "content" 1fr "footer" auto;
 		grid-template-columns: var(--subgrid-columns);
+
+		/*  ensure modals, portals, etc. don't appear behind the page */
+		isolation: isolate;
+
+		/* prevent x overflow on touch devices */
+		overflow-x: clip;
 		--subgrid-columns: ${makeResponsiveGrid({
 			columnCount: 10,
 			gutter: "20px",
 			margin: "50px",
 			sourceDesignWidth: desktopDesignSize,
 		})};
-
-		/* prevent x overflow on touch devices */
-		overflow-x: clip;
 	`),
 
 	f.small(css`

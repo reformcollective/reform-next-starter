@@ -6,11 +6,11 @@ export default function BlogHomeLayout({ children }: { children: React.ReactNode
 
 const Wrapper = styled("div", [
 	f.responsive(css`
-		grid-column: fullbleed;
 		display: grid;
-		grid-template-columns: subgrid;
 		width: 100%;
 		padding-top: 102px;
+		grid-column: fullbleed;
+		grid-template-columns: subgrid;
 	`),
 	f.small(css`
 		width: 100vw;

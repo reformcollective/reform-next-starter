@@ -96,28 +96,28 @@ const SwitchLabel = styled(Field.Label, [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
-		gap: 12px;
-		font-weight: 500;
 		color: ${colors.black};
 		cursor: pointer;
+		font-weight: 500;
+		gap: 12px;
 	`),
 ])
 
 const SwitchControl = styled(Switch.Root, [
 	f.responsive(css`
 		display: flex;
-		align-items: center;
 		width: 44px;
 		height: 24px;
-		padding: 2px;
 		box-sizing: border-box;
-		border-radius: 999px;
-		border: none;
-		cursor: pointer;
 		flex-shrink: 0;
+		align-items: center;
+		padding: 2px;
+		border: none;
+		border-radius: 999px;
 		background: linear-gradient(90deg, ${colors.blue} 35%, #d1d5db 65%);
-		background-size: 200% 100%;
 		background-position-x: 100%;
+		background-size: 200% 100%;
+		cursor: pointer;
 		transition: background-position-x 125ms ease;
 
 		&[data-checked] {
@@ -133,9 +133,9 @@ const SwitchControl = styled(Switch.Root, [
 
 const SwitchThumb = styled(Switch.Thumb, [
 	f.responsive(css`
-		aspect-ratio: 1 / 1;
 		height: 100%;
 		border-radius: 50%;
+		aspect-ratio: 1 / 1;
 		background: white;
 		box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
 		transition: translate 125ms ease;

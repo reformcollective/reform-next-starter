@@ -94,18 +94,18 @@ const Pill = styled("button", [
 			border-color 0.15s;
 
 		&:active {
-			background: ${colors.blog1.secondary300};
 			border-color: ${colors.blog1.secondary400};
+			background: ${colors.blog1.secondary300};
 		}
 
 		&[data-selected="true"] {
-			background: ${colors.blog1.primary200};
 			border-color: transparent;
+			background: ${colors.blog1.primary200};
 		}
 
 		&[data-selected="true"]:active {
-			background: ${colors.blog1.primary100};
 			border-color: ${colors.blog1.primary200};
+			background: ${colors.blog1.primary100};
 		}
 	`),
 ])

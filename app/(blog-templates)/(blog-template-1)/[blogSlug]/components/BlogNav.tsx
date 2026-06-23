@@ -44,16 +44,15 @@ const Categories = styled("div", [
 		width: fit-content;
 	`),
 	f.small(css`
-		width: 100%;
 		overflow: scroll;
+		width: 100%;
 		mask-image: linear-gradient(to right, black calc(100% - 40px), transparent 100%);
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 
 		&::-webkit-scrollbar {
 			display: none;
 		}
-
-		-ms-overflow-style: none;
-		scrollbar-width: none;
 	`),
 ])
 
@@ -64,8 +63,8 @@ const Row = styled("div", [
 	`),
 	f.small(css`
 		display: flex;
-		gap: 8px;
 		margin-left: 20px;
+		gap: 8px;
 	`),
 ])
 
@@ -78,8 +77,8 @@ const Inner = styled("div", [
 	`),
 	f.small(css`
 		width: auto;
-		white-space: nowrap;
 		gap: 0;
+		white-space: nowrap;
 	`),
 ])
 
@@ -87,21 +86,21 @@ const BlogNavWrapper = styled("nav", [
 	f.responsive(css`
 		position: relative;
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
 		height: 96px;
-		border-bottom: 1px solid ${colors.blog1.secondary400};
-		padding: 28px 42px;
 		flex-shrink: 0;
+		align-items: center;
+		justify-content: space-between;
+		padding: 28px 42px;
+		border-bottom: 1px solid ${colors.blog1.secondary400};
 	`),
 	f.small(css`
 		width: 100%;
 		height: 145px;
 		flex-direction: column;
+		flex-shrink: 0;
 		align-items: flex-start;
 		justify-content: space-between;
 		padding: 28px 0 14px 14px;
-		flex-shrink: 0;
 	`),
 ])
 
@@ -113,8 +112,8 @@ const BreadCrumbs = styled("div", [
 		${textStyles.blog1.p2};
 	`),
 	f.small(css`
-		gap: unset;
 		justify-content: flex-start;
+		gap: unset;
 	`),
 ])
 

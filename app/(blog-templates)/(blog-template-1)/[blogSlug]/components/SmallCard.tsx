@@ -41,9 +41,9 @@ const Image = styled(UniversalImage, [
 	f.responsive(css`
 		width: 100%;
 		height: 100%;
-		transition: transform 0.3s ease;
 		object-fit: cover;
 		transform: scale(1.01);
+		transition: transform 0.3s ease;
 	`),
 	f.small(css`
 		width: 100%;
@@ -53,16 +53,16 @@ const Image = styled(UniversalImage, [
 
 const Wrapper = styled(UniversalLink, [
 	f.responsive(css`
-		display: grid;
 		position: relative;
+		display: grid;
 
 		&:hover .card-image {
 			transform: scale(1.1);
 		}
 	`),
 	f.small(css`
-		width: 100%;
 		display: flex;
+		width: 100%;
 		flex-direction: column;
 	`),
 ])
@@ -82,8 +82,8 @@ const TitleText = styled("div", [
 
 		/* Capsize not playing nice with clamp */
 		&::after {
-			content: "";
 			display: none;
+			content: "";
 		}
 	`),
 ])

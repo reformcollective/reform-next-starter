@@ -160,20 +160,20 @@ const Description = styled(Field.Description, [
 
 const Trigger = styled(Select.Trigger, [
 	f.responsive(css`
-		box-sizing: border-box;
 		display: flex;
+		width: 100%;
+		height: 48px;
+		box-sizing: border-box;
 		align-items: center;
 		justify-content: space-between;
 		padding: 0 16px;
-		margin: 0;
 		border: 1px solid #e5e7eb;
-		width: 100%;
-		height: 48px;
 		border-radius: 8px;
-		font-family: inherit;
+		margin: 0;
 		background-color: transparent;
 		color: ${colors.black};
 		cursor: pointer;
+		font-family: inherit;
 
 		@media (hover: hover) {
 			&:hover {
@@ -202,14 +202,14 @@ const Trigger = styled(Select.Trigger, [
 
 const Popup = styled(Select.Popup, [
 	f.responsive(css`
-		background: white;
+		width: var(--anchor-width);
+		padding: 4px;
 		border: 1px solid #e5e7eb;
 		border-radius: 8px;
-		padding: 4px;
+		background: white;
 		box-shadow:
 			0 10px 15px -3px rgb(0 0 0 / 10%),
 			0 4px 6px -4px rgb(0 0 0 / 10%);
-		width: var(--anchor-width);
 		transform-origin: var(--transform-origin);
 		transition:
 			transform 150ms,
@@ -222,62 +222,62 @@ const Popup = styled(Select.Popup, [
 		}
 
 		&[data-side="none"] {
-			transition: none;
-			transform: none;
-			opacity: 1;
 			min-width: calc(var(--anchor-width) + 1rem);
+			opacity: 1;
+			transform: none;
+			transition: none;
 		}
 	`),
 ])
 
 const List = styled(Select.List, [
 	f.responsive(css`
+		max-height: min(23rem, var(--available-height));
 		box-sizing: border-box;
+		outline: none;
 		overflow-y: auto;
 		overscroll-behavior: contain;
 		padding-block: 4px;
 		scroll-padding-block: 4px;
-		outline: none;
-		max-height: min(23rem, var(--available-height));
 	`),
 ])
 
 const Item = styled(Select.Item, [
 	f.responsive(css`
-		box-sizing: border-box;
 		display: grid;
-		grid-template-columns: 0.75rem 1fr;
-		gap: 8px;
+		box-sizing: border-box;
 		align-items: center;
 		padding: 8px 10px;
-		cursor: default;
 		color: ${colors.black};
+		cursor: default;
+		gap: 8px;
+		grid-template-columns: 0.75rem 1fr;
 		outline: none;
 
 		&[data-highlighted] {
-			z-index: 0;
 			position: relative;
+			z-index: 0;
 			color: white;
 		}
 
 		&[data-highlighted]::before {
-			content: "";
-			z-index: -1;
 			position: absolute;
-			inset-block: 0;
-			inset-inline: 4px;
+			z-index: -1;
 			border-radius: 4px;
 			background-color: ${colors.black};
+			content: "";
+			inset-block: 0;
+			inset-inline: 4px;
 		}
 	`),
 ])
 
 const ItemIndicator = styled("span", [
 	f.responsive(css`
-		grid-column-start: 1;
 		display: flex;
 		align-items: center;
 		font-size: 12px;
+		grid-column-start: 1;
 	`),
 ])
 

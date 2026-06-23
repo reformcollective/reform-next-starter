@@ -124,15 +124,15 @@ const Group = styled(RadioGroup, [
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
 		border: none;
+		gap: 12px;
 	`),
 ])
 
 const Legend = styled("legend", [
 	f.responsive(css`
-		color: ${colors.black};
 		margin-bottom: 6px;
+		color: ${colors.black};
 	`),
 ])
 
@@ -146,24 +146,24 @@ const ItemLabel = styled(Field.Label, [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
-		gap: 10px;
 		color: ${colors.black};
 		cursor: pointer;
+		gap: 10px;
 	`),
 ])
 
 const RadioControl = styled(Radio.Root, [
 	f.responsive(css`
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 18px;
 		height: 18px;
-		border-radius: 50%;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
 		border: 1px solid #d1d5db;
+		border-radius: 50%;
 		background: white;
 		cursor: pointer;
-		flex-shrink: 0;
 
 		&:focus-visible {
 			outline: 2px solid ${colors.blue};

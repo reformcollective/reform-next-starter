@@ -71,9 +71,9 @@ export default function PageTransition() {
 const Wrapper = styled("div", [
 	f.responsive(css`
 		position: fixed;
-		inset: 0;
 		z-index: 9998;
 		background: ${colors.black};
+		inset: 0;
 		opacity: 0;
 		pointer-events: none;
 	`),

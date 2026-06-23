@@ -21,17 +21,17 @@ export default function Header({ headerText }: NonNullable<HeaderQueryResult>) {
 const Wrapper = styled(
 	"header",
 	f.responsive(css`
-		display: grid;
-		grid-column: fullbleed;
-		grid-row: header;
-		place-items: center;
 		position: sticky;
+		z-index: 1000;
 		top: 0;
+		display: grid;
 		width: 100%;
 		height: 100px;
 		background-color: rebeccapurple;
 		color: white;
+		grid-column: fullbleed;
+		grid-row: header;
+		place-items: center;
 		view-transition-name: header;
-		z-index: 1000;
 	`),
 )

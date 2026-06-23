@@ -132,9 +132,9 @@ export default async function BlogHome() {
 const Inner = styled("div", [
 	f.responsive(css`
 		position: relative;
-		grid-column: main;
-		background: ${colors.blog1.secondary200};
 		border-radius: 16px;
+		background: ${colors.blog1.secondary200};
+		grid-column: main;
 	`),
 	f.small(css`
 		width: 100%;

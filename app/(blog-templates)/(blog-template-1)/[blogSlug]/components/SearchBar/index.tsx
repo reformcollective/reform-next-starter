@@ -58,8 +58,8 @@ export function SearchBar() {
 const Wrapper = styled("div", [
 	f.responsive(css`
 		display: flex;
-		align-items: center;
 		width: 337px;
+		align-items: center;
 	`),
 	f.small(css`
 		width: 100%;
@@ -69,8 +69,8 @@ const Wrapper = styled("div", [
 const Row = styled("div", [
 	f.responsive(css`
 		display: flex;
-		align-items: center;
 		flex-grow: 1;
+		align-items: center;
 	`),
 ])
 

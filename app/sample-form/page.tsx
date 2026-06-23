@@ -365,26 +365,26 @@ function Results({
 
 const Wrapper = styled("div", [
 	f.responsive(css`
-		grid-area: content;
-		grid-column: 1 / -1;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: 80px 24px;
 		background-color: #f9fafb;
+		grid-area: content;
+		grid-column: 1 / -1;
 	`),
 ])
 
 const Card = styled("div", [
 	f.responsive(css`
+		display: flex;
 		width: 100%;
 		max-width: 480px;
-		background: white;
+		flex-direction: column;
+		padding: 40px;
 		border: 1px solid #e5e7eb;
 		border-radius: 16px;
-		padding: 40px;
-		display: flex;
-		flex-direction: column;
+		background: white;
 		gap: 32px;
 	`),
 ])
@@ -403,38 +403,38 @@ const ControlPanel = styled("div", [
 	f.responsive(css`
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
 		padding: 16px;
-		background: #f3f4f6;
-		border-radius: 8px;
 		border: 1px dashed #d1d5db;
+		border-radius: 8px;
+		background: #f3f4f6;
+		gap: 16px;
 	`),
 ])
 
 const ControlGroup = styled("div", [
 	f.responsive(css`
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		gap: 16px;
-		flex-wrap: wrap;
 	`),
 ])
 
 const ControlLabel = styled("span", [
 	f.responsive(css`
-		font-weight: 600;
-		font-size: 13px;
-		color: #374151;
 		min-width: 110px;
+		color: #374151;
+		font-size: 13px;
+		font-weight: 600;
 	`),
 ])
 
 const SegmentedGroup = styled("div", [
 	f.responsive(css`
 		display: flex;
+		overflow: hidden;
 		border: 1px solid #d1d5db;
 		border-radius: 6px;
-		overflow: hidden;
 	`),
 ])
 
@@ -444,12 +444,12 @@ const SegmentedButton = styled("label", [
 		align-items: center;
 		justify-content: center;
 		padding: 6px 12px;
+		border-right: 1px solid #d1d5db;
+		background: white;
+		color: #6b7280;
+		cursor: pointer;
 		font-size: 12px;
 		font-weight: 500;
-		color: #6b7280;
-		background: white;
-		cursor: pointer;
-		border-right: 1px solid #d1d5db;
 		transition:
 			background 100ms,
 			color 100ms;
@@ -474,9 +474,9 @@ const SegmentedButton = styled("label", [
 const HiddenRadio = styled("input", [
 	f.responsive(css`
 		position: absolute;
-		opacity: 0;
 		width: 0;
 		height: 0;
+		opacity: 0;
 		pointer-events: none;
 	`),
 ])
@@ -485,23 +485,23 @@ const HiddenRadio = styled("input", [
 
 const StyledButton = styled(Button, [
 	f.responsive(css`
-		box-sizing: border-box;
 		display: flex;
+		height: 40px;
+		box-sizing: border-box;
 		align-items: center;
 		justify-content: center;
-		height: 40px;
 		padding: 0 14px;
-		margin: 0;
-		outline: 0;
 		border: 1px solid #e5e7eb;
 		border-radius: 6px;
+		margin: 0;
+		margin-top: 24px;
 		background-color: #f9fafb;
+		color: ${colors.black};
 		font-family: inherit;
 		font-size: 16px;
 		font-weight: 500;
 		line-height: 24px;
-		margin-top: 24px;
-		color: ${colors.black};
+		outline: 0;
 
 		@media (hover: hover) {
 			&:hover:not([data-disabled]) {
@@ -515,9 +515,9 @@ const StyledButton = styled(Button, [
 		}
 
 		&:active:not([data-disabled]) {
+			border-top-color: #d1d5db;
 			background-color: #e5e7eb;
 			box-shadow: inset 0 1px 3px #e5e7eb;
-			border-top-color: #d1d5db;
 		}
 
 		&[data-disabled] {
@@ -539,30 +539,30 @@ const ResultsWrapper = styled("div", [
 const ResultsHeading = styled("h2", [
 	f.responsive(css`
 		margin: 0 0 20px;
+		color: ${colors.black};
 		font-size: 18px;
 		font-weight: 600;
-		color: ${colors.black};
 	`),
 ])
 
 const ResultsList = styled("dl", [
 	f.responsive(css`
-		margin: 0;
 		display: flex;
+		overflow: hidden;
 		flex-direction: column;
-		gap: 0;
 		border: 1px solid #e5e7eb;
 		border-radius: 8px;
-		overflow: hidden;
+		margin: 0;
+		gap: 0;
 	`),
 ])
 
 const ResultsRow = styled("div", [
 	f.responsive(css`
 		display: flex;
-		gap: 16px;
 		padding: 10px 14px;
 		border-bottom: 1px solid #f3f4f6;
+		gap: 16px;
 
 		&:last-child {
 			border-bottom: none;
@@ -576,19 +576,19 @@ const ResultsRow = styled("div", [
 
 const ResultsLabel = styled("dt", [
 	f.responsive(css`
-		flex-shrink: 0;
 		width: 140px;
+		flex-shrink: 0;
+		color: #6b7280;
 		font-size: 13px;
 		font-weight: 600;
-		color: #6b7280;
 	`),
 ])
 
 const ResultsValue = styled("dd", [
 	f.responsive(css`
 		margin: 0;
-		font-size: 13px;
 		color: ${colors.black};
+		font-size: 13px;
 		overflow-wrap: anywhere;
 	`),
 ])

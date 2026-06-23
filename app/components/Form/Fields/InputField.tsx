@@ -189,17 +189,17 @@ const Control = styled(
 	Field.Control,
 	[
 		f.responsive(css`
+			width: 100%;
+			height: 48px;
 			box-sizing: border-box;
 			padding: 0 16px;
 			padding-right: 40px;
-			margin: 0;
 			border: 1px solid #e5e7eb;
-			width: 100%;
-			height: 48px;
 			border-radius: 8px;
-			font-family: inherit;
+			margin: 0;
 			background-color: transparent;
 			color: ${colors.black};
+			font-family: inherit;
 
 			&::placeholder {
 				color: #9ca3af;
@@ -223,14 +223,14 @@ const IconSlot = styled(
 	[
 		f.responsive(css`
 			position: absolute;
-			right: 12px;
 			top: 50%;
-			transform: translateY(-50%);
+			right: 12px;
 			display: flex;
 			align-items: center;
-			pointer-events: none;
 			font-size: 14px;
 			line-height: 1;
+			pointer-events: none;
+			transform: translateY(-50%);
 		`),
 	],
 	"InputIconSlot",

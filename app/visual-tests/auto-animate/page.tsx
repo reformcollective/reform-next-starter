@@ -169,12 +169,12 @@ const RestrictWidth = styled(
 const Wrapper = styled(
 	"div",
 	f.responsive(css`
-		grid-column: main;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 40px;
 		padding: 100px;
+		gap: 40px;
+		grid-column: main;
 	`),
 )
 
@@ -183,8 +183,8 @@ const Row = styled(
 	f.responsive(css`
 		display: flex;
 		min-height: 200px;
-		gap: 40px;
 		align-items: start;
+		gap: 40px;
 	`),
 )
 

@@ -71,11 +71,11 @@ export function Preloader() {
 const Wrapper = styled("div", [
 	f.responsive(css`
 		position: fixed;
-		inset: 0;
 		z-index: 9999;
 		display: grid;
-		place-items: center;
 		background: ${colors.black};
+		inset: 0;
+		place-items: center;
 		pointer-events: auto;
 
 		&[data-ready] {
@@ -90,8 +90,8 @@ const Logo = styled(LogoSVG, [
 	f.responsive(css`
 		width: 80px;
 		height: auto;
-		color: ${colors.white};
 		animation: ${logoPulse} 2s ease-in-out infinite;
+		color: ${colors.white};
 
 		[data-ready] & {
 			animation: ${logoOutro} 0.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;

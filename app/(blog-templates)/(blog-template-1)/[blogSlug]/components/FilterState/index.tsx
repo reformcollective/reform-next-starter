@@ -97,8 +97,8 @@ const Bar = styled("div", [
 	f.small(css`
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 12px;
 		margin-bottom: 16px;
+		gap: 12px;
 	`),
 ])
 
@@ -125,8 +125,8 @@ const CategoryStack = styled("span", [
 const AllCategories = styled("button", [
 	f.responsive(css`
 		color: ${colors.blog1.primary700};
-		opacity: 0.5;
 		cursor: pointer;
+		opacity: 0.5;
 		transition:
 			color 0.3s ease,
 			opacity 0.3s ease;
@@ -142,8 +142,8 @@ const AllCategories = styled("button", [
 		}
 	`),
 	f.small(css`
-		white-space: nowrap;
 		transform: translateY(-5px);
+		white-space: nowrap;
 	`),
 ])
 
@@ -197,8 +197,8 @@ const ClearButton = styled("button", [
 	`),
 	f.small(css`
 		padding: 0;
-		gap: 0;
 		margin-top: 20px;
+		gap: 0;
 	`),
 ])
 

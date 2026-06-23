@@ -51,26 +51,26 @@ export default function ActionTestForm() {
 
 const Wrapper = styled("div", [
 	f.responsive(css`
-		grid-area: content;
-		grid-column: 1 / -1;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: 80px 24px;
 		background-color: #f9fafb;
+		grid-area: content;
+		grid-column: 1 / -1;
 	`),
 ])
 
 const Card = styled("div", [
 	f.responsive(css`
+		display: flex;
 		width: 100%;
 		max-width: 480px;
-		background: white;
+		flex-direction: column;
+		padding: 40px;
 		border: 1px solid #e5e7eb;
 		border-radius: 16px;
-		padding: 40px;
-		display: flex;
-		flex-direction: column;
+		background: white;
 		gap: 32px;
 	`),
 ])
@@ -84,16 +84,16 @@ const StyledLabel = styled(Field.Label, [
 
 const StyledInput = styled(Field.Control, [
 	f.responsive(css`
-		box-sizing: border-box;
-		padding: 0 16px;
-		margin: 0;
-		border: 1px solid #e5e7eb;
 		width: 100%;
 		height: 48px;
+		box-sizing: border-box;
+		padding: 0 16px;
+		border: 1px solid #e5e7eb;
 		border-radius: 8px;
-		font-family: inherit;
+		margin: 0;
 		background-color: transparent;
 		color: ${colors.black};
+		font-family: inherit;
 
 		&::placeholder {
 			color: #9ca3af;
@@ -112,21 +112,21 @@ const StyledInput = styled(Field.Control, [
 
 const StyledButton = styled(Button, [
 	f.responsive(css`
-		box-sizing: border-box;
 		display: flex;
+		height: 44px;
+		box-sizing: border-box;
 		align-items: center;
 		justify-content: center;
-		height: 44px;
 		padding: 0 20px;
-		margin: 0;
 		border: 1px solid #e5e7eb;
 		border-radius: 8px;
+		margin: 0;
 		background-color: ${colors.black};
+		color: white;
+		cursor: pointer;
 		font-family: inherit;
 		font-size: 16px;
 		font-weight: 500;
-		color: white;
-		cursor: pointer;
 
 		@media (hover: hover) {
 			&:hover:not([data-disabled]) {
@@ -140,8 +140,8 @@ const StyledButton = styled(Button, [
 		}
 
 		&[data-disabled] {
-			opacity: 0.5;
 			cursor: not-allowed;
+			opacity: 0.5;
 		}
 	`),
 ])

@@ -67,20 +67,20 @@ export function createStyle({
 export const transparentText = css`
 	/* stylelint-disable-next-line property-no-vendor-prefix  */
 	-webkit-background-clip: text;
+	background-clip: text;
+	background-size: 100%;
 	-webkit-text-fill-color: transparent;
 	-moz-text-fill-color: transparent;
-	background-size: 100%;
-	background-clip: text;
 `
 
 export const clampText = (lines: number) => css`
+	display: -webkit-box;
 	overflow: hidden;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: ${lines};
 	text-overflow: ellipsis;
 	/* stylelint-disable-next-line property-no-vendor-prefix  */
 	-webkit-text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: ${lines};
 `
 
 const sampleMetrics = {

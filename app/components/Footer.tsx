@@ -24,13 +24,13 @@ export default function Footer({ footerText }: NonNullable<FooterQueryResult>) {
 const Wrapper = styled(
 	"footer",
 	f.responsive(css`
+		display: grid;
+		width: 100%;
+		height: 300px;
 		background-color: rebeccapurple;
 		color: white;
-		display: grid;
 		grid-column: fullbleed;
 		place-items: center;
-		height: 300px;
-		width: 100%;
 		view-transition-name: footer;
 	`),
 )
@@ -38,9 +38,9 @@ const Wrapper = styled(
 const Content = styled(
 	"div",
 	f.responsive(css`
-		text-align: center;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
+		text-align: center;
 	`),
 )

@@ -8,8 +8,8 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
 
 const BlogRoot = styled("div", [
 	f.responsive(css`
-		grid-column: fullbleed;
 		display: grid;
+		grid-column: fullbleed;
 		grid-template-columns: var(--subgrid-columns);
 		--subgrid-columns: ${makeResponsiveGrid({
 			columnCount: 8,

@@ -142,16 +142,16 @@ const TextAreaWrapper = styled("div", [
 
 const Control = styled("textarea", [
 	f.responsive(css`
+		width: 100%;
+		max-width: 100%;
 		box-sizing: border-box;
 		padding: 12px;
-		margin: 0;
 		border: 1px solid #e5e7eb;
-		width: 100%;
 		border-radius: 8px;
-		font-family: inherit;
+		margin: 0;
 		background-color: transparent;
 		color: ${colors.black};
-		max-width: 100%;
+		font-family: inherit;
 		overflow-wrap: anywhere;
 
 		&::placeholder {
@@ -172,13 +172,13 @@ const Control = styled("textarea", [
 const IconSlot = styled("span", [
 	f.responsive(css`
 		position: absolute;
-		right: 12px;
 		top: 16px;
+		right: 12px;
 		display: flex;
 		align-items: center;
-		pointer-events: none;
 		font-size: 14px;
 		line-height: 1;
+		pointer-events: none;
 	`),
 ])
 

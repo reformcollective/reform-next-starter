@@ -101,25 +101,25 @@ const CheckboxLabel = styled(Field.Label, [
 	f.responsive(css`
 		display: flex;
 		align-items: center;
-		gap: 10px;
-		font-size: 16px;
 		color: ${colors.black};
 		cursor: pointer;
+		font-size: 16px;
+		gap: 10px;
 	`),
 ])
 
 const CheckboxControl = styled(Checkbox.Root, [
 	f.responsive(css`
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 18px;
 		height: 18px;
-		border-radius: 4px;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
 		border: 1px solid #d1d5db;
+		border-radius: 4px;
 		background: white;
 		cursor: pointer;
-		flex-shrink: 0;
 
 		&:focus-visible {
 			outline: 2px solid ${colors.blue};
@@ -127,17 +127,17 @@ const CheckboxControl = styled(Checkbox.Root, [
 		}
 
 		&[data-checked] {
-			background: ${colors.blue};
 			border-color: ${colors.blue};
+			background: ${colors.blue};
 		}
 	`),
 ])
 
 const Indicator = styled(Checkbox.Indicator, [
 	f.responsive(css`
+		color: white;
 		font-size: 12px;
 		line-height: 1;
-		color: white;
 	`),
 ])
 

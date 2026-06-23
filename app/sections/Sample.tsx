@@ -53,21 +53,21 @@ export default async function SampleSection({
 
 const Wrapper = styled("div", [
 	f.unresponsive(css`
-		grid-column: main;
 		display: grid;
-		grid-template-columns: minmax(0, 1fr);
-		gap: 24px;
-		align-items: center;
 		min-height: 60vh;
+		align-items: center;
 		padding: 72px 0;
+		gap: 24px;
+		grid-column: main;
+		grid-template-columns: minmax(0, 1fr);
 
 		&[data-has-media="true"] {
 			grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
 		}
 
 		@media (width <= 700px) {
-			grid-template-columns: minmax(0, 1fr);
 			padding: 48px 0;
+			grid-template-columns: minmax(0, 1fr);
 
 			&[data-has-media="true"] {
 				grid-template-columns: minmax(0, 1fr);
@@ -79,20 +79,20 @@ const Wrapper = styled("div", [
 const Content = styled("div", [
 	f.unresponsive(css`
 		display: grid;
-		gap: 18px;
-		align-content: center;
 		max-width: 680px;
+		align-content: center;
+		gap: 18px;
 	`),
 ])
 
 const Title = styled("h1", [
 	f.unresponsive(css`
 		margin: 0;
+		color: #111;
 		font-size: 72px;
-		line-height: 0.95;
 		font-weight: 700;
 		letter-spacing: 0;
-		color: #111;
+		line-height: 0.95;
 
 		@media (width <= 700px) {
 			font-size: 42px;
@@ -102,11 +102,11 @@ const Title = styled("h1", [
 
 const Text = styled("p", [
 	f.unresponsive(css`
-		margin: 0;
 		max-width: 58ch;
+		margin: 0;
+		color: #444;
 		font-size: 20px;
 		line-height: 1.45;
-		color: #444;
 
 		@media (width <= 700px) {
 			font-size: 17px;
@@ -116,25 +116,25 @@ const Text = styled("p", [
 
 const Link = styled(UniversalLink, [
 	f.unresponsive(css`
-		justify-self: start;
 		display: inline-flex;
-		align-items: center;
 		min-height: 44px;
+		align-items: center;
 		padding: 0 18px;
 		border: 1px solid #111;
 		border-radius: 6px;
-		color: #fff;
 		background: #111;
-		text-decoration: none;
+		color: #fff;
 		font-size: 15px;
 		font-weight: 600;
+		justify-self: start;
+		text-decoration: none;
 		transition:
 			background 160ms ease,
 			color 160ms ease;
 
 		&:hover {
-			color: #111;
 			background: transparent;
+			color: #111;
 		}
 	`),
 ])
@@ -142,27 +142,27 @@ const Link = styled(UniversalLink, [
 const Media = styled("div", [
 	f.unresponsive(css`
 		display: grid;
-		gap: 16px;
 		min-width: 0;
+		gap: 16px;
 	`),
 ])
 
 const Image = styled(UniversalImage, [
 	f.unresponsive(css`
+		overflow: hidden;
 		width: 100%;
 		height: auto;
 		border-radius: 8px;
-		overflow: hidden;
 		background: #f3f3f3;
 	`),
 ])
 
 const VideoFrame = styled("div", [
 	f.unresponsive(css`
-		width: 100%;
-		aspect-ratio: 16 / 9;
 		overflow: hidden;
+		width: 100%;
 		border-radius: 8px;
+		aspect-ratio: 16 / 9;
 		background: #111;
 	`),
 ])

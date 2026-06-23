@@ -78,12 +78,12 @@ export default function BlogRich({
 
 const Wrapper = styled("div", [
 	f.responsive(css`
+		position: relative;
 		display: grid;
-		grid-template-columns: minmax(0, 1fr);
-		gap: 30px;
 		padding-right: 154px;
 		color: ${colors.blog1.primary900};
-		position: relative;
+		gap: 30px;
+		grid-template-columns: minmax(0, 1fr);
 		overflow-wrap: break-word;
 	`),
 	f.small(css`
@@ -162,9 +162,9 @@ const StyledLink = styled(UniversalLink, [
 
 const StyledVideoEmbed = styled(VideoEmbed, [
 	f.responsive(css`
+		overflow: clip;
 		width: 100%;
 		border-radius: 16px;
 		aspect-ratio: 16 / 9;
-		overflow: clip;
 	`),
 ])
