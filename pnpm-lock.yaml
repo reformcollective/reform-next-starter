@@ -168,11 +168,11 @@ importers:
         specifier: 2.4.10
         version: 2.4.10
       '@eslint/css-tree':
-        specifier: ^3
-        version: 3.6.9
+        specifier: ^4.0.4
+        version: 4.0.4
       '@mux/mux-video-react':
-        specifier: ^0.29
-        version: 0.29.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^0.31.0
+        version: 0.31.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@sanity/image-url':
         specifier: ^2
         version: 2.1.1
@@ -1706,9 +1706,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@eslint/css-tree@3.6.9':
-    resolution: {integrity: sha512-3D5/OHibNEGk+wKwNwMbz63NMf367EoR4mVNNpxddCHKEb2Nez7z62J2U6YjtErSsZDoY0CsccmoUpdEbkogNA==}
-    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
+  '@eslint/css-tree@4.0.4':
+    resolution: {integrity: sha512-nxMparyhqVWQvadx9x8dIfubfIPOE+X2b2waua8fzdnM9vdp9rgVtwEZlG0TmCwEUz/d/f40fzvO/eqBwdxz0A==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   '@exodus/bytes@1.15.1':
     resolution: {integrity: sha512-S6mL0yNB/Abt9Ei4tq8gDhcczc4S3+vQ4ra7vxnAf+YHC02srtqxKKZghx2Dq6p0e66THKwR6r8N6P95wEty7Q==}
@@ -2308,8 +2308,8 @@ packages:
   '@mux/mux-player@3.13.0':
     resolution: {integrity: sha512-vh4CIMahUa29gys+mlfsOFKYKAKXxE07jSWk9WZxkdpGBW1fKfCQXlNxBoAIQlPa9Uk4MZuM3HVgqdW6aTuaZg==}
 
-  '@mux/mux-video-react@0.29.2':
-    resolution: {integrity: sha512-BSKL9j0TS3RnOqorheWEP265j2ScSbhksUKLP5HyFYA35Rugq8HjguWZUph1weT6U56jq7xGHYUtO/gQ5DDp+w==}
+  '@mux/mux-video-react@0.31.0':
+    resolution: {integrity: sha512-58CqzLN/T4kC1OqoLAOU5Ocliz2sB1oUQxmQ1OX6iCnlJox4w36pPPCad3IRnM690DyiVtFSiFWrE6TrnzKzng==}
     peerDependencies:
       '@types/react': ^17.0.0 || ^17.0.0-0 || ^18 || ^18.0.0-0 || ^19 || ^19.0.0-0
       '@types/react-dom': '*'
@@ -2323,9 +2323,6 @@ packages:
 
   '@mux/mux-video@0.31.0':
     resolution: {integrity: sha512-DvO2GynIJhPDc0LMuWvC144lCF+E07NI+chrg/vcRQlCf2fPdNNqCSMoaRdWu2S2v/Orsc85giT9K6GRbjbzgA==}
-
-  '@mux/playback-core@0.32.2':
-    resolution: {integrity: sha512-cmaZN0hRIrEFcSVsj+quBDOeztg5oxug02WwuAiweWkMt1vSBM8nlzuF03coRnD/sKhgnQawdJOrng42R8I0Cg==}
 
   '@mux/playback-core@0.35.0':
     resolution: {integrity: sha512-7Zi1EJ9sQNIUlQVBjJCXV0CB+rUVEsU3vNRElRV4xnD7dbpoioIAhe1SjZNBifjnK5aBKLDwQHypbnL3Cw3a5A==}
@@ -6642,9 +6639,6 @@ packages:
   hls-video-element@1.5.11:
     resolution: {integrity: sha512-tJJ65/52CDxj8XFyIve6zT9nVVdUIc6mqvKR25X0ycPKHk07rpjp4xxVteeCefDUBSf/tFLhlICFmn3KWj37xA==}
 
-  hls.js@1.6.15:
-    resolution: {integrity: sha512-E3a5VwgXimGHwpRGV+WxRTKeSp2DW5DI5MWv34ulL3t5UNmyJWCQ1KmLEHbYzcfThfXG8amBL+fCYPneGHC4VA==}
-
   hls.js@1.6.16:
     resolution: {integrity: sha512-VSIRpLfRwlAAdGL4wiTucx2ScRipo0ed1FBatWkyt832jC4CReKstga6yIhYVwGu9LOBjuX9wzmRMeQdBJtzEA==}
 
@@ -7430,11 +7424,11 @@ packages:
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
 
-  mdn-data@2.23.0:
-    resolution: {integrity: sha512-786vq1+4079JSeu2XdcDjrhi/Ry7BWtjDl9WtGPWLiIHb2T66GvIVflZTBoSNZ5JqTtJGYEVMuFA/lbQlMOyDQ==}
-
   mdn-data@2.27.1:
     resolution: {integrity: sha512-9Yubnt3e8A0OKwxYSXyhLymGW4sCufcLG6VdiDdUGVkPhpqLxlvP5vl1983gQjJl3tqbrM731mjaZaP68AgosQ==}
+
+  mdn-data@2.28.1:
+    resolution: {integrity: sha512-U9w+PzSZ00Z5m9rZ5ARVFL5xOfuCHdKYi/1RRwDCJsboFgJDNT3zT6PIPD7mZQYaQLhsZM3GfDRgSMRHhSmVng==}
 
   mdurl@2.0.0:
     resolution: {integrity: sha512-Lf+9+2r+Tdp5wXDXC4PcIBjTDtq4UKjCPMQhKIuzpJNW0b96kVqSwW0bT7FhRSfmAiFYgP+SCRvdrDozfh0U5w==}
@@ -7596,9 +7590,6 @@ packages:
   mute-stream@3.0.0:
     resolution: {integrity: sha512-dkEJPVvun4FryqBmZ5KhDo0K9iDXAwn08tMLDinNdRBNPcYEDiWYysLcc6k3mjTMlbP9KyylvRpd4wFtwrT9rw==}
     engines: {node: ^20.17.0 || >=22.9.0}
-
-  mux-embed@5.16.0:
-    resolution: {integrity: sha512-dXsR7I1o39mTTR7LxJbD9D2gbJtI6ibU4i7FDCp67O6OphoEvqeNYZ7xAcbf3GGfwsrsxT7RUJ939KyLArBD7A==}
 
   mux-embed@5.18.1:
     resolution: {integrity: sha512-ePsHjiEKY+FgrSBiMmaF+LOtTQSSBWv/1zqpREQFN96JE93xlsArT/MEi30yKOE06MgjOlL70YI750molu3y7g==}
@@ -11714,9 +11705,9 @@ snapshots:
   '@esbuild/win32-x64@0.28.1':
     optional: true
 
-  '@eslint/css-tree@3.6.9':
+  '@eslint/css-tree@4.0.4':
     dependencies:
-      mdn-data: 2.23.0
+      mdn-data: 2.28.1
       source-map-js: 1.2.1
 
   '@exodus/bytes@1.15.1(@noble/hashes@2.2.0)':
@@ -12289,9 +12280,9 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  '@mux/mux-video-react@0.29.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@mux/mux-video-react@0.31.0(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
-      '@mux/playback-core': 0.32.2
+      '@mux/playback-core': 0.35.0
       prop-types: 15.8.1
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
@@ -12306,11 +12297,6 @@ snapshots:
       castable-video: 1.1.16
       custom-media-element: 1.4.6
       media-tracks: 0.3.5
-
-  '@mux/playback-core@0.32.2':
-    dependencies:
-      hls.js: 1.6.15
-      mux-embed: 5.16.0
 
   '@mux/playback-core@0.35.0':
     dependencies:
@@ -17274,8 +17260,6 @@ snapshots:
       hls.js: 1.6.16
       media-tracks: 0.3.5
 
-  hls.js@1.6.15: {}
-
   hls.js@1.6.16: {}
 
   hoist-non-react-statics@3.3.2:
@@ -18062,9 +18046,9 @@ snapshots:
 
   mdn-data@2.0.30: {}
 
-  mdn-data@2.23.0: {}
-
   mdn-data@2.27.1: {}
+
+  mdn-data@2.28.1: {}
 
   mdurl@2.0.0: {}
 
@@ -18202,8 +18186,6 @@ snapshots:
   mute-stream@2.0.0: {}
 
   mute-stream@3.0.0: {}
-
-  mux-embed@5.16.0: {}
 
   mux-embed@5.18.1: {}
 
@@ -21002,8 +20984,8 @@ time:
   '@base-ui/react@1.6.0': '2026-06-18T12:04:15.326Z'
   '@biomejs/biome@2.4.10': '2026-03-30T16:10:03.091Z'
   '@capsizecss/core@4.1.3': '2025-11-12T00:10:27.308Z'
-  '@eslint/css-tree@3.6.9': '2026-02-11T20:53:57.472Z'
-  '@mux/mux-video-react@0.29.2': '2025-12-18T22:15:27.267Z'
+  '@eslint/css-tree@4.0.4': '2026-05-20T20:50:37.573Z'
+  '@mux/mux-video-react@0.31.0': '2026-04-28T23:46:18.507Z'
   '@sanity/assist@6.1.3': '2026-06-17T12:44:25.832Z'
   '@sanity/client@7.23.0': '2026-06-17T09:54:44.044Z'
   '@sanity/code-input@7.1.6': '2026-06-19T11:41:18.743Z'
