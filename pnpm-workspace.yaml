@@ -10,3 +10,4 @@ allowBuilds:
   sharp: true
   vue-demi: true
 ignoreWorkspaceRootCheck: true
+resolutionMode: time-based
