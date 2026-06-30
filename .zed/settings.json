@@ -1,5 +1,12 @@
 {
 	"lsp": {
+		"stylelint-lsp": {
+			"settings": {
+				"stylelint": {
+					"validate": ["css", "postcss", "typescript", "tsx", "javascript", "jsx", "scss", "less"]
+				}
+			}
+		},
 		"oxlint": {
 			"initialization_options": {
 				"settings": {
