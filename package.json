@@ -24,17 +24,17 @@
 		"@sanity/client": "^7.23.0",
 		"@sanity/code-input": "^7.1.6",
 		"@sanity/icons": "^3.7.4",
-		"@sanity/vision": "^6.1.0",
+		"@sanity/vision": "^6.2.0",
 		"@svgr/webpack": "^8.1.0",
 		"@t3-oss/env-nextjs": "^0.13.11",
 		"@total-typescript/ts-reset": "^0.6.1",
 		"@total-typescript/tsconfig": "^1.0.4",
-		"@types/node": "^26.0.0",
+		"@types/node": "^26.0.1",
 		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
-		"@typescript/native-preview": "7.0.0-dev.20260622.1",
+		"@typescript/native-preview": "7.0.0-dev.20260629.1",
 		"@userback/widget": "^0.3.12",
-		"@vanilla-extract/css": "^1.20.1",
+		"@vanilla-extract/css": "^1.21.0",
 		"ahooks": "^3.9.7",
 		"babel-plugin-react-compiler": "^1.0.0",
 		"gsap": "^3.15.0",
@@ -48,28 +48,54 @@
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7",
 		"react-player": "^3.4.0",
-		"sanity": "^6.1.0",
+		"sanity": "^6.2.0",
 		"sanity-plugin-asset-source-unsplash": "^7.0.10",
 		"sanity-plugin-link-field": "file:library/vendor/sanity-plugin-link-field-1.6-preview.tgz",
-		"sanity-plugin-media": "^5.0.2",
-		"sanity-plugin-mux-input": "^4.0.2",
+		"sanity-plugin-media": "^5.0.4",
+		"sanity-plugin-mux-input": "^4.0.3",
 		"server-only": "^0.0.1",
-		"stylelint": "^17.13.0",
+		"stylelint": "^17.14.0",
 		"svgo": "^4.0.1",
 		"typescript": "^6.0.3",
-		"unlighthouse": "^0.17.10",
+		"unlighthouse": "^0.18.0",
 		"vite-tsconfig-paths": "^6.1.1",
-		"wireit": "^0.14.12",
+		"wireit": "^0.14.13",
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {},
 	"stylelint": {
-		"extends": "./library/config/stylelint.config.js"
+		"extends": "./library/config/stylelint.config.js",
+		"rules": {
+			"plugin/use-baseline": [
+				true,
+				{
+					"available": 2024,
+					"ignoreSelectors": [
+						"/^view-transition-/"
+					],
+					"ignoreProperties": {
+						"background-clip": [
+							"text"
+						],
+						"view-transition-name": [],
+						"text-wrap": [
+							"pretty"
+						],
+						"user-select": [
+							"none"
+						],
+						"overscroll-behavior": [
+							"contain"
+						]
+					}
+				}
+			]
+		}
 	},
 	"devEngines": {
 		"runtime": {
 			"name": "node",
-			"version": "^24.16.0",
+			"version": "^24.18.0",
 			"onFail": "download"
 		}
 	},

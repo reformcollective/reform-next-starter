@@ -8,6 +8,7 @@ import { PageTransitionProvider } from "library/link/usePageTransition"
 import { ResetStyles } from "library/reset"
 import { ScreenProvider } from "library/ScreenContext"
 import { SmoothScrollStyle } from "library/Scroll"
+import { HMRProvider } from "library/useHMR"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -27,17 +28,19 @@ if (
 
 export default function GlobalProviders({ children }: { children: React.ReactNode }) {
 	return (
-		<NuqsAdapter>
-			<ScreenProvider>
-				<PageTransitionProvider>
-					<SmoothScrollStyle allowNestedScroll />
-					<ProjectStyles />
-					<ResetStyles />
+		<HMRProvider>
+			<NuqsAdapter>
+				<ScreenProvider>
+					<PageTransitionProvider>
+						<SmoothScrollStyle allowNestedScroll />
+						<ProjectStyles />
+						<ResetStyles />
 
-					{children}
-				</PageTransitionProvider>
-			</ScreenProvider>
-		</NuqsAdapter>
+						{children}
+					</PageTransitionProvider>
+				</ScreenProvider>
+			</NuqsAdapter>
+		</HMRProvider>
 	)
 }
 
