@@ -11,7 +11,7 @@ on:
 jobs:
   library:
     # this hash is updated automatically, so if you're resolving a merge conflict, either hash is fine
-    uses: reformcollective/library/.github/workflows/lighthouse.yml@c3994ca91bbddaecb54b13ed9aab1d42187ad098
+    uses: reformcollective/library/.github/workflows/lighthouse.yml@381fd6f897ff9ccf69e1cfdd9ffc5ceac6b0dbcb
     secrets:
       SECRETS_JSON: ${{ toJSON(secrets) }}
     with:
