@@ -12,6 +12,8 @@ on:
 
 jobs:
   claude-review:
+    # Temporarily disabled — flip `false` to `true` to re-enable.
+    if: false
     # Optional: Filter by PR author
     # if: |
     #   github.event.pull_request.user.login == 'external-contributor' ||
