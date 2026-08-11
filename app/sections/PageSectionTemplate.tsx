@@ -42,6 +42,5 @@ const Wrapper = styled("div", [
 const Inner = styled("div", [
 	f.responsive(css`
 		grid-column: main;
-		border: 1px solid black;
 	`),
 ])
