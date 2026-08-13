@@ -121,8 +121,6 @@ export async function generateMetadata({ params }: PageProps<"/[[...slug]]">): P
 	}
 }
 
-export * from "library/segmentDefaults"
-
 export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">) {
 	const slug = (await params).slug
 	const pathname = slug ? `/${slug.join("/")}` : "/"
