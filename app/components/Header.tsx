@@ -47,7 +47,6 @@ const Wrapper = styled("header", [
 		grid-template-columns: var(--subgrid-columns);
 		grid-column: fullbleed;
 		grid-row: header;
-
 		view-transition-name: header;
 		z-index: 1000;
 		transition: backdrop-filter 0.3s ease-out;

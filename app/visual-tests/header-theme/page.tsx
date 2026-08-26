@@ -74,6 +74,7 @@ const Nav = styled("div", [
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 16px;
+
 		/* the header is fixed, so clear it manually here */
 		padding: calc(var(--site-header-height, 100px) + 48px) 0 48px;
 	`),
