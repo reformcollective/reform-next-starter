@@ -1,6 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next"
 
 import PostContent from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/PostContent"
+import InitialHeaderMode from "app/lib/InitialHeaderMode"
 import { resolveMetaTitle } from "app/lib/metadata"
 import { colors } from "app/styles/colors.css"
 import { PageCommitSignal } from "library/link/usePageTransition"
@@ -122,6 +123,8 @@ export default async function PostPage({ params }: PageProps<"/[blogSlug]/[slug]
 	return (
 		<Wrapper>
 			<PageCommitSignal />
+			{/* a post's first section is BlogNav, which declares dark */}
+			<InitialHeaderMode headerMode="dark" />
 			<PostContent post={post} recentPosts={recentPosts} />
 		</Wrapper>
 	)

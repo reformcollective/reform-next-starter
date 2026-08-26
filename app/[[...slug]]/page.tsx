@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import type { MainPageQueryResult } from "sanity.types"
 
+import InitialHeaderMode from "app/lib/InitialHeaderMode"
 import { resolveMetaTitle } from "app/lib/metadata"
 import SampleSection from "app/sections/Sample"
 import { PageCommitSignal } from "library/link/usePageTransition"
@@ -137,6 +138,12 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 	const sections: PageSection[] = relevantPage.sections
 	if (!pageTitle) notFound()
 
+	// seed the header's theme from the first section, so it is correct on the frame after
+	// navigation instead of flashing the default until the observer catches up
+	const firstSection = sections[0]
+	const initialHeaderMode =
+		firstSection && "headerMode" in firstSection ? firstSection.headerMode : undefined
+
 	const pageDataAttribute = getSanityDataAttribute(
 		{
 			documentId: relevantPage._id,
@@ -149,6 +156,7 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 	return (
 		<>
 			<PageCommitSignal />
+			<InitialHeaderMode headerMode={initialHeaderMode} />
 			{relevantPage.noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
 			{/* Register this page document with Presentation Tool's "Documents on this page" panel.
 			    Without this, pages whose sections have no text (e.g. image-only) are invisible to the panel. */}

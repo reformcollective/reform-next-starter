@@ -2,7 +2,6 @@
 
 import { Categories } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/Categories"
 import { FilterState } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/FilterState"
-import { useHeaderTheme } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/HeaderTheme"
 import LargeCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/LargeCard"
 import {
 	useBlogCategory,
@@ -51,8 +50,6 @@ export function BlogHomeClient({ allCards, featuredCaseStudy, searchMode }: Blog
 	const [serverResults, setServerResults] = useState<Card[]>([])
 	const [, startTransition] = useTransition()
 
-	useHeaderTheme("dark")
-
 	useEffect(() => {
 		if ((searchQuery || categories.length > 0 || showAll) && columnsRef.current)
 			window.lenisInstance?.scrollTo(columnsRef.current, { offset: -getResponsivePixels(120) })
@@ -87,7 +84,7 @@ export function BlogHomeClient({ allCards, featuredCaseStudy, searchMode }: Blog
 	const hasMore = visibleCount < activeCards.length
 
 	return (
-		<BlogWrapper>
+		<BlogWrapper data-header-mode="dark">
 			<FeaturedSection>
 				{featuredCard ? <LargeCard data={featuredCard} /> : undefined}
 			</FeaturedSection>

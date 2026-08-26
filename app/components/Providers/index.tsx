@@ -9,6 +9,7 @@ import { ResetStyles } from "library/reset"
 import { ScreenProvider } from "library/ScreenContext"
 import { SmoothScrollStyle } from "library/Scroll"
 import { HMRProvider } from "library/useHMR"
+import { SectionThemeProvider } from "library/useSectionTheme"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -31,13 +32,15 @@ export default function GlobalProviders({ children }: { children: React.ReactNod
 		<HMRProvider>
 			<NuqsAdapter>
 				<ScreenProvider>
-					<PageTransitionProvider>
-						<SmoothScrollStyle allowNestedScroll />
-						<ProjectStyles />
-						<ResetStyles />
+					<SectionThemeProvider>
+						<PageTransitionProvider>
+							<SmoothScrollStyle allowNestedScroll />
+							<ProjectStyles />
+							<ResetStyles />
 
-						{children}
-					</PageTransitionProvider>
+							{children}
+						</PageTransitionProvider>
+					</SectionThemeProvider>
 				</ScreenProvider>
 			</NuqsAdapter>
 		</HMRProvider>
