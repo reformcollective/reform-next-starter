@@ -1,5 +1,6 @@
 import { sleep } from "library/functions"
 import UniversalLink from "library/link"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 
 export default async function LoaderB() {
@@ -7,6 +8,7 @@ export default async function LoaderB() {
 
 	return (
 		<Wrapper>
+			<PageCommitSignal />
 			<h1>Loader Tests B</h1>
 			<UniversalLink href="/visual-tests/loader/a">Go to Loader A</UniversalLink>
 			<UniversalLink href="/visual-tests/loader/a">Slide to Loader A</UniversalLink>

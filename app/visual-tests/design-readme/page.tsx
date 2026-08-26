@@ -7,6 +7,7 @@ import CustomTextOverflow from "library/CustomTextOverflow"
 import { DisplayDate } from "library/DisplayDate"
 import { InfiniteSideScroll } from "library/InfiniteSideScroll"
 import UniversalLink from "library/link"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import StaticImage from "library/StaticImage"
 import { css, f, styled } from "library/styled"
 import { useState } from "react"
@@ -20,6 +21,7 @@ export default function DesignPage() {
 
 	return (
 		<Wrapper>
+			<PageCommitSignal />
 			<h1>hola</h1>
 			<h2>Animated Paths</h2>
 			<AnimatedPaths lineSpeed={[50, 50]}>

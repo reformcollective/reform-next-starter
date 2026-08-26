@@ -18,6 +18,7 @@ import {
 } from "app/components/Form/Fields"
 import { colors } from "app/styles/colors.css"
 import ClientOnly from "library/ClientOnly"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 import { useRef, useState, type FormEvent } from "react"
 
@@ -115,6 +116,7 @@ export default function SampleForm() {
 
 	return (
 		<ClientOnly>
+			<PageCommitSignal />
 			<Wrapper>
 				<Card>
 					{submittedData ? (

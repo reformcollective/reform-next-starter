@@ -2,6 +2,7 @@
 
 import AutoAnimate from "library/AutoAnimate"
 import UniversalLink from "library/link"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 import { type ComponentProps, Fragment, useEffect, useState } from "react"
 
@@ -64,6 +65,7 @@ export default function AutoTests() {
 
 	return (
 		<Wrapper>
+			<PageCommitSignal />
 			<h1>AutoAnimate Tests</h1>
 			<UniversalLink href="/">go home</UniversalLink>
 			<h2>standard</h2>

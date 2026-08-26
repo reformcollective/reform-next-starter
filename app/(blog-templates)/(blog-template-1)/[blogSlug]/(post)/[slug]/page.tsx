@@ -3,6 +3,7 @@ import type { Metadata, ResolvingMetadata } from "next"
 import PostContent from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/PostContent"
 import { resolveMetaTitle } from "app/lib/metadata"
 import { colors } from "app/styles/colors.css"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { assetMetadataFunctions } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { siteURL } from "library/siteURL"
@@ -120,6 +121,7 @@ export default async function PostPage({ params }: PageProps<"/[blogSlug]/[slug]
 
 	return (
 		<Wrapper>
+			<PageCommitSignal />
 			<PostContent post={post} recentPosts={recentPosts} />
 		</Wrapper>
 	)

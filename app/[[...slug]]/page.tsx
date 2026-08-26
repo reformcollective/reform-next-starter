@@ -3,6 +3,7 @@ import type { MainPageQueryResult } from "sanity.types"
 
 import { resolveMetaTitle } from "app/lib/metadata"
 import SampleSection from "app/sections/Sample"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { assetMetadataFunctions } from "library/sanity/assetMetadata"
 import { resolveDocumentTitle, resolveProductionUrl } from "library/sanity/document-helpers"
 import {
@@ -147,6 +148,7 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 
 	return (
 		<>
+			<PageCommitSignal />
 			{relevantPage.noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
 			{/* Register this page document with Presentation Tool's "Documents on this page" panel.
 			    Without this, pages whose sections have no text (e.g. image-only) are invisible to the panel. */}

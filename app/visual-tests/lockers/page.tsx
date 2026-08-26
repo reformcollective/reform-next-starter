@@ -2,6 +2,7 @@
 
 import { ScrollSmoother } from "gsap/all"
 import UniversalLink from "library/link"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { useScrollLock } from "library/Scroll"
 import { css, f, styled } from "library/styled"
 import { useState } from "react"
@@ -32,6 +33,7 @@ export default function ScrollLock() {
 
 	return (
 		<Wrapper>
+			<PageCommitSignal />
 			<h1>scroll lock tests</h1>
 			<h2 id="test" data-anchor-offset="-100">
 				lockers
