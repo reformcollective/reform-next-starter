@@ -137,10 +137,10 @@ const Root = styled(Accordion.Root, [
 const ItemWrapper = styled(Accordion.Item, [
 	f.responsive(css`
 		transform: translateY(130px);
-		border-bottom: 1px solid color-mix(in srgb, ${colors.black} 15%, transparent);
+		border-bottom: 1px solid ${colors.black};
 
 		&:first-child {
-			border-top: 1px solid color-mix(in srgb, ${colors.black} 15%, transparent);
+			border-top: 1px solid ${colors.black};
 		}
 	`),
 	f.small(css`

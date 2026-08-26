@@ -76,7 +76,7 @@ const TitleColumn = styled("div", [
 const Kicker = styled("span", [
 	f.responsive(css`
 		${textStyles.kicker1};
-		color: color-mix(in srgb, ${colors.black} 60%, ${colors.white});
+		color: ${colors.black};
 	`),
 ])
 
