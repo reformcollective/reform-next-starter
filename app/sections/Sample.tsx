@@ -13,12 +13,13 @@ export default async function SampleSection({
 	sampleImage,
 	sampleLink,
 	sampleVideo,
+	headerMode,
 	sanityDataAttribute,
 }: GetSectionType<"sample">) {
 	const hasMedia = Boolean(sampleImage?.asset || sampleVideo)
 
 	return (
-		<Wrapper data-has-media={hasMedia || undefined}>
+		<Wrapper data-has-media={hasMedia || undefined} data-header-mode={headerMode}>
 			<Content>
 				{title && (
 					<Title data-sanity={getSanityDataAttribute(sanityDataAttribute, "title")}>{title}</Title>

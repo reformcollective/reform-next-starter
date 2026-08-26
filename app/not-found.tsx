@@ -1,9 +1,15 @@
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 
 export default function NotFound() {
-	return <Main>NOT FOUND</Main>
+	return (
+		<>
+			<PageCommitSignal />
+			<Main>NOT FOUND</Main>
+		</>
+	)
 }
 
 const Main = styled("div", [

@@ -14,6 +14,14 @@ const style = css`
 		*:focus-visible {
 			outline: 2px solid #00f8;
 		}
+
+		/**
+		 * the header is fixed, so anchor targets would otherwise land underneath it.
+		 * --site-header-height is published by library/useAutoHideHeader.
+		 */
+		[id] {
+			scroll-margin-top: calc(var(--site-header-height, 0px) + 24px);
+		}
 	}
 `
 

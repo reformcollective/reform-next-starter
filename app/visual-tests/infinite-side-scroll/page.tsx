@@ -2,6 +2,7 @@
 
 import { InfiniteSideScroll } from "library/InfiniteSideScroll"
 import UniversalLink from "library/link"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 import { useEffect, useState } from "react"
 
@@ -22,6 +23,7 @@ export default function InfiniteSideScrollTests() {
 
 	return (
 		<Wrapper>
+			<PageCommitSignal />
 			<h1>InfiniteSideScroll Tests</h1>
 			<UniversalLink href="/">go home</UniversalLink>
 

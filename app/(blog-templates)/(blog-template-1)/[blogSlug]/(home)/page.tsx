@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
 
+import InitialHeaderMode from "app/lib/InitialHeaderMode"
 import { resolveMetaTitle } from "app/lib/metadata"
 import { colors } from "app/styles/colors.css"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { assetMetadataFunctions } from "library/sanity/assetMetadata"
 import { resolveOpenGraphImage } from "library/sanity/opengraph"
 import { siteURL } from "library/siteURL"
@@ -115,6 +117,9 @@ export default async function BlogHome() {
 
 	return (
 		<>
+			<PageCommitSignal />
+			{/* the blog hub's first section is BlogWrapper, which declares dark */}
+			<InitialHeaderMode headerMode="dark" />
 			{blogHub?.noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
 			<Inner>
 				<Suspense fallback={<div>Loading blog...</div>}>

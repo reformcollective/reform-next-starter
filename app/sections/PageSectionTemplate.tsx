@@ -4,9 +4,14 @@
 // import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled"
 
-export default function PageSection() {
+/**
+ * when you copy this into a real section, type the props as
+ * `GetSectionType<"yourSectionName">` — `headerMode` is one of the fields
+ * `definePageSection` adds to every section schema, so it comes through for free.
+ */
+export default function PageSection({ headerMode }: { headerMode?: "light" | "dark" }) {
 	return (
-		<Wrapper>
+		<Wrapper data-header-mode={headerMode}>
 			<Inner />
 		</Wrapper>
 	)
@@ -15,6 +20,10 @@ export default function PageSection() {
 /**
  * spans the full width of the page and re-declares the page grid,
  * so that children can use `grid-column: main` (or any other column)
+ *
+ * `data-header-mode` puts this section into the header's theme rotation: while it is the
+ * section behind the fixed header, the header restyles itself to match. the value comes
+ * from the `headerMode` field that `definePageSection` adds to every section schema.
  */
 const Wrapper = styled("div", [
 	f.unresponsive(css`
