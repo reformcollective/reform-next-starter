@@ -288,7 +288,7 @@ const AnswerWrapper = styled("div", [
 		ul,
 		ol {
 			${textStyles.p1};
-			color: color-mix(in srgb, ${colors.black} 65%, ${colors.white});
+			color: ${colors.black};
 			margin: 8px 0;
 			padding-left: 24px;
 		}
@@ -308,7 +308,7 @@ const AnswerWrapper = styled("div", [
 const StyledP = styled("p", [
 	f.responsive(css`
 		${textStyles.p1};
-		color: color-mix(in srgb, ${colors.black} 65%, ${colors.white});
+		color: ${colors.black};
 		padding: 3px 0;
 	`),
 	f.small(css`
