@@ -80,7 +80,7 @@ const Wrapper = styled("div", [
 		z-index: 9999;
 		display: grid;
 		place-items: center;
-		background: ${colors.surfaceDark};
+		background: ${colors.black};
 		transition: background 0.3s ease-out;
 		pointer-events: auto;
 
