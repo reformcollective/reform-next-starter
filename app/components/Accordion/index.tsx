@@ -95,11 +95,11 @@ function AccordionItem({ item }: { item: FaqEntry }) {
  */
 export default function FAQAccordion({ items }: { items?: FaqEntry[] | null }) {
 	const rootRef = useRef<HTMLDivElement>(null)
-	const isMobile = useMedia(false, false, true, true)
+	const isSmall = useMedia(false, false, true, true)
 	const firstKey = items?.[0]?._key
 
 	useAnimation(() => {
-		if (isMobile || !rootRef.current) return
+		if (isSmall || !rootRef.current) return
 		const children = rootRef.current.children
 
 		gsap.to(children, {
@@ -112,7 +112,7 @@ export default function FAQAccordion({ items }: { items?: FaqEntry[] | null }) {
 				start: "top 90%",
 			},
 		})
-	}, [isMobile])
+	}, [isSmall])
 
 	return (
 		/* `defaultValue` matches on the `value` each ItemWrapper is given, so this expands
