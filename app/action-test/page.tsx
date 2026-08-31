@@ -4,6 +4,7 @@ import { Button } from "@base-ui/react/button"
 import { Field } from "@base-ui/react/field"
 import { Form } from "@base-ui/react/form"
 import { colors } from "app/styles/colors.css"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 import * as React from "react"
 
@@ -14,6 +15,7 @@ export default function ActionTestForm() {
 
 	return (
 		<Wrapper>
+			<PageCommitSignal />
 			<Card>
 				<h1>useActionState Test</h1>
 				<p style={{ color: "#6b7280", margin: 0 }}>

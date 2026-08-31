@@ -44,6 +44,7 @@
 import { colors } from "app/styles/colors.css"
 import { usePreloader } from "library/link/usePreloader"
 import { css, f, styled } from "library/styled"
+import { useHeaderMode } from "library/useSectionTheme"
 import { useRef } from "react"
 
 import { preloaderExit, logoPulse, logoOutro } from "./animations.css"
@@ -51,6 +52,10 @@ import LogoSVG from "./images/logo.inline.svg"
 
 export function Preloader() {
 	const scopeRef = useRef<HTMLDivElement>(null)
+
+	// match the page we're about to reveal. the theme is seeded from the page's first
+	// section by app/lib/InitialHeaderMode, so there's no need to sniff the DOM for it.
+	const mode = useHeaderMode()
 
 	const { ready, completed, devKey } = usePreloader({
 		minDuration: 2000,
@@ -62,7 +67,7 @@ export function Preloader() {
 	if (completed) return null
 
 	return (
-		<Wrapper key={devKey} ref={scopeRef} data-ready={ready || undefined}>
+		<Wrapper key={devKey} ref={scopeRef} data-mode={mode} data-ready={ready || undefined}>
 			<Logo className="logo" aria-hidden="true" />
 		</Wrapper>
 	)
@@ -76,7 +81,12 @@ const Wrapper = styled("div", [
 		display: grid;
 		place-items: center;
 		background: ${colors.black};
+		transition: background 0.3s ease-out;
 		pointer-events: auto;
+
+		&[data-mode="light"] {
+			background: ${colors.surfaceLight};
+		}
 
 		&[data-ready] {
 			/* delayed to start after the logo outro finishes */
@@ -90,8 +100,13 @@ const Logo = styled(LogoSVG, [
 	f.responsive(css`
 		width: 80px;
 		height: auto;
-		color: ${colors.white};
+		color: ${colors.surfaceLight};
+		transition: color 0.3s ease-out;
 		animation: ${logoPulse} 2s ease-in-out infinite;
+
+		[data-mode="light"] & {
+			color: ${colors.surfaceDark};
+		}
 
 		[data-ready] & {
 			animation: ${logoOutro} 0.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;

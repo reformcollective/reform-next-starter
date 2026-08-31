@@ -1,6 +1,7 @@
 "use client"
 
 import gsap from "gsap/all"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { styled } from "library/styled"
 import { useAnimation } from "library/useAnimation"
 import { useRef } from "react"
@@ -17,6 +18,7 @@ export default function VisualTestsPage() {
 
 	return (
 		<div>
+			<PageCommitSignal />
 			<Test>
 				<Box ref={box}>hellow</Box>
 			</Test>

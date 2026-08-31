@@ -8,13 +8,11 @@ import { css, f, styled } from "library/styled"
 import type { Post } from "../types"
 
 import CaretSVG from "../icons/caret.inline.svg"
-import { useHeaderTheme } from "./HeaderTheme"
 import Kicker from "./Kicker"
 
 export default function BlogNav({ categories }: { categories: Post["categories"] }) {
-	useHeaderTheme("dark")
 	return (
-		<BlogNavWrapper>
+		<BlogNavWrapper data-header-mode="dark">
 			<BreadCrumbs>
 				<StyledUniversalLink href="/blog-1">Blog Home</StyledUniversalLink>
 				<Caret />

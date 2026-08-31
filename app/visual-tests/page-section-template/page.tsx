@@ -1,5 +1,6 @@
 import PageSection from "app/sections/PageSectionTemplate"
 import UniversalLink from "library/link"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 
 /**
@@ -10,6 +11,7 @@ import { css, f, styled } from "library/styled"
 export default function PageSectionTemplateTests() {
 	return (
 		<>
+			<PageCommitSignal />
 			<Nav>
 				<h1>Page Section Template Tests</h1>
 				<UniversalLink href="/visual-tests">← visual tests</UniversalLink>

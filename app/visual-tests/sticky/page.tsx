@@ -1,6 +1,7 @@
 "use client"
 
 import UniversalLink from "library/link"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import nativeSmoothPin from "library/nativeSmoothPin"
 import { css, f, styled } from "library/styled"
 
@@ -27,6 +28,7 @@ const topStr: Record<(typeof topOrder)[number], string> = {
 export default function StickyVisualTestPage() {
 	return (
 		<Wrapper>
+			<PageCommitSignal />
 			<h1>Sticky behavior test</h1>
 			<UniversalLink href="/visual-tests">← visual tests</UniversalLink>
 

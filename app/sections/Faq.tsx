@@ -10,10 +10,11 @@ export default function FaqSection({
 	kicker,
 	title,
 	items,
+	headerMode,
 	sanityDataAttribute,
 }: GetSectionType<"faq">) {
 	return (
-		<Wrapper>
+		<Wrapper data-header-mode={headerMode}>
 			<Inner>
 				<TitleColumn>
 					{kicker && (

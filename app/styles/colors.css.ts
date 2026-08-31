@@ -12,6 +12,10 @@ export const rawColors = {
 	black: ["#000", "color(display-p3 0 0 0)"],
 	transparent: ["transparent"],
 
+	/** light/dark surfaces the header switches between, driven by each section's `headerMode` */
+	surfaceLight: ["#FDF6EE"],
+	surfaceDark: ["#141414"],
+
 	// ---------------------------------------------------------------------------
 	// Blog Template 1 Raw Values
 	// NOTE: Placeholder colors from the enzo reference project.
@@ -158,6 +162,8 @@ export const colors = {
 	green: flatColors.green,
 	blue: flatColors.blue,
 	black: flatColors.black,
+	surfaceLight: flatColors.surfaceLight,
+	surfaceDark: flatColors.surfaceDark,
 	blog1: {
 		...mapToVars(blog1Raw),
 		...mapToVars(blog1FormRaw),

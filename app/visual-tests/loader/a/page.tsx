@@ -2,6 +2,7 @@
 
 import UniversalLink from "library/link"
 import { loader } from "library/link/loader"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 import { useEffect, useState } from "react"
 
@@ -24,6 +25,7 @@ export default function Loader() {
 
 	return (
 		<Wrapper>
+			<PageCommitSignal />
 			<h1>Loader Tests</h1>
 			<UniversalLink href="/visual-tests/loader/b">Go to Loader B</UniversalLink>
 			<UniversalLink href="/">go home</UniversalLink>
