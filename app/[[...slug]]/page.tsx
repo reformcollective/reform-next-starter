@@ -62,6 +62,18 @@ const mainPageSlugsQuery = defineQuery(`
 
 const mainPageSettingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
+// The root of this optional catch-all can arrive as several different shapes:
+// undefined normally, ["index"] during ISR regeneration (Next's on-disk name for the
+// root — normalizePagePath turns "/" into "/index", so they are the same cache entry),
+// and degenerate empties like [] or [""]. All of them mean the root. Joining without
+// normalizing turns "index" into the pathname "/index", which matches no document and
+// would cache a 404 on the homepage.
+function resolvePathname(slug: string[] | undefined) {
+	const joined = slug?.filter(Boolean).join("/")
+	if (!joined || joined === "index") return "/"
+	return `/${joined}`
+}
+
 export async function generateStaticParams() {
 	const { data } = await sanityFetch({
 		query: mainPageSlugsQuery,
@@ -74,8 +86,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps<"/[[...slug]]">): Promise<Metadata> {
-	const slug = (await params).slug
-	const pathname = slug ? `/${slug.join("/")}` : "/"
+	const pathname = resolvePathname((await params).slug)
 
 	const [{ data: relevantPage }, { data: settings }] = await Promise.all([
 		sanityFetch({
@@ -125,8 +136,7 @@ export async function generateMetadata({ params }: PageProps<"/[[...slug]]">): P
 }
 
 export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">) {
-	const slug = (await params).slug
-	const pathname = slug ? `/${slug.join("/")}` : "/"
+	const pathname = resolvePathname((await params).slug)
 	const { data: relevantPage } = await sanityFetch({
 		query: mainPageQuery,
 		params: { pathname },
