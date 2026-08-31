@@ -3,6 +3,7 @@ import type { MainPageQueryResult } from "sanity.types"
 
 import InitialHeaderMode from "app/lib/InitialHeaderMode"
 import { resolveMetaTitle } from "app/lib/metadata"
+import FaqSection from "app/sections/Faq"
 import SampleSection from "app/sections/Sample"
 import { PageCommitSignal } from "library/link/usePageTransition"
 import { assetMetadataFunctions } from "library/sanity/assetMetadata"
@@ -178,6 +179,12 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 						return (
 							<Wrapper key={section._key}>
 								<SampleSection {...section} {...sectionContext} />
+							</Wrapper>
+						)
+					case "faq":
+						return (
+							<Wrapper key={section._key}>
+								<FaqSection {...section} {...sectionContext} />
 							</Wrapper>
 						)
 					case "redirect":

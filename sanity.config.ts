@@ -14,7 +14,7 @@ import {
 	resolveDocumentLocations,
 	resolveProductionUrl,
 } from "library/sanity/document-helpers"
-import { video, youtube } from "library/sanity/reusables"
+import { faqItem, video, youtube } from "library/sanity/reusables"
 import { pageStructure, singletonPlugin } from "library/sanity/singletonPlugin"
 import { siteURL } from "library/siteURL"
 import { defineConfig, type PluginOptions } from "sanity"
@@ -67,6 +67,41 @@ export default defineConfig({
 			// reusables
 			youtube,
 			video,
+			/**
+			 * controls what editors can put in an FAQ answer, for THIS project.
+			 * defaults to bold, italic, bulleted + numbered lists, and links.
+			 *
+			 * trim it to match the design — e.g. `faqItem({ lists: [] })` if there is
+			 * no list treatment, or `faqItem({ decorators: [] })` for plain text. each
+			 * option replaces its default list rather than merging, so an empty array
+			 * drops a whole category, and dropping one mark means listing the keepers.
+			 *
+			 * do that before editors author content. adding a mark later is safe;
+			 * removing one leaves existing answers still rendering it, with no Studio
+			 * control to apply or clear it.
+			 */
+			// The whole megillah
+			faqItem(),
+
+			// plain paragraphs and links, nothing else
+			// faqItem({ lists: [], decorators: [] }),
+
+			// no links in answers
+			// faqItem({ annotations: [] }),
+
+			// italic only — each option replaces its default list, so drop a single
+			// mark by passing the ones you keep, not the one you want gone
+			// faqItem({ decorators: [{ title: "Italic", value: "em" }] }),
+
+			// Subheading and regular text
+			// faqItem({
+			// 	styles: [
+			// 		{ title: "Normal", value: "normal" },
+			// 		{ title: "Heading", value: "h3" },
+			// 	],
+			// 	lists: [],
+			// 	decorators: [],
+			// }),
 
 			// blog-1 template schemas
 			blog1AuthorType,
