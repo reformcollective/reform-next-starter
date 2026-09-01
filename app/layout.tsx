@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import FPSTracker from "app/_dev/FPSTracker"
 import Footer from "app/components/Footer"
 import Header from "app/components/Header"
 import { Preloader } from "app/components/Preloader"
@@ -53,6 +54,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 							/>
 						),
 				)}
+				<Suspense>
+					<FPSTracker />
+				</Suspense>
 			</body>
 		</html>
 	)
