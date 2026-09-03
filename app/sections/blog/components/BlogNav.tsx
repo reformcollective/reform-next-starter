@@ -24,12 +24,12 @@ export default function BlogNav({
 			<BreadCrumbs>
 				<StyledUniversalLink href={hubPath}>{hubTitle}</StyledUniversalLink>
 				<Caret />
-				<span>Article</span>
+				<Current>Article</Current>
 			</BreadCrumbs>
 			{categories && categories.length > 0 && (
 				<Categories>
 					<Inner>
-						{categories.length > 1 ? "Categories:" : "Category:"}
+						<Label>{categories.length > 1 ? "Categories:" : "Category:"}</Label>
 						<Row>
 							{categories.filter(Boolean).map((category: string) => (
 								<Kicker size="tag" variant="light" key={category}>
@@ -80,12 +80,17 @@ const Inner = styled("div", [
 		display: flex;
 		gap: 20px;
 		align-items: center;
-		${textStyles.blog1.p2};
 	`),
 	f.small(css`
 		width: auto;
 		white-space: nowrap;
 		gap: 0;
+	`),
+])
+
+const Label = styled("span", [
+	f.responsive(css`
+		${textStyles.blog1.p2};
 	`),
 ])
 
@@ -116,11 +121,19 @@ const BreadCrumbs = styled("div", [
 		display: flex;
 		align-items: center;
 		color: ${colors.blog1.primary700};
-		${textStyles.blog1.p2};
 	`),
 	f.small(css`
 		gap: unset;
 		justify-content: flex-start;
+	`),
+])
+
+const Current = styled("span", [
+	f.responsive(css`
+		${textStyles.blog1.p2};
+	`),
+	f.small(css`
+		${textStyles.blog1.p3};
 	`),
 ])
 

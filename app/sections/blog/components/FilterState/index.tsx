@@ -79,7 +79,7 @@ export function FilterState() {
 			{isActive && (
 				<ClearButton type="button" onClick={clearAll}>
 					<ClearIcon />
-					{clearLabel}
+					<ClearLabel>{clearLabel}</ClearLabel>
 				</ClearButton>
 			)}
 		</Bar>
@@ -107,7 +107,6 @@ const BreadCrumb = styled("div", [
 		display: flex;
 		align-items: center;
 		color: ${colors.blog1.primary700};
-		${textStyles.blog1.p2};
 	`),
 	f.small(css`
 		align-items: flex-start;
@@ -124,6 +123,7 @@ const CategoryStack = styled("span", [
 
 const AllCategories = styled("button", [
 	f.responsive(css`
+		${textStyles.blog1.p2};
 		color: ${colors.blog1.primary700};
 		opacity: 0.5;
 		cursor: pointer;
@@ -171,9 +171,14 @@ const Highlight = styled("span", [
 	`),
 ])
 
-const ClearButton = styled("button", [
+const ClearLabel = styled("span", [
 	f.responsive(css`
 		${textStyles.blog1.p2};
+	`),
+])
+
+const ClearButton = styled("button", [
+	f.responsive(css`
 		display: flex;
 		align-items: center;
 		gap: 8px;

@@ -1,14 +1,18 @@
 /**
- * Seeds the shared starter dataset with sample content: two blog hubs and articles
- * nested under each, alongside the existing pages.
+ * Restores the starter dataset's baseline sample content: two hubs (`/blog` and `/press`),
+ * five articles nested under them, an author, two categories, and the footer links.
  *
- * Idempotent — every document has a fixed `_id`, so re-running replaces rather than
- * duplicates. Only touches documents whose id starts with `starter-`.
+ * Run this after the shared dataset has been edited or emptied and you want testable
+ * content back. Every document has a fixed `_id`, so re-running replaces rather than
+ * duplicates, and it leaves anything it did not create alone.
+ *
+ * Written for the starter dataset specifically: the two image assets are referenced by id,
+ * so against a different dataset the documents are created but their images do not resolve.
  *
  * Requires an editor-scoped token in SANITY_SEED_TOKEN.
  *
- *   node --env-file=.env --experimental-strip-types scripts/seed-starter-content.ts --dry-run
- *   node --env-file=.env --experimental-strip-types scripts/seed-starter-content.ts
+ *   node --env-file=.env --experimental-strip-types scripts/reset-to-baseline.ts --dry-run
+ *   node --env-file=.env --experimental-strip-types scripts/reset-to-baseline.ts
  */
 
 import { createClient, type IdentifiedSanityDocumentStub, type Transaction } from "@sanity/client"

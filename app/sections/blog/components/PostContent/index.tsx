@@ -61,12 +61,12 @@ export default function PostContent({
 						<TextContent>
 							{readTime && (
 								<MetaItem>
-									<Time /> Read Time: <Green>{readTime}</Green>
+									<Time /> <MetaText>Read Time:</MetaText> <Green>{readTime}</Green>
 								</MetaItem>
 							)}
 							{formattedDate && (
 								<MetaItem>
-									<Calendar /> Date: <Green>{formattedDate}</Green>
+									<Calendar /> <MetaText>Date:</MetaText> <Green>{formattedDate}</Green>
 								</MetaItem>
 							)}
 						</TextContent>
@@ -84,12 +84,12 @@ export default function PostContent({
 							<TextContent>
 								{readTime && (
 									<MetaItem>
-										<Time /> Read Time: <Green>{readTime}</Green>
+										<Time /> <MetaText>Read Time:</MetaText> <Green>{readTime}</Green>
 									</MetaItem>
 								)}
 								{formattedDate && (
 									<MetaItem>
-										<Calendar /> Date: <Green>{formattedDate}</Green>
+										<Calendar /> <MetaText>Date:</MetaText> <Green>{formattedDate}</Green>
 									</MetaItem>
 								)}
 							</TextContent>
@@ -150,11 +150,16 @@ const AuthorSidebarMobile = styled(AuthorSidebar, [
 
 const MetaItem = styled("div", [
 	f.responsive(css`
-		${textStyles.blog1.p3};
 		color: ${colors.blog1.primary700};
 		display: flex;
 		align-items: center;
 		gap: 6px;
+	`),
+])
+
+const MetaText = styled("span", [
+	f.responsive(css`
+		${textStyles.blog1.p3};
 	`),
 ])
 
@@ -289,6 +294,7 @@ const Calendar = styled(CalendarSVG, [
 
 const Green = styled("span", [
 	f.responsive(css`
+		${textStyles.blog1.p3};
 		color: ${colors.blog1.primary300};
 	`),
 ])

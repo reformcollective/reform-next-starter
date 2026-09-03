@@ -7,6 +7,10 @@ import { css, f, styled } from "library/styled"
 
 import ArrowIcon from "./Arrow.inline.svg"
 
+// text styles live on this span rather than the inline-flex anchor, so capsize's
+// pseudo-elements do not become flex items alongside the arrow
+const Label = styled("span", [f.responsive(css``)])
+
 export default function ButtonLink({
 	children,
 	arrow,
@@ -22,7 +26,8 @@ export default function ButtonLink({
 }) {
 	return (
 		<Wrapper {...props} className={className} arrow={arrow} blog={blog} isHovered={isHovered}>
-			{children} {arrow && <Arrow />}
+			<Label>{children}</Label>
+			{arrow && <Arrow />}
 		</Wrapper>
 	)
 }
@@ -45,31 +50,34 @@ const Wrapper = styled(UniversalLink, {
 		arrow: {
 			false: [
 				f.responsive(css`
-					${textStyles.blog1.link3}
-				`),
-				f.small(css`
-					${textStyles.blog1.link3}
+					& > span {
+						${textStyles.blog1.link3}
+					}
 				`),
 			],
 			true: [
 				f.responsive(css`
-					${textStyles.blog1.link2}
+					& > span {
+						${textStyles.blog1.link2}
+					}
 				`),
 			],
 		},
 		blog: {
 			false: [
 				f.responsive(css`
-					${textStyles.blog1.link3}
-				`),
-				f.small(css`
-					${textStyles.blog1.link3}
+					& > span {
+						${textStyles.blog1.link3}
+					}
 				`),
 			],
 			true: [
 				f.responsive(css`
-					${textStyles.blog1.link1}
 					color: ${colors.blog1.quaternary400};
+
+					& > span {
+						${textStyles.blog1.link1}
+					}
 				`),
 			],
 		},
