@@ -20,6 +20,7 @@ import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
 import { Fragment } from "react"
 import { sanityFetch } from "sanity/lib/live"
+import { sectionProjection } from "sanity/lib/section-projection"
 import { documentPathProjection } from "sanity/lib/slug-resolver"
 
 type PageSection = NonNullable<NonNullable<MainPageQueryResult>["sections"]>[number]
@@ -44,11 +45,7 @@ const mainPageQuery = defineQuery(`
 		ogImage,
 		sections[] {
 			...,
-			_type == "sample" => {
-				"sampleVideo": reform::video(sampleVideo),
-				"sampleImage": reform::image(sampleImage),
-				"sampleLink": reform::link(sampleLink)
-			}
+			${sectionProjection}
 		}
 	}
 `)
