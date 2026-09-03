@@ -1,5 +1,6 @@
 import { InsertAboveIcon } from "@sanity/icons"
-import { defineField, defineType } from "sanity"
+import { universalLink } from "library/sanity/reusables"
+import { defineArrayMember, defineField, defineType } from "sanity"
 
 export default defineType({
 	name: "footer",
@@ -12,6 +13,12 @@ export default defineType({
 			name: "footerText",
 			type: "string",
 			validation: (Rule) => Rule.required(),
+		}),
+		defineField({
+			title: "Links",
+			name: "links",
+			type: "array",
+			of: [defineArrayMember(universalLink({ name: "link", title: "Link" }))],
 		}),
 	],
 	preview: {

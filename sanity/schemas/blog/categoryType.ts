@@ -1,9 +1,9 @@
 import { TagIcon } from "@sanity/icons"
 import { defineField, defineType } from "sanity"
 
-export const blog1CategoryType = defineType({
-	name: "blog1Category",
-	title: "Blog 1 Category",
+export const blogCategoryType = defineType({
+	name: "blogCategory",
+	title: "Blog Category",
 	type: "document",
 	icon: TagIcon,
 	fields: [

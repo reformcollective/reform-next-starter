@@ -10,6 +10,7 @@ import UniversalImage from "library/UniversalImage"
 
 import type { ArticleContext, RecentPosts } from "../../types"
 
+import { AuthorCard } from "../Author"
 import BlogNav from "../BlogNav"
 import RelatedPosts from "../RelatedPosts"
 import CalendarSVG from "./date.inline.svg"
@@ -25,7 +26,7 @@ export default function PostContent({
 	recentPosts,
 }: {
 	title: Page["title"]
-	mainImage: GetSectionType<"blogArticle">["pageMainImage"]
+	mainImage: GetSectionType<"blogArticle">["mainImage"]
 	articleTextPreview: Page["articleTextPreview"]
 	publishedAt: Page["publishedAt"]
 	body: GetSectionType<"blogArticle">["body"]
@@ -54,15 +55,7 @@ export default function PostContent({
 			<BottomContent>
 				<AuthorSidebar>
 					<TopSide>Author</TopSide>
-					<Author>
-						{author?.image && (
-							<AuthorPhoto src={author.image} alt={`Photo of ${author.name}`} sizes="80px" />
-						)}
-						<TextContent>
-							<AuthorName>{author?.name}</AuthorName>
-							<CompanyName>{author?.company}</CompanyName>
-						</TextContent>
-					</Author>
+					<AuthorCard author={author} />
 					<Details>
 						<TopSide>Details</TopSide>
 						<TextContent>
@@ -85,15 +78,7 @@ export default function PostContent({
 					{articleTextPreview && <Description> {articleTextPreview}</Description>}
 					<AuthorSidebarMobile>
 						<TopSide>Author</TopSide>
-						<Author>
-							{author?.image && (
-								<AuthorPhoto src={author.image} alt={`Photo of ${author.name}`} sizes="80px" />
-							)}
-							<TextContent>
-								<AuthorName>{author?.name}</AuthorName>
-								<CompanyName>{author?.company}</CompanyName>
-							</TextContent>
-						</Author>
+						<AuthorCard author={author} />
 						<Details>
 							<TopSide>Details</TopSide>
 							<TextContent>
@@ -160,26 +145,6 @@ const AuthorSidebarMobile = styled(AuthorSidebar, [
 		width: 100%;
 		align-items: flex-start;
 		gap: unset;
-	`),
-])
-
-const AuthorPhoto = styled(UniversalImage, [
-	f.responsive(css`
-		width: 48px;
-		height: 48px;
-		border-radius: 10px;
-		overflow: clip;
-	`),
-	f.small(css`
-		width: 46px;
-		height: 46px;
-	`),
-])
-
-const AuthorName = styled("div", [
-	f.responsive(css`
-		${textStyles.blog1.link1};
-		color: ${colors.blog1.primary800};
 	`),
 ])
 
@@ -271,14 +236,6 @@ const TopSide = styled("div", [
 	`),
 ])
 
-const Author = styled("div", [
-	f.responsive(css`
-		display: flex;
-		gap: 12px;
-		align-items: center;
-	`),
-])
-
 const TextContent = styled("div", [
 	f.responsive(
 		css`
@@ -288,13 +245,6 @@ const TextContent = styled("div", [
 			color: ${colors.blog1.primary800};
 		`,
 	),
-])
-
-const CompanyName = styled("div", [
-	f.responsive(css`
-		${textStyles.blog1.h8Serif};
-		color: ${colors.black};
-	`),
 ])
 
 const Details = styled("div", [

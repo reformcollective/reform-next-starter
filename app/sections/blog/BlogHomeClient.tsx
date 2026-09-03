@@ -30,6 +30,7 @@ type BlogHomeClientProps = {
 	featuredCaseStudy: FeaturedCard | null
 	searchMode: "client" | "server"
 	hubSlug: string
+	nestedHubPrefixes: string[]
 }
 
 export function BlogHomeClient({
@@ -37,6 +38,7 @@ export function BlogHomeClient({
 	featuredCaseStudy,
 	searchMode,
 	hubSlug,
+	nestedHubPrefixes,
 }: BlogHomeClientProps) {
 	const featuredCard = featuredCaseStudy
 	const isDebug = useSearchParams().has("debug")
@@ -65,10 +67,10 @@ export function BlogHomeClient({
 	useEffect(() => {
 		if (searchMode !== "server") return
 		startTransition(async () => {
-			const results = await searchPosts(searchQuery ?? "", hubSlug)
+			const results = await searchPosts(searchQuery ?? "", hubSlug, nestedHubPrefixes)
 			setServerResults(results)
 		})
-	}, [searchQuery, searchMode, hubSlug])
+	}, [searchQuery, searchMode, hubSlug, nestedHubPrefixes])
 
 	const clientSearchedCards = useSearchResults(
 		searchQuery ?? "",

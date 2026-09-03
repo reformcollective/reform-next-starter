@@ -2,9 +2,9 @@ import { UserIcon } from "@sanity/icons"
 import { universalImage } from "library/sanity/reusables"
 import { defineArrayMember, defineField, defineType } from "sanity"
 
-export const blog1AuthorType = defineType({
-	name: "blog1Author",
-	title: "Blog 1 Author",
+export const blogAuthorType = defineType({
+	name: "blogAuthor",
+	title: "Blog Author",
 	type: "document",
 	icon: UserIcon,
 	fields: [

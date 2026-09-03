@@ -16,6 +16,4 @@ export type PostAuthor = NonNullable<ArticleContext["author"]>
 // Body block union
 export type BlogBodyBlock = NonNullable<GetSectionType<"blogArticle">["body"]>[number]
 
-// Convenience aliases
-export type RecentPost = Card
 export type RecentPosts = Card[]

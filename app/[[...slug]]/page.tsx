@@ -112,7 +112,7 @@ export async function generateMetadata({ params }: PageProps<"/[[...slug]]">): P
 		separator: settings?.metaTitleSeparator,
 		suffix: settings?.defaultTitle,
 	})
-	const isArticle = relevantPage?.kind === "blogPost"
+	const isArticle = relevantPage?.kind === "hubDetail"
 	const canonicalDescription =
 		relevantPage?.description ||
 		(isArticle ? relevantPage.articleTextPreview : undefined) ||

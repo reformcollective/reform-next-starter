@@ -9,7 +9,7 @@ import { sanityFetch } from "sanity/lib/live"
 
 export default async function BlogArticleSection({
 	body,
-	pageMainImage,
+	mainImage,
 	pageId,
 	title,
 	articleTextPreview,
@@ -35,7 +35,7 @@ export default async function BlogArticleSection({
 		<Wrapper>
 			<PostContent
 				title={title}
-				mainImage={pageMainImage}
+				mainImage={mainImage}
 				articleTextPreview={articleTextPreview}
 				publishedAt={publishedAt}
 				body={body}

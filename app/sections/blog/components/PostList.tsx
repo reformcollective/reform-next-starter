@@ -11,13 +11,11 @@ export function PostList({ posts }: { posts: RecentPosts }) {
 	const [searchQuery] = useBlogQuery()
 
 	const seen = new Set<string>()
-	const uniquePosts = (posts ?? [])
-		.filter((p): p is { _id: string } & typeof p => Boolean(p?._id))
-		.filter((p) => {
-			if (seen.has(p._id)) return false
-			seen.add(p._id)
-			return true
-		})
+	const uniquePosts = (posts ?? []).filter((post) => {
+		if (seen.has(post._id)) return false
+		seen.add(post._id)
+		return true
+	})
 
 	const searchedCards = useSearchResults(
 		searchQuery,

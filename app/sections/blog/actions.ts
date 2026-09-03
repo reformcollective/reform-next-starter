@@ -8,9 +8,16 @@ type PostList = NonNullable<
 	Awaited<ReturnType<typeof sanityFetch<typeof hubArticlesQuery>>>["data"]
 >
 
-export async function searchPosts(query: string, hubSlug: string): Promise<PostList> {
+export async function searchPosts(
+	query: string,
+	hubSlug: string,
+	nestedHubPrefixes: string[],
+): Promise<PostList> {
 	if (!query.trim()) {
-		const { data } = await sanityFetch({ query: hubArticlesQuery, params: { hubSlug } })
+		const { data } = await sanityFetch({
+			query: hubArticlesQuery,
+			params: { hubSlug, nestedHubPrefixes },
+		})
 		return data ?? []
 	}
 	// Append * to each term for prefix matching (e.g. "Uta" matches "Utah")
@@ -22,7 +29,7 @@ export async function searchPosts(query: string, hubSlug: string): Promise<PostL
 	// groq-js cannot infer params from match expressions — plain string query, params typed freely
 	const { data } = await sanityFetch({
 		query: hubArticlesSearchQuery,
-		params: { searchQuery: wildcardQuery, hubSlug },
+		params: { searchQuery: wildcardQuery, hubSlug, nestedHubPrefixes },
 	})
 	return (data ?? []) as PostList
 }

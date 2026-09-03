@@ -3,8 +3,8 @@ type PortableTextBlock = {
 	children?: Array<{ _type: string; text?: string }>
 }
 
-export default function getReadTime(body: PortableTextBlock[] | null | undefined): string {
-	const wordCount =
+export function countWords(body: PortableTextBlock[] | null | undefined): number {
+	return (
 		body?.reduce((count, block) => {
 			if (block._type === "block" && Array.isArray(block.children)) {
 				return (
@@ -19,5 +19,9 @@ export default function getReadTime(body: PortableTextBlock[] | null | undefined
 			}
 			return count
 		}, 0) ?? 0
-	return `${Math.max(1, Math.ceil(wordCount / 200))} min read`
+	)
+}
+
+export default function getReadTime(body: PortableTextBlock[] | null | undefined): string {
+	return `${Math.max(1, Math.ceil(countWords(body) / 200))} min read`
 }

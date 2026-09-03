@@ -24,9 +24,9 @@ import { media } from "sanity-plugin-media"
 import { muxInput } from "sanity-plugin-mux-input"
 import { apiVersion, dataset, projectId, studioUrl } from "sanity/lib/api"
 import { presentationTool } from "sanity/presentation"
-import { blog1AuthorType } from "sanity/schemas/blog/blog-1/authorType"
-import { blog1BlockContentType } from "sanity/schemas/blog/blog-1/blockContentType"
-import { blog1CategoryType } from "sanity/schemas/blog/blog-1/categoryType"
+import { blogAuthorType } from "sanity/schemas/blog/authorType"
+import { blogBlockContentType } from "sanity/schemas/blog/blockContentType"
+import { blogCategoryType } from "sanity/schemas/blog/categoryType"
 import page from "sanity/schemas/sanityPage"
 import footer from "sanity/schemas/singletons/footer"
 import header from "sanity/schemas/singletons/header"
@@ -100,10 +100,10 @@ export default defineConfig({
 			// 	decorators: [],
 			// }),
 
-			// blog-1 template schemas
-			blog1AuthorType,
-			blog1BlockContentType,
-			blog1CategoryType,
+			// blog schemas
+			blogAuthorType,
+			blogBlockContentType,
+			blogCategoryType,
 
 			// project schemas
 			page,
@@ -163,22 +163,20 @@ export default defineConfig({
 										S.listItem()
 											.title("Hubs")
 											.child(
-												S.documentList()
-													.title("Hubs")
-													.filter('_type == "page" && kind == "blogHub"'),
+												S.documentList().title("Hubs").filter('_type == "page" && kind == "hub"'),
 											),
 										S.listItem()
 											.title("Articles")
 											.child(
 												S.documentList()
 													.title("Articles")
-													.filter('_type == "page" && kind == "blogPost"'),
+													.filter('_type == "page" && kind == "hubDetail"'),
 											),
-										S.documentTypeListItem("blog1Author").title("Authors"),
-										S.documentTypeListItem("blog1Category").title("Categories"),
+										S.documentTypeListItem("blogAuthor").title("Authors"),
+										S.documentTypeListItem("blogCategory").title("Categories"),
 									]),
 							),
-					hiddenTypes: ["blog1Author", "blog1Category"],
+					hiddenTypes: ["blogAuthor", "blogCategory"],
 				},
 			]),
 		}),

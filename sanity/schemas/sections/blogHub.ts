@@ -18,7 +18,7 @@ export const blogHub = definePageSection({
 			description: "Choose ONE article to feature at the top of this hub.",
 			to: [{ type: "page" }],
 			options: {
-				filter: 'kind == "blogPost"',
+				filter: 'kind == "hubDetail"',
 			},
 		}),
 		defineField({

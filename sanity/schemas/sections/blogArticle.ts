@@ -13,7 +13,7 @@ export const blogArticle = definePageSection({
 	fields: [
 		defineField({
 			name: "body",
-			type: "blog1BlockContent",
+			type: "blogBlockContent",
 			title: "Body",
 		}),
 	],

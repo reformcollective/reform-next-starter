@@ -1,29 +1,33 @@
-# Blog Template: blog-1
+# Blog schemas
 
-This is a self-contained blog template. Each template has its own scoped Sanity schemas, app routes, and components. Multiple templates can coexist in the same project (e.g. a blog and a resources hub).
+Supporting document types for the blog sections: authors, categories, and the rich text
+type used by an article's body. The article and hub layouts themselves are page sections,
+not routes — see `sanity/schemas/sections/blogHub.ts` and `blogArticle.ts`.
 
-The public URL for the blog is controlled entirely by the slug field in the Sanity hub singleton — no code changes are needed to set or change the route.
+## How a blog is structured
 
-## Adopting this template for a project
+Hubs and articles are both `page` documents, distinguished by the `kind` field:
 
-### 1. Set the hub slug in Sanity Studio
+| kind        | slug              | contains section |
+| ----------- | ----------------- | ---------------- |
+| `hub`       | `blog`            | Blog Hub         |
+| `hubDetail` | `blog/my-article` | Blog Article     |
 
-Go to Studio → Blog 1 → Hub Settings and set the slug to whatever the public URL should be (e.g. `blog`, `resources`, `news`). This drives the route, sitemap, and canonical URLs automatically.
+`kind` describes structure, not content: a hub can be a blog, a partner directory, or
+case studies. The sections it contains decide how it looks.
 
-### 2. Update brand colors
+A detail page belongs to the hub its slug is nested under, so a hub's URL is changed by
+editing its slug and moving its detail pages to match. Any number of hubs can coexist
+(`blog`, `press`, `news`) — nothing is hardcoded, and no deploy is needed to add one.
 
-In `app/styles/colors.css.ts`, replace the `blog1*` placeholder color tokens with project brand colors.
+Hubs may be nested (`press` and `press/stories`); a detail page then belongs to the
+deepest hub above it, and the parent hub does not list it.
 
-### 3. Update the grid
+## Adopting this for a project
 
-In `app/(blog-templates)/(blog-template-1)/[blogSlug]/layout.tsx`, update the `makeResponsiveGrid` values to match the project's design grid (column count, gutter, margin, design widths).
-
-### 4. Delete unused templates
-
-Delete any unused template folders under `app/(blog-templates)/` and `sanity/schemas/blog/`.
-
----
-
-## Adding a second blog template
-
-Copy the entire `(blog-template-1)` folder under `app/(blog-templates)/` and give it a new name (e.g. `(blog-template-2)`). Update the absolute imports inside it to reflect the new folder name. Copy and rename the Sanity schema folder and type names using the steps above. Set a different slug in Studio for the second hub — each template's URL is independent.
+1. Replace the `blog1*` placeholder color tokens in `app/styles/colors.css.ts` with the
+   project's brand colors, and the placeholder fonts in `app/styles/text.ts`.
+2. Capture real section previews to replace the placeholder `icon` images in
+   `sanity/schemas/sections/blogHub.ts` and `blogArticle.ts`.
+3. Delete this folder, both blog sections, their projections, and `app/sections/blog/` if
+   the project has no blog.

@@ -66,9 +66,9 @@ const BlockQuote = ({ children }: { children: ReactNode }) => (
 	</span>
 )
 
-export const blog1BlockContentType = defineType({
+export const blogBlockContentType = defineType({
 	title: "Block Content",
-	name: "blog1BlockContent",
+	name: "blogBlockContent",
 	type: "array",
 	of: [
 		defineArrayMember({

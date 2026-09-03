@@ -7,7 +7,7 @@ import { siteURL } from "library/siteURL"
 import { type ConditionalProperty, defineArrayMember, defineField, defineType } from "sanity"
 import { apiVersion } from "sanity/lib/api"
 
-import { ReadTimeInput } from "./blog/blog-1/ReadTimeInput"
+import { ReadTimeInput } from "./blog/ReadTimeInput"
 import * as sections from "./sections"
 
 const allSections = Object.values(sections)
@@ -37,7 +37,7 @@ const Code = ({ children }: { children: ReactNode }) => (
 	</code>
 )
 
-export const pageKinds = ["page", "blogHub", "blogPost"] as const
+export const pageKinds = ["page", "hub", "hubDetail"] as const
 
 export const pageMetadata = [
 	defineField({
@@ -45,12 +45,12 @@ export const pageMetadata = [
 		name: "kind",
 		title: "Page Kind",
 		description:
-			"Determines which sections this page is designed for, and whether it appears in a blog hub's list of articles. Sections from other kinds can still be added when you need them.",
+			"A Hub lists the pages nested under its slug — a blog, a partner directory, case studies. A Hub Detail Page is one of those nested pages. This drives which sections the page is designed for; sections from other kinds can still be added when you need them.",
 		options: {
 			list: [
 				{ title: "Page", value: "page" },
-				{ title: "Blog Hub", value: "blogHub" },
-				{ title: "Blog Article", value: "blogPost" },
+				{ title: "Hub", value: "hub" },
+				{ title: "Hub Detail Page", value: "hubDetail" },
 			],
 			layout: "radio",
 		},
@@ -107,14 +107,17 @@ export const pageMetadata = [
 						message: "Page slug must not be empty",
 					}
 
-				const id = context.document?._id.replace(/^drafts\./, "")
-				const duplicate = await context
+				// A document exists under several ids at once — published, `drafts.`, and a
+				// `versions.<release>.` id per content release — so compare base ids, or a
+				// page counts its own draft or release version as a duplicate of itself.
+				const baseId = context.document?._id.replace(/^(drafts|versions\.[^.]+)\./, "")
+				const duplicates = await context
 					.getClient({ apiVersion })
-					.fetch<boolean>(
-						`defined(*[_type == "page" && slug.current == $slug && !(_id in [$id, "drafts." + $id])][0]._id)`,
-						{ slug: slug.current, id },
+					.fetch<number>(
+						`count(*[_type == "page" && slug.current == $slug && coalesce(_system.base.id, _id) != $baseId])`,
+						{ slug: slug.current, baseId },
 					)
-				if (duplicate)
+				if (duplicates > 0)
 					return {
 						message: `Another page already uses the slug "${slug.current}". Two pages cannot share a URL.`,
 					}
@@ -156,7 +159,7 @@ export const pageMetadata = [
 	}),
 ]
 
-const isNotBlogPost: ConditionalProperty = ({ document }) => document?.kind !== "blogPost"
+const isNotHubDetail: ConditionalProperty = ({ document }) => document?.kind !== "hubDetail"
 
 type PageKind = NonNullable<Page["kind"]>
 type SectionType = NonNullable<Page["sections"]>[number]["_type"]
@@ -165,13 +168,13 @@ const isPageKind = (value: unknown): value is PageKind => pageKinds.includes(val
 
 const kindTitles: Record<PageKind, string> = {
 	page: "Page",
-	blogHub: "Blog Hub",
-	blogPost: "Blog Article",
+	hub: "Hub",
+	hubDetail: "Hub Detail Page",
 }
 
 const kindSectionTypes: Partial<Record<PageKind, SectionType[]>> = {
-	blogHub: ["blogHub"],
-	blogPost: ["blogArticle"],
+	hub: ["blogHub"],
+	hubDetail: ["blogArticle"],
 }
 
 const articleFields = [
@@ -179,28 +182,28 @@ const articleFields = [
 		name: "author",
 		title: "Author",
 		type: "reference",
-		to: [{ type: "blog1Author" }],
-		hidden: isNotBlogPost,
+		to: [{ type: "blogAuthor" }],
+		hidden: isNotHubDetail,
 	}),
 	universalImage({
 		name: "mainImage",
 		title: "Main Image",
 		description: "Shown at the top of the article and on cards in the blog hub.",
-		hidden: isNotBlogPost,
+		hidden: isNotHubDetail,
 	}),
 	defineField({
 		name: "categories",
 		title: "Categories",
 		type: "array",
-		of: [defineArrayMember({ type: "reference", to: { type: "blog1Category" } })],
+		of: [defineArrayMember({ type: "reference", to: { type: "blogCategory" } })],
 		validation: (Rule) => Rule.max(2),
-		hidden: isNotBlogPost,
+		hidden: isNotHubDetail,
 	}),
 	defineField({
 		name: "publishedAt",
 		title: "Published At",
 		type: "datetime",
-		hidden: isNotBlogPost,
+		hidden: isNotHubDetail,
 	}),
 	defineField({
 		name: "articleTextPreview",
@@ -208,7 +211,7 @@ const articleFields = [
 		type: "text",
 		description:
 			"A short description of the article. Used on the blog hub page and at the top of the article. Supports line breaks.",
-		hidden: isNotBlogPost,
+		hidden: isNotHubDetail,
 	}),
 	defineField({
 		name: "readTime",
@@ -216,7 +219,7 @@ const articleFields = [
 		type: "string",
 		readOnly: true,
 		components: { input: ReadTimeInput },
-		hidden: isNotBlogPost,
+		hidden: isNotHubDetail,
 	}),
 ]
 

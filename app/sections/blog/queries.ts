@@ -3,7 +3,22 @@ import { defineQuery } from "next-sanity"
 import { documentPathProjection } from "sanity/lib/slug-resolver"
 import { articleCardProjection } from "sanity/schemas/sections/projections/blogHub"
 
-const articlesUnderHub = `_type == "page" && kind == "blogPost" && string::startsWith(slug.current, $hubSlug + "/")`
+/**
+ * Articles a hub lists: everything nested under its slug, minus anything belonging to a
+ * hub nested deeper. `$nestedHubPrefixes` is empty for every hub that has no hub beneath
+ * it, which is the normal case — the exclusion then costs nothing.
+ */
+const articlesUnderHub = `_type == "page" && kind == "hubDetail"
+	&& string::startsWith(slug.current, $hubSlug + "/")
+	&& count($nestedHubPrefixes[@ != "" && string::startsWith(^.slug.current, @)]) == 0`
+
+export const nestedHubsQuery = defineQuery(`
+	*[
+		_type == "page" && kind == "hub" &&
+		slug.current != $hubSlug &&
+		string::startsWith(slug.current, $hubSlug + "/")
+	].slug.current
+`)
 
 export const hubArticlesQuery = defineQuery(`
 	${assetMetadataFunctions}
@@ -23,7 +38,11 @@ export const articleContextQuery = defineQuery(`
 	${assetMetadataFunctions}
 
 	*[_type == "page" && _id == $id][0] {
-		"hub": *[_type == "page" && kind == "blogHub" && ^.slug.current match slug.current + "/*"][0] {
+		// longest matching slug first, so a nested hub wins over its parent
+		"hub": *[
+			_type == "page" && kind == "hub" &&
+			string::startsWith(^.slug.current, slug.current + "/")
+		] | order(length(slug.current) desc) [0] {
 			title,
 			"path": ${documentPathProjection("@")}
 		},
@@ -34,10 +53,10 @@ export const articleContextQuery = defineQuery(`
 		},
 		"categories": categories[]->title,
 		"related": *[
-			_type == "page" && kind == "blogPost" && _id != ^._id &&
+			_type == "page" && kind == "hubDetail" && _id != ^._id &&
 			count((categories[]->title)[@ in ^.^.categories[]->title]) > 0
 		] | order(publishedAt desc) [0...3] ${articleCardProjection},
-		"recent": *[_type == "page" && kind == "blogPost" && _id != ^._id]
+		"recent": *[_type == "page" && kind == "hubDetail" && _id != ^._id]
 			| order(publishedAt desc) [0...3] ${articleCardProjection}
 	}
 `)
