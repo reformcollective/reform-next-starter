@@ -72,6 +72,7 @@ const Wrapper = styled(
 		display: grid;
 		grid-column: fullbleed;
 		place-items: center;
+
 		/* min rather than fixed, so the CMS link row can wrap without overflowing */
 		min-height: 300px;
 		padding: 32px 0;
