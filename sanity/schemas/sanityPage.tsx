@@ -169,7 +169,10 @@ const kindTitles: Record<PageKind, string> = {
 	blogPost: "Blog Article",
 }
 
-const kindSectionTypes: Partial<Record<PageKind, SectionType[]>> = {}
+const kindSectionTypes: Partial<Record<PageKind, SectionType[]>> = {
+	blogHub: ["blogHub"],
+	blogPost: ["blogArticle"],
+}
 
 const articleFields = [
 	defineField({
@@ -177,6 +180,12 @@ const articleFields = [
 		title: "Author",
 		type: "reference",
 		to: [{ type: "blog1Author" }],
+		hidden: isNotBlogPost,
+	}),
+	universalImage({
+		name: "mainImage",
+		title: "Main Image",
+		description: "Shown at the top of the article and on cards in the blog hub.",
 		hidden: isNotBlogPost,
 	}),
 	defineField({

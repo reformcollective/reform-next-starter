@@ -27,7 +27,12 @@ export function computeReadTime(body: PortableTextBlock[] | undefined): string {
 }
 
 export function ReadTimeInput() {
-	const body = useFormValue(["body"]) as PortableTextBlock[] | undefined
+	const sections = useFormValue(["sections"]) as
+		| { _type: string; body?: PortableTextBlock[] }[]
+		| undefined
+	const body = sections?.flatMap((section) =>
+		section._type === "blogArticle" ? (section.body ?? []) : [],
+	)
 	const readTime = computeReadTime(body)
 	const wordCount =
 		body?.reduce((count, block) => {

@@ -3,6 +3,8 @@ import type { MainPageQueryResult } from "sanity.types"
 
 import InitialHeaderMode from "app/lib/InitialHeaderMode"
 import { resolveMetaTitle } from "app/lib/metadata"
+import BlogArticleSection from "app/sections/BlogArticle"
+import BlogHubSection from "app/sections/BlogHub"
 import FaqSection from "app/sections/Faq"
 import SampleSection from "app/sections/Sample"
 import { PageCommitSignal } from "library/link/usePageTransition"
@@ -18,7 +20,7 @@ import { siteURL } from "library/siteURL"
 import { EagerImages } from "library/StaticImage"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
-import { Fragment } from "react"
+import { Fragment, Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import { sectionProjection } from "sanity/lib/section-projection"
 import { documentPathProjection } from "sanity/lib/slug-resolver"
@@ -192,6 +194,22 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 						return (
 							<Wrapper key={section._key}>
 								<FaqSection {...section} {...sectionContext} />
+							</Wrapper>
+						)
+					case "blogHub":
+						return (
+							<Wrapper key={section._key}>
+								{/* BlogHub reads search params for its filters, which a statically
+								    rendered page can only resolve on the client */}
+								<Suspense>
+									<BlogHubSection {...section} {...sectionContext} />
+								</Suspense>
+							</Wrapper>
+						)
+					case "blogArticle":
+						return (
+							<Wrapper key={section._key}>
+								<BlogArticleSection {...section} {...sectionContext} />
 							</Wrapper>
 						)
 					case "redirect":
