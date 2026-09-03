@@ -4,7 +4,7 @@
 
 import { assist } from "@sanity/assist"
 import { codeInput } from "@sanity/code-input"
-import { RocketIcon } from "@sanity/icons"
+import { DesktopIcon, RocketIcon, UserIcon } from "@sanity/icons"
 import { visionTool } from "@sanity/vision"
 import { env } from "app/env"
 import gsap from "gsap/all"
@@ -155,23 +155,69 @@ export default defineConfig({
 				{
 					item: (S) =>
 						S.listItem()
-							.title("Blog")
+							.title("Pages")
+							.icon(DesktopIcon)
 							.child(
 								S.list()
-									.title("Blog")
+									.title("Pages")
 									.items([
+										S.listItem()
+											.title("All Pages")
+											.child(
+												S.documentList()
+													.title("All Pages")
+													.filter('_type == "page"')
+													.defaultOrdering([{ field: "slug.current", direction: "asc" }]),
+											),
+										S.divider(),
+										S.listItem()
+											.title("Standard Pages")
+											.child(
+												S.documentList()
+													.title("Standard Pages")
+													// pages predating the kind field have none, and are standard pages
+													.filter('_type == "page" && (kind == "page" || !defined(kind))')
+													.defaultOrdering([{ field: "slug.current", direction: "asc" }]),
+											),
 										S.listItem()
 											.title("Hubs")
 											.child(
-												S.documentList().title("Hubs").filter('_type == "page" && kind == "hub"'),
+												// each hub resolves to the detail pages nested under its slug, driven by
+												// the documents themselves, so a new hub needs no config here
+												S.documentTypeList("page")
+													.title("Hubs")
+													.filter('kind == "hub"')
+													.defaultOrdering([{ field: "slug.current", direction: "asc" }])
+													.child(async (hubId, { structureContext }) => {
+														const hubSlug = await structureContext
+															.getClient({ apiVersion })
+															.fetch<string | null>("*[_id == $hubId][0].slug.current", {
+																hubId,
+															})
+														return structureContext
+															.getStructureBuilder()
+															.documentList()
+															.title(hubSlug ? `/${hubSlug}` : "Hub")
+															.filter(
+																'_type == "page" && kind == "hubDetail" && string::startsWith(slug.current, $prefix)',
+															)
+															.params({ prefix: `${hubSlug ?? ""}/` })
+															.defaultOrdering([{ field: "publishedAt", direction: "desc" }])
+													}),
 											),
-										S.listItem()
-											.title("Articles")
-											.child(
-												S.documentList()
-													.title("Articles")
-													.filter('_type == "page" && kind == "hubDetail"'),
-											),
+									]),
+							),
+					hiddenTypes: ["page"],
+				},
+				{
+					item: (S) =>
+						S.listItem()
+							.title("Blog Content")
+							.icon(UserIcon)
+							.child(
+								S.list()
+									.title("Blog Content")
+									.items([
 										S.documentTypeListItem("blogAuthor").title("Authors"),
 										S.documentTypeListItem("blogCategory").title("Categories"),
 									]),

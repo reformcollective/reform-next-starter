@@ -39,10 +39,13 @@ export const articleContextQuery = defineQuery(`
 
 	*[_type == "page" && _id == $id][0] {
 		// longest matching slug first, so a nested hub wins over its parent
-		"hub": *[
+		"hubDoc": *[
 			_type == "page" && kind == "hub" &&
 			string::startsWith(^.slug.current, slug.current + "/")
-		] | order(length(slug.current) desc) [0] {
+		] | order(length(slug.current) desc) [0],
+		...
+	} {
+		"hub": hubDoc {
 			title,
 			"path": ${documentPathProjection("@")}
 		},
@@ -52,11 +55,15 @@ export const articleContextQuery = defineQuery(`
 			"image": reform::image(image)
 		},
 		"categories": categories[]->title,
+		// scoped to this article's own hub, so a press article never suggests a blog post
 		"related": *[
 			_type == "page" && kind == "hubDetail" && _id != ^._id &&
+			string::startsWith(slug.current, ^.hubDoc.slug.current + "/") &&
 			count((categories[]->title)[@ in ^.^.categories[]->title]) > 0
 		] | order(publishedAt desc) [0...3] ${articleCardProjection},
-		"recent": *[_type == "page" && kind == "hubDetail" && _id != ^._id]
-			| order(publishedAt desc) [0...3] ${articleCardProjection}
+		"recent": *[
+			_type == "page" && kind == "hubDetail" && _id != ^._id &&
+			string::startsWith(slug.current, ^.hubDoc.slug.current + "/")
+		] | order(publishedAt desc) [0...3] ${articleCardProjection}
 	}
 `)

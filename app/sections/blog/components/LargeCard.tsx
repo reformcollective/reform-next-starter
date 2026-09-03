@@ -4,16 +4,15 @@ import { colors } from "app/styles/colors.css"
 import textStyles, { clampText } from "app/styles/text"
 import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 import type { FeaturedCard } from "../types"
 
 import ButtonLink from "./ButtonLink"
 
 export default function LargeCard({ data }: { data: FeaturedCard }) {
-	const router = useRouter()
 	const [isHovered, setIsHovered] = useState(false)
+	const linkRef = useRef<HTMLAnchorElement>(null)
 	const { mainImage, title, articleTextPreview, path, publishedAt } = data
 
 	const formattedDate = publishedAt
@@ -24,11 +23,15 @@ export default function LargeCard({ data }: { data: FeaturedCard }) {
 			})
 		: null
 
-	const linkToFeatured = path ?? ""
-
 	return (
 		<Wrapper
-			onClick={() => router.push(linkToFeatured)}
+			// clicking anywhere on the card clicks the link, so navigation always runs
+			// through the page transition rather than around it. clicks on the link
+			// itself are left alone, or they would navigate twice.
+			onClick={(event) => {
+				const link = linkRef.current
+				if (link && !link.contains(event.target as Node)) link.click()
+			}}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
@@ -47,7 +50,7 @@ export default function LargeCard({ data }: { data: FeaturedCard }) {
 					<Title>{title}</Title>
 					<Description>{articleTextPreview}</Description>
 				</Top>
-				<ButtonLink arrow blog href={linkToFeatured} isHovered={isHovered}>
+				<ButtonLink ref={linkRef} arrow blog href={path ?? ""} isHovered={isHovered}>
 					Read Article
 				</ButtonLink>
 			</Details>

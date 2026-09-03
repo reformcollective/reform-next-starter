@@ -15,7 +15,8 @@
 		"prepare": "lefthook install",
 		"check-env": "if [ -n \"$CI\" ]; then exit 0; else node --env-file=.env app/env.ts || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
 		"git-config": "git config submodule.recurse true",
-		"init-submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0"
+		"init-submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0",
+		"check-projections": "wireit"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.6.0",
@@ -206,7 +207,8 @@
 		"lint": {
 			"dependencies": [
 				"stylelint",
-				"oxlint"
+				"oxlint",
+				"check-projections"
 			]
 		},
 		"oxfmt": {
@@ -221,6 +223,14 @@
 			"dependencies": [
 				"./library:test"
 			]
+		},
+		"check-projections": {
+			"command": "node --experimental-strip-types scripts/check-section-projections.ts",
+			"files": [
+				"scripts/check-section-projections.ts",
+				"sanity/schemas/sections/**/*.ts"
+			],
+			"output": []
 		}
 	}
 }

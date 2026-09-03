@@ -66,7 +66,11 @@ an unresolved reference and renders as nothing. Plain text and boolean fields ne
 **Those projections must stay plain strings.** Sanity generates our types by reading the
 source code, so it can't follow anything computed at runtime. Building a query with
 `.map()` or `.join()` silently drops it from type generation, and the page's data becomes
-untyped.
+untyped. That is why they are written by hand rather than generated from the schema.
+
+`pnpm lint` runs `scripts/check-section-projections.ts`, which fails the build if a section
+declares an image, video, or link field that its projection doesn't resolve — so the one
+mistake this split makes easy is caught rather than silently rendering nothing.
 
 ## About the size of the page query
 
