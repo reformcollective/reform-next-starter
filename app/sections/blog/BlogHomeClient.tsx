@@ -16,7 +16,7 @@ import { css, f, styled } from "library/styled"
 import { useMedia } from "library/useMedia"
 import { useSearchResults } from "library/useSearchResults"
 import { getResponsivePixels } from "library/viewportUtils"
-import { useSearchParams } from "next/navigation"
+import { parseAsString, useQueryState } from "nuqs"
 import { Suspense, useEffect, useRef, useState, useTransition } from "react"
 
 import type { Card, FeaturedCard } from "./types"
@@ -41,7 +41,11 @@ export function BlogHomeClient({
 	nestedHubPrefixes,
 }: BlogHomeClientProps) {
 	const featuredCard = featuredCaseStudy
-	const isDebug = useSearchParams().has("debug")
+	// via nuqs rather than useSearchParams, which would force a Suspense boundary around
+	// the whole hub and let the page commit — and the transition reveal — before its
+	// content had rendered
+	const [debug] = useQueryState("debug", parseAsString)
+	const isDebug = debug !== null
 	const baseCards = allCards.filter((card) => card?._id !== featuredCard?._id)
 	const allUnfeaturedCards = isDebug
 		? [1, 2, 3, 4, 5].flatMap((i) => baseCards.map((c) => ({ ...c, _id: `${c._id}-debug-${i}` })))

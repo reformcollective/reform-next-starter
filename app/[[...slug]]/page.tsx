@@ -20,7 +20,7 @@ import { siteURL } from "library/siteURL"
 import { EagerImages } from "library/StaticImage"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
-import { Fragment, Suspense } from "react"
+import { Fragment } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import { sectionProjection } from "sanity/lib/section-projection"
 import { documentPathProjection } from "sanity/lib/slug-resolver"
@@ -217,15 +217,15 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 					case "blogHub":
 						return (
 							<Wrapper key={section._key}>
-								{/* BlogHub reads search params for its filters, which a statically
-								    rendered page can only resolve on the client */}
-								<Suspense>
-									<BlogHubSection
-										{...section}
-										{...sectionContext}
-										hubSlug={relevantPage.slug?.current ?? ""}
-									/>
-								</Suspense>
+								{/* deliberately not wrapped in Suspense: a boundary here lets the page
+								    commit — and the page transition reveal — before the hub's content
+								    has rendered. its search params are read through nuqs, which does
+								    not need one. */}
+								<BlogHubSection
+									{...section}
+									{...sectionContext}
+									hubSlug={relevantPage.slug?.current ?? ""}
+								/>
 							</Wrapper>
 						)
 					case "blogArticle":

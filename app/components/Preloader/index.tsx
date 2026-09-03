@@ -18,7 +18,8 @@
  *   1. Logo pulses while page loads
  *   2. `stopAnimations` tells the hook to find looping animations matching the
  *      selector (within `scope`), let them finish their current cycle, and wait
- *   3. Once settled + minDuration elapsed → `ready = true`
+ *   3. Once settled + minDuration elapsed + fonts and subresources loaded
+ *      (via `customAnimation.beforeReady`) → `ready = true`
  *   4. CSS animations triggered by `[data-ready]`:
  *      - Logo plays outro (pop and shrink, 0.5s)
  *      - Wrapper fades out (0.5s, delayed 0.5s to start after outro)
@@ -45,7 +46,7 @@ import { colors } from "app/styles/colors.css"
 import { usePreloader } from "library/link/usePreloader"
 import { css, f, styled } from "library/styled"
 import { useHeaderMode } from "library/useSectionTheme"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 import { preloaderExit, logoPulse, logoOutro } from "./animations.css"
 import LogoSVG from "./images/logo.inline.svg"
@@ -57,11 +58,26 @@ export function Preloader() {
 	// section by app/lib/InitialHeaderMode, so there's no need to sniff the DOM for it.
 	const mode = useHeaderMode()
 
+	// hold the preloader until fonts and subresources are in, or it lifts onto a page
+	// that is still swapping fonts and decoding images
+	const [resourcesReady] = useState<Promise<unknown>>(() => {
+		if (typeof document === "undefined") return Promise.resolve()
+		const fontsReady = document.fonts?.ready ?? Promise.resolve()
+		const windowLoaded =
+			document.readyState === "complete"
+				? Promise.resolve()
+				: new Promise<void>((resolve) => {
+						window.addEventListener("load", () => resolve(), { once: true })
+					})
+		return Promise.all([fontsReady, windowLoaded]).catch(() => {})
+	})
+
 	const { ready, completed, devKey } = usePreloader({
 		minDuration: 2000,
 		scope: scopeRef,
 		// waits for .logo pulse animation to finish its current cycle before setting ready, ensuring a smooth transition
 		stopAnimations: ".logo",
+		customAnimation: { beforeReady: resourcesReady },
 	})
 
 	if (completed) return null
