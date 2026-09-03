@@ -1,19 +1,20 @@
-import type { AllPostsQueryResult, BlogHubQueryResult, SinglePostQueryResult } from "sanity.types"
+import type { GetSectionType } from "page"
+import type { ArticleContextQueryResult, HubArticlesQueryResult } from "sanity.types"
 
 // Individual post card — used on list pages, related posts, recent posts
-export type Card = AllPostsQueryResult[number]
+export type Card = HubArticlesQueryResult[number]
 
 // Featured post on the hub page
-export type FeaturedCard = NonNullable<NonNullable<BlogHubQueryResult>["featuredPost"]>
+export type FeaturedCard = NonNullable<GetSectionType<"blogHub">["featuredPost"]>
 
-// Full single post
-export type Post = NonNullable<SinglePostQueryResult>
+// Everything an article needs that lives outside its own document
+export type ArticleContext = NonNullable<ArticleContextQueryResult>
 
-// Author from single post
-export type PostAuthor = NonNullable<Post["author"]>
+// Author from an article's context
+export type PostAuthor = NonNullable<ArticleContext["author"]>
 
 // Body block union
-export type BlogBodyBlock = NonNullable<Post["body"]>[number]
+export type BlogBodyBlock = NonNullable<GetSectionType<"blogArticle">["body"]>[number]
 
 // Convenience aliases
 export type RecentPost = Card

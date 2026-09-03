@@ -10,18 +10,18 @@ import { useEffect, useState } from "react"
 import SearchIcon from "./search.inline.svg"
 
 export const useBlogQuery = () => {
-	return useQueryState("query", parseAsString.withDefault(""))
+	return useQueryState("blogQuery", parseAsString.withDefault(""))
 }
 
 export const useBlogCategory = () => {
 	return useQueryState(
-		"category",
+		"blogCategory",
 		parseAsArrayOf(parseAsString).withDefault([]).withOptions({ scroll: false }),
 	)
 }
 
 export const useBlogShowAll = () => {
-	return useQueryState("showAll", parseAsString.withDefault(""))
+	return useQueryState("blogShowAll", parseAsString.withDefault(""))
 }
 
 export function SearchBar() {

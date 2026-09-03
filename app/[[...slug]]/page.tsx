@@ -202,14 +202,25 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 								{/* BlogHub reads search params for its filters, which a statically
 								    rendered page can only resolve on the client */}
 								<Suspense>
-									<BlogHubSection {...section} {...sectionContext} />
+									<BlogHubSection
+										{...section}
+										{...sectionContext}
+										hubSlug={relevantPage.slug?.current ?? ""}
+									/>
 								</Suspense>
 							</Wrapper>
 						)
 					case "blogArticle":
 						return (
 							<Wrapper key={section._key}>
-								<BlogArticleSection {...section} {...sectionContext} />
+								<BlogArticleSection
+									{...section}
+									{...sectionContext}
+									pageId={relevantPage._id}
+									title={relevantPage.title}
+									articleTextPreview={relevantPage.articleTextPreview}
+									publishedAt={relevantPage.publishedAt}
+								/>
 							</Wrapper>
 						)
 					case "redirect":

@@ -5,16 +5,24 @@ import textStyles from "app/styles/text"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled"
 
-import type { Post } from "../types"
+import type { ArticleContext } from "../types"
 
 import CaretSVG from "../icons/caret.inline.svg"
 import Kicker from "./Kicker"
 
-export default function BlogNav({ categories }: { categories: Post["categories"] }) {
+export default function BlogNav({
+	categories,
+	hubPath,
+	hubTitle,
+}: {
+	categories: ArticleContext["categories"]
+	hubPath: string
+	hubTitle: string
+}) {
 	return (
 		<BlogNavWrapper data-header-mode="dark">
 			<BreadCrumbs>
-				<StyledUniversalLink href="/blog-1">Blog Home</StyledUniversalLink>
+				<StyledUniversalLink href={hubPath}>{hubTitle}</StyledUniversalLink>
 				<Caret />
 				<span>Article</span>
 			</BreadCrumbs>

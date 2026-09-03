@@ -1,15 +1,15 @@
 "use client"
 
-import { Categories } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/Categories"
-import { FilterState } from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/FilterState"
-import LargeCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/LargeCard"
+import { Categories } from "app/sections/blog/components/Categories"
+import { FilterState } from "app/sections/blog/components/FilterState"
+import LargeCard from "app/sections/blog/components/LargeCard"
 import {
 	useBlogCategory,
 	useBlogQuery,
 	useBlogShowAll,
 	SearchBar,
-} from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/SearchBar"
-import SmallCard from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/SmallCard"
+} from "app/sections/blog/components/SearchBar"
+import SmallCard from "app/sections/blog/components/SmallCard"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import { css, f, styled } from "library/styled"
@@ -19,7 +19,7 @@ import { getResponsivePixels } from "library/viewportUtils"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useRef, useState, useTransition } from "react"
 
-import type { Card, FeaturedCard } from "../types"
+import type { Card, FeaturedCard } from "./types"
 
 import { searchPosts } from "./actions"
 
@@ -29,9 +29,15 @@ type BlogHomeClientProps = {
 	allCards: Card[]
 	featuredCaseStudy: FeaturedCard | null
 	searchMode: "client" | "server"
+	hubSlug: string
 }
 
-export function BlogHomeClient({ allCards, featuredCaseStudy, searchMode }: BlogHomeClientProps) {
+export function BlogHomeClient({
+	allCards,
+	featuredCaseStudy,
+	searchMode,
+	hubSlug,
+}: BlogHomeClientProps) {
 	const featuredCard = featuredCaseStudy
 	const isDebug = useSearchParams().has("debug")
 	const baseCards = allCards.filter((card) => card?._id !== featuredCard?._id)
@@ -59,15 +65,15 @@ export function BlogHomeClient({ allCards, featuredCaseStudy, searchMode }: Blog
 	useEffect(() => {
 		if (searchMode !== "server") return
 		startTransition(async () => {
-			const results = await searchPosts(searchQuery ?? "")
+			const results = await searchPosts(searchQuery ?? "", hubSlug)
 			setServerResults(results)
 		})
-	}, [searchQuery, searchMode])
+	}, [searchQuery, searchMode, hubSlug])
 
 	const clientSearchedCards = useSearchResults(
 		searchQuery ?? "",
 		[...allUnfeaturedCards],
-		["articleTextPreview", "author", "slug", "title"],
+		["articleTextPreview", "author", "path", "title"],
 		"_id",
 	)
 

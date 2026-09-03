@@ -14,7 +14,7 @@ import ButtonLink from "./ButtonLink"
 export default function LargeCard({ data }: { data: FeaturedCard }) {
 	const router = useRouter()
 	const [isHovered, setIsHovered] = useState(false)
-	const { mainImage, title, articleTextPreview, slug, publishedAt } = data
+	const { mainImage, title, articleTextPreview, path, publishedAt } = data
 
 	const formattedDate = publishedAt
 		? new Date(publishedAt).toLocaleDateString("en-US", {
@@ -24,7 +24,7 @@ export default function LargeCard({ data }: { data: FeaturedCard }) {
 			})
 		: null
 
-	const linkToFeatured = `/blog-1/${encodeURIComponent(slug ?? "")}`
+	const linkToFeatured = path ?? ""
 
 	return (
 		<Wrapper

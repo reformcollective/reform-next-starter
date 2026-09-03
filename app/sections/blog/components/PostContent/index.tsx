@@ -1,11 +1,14 @@
-import BlogRich from "app/(blog-templates)/(blog-template-1)/[blogSlug]/BlogRich"
+import type { GetSectionType } from "page"
+import type { Page } from "sanity.types"
+
+import BlogRich from "app/sections/blog/BlogRich"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import getReadTime from "app/utils/getReadTime"
 import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 
-import type { Post, RecentPosts } from "../../types"
+import type { ArticleContext, RecentPosts } from "../../types"
 
 import BlogNav from "../BlogNav"
 import RelatedPosts from "../RelatedPosts"
@@ -13,13 +16,23 @@ import CalendarSVG from "./date.inline.svg"
 import TimeSVG from "./time.inline.svg"
 
 export default function PostContent({
-	post,
+	title,
+	mainImage,
+	articleTextPreview,
+	publishedAt,
+	body,
+	context,
 	recentPosts,
 }: {
-	post: Post
+	title: Page["title"]
+	mainImage: GetSectionType<"blogArticle">["pageMainImage"]
+	articleTextPreview: Page["articleTextPreview"]
+	publishedAt: Page["publishedAt"]
+	body: GetSectionType<"blogArticle">["body"]
+	context: ArticleContext
 	recentPosts: RecentPosts
 }) {
-	const { author, title, mainImage, categories, articleTextPreview, body, publishedAt } = post
+	const { author, categories, hub } = context
 
 	const formattedDate = publishedAt
 		? new Date(publishedAt).toLocaleDateString("en-US", {
@@ -33,7 +46,11 @@ export default function PostContent({
 
 	return (
 		<Wrapper>
-			<BlogNav categories={categories} />
+			<BlogNav
+				categories={categories}
+				hubPath={hub?.path ?? "/"}
+				hubTitle={hub?.title ?? "Blog Home"}
+			/>
 			<BottomContent>
 				<AuthorSidebar>
 					<TopSide>Author</TopSide>

@@ -1,48 +1,16 @@
 "use server"
 
-import { assetMetadataFunctions } from "library/sanity/assetMetadata"
-import { defineQuery } from "next-sanity"
 import { sanityFetch } from "sanity/lib/live"
 
-const allPostsServerQuery = defineQuery(`
-	${assetMetadataFunctions}
-
-	*[_type == "blog1Post"] | order(publishedAt desc) {
-		_id,
-		title,
-		"slug": slug.current,
-		"author": author->name,
-		articleTextPreview,
-		"mainImage": reform::image(mainImage),
-		"categories": categories[]->title,
-		publishedAt
-	}
-`)
-
-// groq-js does not infer $param from `match` expressions, so defineQuery cannot
-// be used here. The query and return type are correct at runtime.
-const searchedPostsQuery = `
-	${assetMetadataFunctions}
-
-	*[_type == "blog1Post" && [title, pt::text(body)] match $searchQuery] | order(publishedAt desc) {
-		_id,
-		title,
-		"slug": slug.current,
-		"author": author->name,
-		articleTextPreview,
-		"mainImage": reform::image(mainImage),
-		"categories": categories[]->title,
-		publishedAt
-	}
-`
+import { hubArticlesQuery, hubArticlesSearchQuery } from "./queries"
 
 type PostList = NonNullable<
-	Awaited<ReturnType<typeof sanityFetch<typeof allPostsServerQuery>>>["data"]
+	Awaited<ReturnType<typeof sanityFetch<typeof hubArticlesQuery>>>["data"]
 >
 
-export async function searchPosts(query: string): Promise<PostList> {
+export async function searchPosts(query: string, hubSlug: string): Promise<PostList> {
 	if (!query.trim()) {
-		const { data } = await sanityFetch({ query: allPostsServerQuery })
+		const { data } = await sanityFetch({ query: hubArticlesQuery, params: { hubSlug } })
 		return data ?? []
 	}
 	// Append * to each term for prefix matching (e.g. "Uta" matches "Utah")
@@ -53,8 +21,8 @@ export async function searchPosts(query: string): Promise<PostList> {
 		.join(" ")
 	// groq-js cannot infer params from match expressions — plain string query, params typed freely
 	const { data } = await sanityFetch({
-		query: searchedPostsQuery,
-		params: { searchQuery: wildcardQuery },
+		query: hubArticlesSearchQuery,
+		params: { searchQuery: wildcardQuery, hubSlug },
 	})
 	return (data ?? []) as PostList
 }

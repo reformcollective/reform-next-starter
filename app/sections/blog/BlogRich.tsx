@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react"
 
-import BlockquoteWithAttribution from "app/(blog-templates)/(blog-template-1)/[blogSlug]/components/BlockquoteWithAttribution"
+import BlockquoteWithAttribution from "app/sections/blog/components/BlockquoteWithAttribution"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
 import UniversalLink from "library/link"

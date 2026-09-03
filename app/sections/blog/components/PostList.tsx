@@ -22,7 +22,7 @@ export function PostList({ posts }: { posts: RecentPosts }) {
 	const searchedCards = useSearchResults(
 		searchQuery,
 		uniquePosts,
-		["author", "slug", "title"],
+		["author", "path", "title"],
 		"_id",
 	)
 

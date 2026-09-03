@@ -7,7 +7,7 @@ import UniversalImage from "library/UniversalImage"
 import type { Card } from "../types"
 
 export default function SmallCard({ data }: { data: Card }) {
-	const { slug, mainImage, title, publishedAt } = data
+	const { path, mainImage, title, publishedAt } = data
 
 	const formattedDate = publishedAt
 		? new Date(publishedAt).toLocaleDateString("en-US", {
@@ -17,10 +17,8 @@ export default function SmallCard({ data }: { data: Card }) {
 			})
 		: null
 
-	const link = `/blog-1/${encodeURIComponent(slug ?? "")}`
-
 	return (
-		<Wrapper href={link}>
+		<Wrapper href={path ?? ""}>
 			<ImageWrapper>
 				<Image
 					className="card-image"
