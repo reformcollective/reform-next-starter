@@ -1,10 +1,13 @@
 import type { ReactNode } from "react"
+import type { Page } from "sanity.types"
 
 import { DesktopIcon } from "@sanity/icons"
 import { redirect, universalImage } from "library/sanity/reusables"
 import { siteURL } from "library/siteURL"
-import { defineField, defineType } from "sanity"
+import { type ConditionalProperty, defineArrayMember, defineField, defineType } from "sanity"
+import { apiVersion } from "sanity/lib/api"
 
+import { ReadTimeInput } from "./blog/blog-1/ReadTimeInput"
 import * as sections from "./sections"
 
 const allSections = Object.values(sections)
@@ -34,7 +37,26 @@ const Code = ({ children }: { children: ReactNode }) => (
 	</code>
 )
 
+export const pageKinds = ["page", "blogHub", "blogPost"] as const
+
 export const pageMetadata = [
+	defineField({
+		type: "string",
+		name: "kind",
+		title: "Page Kind",
+		description:
+			"Determines which sections this page is designed for, and whether it appears in a blog hub's list of articles. Sections from other kinds can still be added when you need them.",
+		options: {
+			list: [
+				{ title: "Page", value: "page" },
+				{ title: "Blog Hub", value: "blogHub" },
+				{ title: "Blog Article", value: "blogPost" },
+			],
+			layout: "radio",
+		},
+		initialValue: "page",
+		validation: (Rule) => Rule.required(),
+	}),
 	defineField({
 		type: "string",
 		name: "title",
@@ -67,7 +89,7 @@ export const pageMetadata = [
 			source: "title",
 		},
 		validation: (rule) =>
-			rule.custom((slug) => {
+			rule.custom(async (slug, context) => {
 				if (slug?.current?.startsWith("/"))
 					return {
 						message: "Page slug must not start with a slash",
@@ -84,6 +106,19 @@ export const pageMetadata = [
 					return {
 						message: "Page slug must not be empty",
 					}
+
+				const id = context.document?._id.replace(/^drafts\./, "")
+				const duplicate = await context
+					.getClient({ apiVersion })
+					.fetch<boolean>(
+						`defined(*[_type == "page" && slug.current == $slug && !(_id in [$id, "drafts." + $id])][0]._id)`,
+						{ slug: slug.current, id },
+					)
+				if (duplicate)
+					return {
+						message: `Another page already uses the slug "${slug.current}". Two pages cannot share a URL.`,
+					}
+
 				return true
 			}),
 	}),
@@ -121,6 +156,61 @@ export const pageMetadata = [
 	}),
 ]
 
+const isNotBlogPost: ConditionalProperty = ({ document }) => document?.kind !== "blogPost"
+
+type PageKind = NonNullable<Page["kind"]>
+type SectionType = NonNullable<Page["sections"]>[number]["_type"]
+
+const isPageKind = (value: unknown): value is PageKind => pageKinds.includes(value as PageKind)
+
+const kindTitles: Record<PageKind, string> = {
+	page: "Page",
+	blogHub: "Blog Hub",
+	blogPost: "Blog Article",
+}
+
+const kindSectionTypes: Partial<Record<PageKind, SectionType[]>> = {}
+
+const articleFields = [
+	defineField({
+		name: "author",
+		title: "Author",
+		type: "reference",
+		to: [{ type: "blog1Author" }],
+		hidden: isNotBlogPost,
+	}),
+	defineField({
+		name: "categories",
+		title: "Categories",
+		type: "array",
+		of: [defineArrayMember({ type: "reference", to: { type: "blog1Category" } })],
+		validation: (Rule) => Rule.max(2),
+		hidden: isNotBlogPost,
+	}),
+	defineField({
+		name: "publishedAt",
+		title: "Published At",
+		type: "datetime",
+		hidden: isNotBlogPost,
+	}),
+	defineField({
+		name: "articleTextPreview",
+		title: "Article Text Preview",
+		type: "text",
+		description:
+			"A short description of the article. Used on the blog hub page and at the top of the article. Supports line breaks.",
+		hidden: isNotBlogPost,
+	}),
+	defineField({
+		name: "readTime",
+		title: "Read Time",
+		type: "string",
+		readOnly: true,
+		components: { input: ReadTimeInput },
+		hidden: isNotBlogPost,
+	}),
+]
+
 export default defineType({
 	icon: DesktopIcon,
 	name: "page",
@@ -128,6 +218,7 @@ export default defineType({
 	type: "document",
 	fields: [
 		...pageMetadata,
+		...articleFields,
 		defineField({
 			type: "array",
 			name: "sections",
@@ -138,6 +229,27 @@ export default defineType({
 					views: [{ name: "list" }, { name: "grid" }],
 				},
 			},
+			validation: (Rule) =>
+				Rule.warning().custom((value: Page["sections"], context) => {
+					const kind = context.document?.kind
+					if (!isPageKind(kind)) return true
+
+					const expected = kindSectionTypes[kind]
+					if (!expected) return true
+
+					const present = value?.map((section) => section._type) ?? []
+
+					if (!present.some((type) => expected.includes(type)))
+						return `A ${kindTitles[kind]} usually contains a ${expected.join(" or ")} section.`
+
+					const foreign = Object.entries(kindSectionTypes).flatMap(([otherKind, types]) =>
+						otherKind === kind ? [] : (types?.filter((type) => present.includes(type)) ?? []),
+					)
+					if (foreign.length > 0)
+						return `This page also contains ${foreign.join(", ")}, which ${kindTitles[kind]} pages are not designed for.`
+
+					return true
+				}),
 		}),
 	],
 })
