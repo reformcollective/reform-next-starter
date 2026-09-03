@@ -27,9 +27,7 @@ import { presentationTool } from "sanity/presentation"
 import { blog1AuthorType } from "sanity/schemas/blog/blog-1/authorType"
 import { blog1BlockContentType } from "sanity/schemas/blog/blog-1/blockContentType"
 import { blog1CategoryType } from "sanity/schemas/blog/blog-1/categoryType"
-import { blog1PostType } from "sanity/schemas/blog/blog-1/postType"
 import page from "sanity/schemas/sanityPage"
-import { blog1Hub } from "sanity/schemas/singletons/blog-1"
 import footer from "sanity/schemas/singletons/footer"
 import header from "sanity/schemas/singletons/header"
 import settings from "sanity/schemas/singletons/settings"
@@ -39,7 +37,6 @@ import { structureTool } from "sanity/structure"
 gsap.ticker.sleep()
 
 const singletons = [settings, header, footer]
-const allSingletons = [...singletons, blog1Hub]
 
 export default defineConfig({
 	/**
@@ -62,7 +59,7 @@ export default defineConfig({
 	schema: {
 		types: [
 			// singletons
-			...allSingletons,
+			...singletons,
 
 			// reusables
 			youtube,
@@ -107,7 +104,6 @@ export default defineConfig({
 			blog1AuthorType,
 			blog1BlockContentType,
 			blog1CategoryType,
-			blog1PostType,
 
 			// project schemas
 			page,
@@ -159,22 +155,30 @@ export default defineConfig({
 				{
 					item: (S) =>
 						S.listItem()
-							.title("Blog 1")
+							.title("Blog")
 							.child(
 								S.list()
-									.title("Blog 1")
+									.title("Blog")
 									.items([
 										S.listItem()
-											.title("Hub Settings")
+											.title("Hubs")
 											.child(
-												S.editor().id("blog1Hub").schemaType("blog1Hub").documentId("blog1Hub"),
+												S.documentList()
+													.title("Hubs")
+													.filter('_type == "page" && kind == "blogHub"'),
 											),
-										S.documentTypeListItem("blog1Post").title("Posts"),
+										S.listItem()
+											.title("Articles")
+											.child(
+												S.documentList()
+													.title("Articles")
+													.filter('_type == "page" && kind == "blogPost"'),
+											),
 										S.documentTypeListItem("blog1Author").title("Authors"),
 										S.documentTypeListItem("blog1Category").title("Categories"),
 									]),
 							),
-					hiddenTypes: ["blog1Hub", "blog1Post", "blog1Author", "blog1Category"],
+					hiddenTypes: ["blog1Author", "blog1Category"],
 				},
 			]),
 		}),
@@ -213,7 +217,7 @@ export default defineConfig({
 		/**
 		 * our custom singleton plugin
 		 */
-		singletonPlugin(allSingletons.map((singleton) => singleton.name)),
+		singletonPlugin(singletons.map((singleton) => singleton.name)),
 		/**
 		 * adds unsplash as an image asset source
 		 */
