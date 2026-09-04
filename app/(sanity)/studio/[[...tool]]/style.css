@@ -129,29 +129,16 @@ body {
 	display: revert;
 }
 
-/*
-	Center a bullet against its list item's text.
-
-	Studio pins the marker to the top of the line with a constant offset tuned for its own
-	text size, which leaves it high against the larger line-height our block content uses.
-	The marker's gutter is stretched to the item's full height so the dot can be centered
-	against it.
-
-	Studio sets `top` and `transform` on the marker from a styled-component, so the
-	attribute selector is repeated to outweigh its generated class.
-*/
 [data-list-item="bullet"] {
 	position: relative;
 }
 
-/* the marker's gutter, stretched to the height of the list item */
 [data-list-item="bullet"] > * > * > * {
 	position: absolute;
 	top: 0;
 	bottom: 0;
 }
 
-/* the marker itself, centered in that gutter */
 [data-list-item="bullet"] [data-list-prefix] span {
 	position: absolute !important;
 	top: 50% !important;

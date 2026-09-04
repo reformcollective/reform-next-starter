@@ -27,11 +27,12 @@ import { presentationTool } from "sanity/presentation"
 import { blogAuthorType } from "sanity/schemas/blog/authorType"
 import { blogBlockContentType } from "sanity/schemas/blog/blockContentType"
 import { blogCategoryType } from "sanity/schemas/blog/categoryType"
+import { logoSet } from "sanity/schemas/documents/logoSet"
 import page from "sanity/schemas/sanityPage"
 import footer from "sanity/schemas/singletons/footer"
 import header from "sanity/schemas/singletons/header"
 import settings from "sanity/schemas/singletons/settings"
-import { structureTool } from "sanity/structure"
+import { defaultIntentChecker, structureTool } from "sanity/structure"
 
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
@@ -105,6 +106,9 @@ export default defineConfig({
 			blogBlockContentType,
 			blogCategoryType,
 
+			// shared content, referenced from sections rather than owned by one
+			logoSet,
+
 			// project schemas
 			page,
 		],
@@ -175,54 +179,61 @@ export default defineConfig({
 											.child(
 												S.documentList()
 													.title("Standard Pages")
+													.schemaType("page")
 													// pages predating the kind field have none, and are standard pages
 													.filter('_type == "page" && (kind == "page" || !defined(kind))')
-													.defaultOrdering([{ field: "slug.current", direction: "asc" }]),
+													.defaultOrdering([{ field: "slug.current", direction: "asc" }])
+													// keeps creation in this pane rather than routing it elsewhere
+													.canHandleIntent(defaultIntentChecker),
 											),
 										S.listItem()
 											.title("Hubs")
 											.child(
-												// each hub resolves to the detail pages nested under its slug, driven by
-												// the documents themselves, so a new hub needs no config here
-												S.documentTypeList("page")
+												// hubs and their pages in one flat list. ordering by slug puts each hub
+												// directly above its own pages, since a hub's slug is their prefix
+												S.documentList()
 													.title("Hubs")
-													.filter('kind == "hub"')
+													.schemaType("page")
+													.filter('_type == "page" && (kind == "hub" || kind == "hubDetail")')
 													.defaultOrdering([{ field: "slug.current", direction: "asc" }])
-													.child(async (hubId, { structureContext }) => {
-														const hubSlug = await structureContext
-															.getClient({ apiVersion })
-															.fetch<string | null>("*[_id == $hubId][0].slug.current", {
-																hubId,
-															})
-														return structureContext
-															.getStructureBuilder()
-															.documentList()
-															.title(hubSlug ? `/${hubSlug}` : "Hub")
-															.filter(
-																'_type == "page" && kind == "hubDetail" && string::startsWith(slug.current, $prefix)',
-															)
-															.params({ prefix: `${hubSlug ?? ""}/` })
-															.defaultOrdering([{ field: "publishedAt", direction: "desc" }])
-													}),
+													// without this, creating a page resolves to the page type's default
+													// location and replaces the whole pane stack
+													.canHandleIntent(defaultIntentChecker),
 											),
 									]),
 							),
 					hiddenTypes: ["page"],
 				},
 				{
+					/**
+					 * Documents that live outside the page tree and are referenced from more than
+					 * one place — authors, categories, icon sets, testimonials. Grouped by domain
+					 * so a project that drops the blog removes one child rather than picking
+					 * entries out of a flat list.
+					 */
 					item: (S) =>
 						S.listItem()
-							.title("Blog Content")
+							.title("Shared Content")
 							.icon(UserIcon)
 							.child(
 								S.list()
-									.title("Blog Content")
+									.title("Shared Content")
 									.items([
-										S.documentTypeListItem("blogAuthor").title("Authors"),
-										S.documentTypeListItem("blogCategory").title("Categories"),
+										S.documentTypeListItem("logoSet").title("Logo Sets"),
+										S.divider(),
+										S.listItem()
+											.title("Blog")
+											.child(
+												S.list()
+													.title("Blog")
+													.items([
+														S.documentTypeListItem("blogAuthor").title("Authors"),
+														S.documentTypeListItem("blogCategory").title("Categories"),
+													]),
+											),
 									]),
 							),
-					hiddenTypes: ["blogAuthor", "blogCategory"],
+					hiddenTypes: ["blogAuthor", "blogCategory", "logoSet"],
 				},
 			]),
 		}),
