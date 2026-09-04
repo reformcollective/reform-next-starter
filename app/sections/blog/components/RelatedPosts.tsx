@@ -14,7 +14,9 @@ export default function RelatedPosts({ recentPosts }: { recentPosts: RecentPosts
 			<Kicker size="medium" variant="dark">
 				From The Blog
 			</Kicker>
-			<RelatedHeading>Related Articles</RelatedHeading>
+			<RelatedHeading>
+				<RelatedHeadingText>Related Articles</RelatedHeadingText>
+			</RelatedHeading>
 			{recentPosts && recentPosts.length > 0 && (
 				<Related>
 					<Suspense fallback={<HelperText>Loading posts...</HelperText>}>
@@ -51,12 +53,19 @@ const RelatedHeading = styled("div", [
 	f.responsive(css`
 		display: grid;
 		grid-column: main;
-		${textStyles.blog1.h4Sans};
 		color: ${colors.blog1.primary800};
 		margin: 28px 0 54px;
 	`),
 	f.small(css`
 		width: 300px;
+	`),
+])
+
+const RelatedHeadingText = styled("div", [
+	f.responsive(css`
+		${textStyles.blog1.h4Sans};
+	`),
+	f.small(css`
 		${textStyles.blog1.h5Sans};
 	`),
 ])

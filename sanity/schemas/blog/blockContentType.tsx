@@ -4,66 +4,20 @@ import { ImageIcon } from "@sanity/icons"
 import { universalImage } from "library/sanity/reusables"
 import { defineType, defineArrayMember, defineField } from "sanity"
 
-// h6Sans: 40px, weight 600, letter-spacing -5%
 const H1 = ({ children }: { children: ReactNode }) => (
-	<span
-		style={{
-			display: "block",
-			fontSize: 40,
-			fontWeight: 600,
-			lineHeight: 1,
-			letterSpacing: "-0.05em",
-		}}
-	>
-		{children}
-	</span>
+	<span className="studio-block studio-block-h1">{children}</span>
 )
 
-// h7Serif: 21px, weight 400, line-height 120%
 const H2 = ({ children }: { children: ReactNode }) => (
-	<span
-		style={{
-			display: "block",
-			fontSize: 21,
-			fontWeight: 400,
-			lineHeight: 1.2,
-			fontFamily: "serif",
-		}}
-	>
-		{children}
-	</span>
+	<span className="studio-block studio-block-h2">{children}</span>
 )
 
-// p2: 14px, weight 500, line-height 150%, letter-spacing -1%
 const Normal = ({ children }: { children: ReactNode }) => (
-	<span
-		style={{
-			display: "block",
-			fontSize: 14,
-			fontWeight: 500,
-			lineHeight: 1.5,
-			letterSpacing: "-0.01em",
-		}}
-	>
-		{children}
-	</span>
+	<span className="studio-block studio-block-normal">{children}</span>
 )
 
 const BlockQuote = ({ children }: { children: ReactNode }) => (
-	<span
-		style={{
-			display: "block",
-			fontSize: 14,
-			fontWeight: 500,
-			lineHeight: 1.5,
-			fontStyle: "italic",
-			borderLeft: "3px solid currentcolor",
-			paddingLeft: "1em",
-			opacity: 0.7,
-		}}
-	>
-		{children}
-	</span>
+	<span className="studio-block studio-block-quote">{children}</span>
 )
 
 export const blogBlockContentType = defineType({
@@ -86,14 +40,14 @@ export const blogBlockContentType = defineType({
 						title: "Strong",
 						value: "strong",
 						component: ({ children }: { children: ReactNode }) => (
-							<strong style={{ fontWeight: 700 }}>{children}</strong>
+							<strong className="studio-strong">{children}</strong>
 						),
 					},
 					{
 						title: "Emphasis",
 						value: "em",
 						component: ({ children }: { children: ReactNode }) => (
-							<em style={{ fontStyle: "italic" }}>{children}</em>
+							<em className="studio-em">{children}</em>
 						),
 					},
 				],

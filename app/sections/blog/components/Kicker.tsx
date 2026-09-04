@@ -60,7 +60,10 @@ const Wrapper = styled("span", {
 				f.responsive(css`
 					height: 39px;
 					padding: 15px 18px;
-					${textStyles.blog1.p3}
+
+					span {
+						${textStyles.blog1.p3}
+					}
 				`),
 			],
 		},

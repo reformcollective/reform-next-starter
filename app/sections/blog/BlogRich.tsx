@@ -47,7 +47,9 @@ export default function BlogRich({
 						h1: ({ children }: { children: ReactNode }) => <StyledH1>{children}</StyledH1>,
 						h2: ({ children }: { children: ReactNode }) => <StyledH2>{children}</StyledH2>,
 						blockquote: ({ children }: { children: ReactNode }) => (
-							<StyledBlockQuote>{children}</StyledBlockQuote>
+							<StyledBlockQuote>
+								<StyledBlockQuoteText>{children}</StyledBlockQuoteText>
+							</StyledBlockQuote>
 						),
 					},
 					list: {
@@ -121,7 +123,6 @@ const StyledH2 = styled("h2", [
 
 const StyledBlockQuote = styled("blockquote", [
 	f.responsive(css`
-		${textStyles.blog1.p1};
 		color: ${colors.blog1.primary800};
 		display: flex;
 		flex-direction: column;
@@ -137,13 +138,22 @@ const StyledBlockQuote = styled("blockquote", [
 	`),
 ])
 
+const StyledBlockQuoteText = styled("div", [
+	f.responsive(css`
+		${textStyles.blog1.p1};
+	`),
+])
+
 const StyledUl = styled("ul", [
 	f.responsive(css`
 		list-style: disc;
 		padding-inline-start: 2.3ch;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
-		${textStyles.blog1.p2};
+
+		li {
+			${textStyles.blog1.p2};
+		}
 	`),
 ])
 

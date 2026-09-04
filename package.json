@@ -10,12 +10,13 @@
 		"test": "wireit",
 		"lint": "wireit",
 		"format": "wireit",
+		"init-project": "pnpm install && pnpm dev",
 		"pnpm:devPreinstall": "pnpm init-submodule && pnpm git-config",
 		"postinstall": "pnpm check-env",
 		"prepare": "lefthook install",
 		"check-env": "if [ -n \"$CI\" ]; then exit 0; else node --env-file=.env app/env.ts || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
 		"git-config": "git config submodule.recurse true",
-		"init-submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0",
+		"init-submodule": "git submodule update --init",
 		"check-projections": "wireit"
 	},
 	"dependencies": {

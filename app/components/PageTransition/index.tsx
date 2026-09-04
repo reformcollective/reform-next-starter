@@ -57,15 +57,7 @@ export default function PageTransition() {
 		},
 	})
 
-	return (
-		<Wrapper
-			ref={wrapper}
-			style={{
-				opacity: isAnimating ? 1 : 0,
-				pointerEvents: isAnimating ? "auto" : "none",
-			}}
-		/>
-	)
+	return <Wrapper ref={wrapper} data-animating={isAnimating ? "true" : undefined} />
 }
 
 const Wrapper = styled("div", [
@@ -76,5 +68,10 @@ const Wrapper = styled("div", [
 		background: ${colors.black};
 		opacity: 0;
 		pointer-events: none;
+
+		&[data-animating] {
+			opacity: 1;
+			pointer-events: auto;
+		}
 	`),
 ])

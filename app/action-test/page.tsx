@@ -18,33 +18,24 @@ export default function ActionTestForm() {
 			<PageCommitSignal />
 			<Card>
 				<h1>useActionState Test</h1>
-				<p style={{ color: "#6b7280", margin: 0 }}>
-					Try &quot;admin&quot; (reserved) or anything else (50% chance taken).
-				</p>
+				<Hint>Try &quot;admin&quot; (reserved) or anything else (50% chance taken).</Hint>
 				{state.success ? (
-					<p style={{ color: "#15803d" }}>Username registered!</p>
+					<SuccessMessage>Username registered!</SuccessMessage>
 				) : (
-					<Form
-						errors={state.serverErrors}
-						action={formAction}
-						style={{ display: "flex", flexDirection: "column", gap: 24 }}
-					>
-						<Field.Root
-							name="username"
-							style={{ display: "flex", flexDirection: "column", gap: 6 }}
-						>
+					<StyledForm errors={state.serverErrors} action={formAction}>
+						<StyledField name="username">
 							<StyledLabel>Username</StyledLabel>
 							<StyledInput
 								required
 								defaultValue={state.values?.username ?? "admin"}
 								placeholder="e.g. alice132"
 							/>
-							<Field.Error style={{ color: colors.red }} />
-						</Field.Root>
+							<StyledError />
+						</StyledField>
 						<StyledButton type="submit" disabled={loading} focusableWhenDisabled>
 							{loading ? "Submitting..." : "Submit"}
 						</StyledButton>
-					</Form>
+					</StyledForm>
 				)}
 			</Card>
 		</Wrapper>
@@ -74,6 +65,41 @@ const Card = styled("div", [
 		display: flex;
 		flex-direction: column;
 		gap: 32px;
+	`),
+])
+
+const Hint = styled("p", [
+	f.responsive(css`
+		color: #6b7280;
+		margin: 0;
+	`),
+])
+
+const SuccessMessage = styled("p", [
+	f.responsive(css`
+		color: ${colors.green};
+	`),
+])
+
+const StyledForm = styled(Form, [
+	f.responsive(css`
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	`),
+])
+
+const StyledField = styled(Field.Root, [
+	f.responsive(css`
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	`),
+])
+
+const StyledError = styled(Field.Error, [
+	f.responsive(css`
+		color: ${colors.red};
 	`),
 ])
 

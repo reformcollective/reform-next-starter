@@ -19,12 +19,8 @@ export default function Footer({ footerText, links }: NonNullable<FooterQueryRes
 						))}
 					</LinkRow>
 				)}
-				<UniversalLink href="/" style={{ textDecoration: "underline" }}>
-					Go to Home
-				</UniversalLink>
-				<UniversalLink href="/visual-tests" style={{ textDecoration: "underline" }}>
-					Go to Visual Tests
-				</UniversalLink>
+				<FooterLink href="/">Go to Home</FooterLink>
+				<FooterLink href="/visual-tests">Go to Visual Tests</FooterLink>
 			</Content>
 		</Wrapper>
 	)
