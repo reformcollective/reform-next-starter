@@ -3,6 +3,7 @@ import type { GetSectionType } from "page"
 import { BlogHomeClient } from "app/sections/blog/BlogHomeClient"
 import { hubArticlesQuery, nestedHubsQuery } from "app/sections/blog/queries"
 import { colors } from "app/styles/colors.css"
+import { PageCommitSignal } from "library/link/usePageTransition"
 import { css, f, styled } from "library/styled"
 import { sanityFetch } from "sanity/lib/live"
 
@@ -24,6 +25,9 @@ export default async function BlogHubSection({
 
 	return (
 		<Inner>
+			{/* signalled here rather than by the route: this section sits behind a Suspense
+			    boundary, so the page commits before it does */}
+			<PageCommitSignal />
 			<BlogHomeClient
 				allCards={allCards ?? []}
 				featuredCaseStudy={featuredPost}

@@ -20,7 +20,7 @@ import { siteURL } from "library/siteURL"
 import { EagerImages } from "library/StaticImage"
 import { defineQuery } from "next-sanity"
 import { notFound } from "next/navigation"
-import { Fragment } from "react"
+import { Fragment, Suspense } from "react"
 import { sanityFetch } from "sanity/lib/live"
 import { sectionProjection } from "sanity/lib/section-projection"
 import { documentPathProjection } from "sanity/lib/slug-resolver"
@@ -181,9 +181,14 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 		"sections",
 	)
 
+	// A suspended section commits after this signal would fire, so the page transition
+	// would reveal it before its content rendered. Those sections signal commit
+	// themselves, from inside their own boundary.
+	const sectionOwnsCommitSignal = sections.some((section) => section._type === "blogHub")
+
 	return (
 		<>
-			<PageCommitSignal />
+			{!sectionOwnsCommitSignal && <PageCommitSignal />}
 			<InitialHeaderMode headerMode={initialHeaderMode} />
 			{relevantPage.noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
 			{/* Register this page document with Presentation Tool's "Documents on this page" panel.
@@ -217,15 +222,16 @@ export default async function TemplatePage({ params }: PageProps<"/[[...slug]]">
 					case "blogHub":
 						return (
 							<Wrapper key={section._key}>
-								{/* deliberately not wrapped in Suspense: a boundary here lets the page
-								    commit — and the page transition reveal — before the hub's content
-								    has rendered. its search params are read through nuqs, which does
-								    not need one. */}
-								<BlogHubSection
-									{...section}
-									{...sectionContext}
-									hubSlug={relevantPage.slug?.current ?? ""}
-								/>
+								{/* required: the hub's filters read search params, which cannot be
+								    prerendered. the section signals page commit itself from inside this
+								    boundary, so the transition does not reveal an empty hub. */}
+								<Suspense>
+									<BlogHubSection
+										{...section}
+										{...sectionContext}
+										hubSlug={relevantPage.slug?.current ?? ""}
+									/>
+								</Suspense>
 							</Wrapper>
 						)
 					case "blogArticle":
