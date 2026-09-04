@@ -26,15 +26,7 @@ const groups = Array.from(groupNames).map((name) => ({
 }))
 
 const Code = ({ children }: { children: ReactNode }) => (
-	<code
-		style={{
-			border: "1px solid rgb(from currentcolor r g b / 20%)",
-			borderRadius: "4px",
-			padding: "0 4px",
-		}}
-	>
-		{children}
-	</code>
+	<code className="studio-code">{children}</code>
 )
 
 export const pageKinds = ["page", "hub", "hubDetail"] as const

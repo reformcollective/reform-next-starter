@@ -13,7 +13,7 @@ export function ReadTimeInput() {
 	)
 
 	return (
-		<p style={{ margin: "8px 0", color: "var(--card-muted-fg-color)" }}>
+		<p className="studio-read-time">
 			~{getReadTime(body)} ({countWords(body)} words)
 		</p>
 	)

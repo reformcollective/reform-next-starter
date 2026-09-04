@@ -27,7 +27,9 @@ export function Categories({ items }: { items: Card[] }) {
 
 	return (
 		<Wrapper>
-			<CategoryHeader>Categories</CategoryHeader>
+			<CategoryHeader>
+				<CategoryHeaderText>Categories</CategoryHeaderText>
+			</CategoryHeader>
 			<PillGroup>
 				<Pill
 					type="button"
@@ -62,13 +64,18 @@ const Wrapper = styled("div", [
 
 const CategoryHeader = styled("div", [
 	f.responsive(css`
-		${textStyles.blog1.p2};
 		display: flex;
 		align-items: center;
 		gap: 10px;
 		margin-bottom: 24px;
 		padding-bottom: 24px;
 		border-bottom: 1px solid ${colors.blog1.secondary400};
+	`),
+])
+
+const CategoryHeaderText = styled("div", [
+	f.responsive(css`
+		${textStyles.blog1.p2};
 	`),
 ])
 

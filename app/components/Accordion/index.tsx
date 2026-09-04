@@ -290,7 +290,16 @@ const AnswerWrapper = styled("div", [
 			${textStyles.p1};
 			color: ${colors.black};
 			margin: 8px 0;
-			padding-left: 24px;
+		}
+
+		ul {
+			list-style-position: outside;
+			padding-inline-start: 2.3ch;
+		}
+
+		ol {
+			list-style-position: outside;
+			padding-inline-start: 3.2ch;
 		}
 
 		li {
