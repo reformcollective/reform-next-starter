@@ -137,8 +137,8 @@ body {
 	The marker's gutter is stretched to the item's full height so the dot can be centered
 	against it.
 
-	`!important` is needed because Studio sets `top` and `transform` on the marker from a
-	styled-component, whose generated class outranks any attribute selector here.
+	Studio sets `top` and `transform` on the marker from a styled-component, so the
+	attribute selector is repeated to outweigh its generated class.
 */
 [data-list-item="bullet"] {
 	position: relative;
