@@ -1,14 +1,13 @@
 import { definePageSection } from "library/sanity/reusables"
 import { defineField } from "sanity"
 
-import preview from "./preview/sample.png"
+import preview from "./preview/blogHub.png"
 
 export const blogHub = definePageSection({
 	group: "Designed for Blog",
 	type: "object",
 	name: "blogHub",
 	title: "Blog Hub",
-	// TODO placeholder preview — capture the blog hub section and replace
 	icon: preview,
 	fields: [
 		defineField({

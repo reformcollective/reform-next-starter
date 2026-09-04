@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import type { Page } from "sanity.types"
 
-import { DesktopIcon } from "@sanity/icons"
+import { DesktopIcon, DocumentTextIcon, FolderIcon } from "@sanity/icons"
 import { redirect, universalImage } from "library/sanity/reusables"
 import { siteURL } from "library/siteURL"
 import { type ConditionalProperty, defineArrayMember, defineField, defineType } from "sanity"
@@ -172,6 +172,13 @@ const kindTitles: Record<PageKind, string> = {
 	hubDetail: "Hub Detail Page",
 }
 
+/** shown in lists when a page has no image of its own */
+const kindIcons: Record<PageKind, typeof DesktopIcon> = {
+	page: DesktopIcon,
+	hub: FolderIcon,
+	hubDetail: DocumentTextIcon,
+}
+
 const kindSectionTypes: Partial<Record<PageKind, SectionType[]>> = {
 	hub: ["blogHub"],
 	hubDetail: ["blogArticle"],
@@ -264,4 +271,21 @@ export default defineType({
 				}),
 		}),
 	],
+	preview: {
+		select: {
+			title: "title",
+			slug: "slug.current",
+			kind: "kind",
+			mainImage: "mainImage",
+			ogImage: "ogImage",
+		},
+		prepare({ title, slug, kind, mainImage, ogImage }) {
+			return {
+				title: title ?? "Untitled Page",
+				subtitle: slug ? `/${slug}` : undefined,
+				// an article's own image, so a hub's list of pages is scannable by picture
+				media: mainImage ?? ogImage ?? kindIcons[isPageKind(kind) ? kind : "page"],
+			}
+		},
+	},
 })

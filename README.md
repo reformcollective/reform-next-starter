@@ -62,7 +62,7 @@ hub's slug with `kind: hubDetail`. Any number of hubs can coexist (`blog`, `pres
 Full details in `sanity/schemas/blog/README.md`.
 
 1. Replace `blog1*` placeholder color tokens in `app/styles/colors.css.ts` with project brand colors, and the placeholder fonts in `app/styles/text.ts`
-1. Capture real section previews to replace the placeholder `icon` images in `sanity/schemas/sections/blogHub.ts` and `blogArticle.ts`
+1. Recapture the section preview images in `sanity/schemas/sections/preview/` once the design is in — they are what an editor picks from in the insert menu
 1. If the project has no blog, delete `app/sections/blog`, `app/sections/Blog*.tsx`, `sanity/schemas/blog`, and the two blog sections and their projections
 
 <!-- Repository Cover -->

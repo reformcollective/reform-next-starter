@@ -27,7 +27,7 @@ deepest hub above it, and the parent hub does not list it.
 
 1. Replace the `blog1*` placeholder color tokens in `app/styles/colors.css.ts` with the
    project's brand colors, and the placeholder fonts in `app/styles/text.ts`.
-2. Capture real section previews to replace the placeholder `icon` images in
-   `sanity/schemas/sections/blogHub.ts` and `blogArticle.ts`.
+2. Recapture the section preview images in `sanity/schemas/sections/preview/` once the
+   design is in — they are what an editor picks from in the insert menu.
 3. Delete this folder, both blog sections, their projections, and `app/sections/blog/` if
    the project has no blog.
