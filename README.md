@@ -36,7 +36,7 @@ If this project is using a CMS, set up a new project in Sanity. If we're not sur
 ### Removing Sanity
 
 1. in `package.json`, delete any scripts that reference sanity.
-1. delete `app/(sanity)`, `app/(blog-templates)`, `app/[[...slug]]`, and `sanity` folders
+1. delete `app/(sanity)`, `app/[[...slug]]`, `app/sections/blog`, and `sanity` folders
 1. delete `.vscode/tasks.json`, `sanity.config.ts`, `sanity.types.ts`, and `sanity.cli.ts`, and any other sanity-related files in the root of the project
 1. remove `SanityLive`, `SanityFetch`, and `defineQuery`, as well as any dependent code, from `app/layout.tsx`, `app/components/Header.tsx`, `app/components/Footer.tsx`, and `app/sitemap.ts`
 1. add `library/sanity` and `library/UniversalImage.tsx` to the `exclude` array in `tsconfig.json` (you'll be using StaticImage instead)
@@ -51,14 +51,19 @@ If this project is using a CMS, set up a new project in Sanity. If we're not sur
    - `NEXT_PUBLIC_SANITY_DATASET` is your dataset name, for a new project this is `production` (if we're working on updates while the site is live we'll use `development`)
    - `SANITY_AUTH_TOKEN` is a read only access token. Generate one in Sanity under the `API` tab
 
-## Blog Template Adoption
+## Blog Adoption
 
-If this project uses a blog template, adopt it from the starter by completing these steps. Full details in `sanity/schemas/blog/blog-1/README.md`.
+Hubs and their detail pages are `page` documents, told apart by the `kind` field, and
+their layouts are page sections rather than routes. Editors create a hub by adding a page
+with `kind: hub` and a Blog Hub section; its detail pages are pages nested under that
+hub's slug with `kind: hubDetail`. Any number of hubs can coexist (`blog`, `press`,
+`partners`) with no code changes — a hub is not blog-specific.
 
-1. Set the hub slug in Sanity Studio (Studio → Blog 1 → Hub Settings) — this drives the public URL, sitemap, and canonical URLs
-1. Replace `blog1*` placeholder color tokens in `app/styles/colors.css.ts` with project brand colors
-1. Update grid values in `app/(blog-templates)/(blog-template-1)/[blogSlug]/layout.tsx` to match the design
-1. Delete unused template folders under `app/(blog-templates)/` and `sanity/schemas/blog/`
+Full details in `sanity/schemas/blog/README.md`.
+
+1. Replace `blog1*` placeholder color tokens in `app/styles/colors.css.ts` with project brand colors, and the placeholder fonts in `app/styles/text.ts`
+1. Recapture the section preview images in `sanity/schemas/sections/preview/` once the design is in — they are what an editor picks from in the insert menu
+1. If the project has no blog, delete `app/sections/blog`, `app/sections/Blog*.tsx`, `sanity/schemas/blog`, and the two blog sections and their projections
 
 <!-- Repository Cover -->
 <!-- you can get a nice image by modifying the figma cover, or using the opengraph image -->

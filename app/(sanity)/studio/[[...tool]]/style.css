@@ -128,3 +128,21 @@ body {
 	all: revert;
 	display: revert;
 }
+
+[data-list-item="bullet"] {
+	position: relative;
+}
+
+[data-list-item="bullet"] > * > * > * {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
+
+[data-list-item="bullet"] [data-list-prefix] span {
+	position: absolute !important;
+	top: 50% !important;
+	right: 0;
+	transform: translateY(-50%) !important;
+	line-height: 1;
+}

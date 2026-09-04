@@ -7,6 +7,7 @@ import { Preloader } from "app/components/Preloader"
 import GlobalProviders from "app/components/Providers"
 import { desktopDesignSize, mobileDesignSize } from "app/styles/media"
 import { makeResponsiveGrid } from "library/layoutGridBuilder"
+import { assetMetadataFunctions } from "library/sanity/assetMetadata"
 import { siteURL } from "library/siteURL"
 import { css, f, styled } from "library/styled"
 import "app/styles/colors.css"
@@ -17,7 +18,14 @@ import { SanityRuntime, sanityFetch } from "sanity/lib/live"
 const PageTransition = lazy(() => import("app/components/PageTransition"))
 
 const headerQuery = defineQuery(`*[_type == "header"][0]`)
-const footerQuery = defineQuery(`*[_type == "footer"][0]`)
+const footerQuery = defineQuery(`
+	${assetMetadataFunctions}
+
+	*[_type == "footer"][0] {
+		...,
+		"links": reform::links(links)
+	}
+`)
 const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
 export const metadata: Metadata = {

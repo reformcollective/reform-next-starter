@@ -8,20 +8,9 @@ import { documentPathProjection } from "sanity/lib/slug-resolver"
 
 const sitemapCmsQuery = defineQuery(`
   *[
-    (
-      _type == "page" &&
-      defined(slug.current) &&
-      !(noIndex == true)
-    ) ||
-    (
-      _type == "blog1Hub" &&
-      defined(slug.current) &&
-      !(noIndex == true)
-    ) ||
-    (
-      _type == "blog1Post" &&
-      defined(slug.current)
-    )
+    _type == "page" &&
+    defined(slug.current) &&
+    !(noIndex == true)
   ] {
     "path": ${documentPathProjection("@")}
   }

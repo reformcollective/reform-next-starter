@@ -4,7 +4,7 @@
 
 import { assist } from "@sanity/assist"
 import { codeInput } from "@sanity/code-input"
-import { RocketIcon } from "@sanity/icons"
+import { DesktopIcon, RocketIcon, UserIcon } from "@sanity/icons"
 import { visionTool } from "@sanity/vision"
 import { env } from "app/env"
 import gsap from "gsap/all"
@@ -24,22 +24,20 @@ import { media } from "sanity-plugin-media"
 import { muxInput } from "sanity-plugin-mux-input"
 import { apiVersion, dataset, projectId, studioUrl } from "sanity/lib/api"
 import { presentationTool } from "sanity/presentation"
-import { blog1AuthorType } from "sanity/schemas/blog/blog-1/authorType"
-import { blog1BlockContentType } from "sanity/schemas/blog/blog-1/blockContentType"
-import { blog1CategoryType } from "sanity/schemas/blog/blog-1/categoryType"
-import { blog1PostType } from "sanity/schemas/blog/blog-1/postType"
+import { blogAuthorType } from "sanity/schemas/blog/authorType"
+import { blogBlockContentType } from "sanity/schemas/blog/blockContentType"
+import { blogCategoryType } from "sanity/schemas/blog/categoryType"
+import { logoSet } from "sanity/schemas/documents/logoSet"
 import page from "sanity/schemas/sanityPage"
-import { blog1Hub } from "sanity/schemas/singletons/blog-1"
 import footer from "sanity/schemas/singletons/footer"
 import header from "sanity/schemas/singletons/header"
 import settings from "sanity/schemas/singletons/settings"
-import { structureTool } from "sanity/structure"
+import { defaultIntentChecker, structureTool } from "sanity/structure"
 
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
 
 const singletons = [settings, header, footer]
-const allSingletons = [...singletons, blog1Hub]
 
 export default defineConfig({
 	/**
@@ -62,7 +60,7 @@ export default defineConfig({
 	schema: {
 		types: [
 			// singletons
-			...allSingletons,
+			...singletons,
 
 			// reusables
 			youtube,
@@ -103,11 +101,13 @@ export default defineConfig({
 			// 	decorators: [],
 			// }),
 
-			// blog-1 template schemas
-			blog1AuthorType,
-			blog1BlockContentType,
-			blog1CategoryType,
-			blog1PostType,
+			// blog schemas
+			blogAuthorType,
+			blogBlockContentType,
+			blogCategoryType,
+
+			// shared content, referenced from sections rather than owned by one
+			logoSet,
 
 			// project schemas
 			page,
@@ -159,22 +159,81 @@ export default defineConfig({
 				{
 					item: (S) =>
 						S.listItem()
-							.title("Blog 1")
+							.title("Pages")
+							.icon(DesktopIcon)
 							.child(
 								S.list()
-									.title("Blog 1")
+									.title("Pages")
 									.items([
 										S.listItem()
-											.title("Hub Settings")
+											.title("All Pages")
 											.child(
-												S.editor().id("blog1Hub").schemaType("blog1Hub").documentId("blog1Hub"),
+												S.documentList()
+													.title("All Pages")
+													.filter('_type == "page"')
+													.defaultOrdering([{ field: "slug.current", direction: "asc" }]),
 											),
-										S.documentTypeListItem("blog1Post").title("Posts"),
-										S.documentTypeListItem("blog1Author").title("Authors"),
-										S.documentTypeListItem("blog1Category").title("Categories"),
+										S.divider(),
+										S.listItem()
+											.title("Standard Pages")
+											.child(
+												S.documentList()
+													.title("Standard Pages")
+													.schemaType("page")
+													// pages predating the kind field have none, and are standard pages
+													.filter('_type == "page" && (kind == "page" || !defined(kind))')
+													.defaultOrdering([{ field: "slug.current", direction: "asc" }])
+													// keeps creation in this pane rather than routing it elsewhere
+													.canHandleIntent(defaultIntentChecker),
+											),
+										S.listItem()
+											.title("Hubs")
+											.child(
+												// hubs and their pages in one flat list. ordering by slug puts each hub
+												// directly above its own pages, since a hub's slug is their prefix
+												S.documentList()
+													.title("Hubs")
+													.schemaType("page")
+													.filter('_type == "page" && (kind == "hub" || kind == "hubDetail")')
+													.defaultOrdering([{ field: "slug.current", direction: "asc" }])
+													// without this, creating a page resolves to the page type's default
+													// location and replaces the whole pane stack
+													.canHandleIntent(defaultIntentChecker),
+											),
 									]),
 							),
-					hiddenTypes: ["blog1Hub", "blog1Post", "blog1Author", "blog1Category"],
+					hiddenTypes: ["page"],
+				},
+				{
+					/**
+					 * Documents that live outside the page tree and are referenced from more than
+					 * one place — authors, categories, icon sets, testimonials. Grouped by domain
+					 * so a project that drops the blog removes one child rather than picking
+					 * entries out of a flat list.
+					 */
+					item: (S) =>
+						S.listItem()
+							.title("Shared Content")
+							.icon(UserIcon)
+							.child(
+								S.list()
+									.title("Shared Content")
+									.items([
+										S.documentTypeListItem("logoSet").title("Logo Sets"),
+										S.divider(),
+										S.listItem()
+											.title("Blog")
+											.child(
+												S.list()
+													.title("Blog")
+													.items([
+														S.documentTypeListItem("blogAuthor").title("Authors"),
+														S.documentTypeListItem("blogCategory").title("Categories"),
+													]),
+											),
+									]),
+							),
+					hiddenTypes: ["blogAuthor", "blogCategory", "logoSet"],
 				},
 			]),
 		}),
@@ -213,7 +272,7 @@ export default defineConfig({
 		/**
 		 * our custom singleton plugin
 		 */
-		singletonPlugin(allSingletons.map((singleton) => singleton.name)),
+		singletonPlugin(singletons.map((singleton) => singleton.name)),
 		/**
 		 * adds unsplash as an image asset source
 		 */
