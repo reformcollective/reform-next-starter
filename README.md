@@ -1,14 +1,32 @@
 # Reform Next Starter
 
 Starter Setup!
-Remove each item from the list as you complete it.
+Remove each item from the list as you complete it, and delete everything above the cover image once the project is set up.
 
 ## Local Setup
 
+The first install is order-sensitive: `.env` has to exist before you run `pnpm i`, and the `library`
+submodule has to be initialized before dependencies can resolve (install handles that part for you).
+
 1. Clone using the template in GitHub
-1. Copy the starters `.env` file to your own `.env` file (you'll update this during sanity setup or ejection)
+1. Get the company-shared starter `.env` — it's the same for every new project and is documented in
+   the internal setup doc. It provides:
+   - `NEXT_PUBLIC_SANITY_PROJECT_ID`
+   - `NEXT_PUBLIC_SANITY_DATASET`
+   - `SANITY_AUTH_TOKEN`
+
+   You'll replace these during Sanity setup or ejection below. `pnpm i` only warns if it's missing,
+   but `pnpm dev` refuses to start without it, so grab it early.
+1. `pnpm i`. Beyond installing, this also:
+   - initializes the `library` submodule and sets `git config submodule.recurse true`
+     (`pnpm:devPreinstall`) — this has to happen first, because `sanity-plugin-link-field` is a
+     `file:` dependency pointing inside the submodule
+   - warns (does not fail) if `.env` is missing, and validates it against `app/env.ts` when present
+     (`postinstall`)
+   - installs the lefthook git hooks (`prepare`)
+1. `pnpm dev` and confirm the site boots (`pnpm init-project` runs this and the install together)
 1. Update all existing packages with `pnpm update --latest --recursive` (feel free to update the starter repository as well)
-1. Update node with `pnpm runtime set node lts`
+1. Bump the pinned node version with `pnpm runtime set node lts` — this writes `devEngines.runtime` in `package.json`, so commit it
 1. Update pnpm with `pnpm self-update`
 1. Update the README.md to add project-specific image and name below
 1. Delete the `app/visual-tests` folder
@@ -50,6 +68,7 @@ If this project is using a CMS, set up a new project in Sanity. If we're not sur
    - `NEXT_PUBLIC_SANITY_PROJECT_ID` is your project ID, for example `m85xxx23`
    - `NEXT_PUBLIC_SANITY_DATASET` is your dataset name, for a new project this is `production` (if we're working on updates while the site is live we'll use `development`)
    - `SANITY_AUTH_TOKEN` is a read only access token. Generate one in Sanity under the `API` tab
+   - `SANITY_SEED_TOKEN` (optional) is an editor-scoped token, only needed to run `scripts/reset-to-baseline.ts`
 
 ## Blog Adoption
 
@@ -76,6 +95,11 @@ Built with Next. Install dependencies with `pnpm i` and run with `pnpm dev`
 
 ## Setup
 
+1. Get a `.env`
+   Ask the team for the shared `.env` and drop it in the project root. `pnpm i` works without it and
+   only warns, but `pnpm dev` stops with a message until it's there. If it exists but is missing a
+   key, you'll get the exact variable name.
+
 1. Install PNPM
    You need at least pnpm 10. pnpm manages its own version, so any version >=10.x will work.
 
@@ -87,6 +111,18 @@ Built with Next. Install dependencies with `pnpm i` and run with `pnpm dev`
 
    I've configured my default logger to be `WIREIT_LOGGER=metrics`
 
+### The library submodule
+
+`library/` is a git submodule, and it has to be checked out before dependencies can resolve —
+`sanity-plugin-link-field` is a `file:` dependency pointing at a tarball inside it. `pnpm i` runs
+`git submodule update --init` for you (via `pnpm:devPreinstall`), but it skips that when your working
+tree is dirty so it never clobbers in-progress library work. If `library/` is empty, run
+`pnpm init-submodule` on a clean tree.
+
+One consequence worth knowing: a submodule sitting at the wrong revision is itself a dirty working
+tree, so `pnpm i` will not move it back. Git handles that case instead — install sets
+`submodule.recurse true`, so `git pull` and `git checkout` sync `library/` for you.
+
 ---
 
-See [CONVENTIONS.md](CONVENTIONS.md) for code and project structure conventions.
+See [AGENTS.md](AGENTS.md) for code and project structure conventions.

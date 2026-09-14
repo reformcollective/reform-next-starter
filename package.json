@@ -4,7 +4,8 @@
 	"author": "Reform Collective",
 	"type": "module",
 	"scripts": {
-		"dev": "wireit",
+		"dev": "pnpm require-env && pnpm dev:server",
+		"dev:server": "wireit",
 		"build": "wireit",
 		"serve": "wireit",
 		"test": "wireit",
@@ -14,9 +15,10 @@
 		"pnpm:devPreinstall": "pnpm init-submodule && pnpm git-config",
 		"postinstall": "pnpm check-env",
 		"prepare": "lefthook install",
-		"check-env": "if [ -n \"$CI\" ]; then exit 0; else node --env-file=.env app/env.ts || (pnpm dlx cowsay 'You are missing a .env file' && exit 1); fi",
+		"check-env": "if [ -n \"$CI\" ]; then exit 0; elif [ ! -f .env ]; then pnpm dlx cowsay 'No .env yet! Copy the shared .env into the project root before running pnpm dev'; exit 0; else node --env-file=.env app/env.ts; fi",
+		"require-env": "if [ -n \"$CI\" ]; then exit 0; elif [ ! -f .env ]; then pnpm dlx cowsay 'No .env! Copy the shared .env into the project root, then try again'; exit 1; else node --env-file=.env app/env.ts; fi",
 		"git-config": "git config submodule.recurse true",
-		"init-submodule": "git submodule update --init",
+		"init-submodule": "git diff --exit-code --quiet && git submodule update --init || exit 0",
 		"check-projections": "wireit"
 	},
 	"dependencies": {
@@ -103,7 +105,7 @@
 	},
 	"packageManager": "pnpm@11.7.0",
 	"wireit": {
-		"dev": {
+		"dev:server": {
 			"command": "next dev",
 			"dependencies": [
 				"typegen:dev"
