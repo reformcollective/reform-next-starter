@@ -11,6 +11,7 @@ Applies when implementing from a Figma file or URL.
 Treat Figma as the source of truth unless told otherwise. Don't guess from screenshots. Pixel values are always scaled (`f.responsive` or `f.small`) unless stated otherwise.
 
 Before implementing:
+
 - Inspect whether key visuals are components, instances, variants, vectors, or exportable assets.
 - Reuse existing Figma components, styles, variables and design-system assets before recreating anything.
 
