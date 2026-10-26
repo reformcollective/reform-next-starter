@@ -1,0 +1,21 @@
+name: Debug Lighthouse token
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/debug-lighthouse-token.yml
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fingerprint LIGHTHOUSE_PAT
+        env:
+          T: ${{ secrets.LIGHTHOUSE_PAT }}
+        run: |
+          echo "length: ${#T}"
+          echo "starts with github_pat_: $([[ "$T" == github_pat_* ]] && echo yes || echo no)"
+          echo "contains whitespace or newline: $(printf '%s' "$T" | grep -c '[[:space:]]')"
+          echo "sha256 first 8: $(printf '%s' "$T" | sha256sum | cut -c1-8)"
+          echo "http status for repo: $(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $T" https://api.github.com/repos/reformcollective/lighthouse)"
+          git ls-remote --heads "https://x-access-token:${T}@github.com/reformcollective/lighthouse.git" gh-pages 2>&1 | sed "s/${T}/***/g" || true
