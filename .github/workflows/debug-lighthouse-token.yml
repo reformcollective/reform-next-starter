@@ -7,7 +7,11 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, blacksmith-4vcpu-ubuntu-2204]
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Fingerprint LIGHTHOUSE_PAT
         env:
