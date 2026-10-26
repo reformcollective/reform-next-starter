@@ -37,3 +37,21 @@ jobs:
           echo "contains whitespace or newline: $(printf '%s' "$T" | grep -c '[[:space:]]')"
           echo "sha256 first 8: $(printf '%s' "$T" | sha256sum | cut -c1-8)"
           echo "http status for repo: $(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $T" https://api.github.com/repos/reformcollective/lighthouse)"
+
+      - uses: actions/checkout@v6
+        with:
+          path: persist-default
+
+      - uses: actions/checkout@v6
+        with:
+          path: persist-false
+          persist-credentials: false
+
+      - name: ls-remote from inside each checkout
+        env:
+          T: ${{ env.LIGHTHOUSE_PAT }}
+        run: |
+          for d in persist-default persist-false; do
+            echo "== $d"
+            git -C "$d" ls-remote --heads "https://x-access-token:${T}@github.com/reformcollective/lighthouse.git" gh-pages 2>&1 | sed "s/${T}/***/g"
+          done
