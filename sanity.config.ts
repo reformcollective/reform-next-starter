@@ -5,6 +5,8 @@
 import { assist } from "@sanity/assist"
 import { codeInput } from "@sanity/code-input"
 import { DesktopIcon } from "@sanity/icons/Desktop"
+import { DocumentTextIcon } from "@sanity/icons/DocumentText"
+import { HelpCircleIcon } from "@sanity/icons/HelpCircle"
 import { RocketIcon } from "@sanity/icons/Rocket"
 import { UserIcon } from "@sanity/icons/User"
 import { visionTool } from "@sanity/vision"
@@ -24,6 +26,8 @@ import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash"
 import { linkField } from "sanity-plugin-link-field"
 import { media } from "sanity-plugin-media"
 import { muxInput } from "sanity-plugin-mux-input"
+import HelpDocPane from "sanity/components/help/HelpDocPane"
+import { type HelpEntry, helpTree } from "sanity/components/help/helpDocs"
 import { apiVersion, dataset, projectId, studioUrl } from "sanity/lib/api"
 import { presentationTool } from "sanity/presentation"
 import { blogAuthorType } from "sanity/schemas/blog/authorType"
@@ -34,12 +38,46 @@ import page from "sanity/schemas/sanityPage"
 import footer from "sanity/schemas/singletons/footer"
 import header from "sanity/schemas/singletons/header"
 import settings from "sanity/schemas/singletons/settings"
-import { defaultIntentChecker, structureTool } from "sanity/structure"
+import {
+	defaultIntentChecker,
+	type ListItemBuilder,
+	type StructureBuilder,
+	structureTool,
+} from "sanity/structure"
 
 // if GSAP tries to run during manifest generation it might fail in prod
 gsap.ticker.sleep()
 
 const singletons = [settings, header, footer]
+
+function helpEntryItem(
+	S: StructureBuilder,
+	entry: HelpEntry,
+): ListItemBuilder | ReturnType<StructureBuilder["divider"]> {
+	if (entry === "divider") return S.divider()
+	if ("blocks" in entry) {
+		return S.listItem()
+			.id(entry.id)
+			.title(entry.title)
+			.icon(DocumentTextIcon)
+			.child(
+				S.component()
+					.id(entry.id)
+					.title(entry.title)
+					.component(HelpDocPane)
+					.options({ docId: entry.id }),
+			)
+	}
+	return S.listItem()
+		.id(entry.id)
+		.title(entry.title)
+		.child(
+			S.list()
+				.id(entry.id)
+				.title(entry.title)
+				.items(entry.items.map((item) => helpEntryItem(S, item))),
+		)
+}
 
 export default defineConfig({
 	/**
@@ -236,6 +274,18 @@ export default defineConfig({
 									]),
 							),
 					hiddenTypes: ["blogAuthor", "blogCategory", "logoSet"],
+				},
+				{
+					item: (S) =>
+						S.listItem()
+							.title("Help & Docs")
+							.icon(HelpCircleIcon)
+							.child(
+								S.list()
+									.title("Help & Docs")
+									.items(helpTree.map((entry) => helpEntryItem(S, entry))),
+							),
+					hiddenTypes: [],
 				},
 			]),
 		}),
