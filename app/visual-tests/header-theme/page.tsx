@@ -1,8 +1,10 @@
 "use client"
 
 import { colors } from "app/styles/colors.css"
+import textStyles from "app/styles/text"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled"
+import { useHeaderMode } from "library/useSectionTheme"
 
 /**
  * exercises library/useSectionTheme without needing Sanity content.
@@ -31,8 +33,11 @@ const blocks = [
 ] as const
 
 export default function HeaderThemeVisualTestPage() {
+	const mode = useHeaderMode()
+
 	return (
 		<Wrapper>
+			<ModeBadge>header mode: {mode}</ModeBadge>
 			<Nav>
 				<h1>Header theme test</h1>
 				<UniversalLink href="/visual-tests">← visual tests</UniversalLink>
@@ -64,6 +69,20 @@ const Wrapper = styled("div", [
 		grid-column: fullbleed;
 		display: grid;
 		grid-template-columns: var(--subgrid-columns);
+	`),
+])
+
+const ModeBadge = styled("div", [
+	f.responsive(css`
+		${textStyles.p1}
+		position: fixed;
+		top: calc(var(--site-header-height, 100px) + 16px);
+		right: 16px;
+		z-index: 10;
+		padding: 8px 16px;
+		background: ${colors.white};
+		color: ${colors.black};
+		border: 2px solid ${colors.blue};
 	`),
 ])
 

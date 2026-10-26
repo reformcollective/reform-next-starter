@@ -1,56 +1,51 @@
-"use client"
-
-import gsap from "gsap/all"
+import textStyles from "app/styles/text"
+import UniversalLink from "library/link"
 import { PageCommitSignal } from "library/link/usePageTransition"
-import { styled } from "library/styled"
-import { useAnimation } from "library/useAnimation"
-import { useRef } from "react"
+import { listStaticRoutes } from "library/list-pages"
+import { css, f, styled } from "library/styled"
+
+const prefix = "/visual-tests/"
 
 export default function VisualTestsPage() {
-	const box = useRef<HTMLDivElement>(null)
-
-	useAnimation(() => {
-		gsap.from(box.current, {
-			background: "red",
-			duration: 5,
-		})
-	}, [])
+	const tests = listStaticRoutes().filter((route) => route.startsWith(prefix))
 
 	return (
-		<div>
+		<Wrapper>
 			<PageCommitSignal />
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-		</div>
+			<h1>Visual tests</h1>
+			<List>
+				{tests.map((route) => (
+					<Item key={route}>
+						<UniversalLink href={route}>{route.slice(prefix.length)}</UniversalLink>
+					</Item>
+				))}
+			</List>
+		</Wrapper>
 	)
 }
 
-const Test = styled("div", {
-	background: "whitesmoke",
-	padding: "100px",
-})
+const Wrapper = styled("div", [
+	f.responsive(css`
+		grid-column: main;
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		padding: calc(var(--site-header-height, 100px) + 48px) 0 48px;
+	`),
+])
 
-const Box = styled("div", {
-	border: "1px solid black",
-	background: "dodgerblue",
-	borderRadius: "5px",
-	padding: "10px",
-	width: "100px",
-	height: "100px",
-})
+const List = styled("ul", [
+	f.responsive(css`
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		list-style: none;
+		padding: 0;
+	`),
+])
+
+const Item = styled("li", [
+	f.responsive(css`
+		${textStyles.p1}
+	`),
+])
