@@ -13,7 +13,7 @@ allowBuilds:
 ignoreWorkspaceRootCheck: true
 overrides:
   # the vanilla split loader runs vite 8 (oxc) over tsx under jsx: preserve and fails; keep the compiler on vite 7
-  "@vanilla-extract/compiler>vite": 7.3.2
+  "@vanilla-extract/compiler>vite": 7.3.7
 minimumReleaseAgeExclude:
   - "@sanity/assist@6.1.3"
   - "@sanity/client@7.23.0"
