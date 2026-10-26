@@ -19,3 +19,17 @@ jobs:
           echo "sha256 first 8: $(printf '%s' "$T" | sha256sum | cut -c1-8)"
           echo "http status for repo: $(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $T" https://api.github.com/repos/reformcollective/lighthouse)"
           git ls-remote --heads "https://x-access-token:${T}@github.com/reformcollective/lighthouse.git" gh-pages 2>&1 | sed "s/${T}/***/g" || true
+
+      - name: Load secrets the way the Lighthouse workflow does
+        uses: oNaiPs/secrets-to-env-action@v1.5
+        with:
+          secrets: ${{ toJSON(secrets) }}
+
+      - name: Fingerprint env.LIGHTHOUSE_PAT after loading
+        env:
+          T: ${{ env.LIGHTHOUSE_PAT }}
+        run: |
+          echo "length: ${#T}"
+          echo "contains whitespace or newline: $(printf '%s' "$T" | grep -c '[[:space:]]')"
+          echo "sha256 first 8: $(printf '%s' "$T" | sha256sum | cut -c1-8)"
+          echo "http status for repo: $(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $T" https://api.github.com/repos/reformcollective/lighthouse)"
