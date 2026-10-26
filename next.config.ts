@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
 	// enable react compiler, error when a file can't be compiled
 	reactCompiler: { panicThreshold: "all_errors" },
 
+	experimental: {
+		// the vanilla split loader writes virtual files Turbopack doesn't track, so a restored
+		// build cache serves stale styled exports ("Export X doesn't exist in target module")
+		turbopackFileSystemCacheForBuild: false,
+	},
+
 	turbopack: {
 		rules: {
 			// importing inline SVGs as React components
