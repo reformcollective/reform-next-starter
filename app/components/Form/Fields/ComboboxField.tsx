@@ -126,7 +126,7 @@ export function ComboboxField(props: ComboboxFieldProps) {
 							{currentMultiValue.map((item) => (
 								<Chip key={item}>
 									{item}
-									<ChipRemove>×</ChipRemove>
+									<ChipRemove aria-label={`Remove ${item}`}>×</ChipRemove>
 								</Chip>
 							))}
 						</Chips>

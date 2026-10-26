@@ -33,6 +33,7 @@ export function Categories({ items }: { items: Card[] }) {
 			<PillGroup>
 				<Pill
 					type="button"
+					aria-pressed={categories.length === 0}
 					data-selected={categories.length === 0}
 					onClick={() => void setCategories(null)}
 				>
@@ -41,7 +42,13 @@ export function Categories({ items }: { items: Card[] }) {
 				{uniqueCategories.map((item) => {
 					const selected = categories.includes(item)
 					return (
-						<Pill type="button" key={item} onClick={() => toggle(item)} data-selected={selected}>
+						<Pill
+							type="button"
+							key={item}
+							onClick={() => toggle(item)}
+							aria-pressed={selected}
+							data-selected={selected}
+						>
 							{item}
 						</Pill>
 					)

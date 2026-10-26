@@ -31,3 +31,15 @@ export const geist = Geist({
 //     },
 //   ],
 // })
+
+// export const exampleVariableFont = localFont({
+//   adjustFontFallback: "Arial",
+//   display: "swap",
+//   src: [
+//     {
+//       path: "./Example-VF.woff2",
+//       weight: "300 900",
+//       style: "normal",
+//     },
+//   ],
+// })

@@ -1,5 +1,6 @@
 import { colors } from "app/styles/colors.css"
 import textStyles, { clampText } from "app/styles/text"
+import { formatPostDate } from "app/utils/formatPostDate"
 import UniversalLink from "library/link"
 import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
@@ -9,13 +10,7 @@ import type { Card } from "../types"
 export default function SmallCard({ data }: { data: Card }) {
 	const { path, mainImage, title, publishedAt } = data
 
-	const formattedDate = publishedAt
-		? new Date(publishedAt).toLocaleDateString("en-US", {
-				month: "long",
-				day: "numeric",
-				year: "numeric",
-			})
-		: null
+	const formattedDate = publishedAt ? formatPostDate(publishedAt) : null
 
 	return (
 		<Wrapper href={path ?? ""}>

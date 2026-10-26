@@ -108,7 +108,7 @@ export const pageMetadata = [
 				const duplicates = await context
 					.getClient({ apiVersion })
 					.fetch<number>(
-						`count(*[_type == "page" && slug.current == $slug && coalesce(_system.base.id, _id) != $baseId])`,
+						`count(*[_type == "page" && slug.current == $slug && !sanity::versionOf($baseId)])`,
 						{ slug: slug.current, baseId },
 					)
 				if (duplicates > 0)

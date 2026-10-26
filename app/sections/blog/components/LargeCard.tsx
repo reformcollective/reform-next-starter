@@ -2,6 +2,7 @@
 
 import { colors } from "app/styles/colors.css"
 import textStyles, { clampText } from "app/styles/text"
+import { formatPostDate } from "app/utils/formatPostDate"
 import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
 import { useRef, useState } from "react"
@@ -15,13 +16,7 @@ export default function LargeCard({ data }: { data: FeaturedCard }) {
 	const linkRef = useRef<HTMLAnchorElement>(null)
 	const { mainImage, title, articleTextPreview, path, publishedAt } = data
 
-	const formattedDate = publishedAt
-		? new Date(publishedAt).toLocaleDateString("en-US", {
-				month: "long",
-				day: "numeric",
-				year: "numeric",
-			})
-		: null
+	const formattedDate = publishedAt ? formatPostDate(publishedAt) : null
 
 	return (
 		<Wrapper
