@@ -1,6 +1,9 @@
 import type { UserConfig } from "unlighthouse/config"
 
 export default {
+	scanner: {
+		exclude: [/\/visual-tests/],
+	},
 	ci: {
 		buildStatic: true,
 		reporter: "jsonSimple",
