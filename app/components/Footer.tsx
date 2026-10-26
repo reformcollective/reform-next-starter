@@ -67,6 +67,7 @@ const Wrapper = styled(
 		color: white;
 		display: grid;
 		grid-column: fullbleed;
+		grid-row: footer;
 		place-items: center;
 
 		/* min rather than fixed, so the CMS link row can wrap without overflowing */

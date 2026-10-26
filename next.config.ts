@@ -8,11 +8,6 @@ const nextConfig: NextConfig = {
 	// type-aware linting checks this separately from next build
 	typescript: { ignoreBuildErrors: true },
 
-	experimental: {
-		// enable view transition support
-		viewTransition: true,
-	},
-
 	images: {
 		qualities: [90],
 	},

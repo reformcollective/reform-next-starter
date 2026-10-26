@@ -13,6 +13,13 @@ export default defineCliConfig({
 	vite: {
 		plugins: [tsconfigPaths()],
 	},
+	schemaExtraction: {
+		watchPatterns: [
+			"sanity/**/*.{ts,tsx}",
+			"library/sanity/**/*.{ts,tsx}",
+			"library/link/**/*.{ts,tsx}",
+		],
+	},
 	typegen: {
 		path: ["app/**/*.{ts,tsx,js,jsx}", "library/**/*.{ts,tsx,js,jsx}"],
 	},

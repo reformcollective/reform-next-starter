@@ -1,4 +1,4 @@
-import { ImagesIcon } from "@sanity/icons"
+import { ImagesIcon } from "@sanity/icons/Images"
 import { universalImage } from "library/sanity/reusables"
 import { defineField, defineType } from "sanity"
 

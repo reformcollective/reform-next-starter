@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 						</Suspense>
 						<SanityRuntime />
 						{headerData && <Header {...headerData} />}
-						{children}
+						<Content>{children}</Content>
 						{footerData && <Footer {...footerData} />}
 					</PageRoot>
 				</GlobalProviders>
@@ -98,5 +98,23 @@ const PageRoot = styled("div", [
 			margin: "24px",
 			sourceDesignWidth: mobileDesignSize,
 		})};
+	`),
+])
+
+/**
+ * holds every section of the page in the grid's `content` row. without this each
+ * section places itself directly on the page grid, and any section past the first
+ * lands in an implicit row *after* `footer`, putting the footer above them.
+ *
+ * the page grid is re-declared here so sections can keep addressing `main` and
+ * `fullbleed` exactly as they do on the root.
+ */
+const Content = styled("div", [
+	f.responsive(css`
+		grid-row: content;
+		grid-column: fullbleed;
+		display: grid;
+		grid-template-columns: var(--subgrid-columns);
+		align-content: start;
 	`),
 ])

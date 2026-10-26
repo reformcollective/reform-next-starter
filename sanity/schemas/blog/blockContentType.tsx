@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 
-import { ImageIcon } from "@sanity/icons"
+import { ImageIcon } from "@sanity/icons/Image"
 import { universalImage } from "library/sanity/reusables"
 import { defineType, defineArrayMember, defineField } from "sanity"
 

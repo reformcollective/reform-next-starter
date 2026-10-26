@@ -1,4 +1,4 @@
-import { InsertAboveIcon } from "@sanity/icons"
+import { InsertAboveIcon } from "@sanity/icons/InsertAbove"
 import { defineField, defineType } from "sanity"
 
 export default defineType({

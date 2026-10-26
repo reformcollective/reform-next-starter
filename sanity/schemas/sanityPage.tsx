@@ -1,7 +1,9 @@
 import type { ReactNode } from "react"
 import type { Page } from "sanity.types"
 
-import { DesktopIcon, DocumentTextIcon, FolderIcon } from "@sanity/icons"
+import { DesktopIcon } from "@sanity/icons/Desktop"
+import { DocumentTextIcon } from "@sanity/icons/DocumentText"
+import { FolderIcon } from "@sanity/icons/Folder"
 import { redirect, universalImage } from "library/sanity/reusables"
 import { siteURL } from "library/siteURL"
 import { type ConditionalProperty, defineArrayMember, defineField, defineType } from "sanity"

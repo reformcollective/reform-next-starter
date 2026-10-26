@@ -1,4 +1,4 @@
-import { CogIcon } from "@sanity/icons"
+import { CogIcon } from "@sanity/icons/Cog"
 import { universalImage } from "library/sanity/reusables"
 import { defineField, defineType } from "sanity"
 

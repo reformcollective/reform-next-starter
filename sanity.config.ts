@@ -4,7 +4,9 @@
 
 import { assist } from "@sanity/assist"
 import { codeInput } from "@sanity/code-input"
-import { DesktopIcon, RocketIcon, UserIcon } from "@sanity/icons"
+import { DesktopIcon } from "@sanity/icons/Desktop"
+import { RocketIcon } from "@sanity/icons/Rocket"
+import { UserIcon } from "@sanity/icons/User"
 import { visionTool } from "@sanity/vision"
 import { env } from "app/env"
 import gsap from "gsap/all"
