@@ -14,7 +14,7 @@ export default function Header({ headerText }: NonNullable<HeaderQueryResult>) {
 	// both hooks share the ref: useAutoHideHeader writes data-header-scrolled and
 	// --site-header-height onto it, useSectionTheme measures it to place its observer strip
 	useAutoHideHeader(wrapperRef)
-	useSectionTheme(wrapperRef)
+	useSectionTheme(wrapperRef, { offset: 100 })
 	const mode = useHeaderMode()
 
 	return (
