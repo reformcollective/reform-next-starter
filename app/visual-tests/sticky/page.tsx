@@ -155,14 +155,16 @@ const StickyElement = styled("div", {
 			goopType,
 			base: [
 				f.responsive(css`
-					${top === "neg"
-						? css`
-								*:has(> &) {
-									border: 2px solid red;
-									container-type: size;
-								}
-							`
-						: ""}
+					${
+						top === "neg"
+							? css`
+									*:has(> &) {
+										border: 2px solid red;
+										container-type: size;
+									}
+								`
+							: ""
+					}
 
 					${nativeSmoothPin({
 						top: topStr[top],

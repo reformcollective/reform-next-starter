@@ -242,14 +242,12 @@ const TopSide = styled("div", [
 ])
 
 const TextContent = styled("div", [
-	f.responsive(
-		css`
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-			color: ${colors.blog1.primary800};
-		`,
-	),
+	f.responsive(css`
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		color: ${colors.blog1.primary800};
+	`),
 ])
 
 const Details = styled("div", [
