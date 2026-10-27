@@ -1,0 +1,6 @@
+{
+	"permissions": {
+		"allow": ["Bash(WIREIT_LOGGER=metrics pnpm lint)", "Bash(pnpm exec *)", "Bash(pnpm sanity *)"],
+		"ask": ["Bash(git commit *)", "Bash(git push *)", "Bash(git merge *)", "Bash(git rebase *)"]
+	}
+}

@@ -33,9 +33,11 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-	const { data: headerData } = await sanityFetch({ query: headerQuery })
-	const { data: footerData } = await sanityFetch({ query: footerQuery })
-	const { data: settings } = await sanityFetch({ query: settingsQuery })
+	const [{ data: headerData }, { data: footerData }, { data: settings }] = await Promise.all([
+		sanityFetch({ query: headerQuery }),
+		sanityFetch({ query: footerQuery }),
+		sanityFetch({ query: settingsQuery }),
+	])
 
 	return (
 		<html lang="en">
@@ -48,7 +50,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
 						</Suspense>
 						<SanityRuntime />
 						{headerData && <Header {...headerData} />}
-						{children}
+						<Content>{children}</Content>
 						{footerData && <Footer {...footerData} />}
 					</PageRoot>
 				</GlobalProviders>
@@ -98,5 +100,16 @@ const PageRoot = styled("div", [
 			margin: "24px",
 			sourceDesignWidth: mobileDesignSize,
 		})};
+	`),
+])
+
+/** Without this wrapper, sections past the first land in an implicit row after `footer`. */
+const Content = styled("div", [
+	f.responsive(css`
+		grid-row: content;
+		grid-column: fullbleed;
+		display: grid;
+		grid-template-columns: var(--subgrid-columns);
+		align-content: start;
 	`),
 ])

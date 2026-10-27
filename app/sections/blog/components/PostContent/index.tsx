@@ -4,6 +4,7 @@ import type { Page } from "sanity.types"
 import BlogRich from "app/sections/blog/BlogRich"
 import { colors } from "app/styles/colors.css"
 import textStyles from "app/styles/text"
+import { formatPostDate } from "app/utils/formatPostDate"
 import getReadTime from "app/utils/getReadTime"
 import { css, f, styled } from "library/styled"
 import UniversalImage from "library/UniversalImage"
@@ -35,13 +36,7 @@ export default function PostContent({
 }) {
 	const { author, categories, hub } = context
 
-	const formattedDate = publishedAt
-		? new Date(publishedAt).toLocaleDateString("en-US", {
-				month: "long",
-				day: "numeric",
-				year: "numeric",
-			})
-		: null
+	const formattedDate = publishedAt ? formatPostDate(publishedAt) : null
 
 	const readTime = getReadTime(body)
 
@@ -242,14 +237,12 @@ const TopSide = styled("div", [
 ])
 
 const TextContent = styled("div", [
-	f.responsive(
-		css`
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-			color: ${colors.blog1.primary800};
-		`,
-	),
+	f.responsive(css`
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		color: ${colors.blog1.primary800};
+	`),
 ])
 
 const Details = styled("div", [

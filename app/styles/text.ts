@@ -33,7 +33,7 @@ export function createStyle({
 		unitsPerEm: number
 	}
 	fontStyle?: "normal" | "italic" | "oblique"
-	fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+	fontWeight?: number
 	/**
 	 * a letter spacing value in pixels, will be converted to em using the provided font size
 	 */

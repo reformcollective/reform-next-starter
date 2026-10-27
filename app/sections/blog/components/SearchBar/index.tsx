@@ -41,6 +41,7 @@ export function SearchBar() {
 			<Row>
 				<Input
 					name="search"
+					aria-label="Search articles"
 					value={inputValue}
 					onChange={(e) => {
 						setInputValue(e.target.value)

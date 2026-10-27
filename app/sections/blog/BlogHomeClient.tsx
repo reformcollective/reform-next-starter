@@ -66,10 +66,14 @@ export function BlogHomeClient({
 
 	useEffect(() => {
 		if (searchMode !== "server") return
+		let stale = false
 		startTransition(async () => {
 			const results = await searchPosts(searchQuery ?? "", hubSlug, nestedHubPrefixes)
-			setServerResults(results)
+			if (!stale) setServerResults(results)
 		})
+		return () => {
+			stale = true
+		}
 	}, [searchQuery, searchMode, hubSlug, nestedHubPrefixes])
 
 	const clientSearchedCards = useSearchResults(

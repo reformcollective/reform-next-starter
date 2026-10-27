@@ -8,17 +8,18 @@ const nextConfig: NextConfig = {
 	// type-aware linting checks this separately from next build
 	typescript: { ignoreBuildErrors: true },
 
-	experimental: {
-		// enable view transition support
-		viewTransition: true,
-	},
-
 	images: {
 		qualities: [90],
 	},
 
 	// enable react compiler, error when a file can't be compiled
 	reactCompiler: { panicThreshold: "all_errors" },
+
+	experimental: {
+		// the vanilla split loader writes virtual files Turbopack doesn't track, so a restored
+		// build cache serves stale styled exports ("Export X doesn't exist in target module")
+		turbopackFileSystemCacheForBuild: false,
+	},
 
 	turbopack: {
 		rules: {

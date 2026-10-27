@@ -1,7 +1,9 @@
 import type { ReactNode } from "react"
 import type { Page } from "sanity.types"
 
-import { DesktopIcon, DocumentTextIcon, FolderIcon } from "@sanity/icons"
+import { DesktopIcon } from "@sanity/icons/Desktop"
+import { DocumentTextIcon } from "@sanity/icons/DocumentText"
+import { FolderIcon } from "@sanity/icons/Folder"
 import { redirect, universalImage } from "library/sanity/reusables"
 import { siteURL } from "library/siteURL"
 import { type ConditionalProperty, defineArrayMember, defineField, defineType } from "sanity"
@@ -106,7 +108,7 @@ export const pageMetadata = [
 				const duplicates = await context
 					.getClient({ apiVersion })
 					.fetch<number>(
-						`count(*[_type == "page" && slug.current == $slug && coalesce(_system.base.id, _id) != $baseId])`,
+						`count(*[_type == "page" && slug.current == $slug && !sanity::versionOf($baseId)])`,
 						{ slug: slug.current, baseId },
 					)
 				if (duplicates > 0)

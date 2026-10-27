@@ -19,89 +19,6 @@
 		"init-submodule": "git submodule update --init",
 		"check-projections": "wireit"
 	},
-	"dependencies": {
-		"@base-ui/react": "^1.6.0",
-		"@capsizecss/core": "^4.1.3",
-		"@sanity/assist": "^6.1.3",
-		"@sanity/client": "^7.23.0",
-		"@sanity/code-input": "^7.1.6",
-		"@sanity/icons": "^3.7.4",
-		"@sanity/vision": "^6.2.0",
-		"@svgr/webpack": "^8.1.0",
-		"@t3-oss/env-nextjs": "^0.13.11",
-		"@total-typescript/ts-reset": "^0.6.1",
-		"@total-typescript/tsconfig": "^1.0.4",
-		"@types/node": "^26.0.1",
-		"@types/react": "^19.2.17",
-		"@types/react-dom": "^19.2.3",
-		"@typescript/native-preview": "7.0.0-dev.20260629.1",
-		"@userback/widget": "^0.3.12",
-		"@vanilla-extract/css": "^1.21.0",
-		"ahooks": "^3.9.7",
-		"babel-plugin-react-compiler": "^1.0.0",
-		"gsap": "^3.15.0",
-		"lefthook": "^2.1.9",
-		"next": "^16.2.9",
-		"next-sanity": "^13.1.1",
-		"nuqs": "^2.8.9",
-		"oxfmt": "^0.56.0",
-		"oxlint": "^1.71.0",
-		"oxlint-tsgolint": "^0.23.0",
-		"react": "^19.2.7",
-		"react-dom": "^19.2.7",
-		"react-player": "^3.4.0",
-		"sanity": "^6.2.0",
-		"sanity-plugin-asset-source-unsplash": "^7.0.10",
-		"sanity-plugin-link-field": "file:library/vendor/sanity-plugin-link-field-1.6-preview.tgz",
-		"sanity-plugin-media": "^5.0.4",
-		"sanity-plugin-mux-input": "^4.0.3",
-		"server-only": "^0.0.1",
-		"stylelint": "^17.14.0",
-		"svgo": "^4.0.1",
-		"typescript": "^6.0.3",
-		"unlighthouse": "^0.18.0",
-		"vite-tsconfig-paths": "^6.1.1",
-		"wireit": "^0.14.13",
-		"zod": "^4.4.3"
-	},
-	"devDependencies": {},
-	"stylelint": {
-		"extends": "./library/config/stylelint.config.js",
-		"rules": {
-			"plugin/use-baseline": [
-				true,
-				{
-					"available": 2024,
-					"ignoreSelectors": [
-						"/^view-transition-/"
-					],
-					"ignoreProperties": {
-						"background-clip": [
-							"text"
-						],
-						"view-transition-name": [],
-						"text-wrap": [
-							"pretty"
-						],
-						"user-select": [
-							"none"
-						],
-						"overscroll-behavior": [
-							"contain"
-						]
-					}
-				}
-			]
-		}
-	},
-	"devEngines": {
-		"runtime": {
-			"name": "node",
-			"version": "^24.18.0",
-			"onFail": "download"
-		}
-	},
-	"packageManager": "pnpm@11.7.0",
 	"wireit": {
 		"dev": {
 			"command": "next dev",
@@ -143,7 +60,7 @@
 			]
 		},
 		"sanity-schema:dev": {
-			"command": "sanity schema extract --watch",
+			"command": "sanity schema extract --watch --force",
 			"service": true
 		},
 		"typegen:dev": {
@@ -233,5 +150,91 @@
 			],
 			"output": []
 		}
-	}
+	},
+	"dependencies": {
+		"@base-ui/react": "^1.9.0",
+		"@capsizecss/core": "^4.1.3",
+		"@sanity/assist": "^6.2.5",
+		"@sanity/client": "^8.11.0",
+		"@sanity/code-input": "^7.3.14",
+		"@sanity/icons": "^5.2.3",
+		"@sanity/ui": "^3.2.0",
+		"@sanity/vision": "^6.20.0",
+		"@svgr/webpack": "^8.1.0",
+		"@t3-oss/env-nextjs": "^0.13.11",
+		"@total-typescript/ts-reset": "^0.6.1",
+		"@total-typescript/tsconfig": "^1.0.4",
+		"@types/node": "^26.6.5",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
+		"@typescript/native-preview": "7.0.0-dev.20260707.2",
+		"@userback/widget": "^0.3.13",
+		"@vanilla-extract/css": "^1.21.3",
+		"ahooks": "^3.10.0",
+		"babel-plugin-react-compiler": "^1.0.0",
+		"gsap": "^3.15.0",
+		"lefthook": "^2.2.2",
+		"next": "^16.4.3",
+		"next-sanity": "^13.4.0",
+		"nuqs": "^2.10.2",
+		"oxfmt": "^0.74.0",
+		"oxlint": "^1.89.0",
+		"oxlint-tsgolint": "^7.0.2005",
+		"react": "^19.3.1",
+		"react-dom": "^19.3.1",
+		"react-player": "^3.4.0",
+		"sanity": "^6.20.0",
+		"sanity-plugin-asset-source-unsplash": "^7.0.30",
+		"sanity-plugin-link-field": "file:library/vendor/sanity-plugin-link-field-1.6-preview.tgz",
+		"sanity-plugin-media": "^6.5.0",
+		"sanity-plugin-mux-input": "^5.2.0",
+		"server-only": "^0.0.1",
+		"stylelint": "^17.16.0",
+		"svgo": "^4.1.0",
+		"typescript": "^6.0.3",
+		"unlighthouse": "^0.19.1",
+		"vite-tsconfig-paths": "^6.1.1",
+		"wireit": "^0.15.0",
+		"zod": "^4.6.7"
+	},
+	"devDependencies": {
+		"@plutotcool/fsv": "0.5.1"
+	},
+	"stylelint": {
+		"extends": "./library/config/stylelint.config.js",
+		"rules": {
+			"plugin/use-baseline": [
+				true,
+				{
+					"available": 2024,
+					"ignoreSelectors": [
+						"/^view-transition-/"
+					],
+					"ignoreProperties": {
+						"background-clip": [
+							"text"
+						],
+						"view-transition-name": [],
+						"text-wrap": [
+							"pretty"
+						],
+						"user-select": [
+							"none"
+						],
+						"overscroll-behavior": [
+							"contain"
+						]
+					}
+				}
+			]
+		}
+	},
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": "^24.18.0",
+			"onFail": "download"
+		}
+	},
+	"packageManager": "pnpm@11.7.0"
 }

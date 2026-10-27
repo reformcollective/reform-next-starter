@@ -1,3 +1,4 @@
+import { colors } from "app/styles/colors.css"
 import { compileTime } from "library/compile-time"
 import { foundation } from "library/layers.css"
 import { css } from "library/styled"
@@ -6,7 +7,7 @@ const style = css`
 	@layer ${foundation} {
 		/* set base project colors */
 		html {
-			background: #fdf6ee;
+			background: ${colors.surfaceLight};
 			color: blue;
 		}
 

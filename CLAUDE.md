@@ -1,1 +1,1 @@
-library/CLAUDE.md
+@AGENTS.md

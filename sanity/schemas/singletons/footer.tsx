@@ -1,4 +1,4 @@
-import { InsertAboveIcon } from "@sanity/icons"
+import { InsertAboveIcon } from "@sanity/icons/InsertAbove"
 import { universalLink } from "library/sanity/reusables"
 import { defineArrayMember, defineField, defineType } from "sanity"
 

@@ -1,56 +1,9 @@
-"use client"
+import { listStaticRoutes } from "library/list-pages"
 
-import gsap from "gsap/all"
-import { PageCommitSignal } from "library/link/usePageTransition"
-import { styled } from "library/styled"
-import { useAnimation } from "library/useAnimation"
-import { useRef } from "react"
+import { testPrefix, VisualTestsList } from "./VisualTestsList"
 
 export default function VisualTestsPage() {
-	const box = useRef<HTMLDivElement>(null)
+	const tests = listStaticRoutes().filter((route) => route.startsWith(testPrefix))
 
-	useAnimation(() => {
-		gsap.from(box.current, {
-			background: "red",
-			duration: 5,
-		})
-	}, [])
-
-	return (
-		<div>
-			<PageCommitSignal />
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-			<Test>
-				<Box ref={box}>hellow</Box>
-			</Test>
-		</div>
-	)
+	return <VisualTestsList tests={tests} />
 }
-
-const Test = styled("div", {
-	background: "whitesmoke",
-	padding: "100px",
-})
-
-const Box = styled("div", {
-	border: "1px solid black",
-	background: "dodgerblue",
-	borderRadius: "5px",
-	padding: "10px",
-	width: "100px",
-	height: "100px",
-})
