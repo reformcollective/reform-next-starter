@@ -13,6 +13,7 @@ Legend: LIVE = request I ran; DOC = text fetched from mux.com docs; SRC = read i
 ## 1. Storyboard
 
 All LIVE 200, GET and HEAD, both assets P and D:
+
 - `https://image.mux.com/<id>/storyboard.png` image/png (P: 1420x1600 = 5 cols x 10 rows of 284x160 tiles, 2,525,150 bytes)
 - `.../storyboard.jpg` and `.../storyboard.webp` also 200 (jpg is the default format referenced from VTT/JSON)
 - `.../storyboard.vtt` text/vtt, 6251 bytes. Cue example (LIVE): `00:00:00.000 --> 00:00:02.686` then `https://image.mux.com/<id>/storyboard.jpg#xywh=0,0,284,160`
@@ -30,6 +31,7 @@ All LIVE 200, GET and HEAD, both assets P and D:
 Formats LIVE: `.jpg`/`.jpeg` 200 image/jpeg, `.png` 200, `.webp` 200 (all 1920x1080). `.avif` 404 (HTML "404 Invalid Path"), `.gif` 404 (use `animated.gif`). DOC lists only png|jpg|webp. There is no `format` query for thumbnails; the extension is the format.
 
 Params (DOC table; each LIVE tested on P):
+
 - `time` float seconds. Default = asset `thumbnail_time` if set, else middle of video (DOC set-a-default-thumbnail: "Mux picks a frame from the middle of the video"; `thumbnail_time` can only be PATCHed on a ready asset). LIVE: `time=500` (beyond 134.4 s) -> 200, identical bytes to `time=134.4` (clamped to end). `time=-1` -> 200 (clamped, not an error).
 - `width` int32: LIVE `width=320` -> 320x180 (aspect preserved). `width=99999` -> 400 `{"error":{"code":3,"message":"Invalid width: 99999"}}` (limit not documented).
 - `height` int32: LIVE `height=100` -> 178x100.
@@ -43,6 +45,7 @@ Params (DOC table; each LIVE tested on P):
 - `http HEAD` works; no Set-Cookie on image or stream hosts (LIVE).
 
 ### Signed URLs for images
+
 - DOC (secure-video-playback): audiences `v` video/subtitles, `t` thumbnail, `g` gif, `s` storyboard, `d` DRM license. "For Playback IDs that use a signed policy, the thumbnail options must be specified in the JWT claims ... simply include the `width` and `time` keys in the JWT claims." "After the parameters are signed ... the resulting signed URL should only contain the `token` parameter." Bad example given: `.../thumbnail.jpg?time=25&token={token}`. So yes: `time` (and width, height, fit_mode, rotate, flip_*, and playback modifiers like `default_subtitles_lang`, `redundant_streams`, `roku_trick_play`, `max_resolution`, `min_resolution`, `rendition_order`) must be in the JWT claims body, and the URL carries only `token`.
 - SRC corroborates: mux-player `getPosterURLFromPlaybackId` has comment "thumbnailTime is not supported when using a signedURL/token. Remove under these cases" and returns nothing if the token `aud` is not `t`. mux-video `toMuxVideoURL` deletes every query param except `token` when a token exists.
 - LIVE on signed IDs (bos2bPV3qbFgpVPaQ900Xd5UcdM6WXTmz02WZSz01nJ00tY from elements tests): m3u8, thumbnail, storyboard.vtt and low.mp4 with no token -> 403 `{"error":{"messages":["Not Authorized"],"type":"not_authorized"}}` (image host uses `{"error":{"code":7,"message":"Not Authorized"}}`). With garbage `token=abc.def.ghi` the image host returns an HTML page "403 Expired".
@@ -72,7 +75,7 @@ No `animated.avif`. No fit_mode/flip/rotate for animated (DOC lists only start,e
 
 - DOC add-subtitles-to-your-videos: add at asset creation as `inputs` entries `{"url", "type":"text", "text_type":"subtitles", "closed_captions": false|true, "language_code":"en", "name":"English"}` (SRT or WebVTT; "There's no limit on the number of tracks"), or later via Create Asset Track API once asset is `ready`. "Mux videos include subtitles with HLS manifest".
 - Auto-generated (DOC): `generated_subtitles: [{language_code, name}]` inside the video input at creation, Whisper-based. Stable: en, es, it, pt, de, fr, auto. Beta: pl, ru, nl, ca, tr, sv, and more (list truncated in my fetch, NOT fully read). Transcript: `https://stream.mux.com/{PLAYBACK_ID}/text/{TRACK_ID}.txt` (plain text) or `.vtt` (DOC); signed: `?token={JWT}`. TRACK_ID comes from the Mux API (not discoverable from public manifest alone), so NOT VERIFIED live.
-- LIVE manifest of public ID ihZa7qP1zY8oyLSQW9TS602VgwQvNdyIvlk9LInEGU2s (from elements tests): 
+- LIVE manifest of public ID ihZa7qP1zY8oyLSQW9TS602VgwQvNdyIvlk9LInEGU2s (from elements tests):
   `#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="sub1",CHARACTERISTICS="public.accessibility.transcribes-spoken-dialog,public.accessibility.describes-music-and-sound",NAME="English",AUTOSELECT=YES,DEFAULT=NO,FORCED=NO,LANGUAGE="en",URI=".../subtitles.m3u8?..."` plus Swedish (sv) and Arabic (ar); each variant has `SUBTITLES="sub1"`. The subtitle playlist is HLS VOD of 30 s WebVTT segments (`#EXTINF:30,` -> `.../v1/subtitle/<token>/0.vtt`).
 - `default_subtitles_lang` modifier (LIVE on that ID): `=sv` sets `DEFAULT=YES` on sv; `=sv-SE` also selects sv (closest match); `=fr` (not present) -> all DEFAULT=NO. DOC: "If there's no exact language match, the closest match of the same language is selected." DOC: "Video players play the default text track for autoplaying videos even when muted." With signed URLs it must be in the JWT.
 - Other public manifests: 23s11nz72DsoN657h4314PjKKjsF2JG33eBQQt6B95I, VcmKA6aqzIzlg3MayLJDnbF55kX00mds028Z65QxvBYaA and qP5Eb2cj7MrNnoxBGz012pbZkMHqpIcrKMzd7ykGr01gM each have 1 English subtitles track. P and D have none (`EXT-X-MEDIA` count 0).
@@ -87,6 +90,7 @@ No `animated.avif`. No fit_mode/flip/rotate for animated (DOC lists only start,e
 ## 8. Rendition control (HLS modifiers)
 
 DOC modify-playback-behavior table + LIVE on P (source 1080p; ladder 1920x1080, 1280x720, 960x540, 640x360, 480x270):
+
 - `max_resolution` values 270p,360p,480p,540p,720p,1080p,1440p,2160p. LIVE `720p` -> 720,540,360,270 (no 1080). `480p` -> 360 and 270 only (so Mux matches by short side/height tier, 640x360 passes a "480p" cap). `2160p` -> all (source is 1080p). Invalid `999p` -> 400 `{"error":{"messages":["Unable to parse max_resolution"],"type":"invalid_parameters"}}`. DOC: unavailable value is clamped to the nearest available.
 - `min_resolution` LIVE `720p` -> 1080 and 720 only. `min=1080p&max=1080p` -> single 1080 rendition.
 - `rendition_order=desc` only valid value (LIVE `asc` -> 400 `Unable to parse rendition order`). DOC: by default the first listed rendition is one of the middle ones; `desc` lists highest first so players start at highest.
@@ -116,7 +120,7 @@ DOC modify-playback-behavior table + LIVE on P (source 1080p; ladder 1920x1080, 
 
 ## 11. Mux Data
 
-- SRC playback-core `monitor()`: Mux Data starts only if `!disableTracking && (env_key || isMuxVideoSrc)`. For a Mux-hosted src the environment is inferred, so no `env-key` is required (README: "If undefined and you are playing a Mux Video asset, the environment will be inferred"). 
+- SRC playback-core `monitor()`: Mux Data starts only if `!disableTracking && (env_key || isMuxVideoSrc)`. For a Mux-hosted src the environment is inferred, so no `env-key` is required (README: "If undefined and you are playing a Mux Video asset, the environment will be inferred").
 - Disable: `disable-tracking` attribute (toggling reloads the media, preserving time). Yes it can be fully disabled.
 - `disable-cookies`: DOC "By default, Mux plugins for HTML5-based players use a cookie to track playback across subsequent page views ... This cookie includes ... an anonymized viewer ID". SRC: re-attaches Mux Data on change and clears cookies (`clearMuxDataCookies`).
 - `beacon-collection-domain`: DOC "If you have integrated a custom domain for Data collection ... `beaconCollectionDomain`" (guide `integrate-a-data-custom-domain`, not fetched; ad-blocker use case is my inference, NOT VERIFIED).
@@ -127,6 +131,7 @@ DOC modify-playback-behavior table + LIVE on P (source 1080p; ladder 1920x1080, 
 ## 12. Static MP4 renditions and ffprobe
 
 LIVE URL probes (P and D identical pattern):
+
 - 200 video/mp4: `https://stream.mux.com/<id>/low.mp4` (P 14,107,285 B; D 316,377), `/medium.mp4` (P 24,973,272; D 484,438), `/high.mp4` (P 72,619,954; D 426,218). `accept-ranges: bytes`, Range request -> 206, `cache-control: max-age=86400`, CORS `*`. `?download=myname` -> `content-disposition: attachment; filename="myname.mp4"` (matches DOC).
 - 404 `{"error":{"messages":["MP4 does not exist"],"type":"not_found"}}`: `capped-1080p.mp4`, `highest.mp4`, `audio.m4a`, `1080p.mp4`, `720p.mp4`, `360p.mp4`, `270p.mp4`. So these assets use the legacy `mp4_support` naming (low/medium/high), not the new `static_renditions` names. DOC (enable-static-mp4-renditions): new API names are `highest.mp4` and `audio.m4a` for standard, explicit resolutions 270p..1440p for advanced ("highest" cannot be mixed with explicit resolutions; audio-only can). URL form `https://stream.mux.com/{PLAYBACK_ID}/{STATIC_RENDITION_NAME}` and `?download={SAVED_FILE_NAME}`. The DOC fetch contains no `capped-1080p` string, so that name is from the older mp4_support values and NOT VERIFIED on a live asset. Explicit-resolution file names (e.g. `720p.mp4`) are NOT VERIFIED. DOC: storage fees apply, streaming charged like HLS, DRM playback IDs cannot access them, signed IDs need a token.
 - ffprobe of the files LIVE:
@@ -138,6 +143,7 @@ LIVE URL probes (P and D identical pattern):
 ## 13. The colour issue (untagged P: thumbnails lighter than video)
 
 Findings (LIVE, measured):
+
 1. P's source is effectively FULL-range content that is untagged. Y plane of the delivered video (high.mp4 decoded with ffmpeg, raw `gray`): values 0 to 252 (t=60), 0 to 249 (t=20), 0 to 228 (t=100); 26% of pixels at Y=0 (mostly black bars) and almost no values above 235. Tagged limited-range content never goes below 16 in normal pixels.
 2. Mux's untagged pipeline treats it so, and the delivered video carries no range flag (`color_range=unknown`). Browsers assume limited range for untagged H.264 (my model, NOT VERIFIED in a browser: no browser automation per repo rules), so they expand `(Y-16)*255/219` and crush everything below 16 to black and clip highs.
 3. Mux image outputs map the same Y values as `Y_img = 16 + Y_video * 219/255`: quantile match at 4 times, percentiles of video Y vs thumbnail luma, e.g. t=60: median 169 -> 161 (predicted 161.1), 75th 197 -> 185 (185.2), 95th 219 -> 204 (204.1); t=20: 129 -> 126 (126.8); and floor: video Y=0 (25% of pixels) -> thumbnail 16. So blacks are lifted from 0 to 16 (and whites compressed from 252 to ~232): the "lifted blacks / lighter / lower contrast" look. Mean luma examples, thumbnail (jpg) vs ffmpeg limited-range BT.709 decode of the video at same time: t=5 24.5 vs 9.9 (dark scene, big difference), t=20 107.3 vs 107.6, t=60 122.1 vs 123.3, t=100 68.5 vs 62.7. p1 luma: thumbnail 16 vs video decode 0 at every time. Hence mean luma differences are scene dependent (large in dark scenes), the black floor is constant.
@@ -152,6 +158,7 @@ Findings (LIVE, measured):
 8. Per-asset flags/encoding settings: none found in docs I read (asset create options seen: `video_quality`, `playback_policies`, `static_renditions`, `generated_subtitles`, `thumbnail_time`, etc.). NOT VERIFIED against the full API reference (api-reference pages not fetched).
 
 Practical fixes (ranked, none tested end-to-end against Mux because I have no account):
+
 - A. Fix the SOURCE before upload so it is tagged/encoded as limited-range BT.709 (Mux's stated standard). If the pixel data is truly full-range, convert, don't just retag: `ffmpeg -i in.mp4 -vf "scale=in_range=full:out_range=limited:out_color_matrix=bt709,format=yuv420p" -c:v libx264 -colorspace bt709 -color_primaries bt709 -color_trc bt709 -color_range tv ...`. Then the video, HLS and thumbnails should agree (as D does). Re-upload required; NOT VERIFIED that Mux then produces matching thumbnails for this specific file.
 - B. Alternatively retag as full range (`-bsf:v h264_metadata=video_full_range_flag=1`) so players expand correctly; NOT VERIFIED whether Mux's transcode/thumbnailer honours the flag.
 - C. Stop using Mux thumbnails for the poster: supply our own poster (Sanity image) or use the first video frame (video element with `preload=auto`, no poster). Always correct visually.

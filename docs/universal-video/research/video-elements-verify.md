@@ -19,21 +19,21 @@ Legend: IMPL = defined by the element's own code. PROXY = not defined by the ele
 
 ## 1. npm facts (all [NPM], `npm view <pkg> version license dependencies time --json`)
 
-| Package | Exists | Latest | Published (latest version) | License | dependencies (npm) |
-|---|---|---|---|---|---|
-| wistia-video-element | yes | 1.4.0 | 2026-05-06T18:50:20Z | MIT | super-media-element ~1.4.2 |
-| twitch-video-element | yes | 0.2.0 | 2026-04-21T18:16:33Z | MIT | none |
-| tiktok-video-element | yes | 0.1.2 | 2025-11-25T16:09:19Z | MIT | none |
-| spotify-audio-element | yes | 1.0.5 | 2026-10-22T19:41:23Z | MIT | none |
-| cloudflare-video-element | yes | 1.3.6 | 2026-10-22T18:57:08Z | MIT | none |
-| dash-video-element | yes | 0.3.3 | 2026-10-22T19:00:14Z | MIT | dashjs ^5.0.3, media-tracks ^0.3.5, custom-media-element ^1.4.7 |
-| shaka-video-element | yes | 0.7.2 | 2026-10-22T19:40:24Z | MIT | media-tracks ^0.3.5, shaka-player ~4.15.4, custom-media-element ^1.4.7 |
-| videojs-video-element | yes | 1.4.8 | 2026-05-06T18:50:18Z | MIT | media-tracks ^0.3.5, super-media-element ~1.4.2 |
-| jwplayer-video-element | yes | 1.3.5 | 2025-11-25T16:09:10Z | MIT | super-media-element ~1.4.2 |
-| youtube-video-element | yes | 1.9.1 | 2026-10-22T19:56:11Z | MIT | media-played-ranges-mixin ^0.1.0 |
-| vimeo-video-element | yes | 1.7.4 | 2026-10-08T14:42:13Z | MIT | @vimeo/player 2.29.0, media-played-ranges-mixin ^0.1.0 |
-| hls-video-element | yes | 1.5.12 | 2026-10-22T19:39:57Z | MIT | hls.js ^1.6.5, media-tracks ^0.3.5, custom-media-element ^1.4.7 |
-| @mux/mux-video (not `mux-video`) | yes | 0.31.6 | 2026-10-23T16:52:32Z | MIT | media-tracks ~0.3.5, castable-video ~1.1.17, @mux/playback-core 0.36.1, custom-media-element ~1.4.7, @mux/mux-data-google-ima ^0.3.17, @types/google_interactive_media_ads_types ^3.697.0 |
+| Package                          | Exists | Latest | Published (latest version) | License | dependencies (npm)                                                                                                                                                                        |
+| -------------------------------- | ------ | ------ | -------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| wistia-video-element             | yes    | 1.4.0  | 2026-05-06T18:50:20Z       | MIT     | super-media-element ~1.4.2                                                                                                                                                                |
+| twitch-video-element             | yes    | 0.2.0  | 2026-04-21T18:16:33Z       | MIT     | none                                                                                                                                                                                      |
+| tiktok-video-element             | yes    | 0.1.2  | 2025-11-25T16:09:19Z       | MIT     | none                                                                                                                                                                                      |
+| spotify-audio-element            | yes    | 1.0.5  | 2026-10-22T19:41:23Z       | MIT     | none                                                                                                                                                                                      |
+| cloudflare-video-element         | yes    | 1.3.6  | 2026-10-22T18:57:08Z       | MIT     | none                                                                                                                                                                                      |
+| dash-video-element               | yes    | 0.3.3  | 2026-10-22T19:00:14Z       | MIT     | dashjs ^5.0.3, media-tracks ^0.3.5, custom-media-element ^1.4.7                                                                                                                           |
+| shaka-video-element              | yes    | 0.7.2  | 2026-10-22T19:40:24Z       | MIT     | media-tracks ^0.3.5, shaka-player ~4.15.4, custom-media-element ^1.4.7                                                                                                                    |
+| videojs-video-element            | yes    | 1.4.8  | 2026-05-06T18:50:18Z       | MIT     | media-tracks ^0.3.5, super-media-element ~1.4.2                                                                                                                                           |
+| jwplayer-video-element           | yes    | 1.3.5  | 2025-11-25T16:09:10Z       | MIT     | super-media-element ~1.4.2                                                                                                                                                                |
+| youtube-video-element            | yes    | 1.9.1  | 2026-10-22T19:56:11Z       | MIT     | media-played-ranges-mixin ^0.1.0                                                                                                                                                          |
+| vimeo-video-element              | yes    | 1.7.4  | 2026-10-08T14:42:13Z       | MIT     | @vimeo/player 2.29.0, media-played-ranges-mixin ^0.1.0                                                                                                                                    |
+| hls-video-element                | yes    | 1.5.12 | 2026-10-22T19:39:57Z       | MIT     | hls.js ^1.6.5, media-tracks ^0.3.5, custom-media-element ^1.4.7                                                                                                                           |
+| @mux/mux-video (not `mux-video`) | yes    | 0.31.6 | 2026-10-23T16:52:32Z       | MIT     | media-tracks ~0.3.5, castable-video ~1.1.17, @mux/playback-core 0.36.1, custom-media-element ~1.4.7, @mux/mux-data-google-ima ^0.3.17, @types/google_interactive_media_ads_types ^3.697.0 |
 
 No `peerDependencies` listed for youtube-video-element (checked). The other packages' `peerDependencies` printed empty in my `npm view` loop.
 Repo package list (GitHub API `contents/packages`, 2026-10-27): castable-video, cloudflare-video-element, custom-media-element, dash-video-element, hls-video-element, jwplayer-video-element, media-played-ranges-mixin, media-tracks, peertube-video-element, shaka-video-element, spotify-audio-element, super-media-element, tiktok-video-element, twitch-video-element, videojs-video-element, vimeo-video-element, wistia-video-element, youtube-video-element. (peertube-video-element exists too; not checked further.)
@@ -50,24 +50,24 @@ Event forwarding in SME: every name in the `Events` list is listened to in captu
 
 Source: [DIST] `wistia-video-element/dist/wistia-video-element.js`; [SME].
 
-| Feature | Status | Source |
-|---|---|---|
-| play() | IMPL (override) | L87-91: `async play(){ await this.loadComplete; this.api.play(); return new Promise(r => this.addEventListener("playing", r)) }` |
-| pause() | PROXY to nativeEl (`api.elem()` or `querySelector("video")`) | L58-60 nativeEl getter; SME L121-132 |
-| muted | PROXY (initial value from `defaultMuted` -> Wistia option `muted`) | L56 option; SME L134-176 |
-| volume | PROXY | SME L134-176 |
-| currentTime get/set | PROXY | SME L134-176 |
-| duration | IMPL (override, reads `this.api?.duration()`) | L80-83 |
-| paused | PROXY | SME |
-| ended | PROXY | SME |
-| playbackRate | PROXY | SME |
-| loop | IMPL as option: `endVideoBehavior: this.loop ? "loop" : undefined` at load time only (attribute change after load is forwarded to nativeEl by SME `#forwardAttribute`) | L52 ; SME L378-392 |
-| autoplay | IMPL as option `autoPlay`, `silentAutoPlay: "allow"` when autoplay | L49-50 |
-| controls attribute | IMPL (override): at load `chromeless: !this.controls, playButton: this.controls`; on change calls `api.bigPlayButtonEnabled`, `api.releaseChromeless()/requestChromeless()` | L51-52, L70-80 |
-| textTracks | PROXY to inner video's textTracks. Whether Wistia's inner video exposes any is NOT VERIFIED | SME |
-| requestFullscreen | not overridden (see common note) | |
-| Events | forwarded from nativeEl by SME (list above). `play()` waits for a `playing` event on the host | SME L296-301 |
-| config | `config` property passed into Wistia embed options (spread last) | L22-27, L53-55 |
+| Feature             | Status                                                                                                                                                                      | Source                                                                                                                           |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| play()              | IMPL (override)                                                                                                                                                             | L87-91: `async play(){ await this.loadComplete; this.api.play(); return new Promise(r => this.addEventListener("playing", r)) }` |
+| pause()             | PROXY to nativeEl (`api.elem()` or `querySelector("video")`)                                                                                                                | L58-60 nativeEl getter; SME L121-132                                                                                             |
+| muted               | PROXY (initial value from `defaultMuted` -> Wistia option `muted`)                                                                                                          | L56 option; SME L134-176                                                                                                         |
+| volume              | PROXY                                                                                                                                                                       | SME L134-176                                                                                                                     |
+| currentTime get/set | PROXY                                                                                                                                                                       | SME L134-176                                                                                                                     |
+| duration            | IMPL (override, reads `this.api?.duration()`)                                                                                                                               | L80-83                                                                                                                           |
+| paused              | PROXY                                                                                                                                                                       | SME                                                                                                                              |
+| ended               | PROXY                                                                                                                                                                       | SME                                                                                                                              |
+| playbackRate        | PROXY                                                                                                                                                                       | SME                                                                                                                              |
+| loop                | IMPL as option: `endVideoBehavior: this.loop ? "loop" : undefined` at load time only (attribute change after load is forwarded to nativeEl by SME `#forwardAttribute`)      | L52 ; SME L378-392                                                                                                               |
+| autoplay            | IMPL as option `autoPlay`, `silentAutoPlay: "allow"` when autoplay                                                                                                          | L49-50                                                                                                                           |
+| controls attribute  | IMPL (override): at load `chromeless: !this.controls, playButton: this.controls`; on change calls `api.bigPlayButtonEnabled`, `api.releaseChromeless()/requestChromeless()` | L51-52, L70-80                                                                                                                   |
+| textTracks          | PROXY to inner video's textTracks. Whether Wistia's inner video exposes any is NOT VERIFIED                                                                                 | SME                                                                                                                              |
+| requestFullscreen   | not overridden (see common note)                                                                                                                                            |                                                                                                                                  |
+| Events              | forwarded from nativeEl by SME (list above). `play()` waits for a `playing` event on the host                                                                               | SME L296-301                                                                                                                     |
+| config              | `config` property passed into Wistia embed options (spread last)                                                                                                            | L22-27, L53-55                                                                                                                   |
 
 Other behavior seen: `src` must match `/(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/i`, else `this.src.match(...)[1]` throws (no null check) at L45-46 [DIST]. It does `await new Promise(r => setTimeout(r, 50))` before loading (L44). It loads `https://fast.wistia.com/assets/external/E-v1.js` via a `<script>` tag (L63, loadScript L101-115). `skipAttributes = ["src"]`.
 
@@ -75,28 +75,28 @@ Other behavior seen: `src` must match `/(?:wistia\.com|wi\.st)\/(?:medias|embed)
 
 Source: [DIST] `twitch-video-element/dist/twitch-video-element.js` (== [MAIN] member list).
 
-| Feature | Status | Source |
-|---|---|---|
-| play() | IMPL, but returns `undefined` (not a Promise): sets `#paused=false`, posts PLAY command | L255-258 |
-| pause() | IMPL (returns undefined) | L259-262 |
-| muted get/set | IMPL (local `#muted`, posts SET_MUTED after `loadComplete`; updated from player state) | L231-239, L302-310 |
-| volume get/set | IMPL (posts SET_VOLUME) | L240-248 |
-| currentTime get | IMPL (from `#playerState.currentTime`, else cached `#currentTime`; note falsy 0 falls back to cache) | L209-212 |
-| currentTime set | IMPL (posts SEEK after `loadComplete`) | L213-218 |
-| duration | IMPL (`#playerState.duration ?? NaN`) | L192-194 |
-| paused | IMPL | L184-187 |
-| ended | IMPL (`playback === "Ended"`) | L188-191 |
-| playbackRate | MISSING (no getter/setter, no Twitch command) | grep: no `playbackRate` in file |
-| loop | IMPL as attribute getter/setter only; not passed to the embed URL params (params are controls, autoplay, muted, preload, config, parent) | L225-230, L68-76 |
-| autoplay | IMPL (attribute; passed as `autoplay` param; `false` when absent) | L195-201, L70 |
-| controls attribute | IMPL (attribute; `controls` param; changing it reloads iframe). Host gets `pointer-events: none` when `controls` absent | L202-208, L55-57, L159-163 |
-| textTracks | MISSING (PlayerCommands include ENABLE_CAPTIONS/DISABLE_CAPTIONS but no property or method uses them) | L11-24; grep: no `textTracks` |
-| requestFullscreen | MISSING (plain HTMLElement behaviour on host; iframe has `allow="... fullscreen ..."`) | L31 |
-| readyState / seeking / buffered | IMPL (readyState only goes 0, 1, 3; `buffered` is a synthetic range of `bufferSize`) | L174-183 |
-| getVideoPlaybackQuality() | IMPL (throws if no stats yet: `this.#playerState.stats.videoStats`) | L165-167 |
-| Events dispatched by the element's own code | emptied, loadstart, loadedmetadata, seeking, seeked, playing, durationchange, timeupdate, volumechange, progress, loadcomplete | L136, L142, L275-278, L283-285, L297-313 |
-| Events forwarded generically | any other `twitch-embed` `data.eventName` is re-dispatched verbatim (`else { this.dispatchEvent(new Event(data.eventName)) }`). Which names Twitch actually emits (play, pause, ended, error...) is NOT VERIFIED here | L286-288 |
-| canplay / waiting / error / ratechange | not dispatched by own code. NOT VERIFIED whether Twitch emits them | |
+| Feature                                     | Status                                                                                                                                                                                                                | Source                                   |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| play()                                      | IMPL, but returns `undefined` (not a Promise): sets `#paused=false`, posts PLAY command                                                                                                                               | L255-258                                 |
+| pause()                                     | IMPL (returns undefined)                                                                                                                                                                                              | L259-262                                 |
+| muted get/set                               | IMPL (local `#muted`, posts SET_MUTED after `loadComplete`; updated from player state)                                                                                                                                | L231-239, L302-310                       |
+| volume get/set                              | IMPL (posts SET_VOLUME)                                                                                                                                                                                               | L240-248                                 |
+| currentTime get                             | IMPL (from `#playerState.currentTime`, else cached `#currentTime`; note falsy 0 falls back to cache)                                                                                                                  | L209-212                                 |
+| currentTime set                             | IMPL (posts SEEK after `loadComplete`)                                                                                                                                                                                | L213-218                                 |
+| duration                                    | IMPL (`#playerState.duration ?? NaN`)                                                                                                                                                                                 | L192-194                                 |
+| paused                                      | IMPL                                                                                                                                                                                                                  | L184-187                                 |
+| ended                                       | IMPL (`playback === "Ended"`)                                                                                                                                                                                         | L188-191                                 |
+| playbackRate                                | MISSING (no getter/setter, no Twitch command)                                                                                                                                                                         | grep: no `playbackRate` in file          |
+| loop                                        | IMPL as attribute getter/setter only; not passed to the embed URL params (params are controls, autoplay, muted, preload, config, parent)                                                                              | L225-230, L68-76                         |
+| autoplay                                    | IMPL (attribute; passed as `autoplay` param; `false` when absent)                                                                                                                                                     | L195-201, L70                            |
+| controls attribute                          | IMPL (attribute; `controls` param; changing it reloads iframe). Host gets `pointer-events: none` when `controls` absent                                                                                               | L202-208, L55-57, L159-163               |
+| textTracks                                  | MISSING (PlayerCommands include ENABLE_CAPTIONS/DISABLE_CAPTIONS but no property or method uses them)                                                                                                                 | L11-24; grep: no `textTracks`            |
+| requestFullscreen                           | MISSING (plain HTMLElement behaviour on host; iframe has `allow="... fullscreen ..."`)                                                                                                                                | L31                                      |
+| readyState / seeking / buffered             | IMPL (readyState only goes 0, 1, 3; `buffered` is a synthetic range of `bufferSize`)                                                                                                                                  | L174-183                                 |
+| getVideoPlaybackQuality()                   | IMPL (throws if no stats yet: `this.#playerState.stats.videoStats`)                                                                                                                                                   | L165-167                                 |
+| Events dispatched by the element's own code | emptied, loadstart, loadedmetadata, seeking, seeked, playing, durationchange, timeupdate, volumechange, progress, loadcomplete                                                                                        | L136, L142, L275-278, L283-285, L297-313 |
+| Events forwarded generically                | any other `twitch-embed` `data.eventName` is re-dispatched verbatim (`else { this.dispatchEvent(new Event(data.eventName)) }`). Which names Twitch actually emits (play, pause, ended, error...) is NOT VERIFIED here | L286-288                                 |
+| canplay / waiting / error / ratechange      | not dispatched by own code. NOT VERIFIED whether Twitch emits them                                                                                                                                                    |                                          |
 
 Other: `parent` param is built from `props.parent` plus `globalThis.location?.hostname` (deduped) [L75]; there is a `parent` property/attribute and a `config` property. `sandbox` attribute on the iframe is `allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox` [L32]. Accepts `twitch.tv/videos/<id>`, `twitch.tv/<channel>` [L2-3]; clips and collections are not matched by the regexes (only video and channel branches in `serializeIframeUrl`, L77-83).
 
@@ -104,46 +104,46 @@ Other: `parent` param is built from `props.parent` plus `globalThis.location?.ho
 
 Source: [DIST] `tiktok-video-element/dist/tiktok-video-element.js`.
 
-| Feature | Status | Source |
-|---|---|---|
-| play() | IMPL (async; postMessage `play`) | L179-182 |
-| pause() | IMPL (async; postMessage `pause`) | L183-186 |
-| muted get/set | IMPL (postMessage `mute`/`unMute`) | L211-217 |
-| volume get | IMPL (`#volume / 100`; default `#volume = 100`) | L199-201, L73 |
-| volume set | STUB: `console.warn("Volume control is not supported for TikTok videos.")` | L202-204 |
-| currentTime get/set | IMPL (`seekTo` postMessage; value from `onCurrentTime`) | L205-210, L150-155 |
-| duration | IMPL (from `onCurrentTime`, initial 0) | L227-229, L74 |
-| paused | IMPL | L224-226 |
-| ended | MISSING (no getter; only an `ended` event is dispatched) | L7, grep: no `get ended` |
-| playbackRate | MISSING | grep |
-| loop / autoplay | attribute only used as iframe URL params; NO `loop`/`autoplay` property getters/setters on the element. Changing either attribute reloads the iframe | L52-53, L120-125 |
-| controls attribute | IMPL as URL param only (`controls=0` unless `controls` attr is present); no `controls` property; changing attribute reloads | L50, L120-125 |
-| textTracks | MISSING | grep |
-| requestFullscreen | MISSING (iframe `allow` includes fullscreen) | L17 |
-| readyState / buffered / seeking | MISSING | grep |
-| Events | `emptied` (state -1), `pause`, `ended`, `play`, `waiting` (from `onStateChange`), `durationchange`+`timeupdate` (both on every `onCurrentTime`), `volumechange` (onVolumeChange, onMute), `error` (onError). Unknown message types `console.warn`. NOT dispatched: canplay, loadedmetadata, playing, seeking, seeked, progress | L4-10, L144-170 |
+| Feature                         | Status                                                                                                                                                                                                                                                                                                                         | Source                   |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
+| play()                          | IMPL (async; postMessage `play`)                                                                                                                                                                                                                                                                                               | L179-182                 |
+| pause()                         | IMPL (async; postMessage `pause`)                                                                                                                                                                                                                                                                                              | L183-186                 |
+| muted get/set                   | IMPL (postMessage `mute`/`unMute`)                                                                                                                                                                                                                                                                                             | L211-217                 |
+| volume get                      | IMPL (`#volume / 100`; default `#volume = 100`)                                                                                                                                                                                                                                                                                | L199-201, L73            |
+| volume set                      | STUB: `console.warn("Volume control is not supported for TikTok videos.")`                                                                                                                                                                                                                                                     | L202-204                 |
+| currentTime get/set             | IMPL (`seekTo` postMessage; value from `onCurrentTime`)                                                                                                                                                                                                                                                                        | L205-210, L150-155       |
+| duration                        | IMPL (from `onCurrentTime`, initial 0)                                                                                                                                                                                                                                                                                         | L227-229, L74            |
+| paused                          | IMPL                                                                                                                                                                                                                                                                                                                           | L224-226                 |
+| ended                           | MISSING (no getter; only an `ended` event is dispatched)                                                                                                                                                                                                                                                                       | L7, grep: no `get ended` |
+| playbackRate                    | MISSING                                                                                                                                                                                                                                                                                                                        | grep                     |
+| loop / autoplay                 | attribute only used as iframe URL params; NO `loop`/`autoplay` property getters/setters on the element. Changing either attribute reloads the iframe                                                                                                                                                                           | L52-53, L120-125         |
+| controls attribute              | IMPL as URL param only (`controls=0` unless `controls` attr is present); no `controls` property; changing attribute reloads                                                                                                                                                                                                    | L50, L120-125            |
+| textTracks                      | MISSING                                                                                                                                                                                                                                                                                                                        | grep                     |
+| requestFullscreen               | MISSING (iframe `allow` includes fullscreen)                                                                                                                                                                                                                                                                                   | L17                      |
+| readyState / buffered / seeking | MISSING                                                                                                                                                                                                                                                                                                                        | grep                     |
+| Events                          | `emptied` (state -1), `pause`, `ended`, `play`, `waiting` (from `onStateChange`), `durationchange`+`timeupdate` (both on every `onCurrentTime`), `volumechange` (onVolumeChange, onMute), `error` (onError). Unknown message types `console.warn`. NOT dispatched: canplay, loadedmetadata, playing, seeking, seeked, progress | L4-10, L144-170          |
 
 ### 2.4 spotify-audio-element 1.0.5 (`<spotify-audio>`; standalone; audio)
 
 Source: [DIST] `spotify-audio-element/dist/spotify-audio-element.js`.
 
-| Feature | Status | Source |
-|---|---|---|
-| play() | IMPL (async; sets `#paused=false`, dispatches `play`, then `api.resume()`) | L184-191 |
-| pause() | IMPL (async; `api.pause()`) | L192-196 |
-| muted | STUB: getter returns `false`, setter empty | L206-210 |
-| volume | STUB: getter returns `1`, setter empty | L211-215 |
-| currentTime get/set | IMPL (set: dispatches synthetic `timeupdate`, then `api.seek(val)`) | L229-243 |
-| duration | IMPL (ms/1000 from `playback_update`; initial NaN) | L244-246, L126-130 |
-| paused | IMPL | L203-205 |
-| ended | IMPL (`Math.ceil(currentTime) >= duration`) | L216-218 |
-| playbackRate | MISSING | grep |
-| loop | IMPL (attribute, plus a manual seek-to-1s loop in playback_update) | L222-228, L160-163 |
-| autoplay | MISSING (not in observedAttributes: `controls, loop, src`) | L58-62 |
-| controls attribute | IMPL as CSS only: `:host(:not([controls])) { display: none !important }` (player hidden without `controls`) | L33-35 |
-| textTracks | MISSING | grep |
-| requestFullscreen | MISSING | grep |
-| Events | emptied, loadstart, loadedmetadata, durationchange, volumechange (all on Spotify `ready`), timeupdate, play, pause, waiting, playing, ended. NOT dispatched: canplay, error, seeking/seeked (it only keeps a `seeking` getter) | L90, L96, L115-170 |
+| Feature             | Status                                                                                                                                                                                                                         | Source             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| play()              | IMPL (async; sets `#paused=false`, dispatches `play`, then `api.resume()`)                                                                                                                                                     | L184-191           |
+| pause()             | IMPL (async; `api.pause()`)                                                                                                                                                                                                    | L192-196           |
+| muted               | STUB: getter returns `false`, setter empty                                                                                                                                                                                     | L206-210           |
+| volume              | STUB: getter returns `1`, setter empty                                                                                                                                                                                         | L211-215           |
+| currentTime get/set | IMPL (set: dispatches synthetic `timeupdate`, then `api.seek(val)`)                                                                                                                                                            | L229-243           |
+| duration            | IMPL (ms/1000 from `playback_update`; initial NaN)                                                                                                                                                                             | L244-246, L126-130 |
+| paused              | IMPL                                                                                                                                                                                                                           | L203-205           |
+| ended               | IMPL (`Math.ceil(currentTime) >= duration`)                                                                                                                                                                                    | L216-218           |
+| playbackRate        | MISSING                                                                                                                                                                                                                        | grep               |
+| loop                | IMPL (attribute, plus a manual seek-to-1s loop in playback_update)                                                                                                                                                             | L222-228, L160-163 |
+| autoplay            | MISSING (not in observedAttributes: `controls, loop, src`)                                                                                                                                                                     | L58-62             |
+| controls attribute  | IMPL as CSS only: `:host(:not([controls])) { display: none !important }` (player hidden without `controls`)                                                                                                                    | L33-35             |
+| textTracks          | MISSING                                                                                                                                                                                                                        | grep               |
+| requestFullscreen   | MISSING                                                                                                                                                                                                                        | grep               |
+| Events              | emptied, loadstart, loadedmetadata, durationchange, volumechange (all on Spotify `ready`), timeupdate, play, pause, waiting, playing, ended. NOT dispatched: canplay, error, seeking/seeked (it only keeps a `seeking` getter) | L90, L96, L115-170 |
 
 Other: config options are `startAt`, `theme` (`"dark"` -> `theme=0`), `preferVideo` (switches embed path to `/video`) [L47-52, L97-101]. Loads `https://open.spotify.com/embed-podcast/iframe-api/v1` via script tag [L3]. Default size `min-width:160px; min-height:80px` [L21-24]. `this.continuous` is referenced (L164) but never defined in the file; it is always `undefined`. `src` regex `open\.spotify\.com\/(\w+)\/(\w+)` [L2].
 
@@ -151,24 +151,24 @@ Other: config options are `startAt`, `theme` (`"dark"` -> `theme=0`), `preferVid
 
 Source: [DIST] `cloudflare-video-element/dist/cloudflare-video-element.js`.
 
-| Feature | Status | Source |
-|---|---|---|
-| play() | IMPL (async; `api.play()`) | L184-188 |
-| pause() | IMPL (async) | L189-193 |
-| muted get/set | IMPL (`api.muted`) | L284-293 |
-| volume get/set | IMPL (`api.volume`) | L318-327 |
-| currentTime get/set | IMPL | L260-269 |
-| duration | IMPL (`api.duration` if > 0 else NaN) | L231-237 |
-| paused | IMPL (`api.paused ?? true`) | L227-230 |
-| ended | IMPL (`api.ended ?? false`) | L194-197 |
-| playbackRate get/set | IMPL (`api.playbackRate`) | L294-303 |
-| loop | IMPL (attribute; forwarded to `api.loop` on change) | L277-283, L171-175 |
-| autoplay | IMPL (attribute; forwarded to `api.autoplay`) | L238-244 |
-| controls attribute | IMPL (attribute; forwarded to `api.controls`). Host has `pointer-events:none` without `controls` | L253-259, L61-63 |
-| textTracks | MISSING (only a `defaulttexttrack` attribute passed to iframe URL) | L81 |
-| requestFullscreen | MISSING | grep |
-| other implemented | readyState (0-3), seeking, videoWidth/Height, buffered, played, poster, preload, playsInline, defaultMuted | L108, L198-226, L245-252 |
-| Events | forwards every event in its list from the Cloudflare SDK: standard media events (abort, canplay, canplaythrough, durationchange, emptied, encrypted, ended, error, loadeddata, loadedmetadata, loadstart, pause, play, playing, progress, ratechange, seeked, seeking, stalled, suspend, timeupdate, volumechange, waiting, ...) plus `stream-adstart`, `stream-adend`, `stream-adtimeout`. Also `emptied` and `loadcomplete` from own code | L1-33, L149-153 |
+| Feature              | Status                                                                                                                                                                                                                                                                                                                                                                                                                                      | Source                   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| play()               | IMPL (async; `api.play()`)                                                                                                                                                                                                                                                                                                                                                                                                                  | L184-188                 |
+| pause()              | IMPL (async)                                                                                                                                                                                                                                                                                                                                                                                                                                | L189-193                 |
+| muted get/set        | IMPL (`api.muted`)                                                                                                                                                                                                                                                                                                                                                                                                                          | L284-293                 |
+| volume get/set       | IMPL (`api.volume`)                                                                                                                                                                                                                                                                                                                                                                                                                         | L318-327                 |
+| currentTime get/set  | IMPL                                                                                                                                                                                                                                                                                                                                                                                                                                        | L260-269                 |
+| duration             | IMPL (`api.duration` if > 0 else NaN)                                                                                                                                                                                                                                                                                                                                                                                                       | L231-237                 |
+| paused               | IMPL (`api.paused ?? true`)                                                                                                                                                                                                                                                                                                                                                                                                                 | L227-230                 |
+| ended                | IMPL (`api.ended ?? false`)                                                                                                                                                                                                                                                                                                                                                                                                                 | L194-197                 |
+| playbackRate get/set | IMPL (`api.playbackRate`)                                                                                                                                                                                                                                                                                                                                                                                                                   | L294-303                 |
+| loop                 | IMPL (attribute; forwarded to `api.loop` on change)                                                                                                                                                                                                                                                                                                                                                                                         | L277-283, L171-175       |
+| autoplay             | IMPL (attribute; forwarded to `api.autoplay`)                                                                                                                                                                                                                                                                                                                                                                                               | L238-244                 |
+| controls attribute   | IMPL (attribute; forwarded to `api.controls`). Host has `pointer-events:none` without `controls`                                                                                                                                                                                                                                                                                                                                            | L253-259, L61-63         |
+| textTracks           | MISSING (only a `defaulttexttrack` attribute passed to iframe URL)                                                                                                                                                                                                                                                                                                                                                                          | L81                      |
+| requestFullscreen    | MISSING                                                                                                                                                                                                                                                                                                                                                                                                                                     | grep                     |
+| other implemented    | readyState (0-3), seeking, videoWidth/Height, buffered, played, poster, preload, playsInline, defaultMuted                                                                                                                                                                                                                                                                                                                                  | L108, L198-226, L245-252 |
+| Events               | forwards every event in its list from the Cloudflare SDK: standard media events (abort, canplay, canplaythrough, durationchange, emptied, encrypted, ended, error, loadeddata, loadedmetadata, loadstart, pause, play, playing, progress, ratechange, seeked, seeking, stalled, suspend, timeupdate, volumechange, waiting, ...) plus `stream-adstart`, `stream-adend`, `stream-adtimeout`. Also `emptied` and `loadcomplete` from own code | L1-33, L149-153          |
 
 Other: src regex `(?:cloudflarestream\.com|videodelivery\.net)\/([\w-.]+)` [L35]. iframe base `https://iframe.videodelivery.net` [L34]. SDK script `https://embed.videodelivery.net/embed/sdk.latest.js` [L36]. NOTE discrepancy: Cloudflare's current docs show `https://embed.cloudflarestream.com/embed/sdk.latest.js` [DOC:cf-player-api below]. The element has code for a server-rendered shadow root (`serverRendered = this.shadowRoot`, L129-138). Extra attributes: `defaulttexttrack, primarycolor, letterboxcolor, starttime, adurl` [L81-85]; note these are NOT in `observedAttributes` (L93-103), so changing them after load does nothing; they are only read when the iframe URL is built.
 
@@ -180,46 +180,46 @@ All exist on npm, MIT, versions and deps in section 1. dash and shaka use custom
 
 Source: [DIST] `youtube-video-element/dist/youtube-video-element.js`.
 
-| Feature | Status | Source |
-|---|---|---|
-| play() | IMPL (async; `api.playVideo()`, returns a play promise) | L297-303 |
-| pause() | IMPL | L304-308 |
-| muted get/set | IMPL (getter and setter defined) | L398-409 area (setter L398, getter L405) |
-| volume get/set | IMPL (`api.setVolume(val*100)` / `getVolume()/100`; pre-load value cached) | L435-451 |
-| currentTime get/set | IMPL | L365-383 |
-| duration | IMPL (`api.getDuration()`) | L338-341 |
-| paused | IMPL (from `getPlayerState` in [-1,0,2,5]) | L333-337 |
-| ended | MISSING (no `get ended`; `ended` is only dispatched as an event at L238) | grep |
-| playbackRate get/set | IMPL | L410-420 |
-| loop | IMPL (attribute getter/setter; manual loop at ended) | L391-397, L239 |
-| autoplay | IMPL | L342-348 |
-| controls attribute | IMPL (attribute getter/setter; `controls` is in observedAttributes) | L358-364, L104-114 |
-| textTracks | IMPL (a `TextTrackList` taken from a dummy `<video>`; populated from YouTube caption tracks, change handler sets the caption) | L124, L157-163, L211-214 |
-| requestFullscreen | MISSING (no override; host element behaviour; iframe allows fullscreen) | L35 |
-| error | IMPL (`get error()` returns `{code, message}`) | L196-198, L322-324 |
-| Events dispatched | emptied, loadstart, loadedmetadata, durationchange, volumechange, loadcomplete, error, play, playing, pause, ended, seeking, seeked, ratechange, timeupdate, progress. NOT dispatched: canplay, waiting | L150-281 (grep of `dispatchEvent`) |
+| Feature              | Status                                                                                                                                                                                                  | Source                                   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| play()               | IMPL (async; `api.playVideo()`, returns a play promise)                                                                                                                                                 | L297-303                                 |
+| pause()              | IMPL                                                                                                                                                                                                    | L304-308                                 |
+| muted get/set        | IMPL (getter and setter defined)                                                                                                                                                                        | L398-409 area (setter L398, getter L405) |
+| volume get/set       | IMPL (`api.setVolume(val*100)` / `getVolume()/100`; pre-load value cached)                                                                                                                              | L435-451                                 |
+| currentTime get/set  | IMPL                                                                                                                                                                                                    | L365-383                                 |
+| duration             | IMPL (`api.getDuration()`)                                                                                                                                                                              | L338-341                                 |
+| paused               | IMPL (from `getPlayerState` in [-1,0,2,5])                                                                                                                                                              | L333-337                                 |
+| ended                | MISSING (no `get ended`; `ended` is only dispatched as an event at L238)                                                                                                                                | grep                                     |
+| playbackRate get/set | IMPL                                                                                                                                                                                                    | L410-420                                 |
+| loop                 | IMPL (attribute getter/setter; manual loop at ended)                                                                                                                                                    | L391-397, L239                           |
+| autoplay             | IMPL                                                                                                                                                                                                    | L342-348                                 |
+| controls attribute   | IMPL (attribute getter/setter; `controls` is in observedAttributes)                                                                                                                                     | L358-364, L104-114                       |
+| textTracks           | IMPL (a `TextTrackList` taken from a dummy `<video>`; populated from YouTube caption tracks, change handler sets the caption)                                                                           | L124, L157-163, L211-214                 |
+| requestFullscreen    | MISSING (no override; host element behaviour; iframe allows fullscreen)                                                                                                                                 | L35                                      |
+| error                | IMPL (`get error()` returns `{code, message}`)                                                                                                                                                          | L196-198, L322-324                       |
+| Events dispatched    | emptied, loadstart, loadedmetadata, durationchange, volumechange, loadcomplete, error, play, playing, pause, ended, seeking, seeked, ratechange, timeupdate, progress. NOT dispatched: canplay, waiting | L150-281 (grep of `dispatchEvent`)       |
 
 ### 2.8 vimeo-video-element 1.7.4 (`<vimeo-video>`; standalone, `MediaPlayedRangesMixin(...)`, uses `@vimeo/player`)
 
 Source: [DIST] `vimeo-video-element/dist/vimeo-video-element.js`.
 
-| Feature | Status | Source |
-|---|---|---|
-| play() | IMPL (async; dispatches `play` itself, then `api.play()`) | L343-355 |
-| pause() | IMPL | L356-360 |
-| muted get/set | IMPL (`api.setMuted`) | L438-449 |
-| volume get/set | IMPL | L476-490 area |
-| currentTime get/set | IMPL | L412-423 |
-| duration | IMPL | L389-391 |
-| paused | IMPL | L386-388 |
-| ended | IMPL (`#currentTime >= #duration`) | L364-366 |
-| playbackRate get/set | IMPL | L450-461 |
-| loop | IMPL | L431-437 |
-| autoplay | IMPL | L392-398 |
-| controls attribute | IMPL (getter/setter) | L405-411 |
-| textTracks | IMPL (dummy `<video>` TextTrackList populated from Vimeo text tracks) | L235-251 |
-| requestFullscreen | IMPL (override, calls `api.requestFullscreen`); also exitFullscreen, requestPictureInPicture, exitPictureInPicture | L112-127 |
-| Events dispatched | emptied, loadstart, loadedmetadata, volumechange, durationchange, loadcomplete, error (ErrorEvent), play, waiting, playing, seeking, seeked, pause, ended, ratechange, timeupdate, progress, resize. NOT dispatched: canplay | L146-322 |
+| Feature              | Status                                                                                                                                                                                                                       | Source        |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| play()               | IMPL (async; dispatches `play` itself, then `api.play()`)                                                                                                                                                                    | L343-355      |
+| pause()              | IMPL                                                                                                                                                                                                                         | L356-360      |
+| muted get/set        | IMPL (`api.setMuted`)                                                                                                                                                                                                        | L438-449      |
+| volume get/set       | IMPL                                                                                                                                                                                                                         | L476-490 area |
+| currentTime get/set  | IMPL                                                                                                                                                                                                                         | L412-423      |
+| duration             | IMPL                                                                                                                                                                                                                         | L389-391      |
+| paused               | IMPL                                                                                                                                                                                                                         | L386-388      |
+| ended                | IMPL (`#currentTime >= #duration`)                                                                                                                                                                                           | L364-366      |
+| playbackRate get/set | IMPL                                                                                                                                                                                                                         | L450-461      |
+| loop                 | IMPL                                                                                                                                                                                                                         | L431-437      |
+| autoplay             | IMPL                                                                                                                                                                                                                         | L392-398      |
+| controls attribute   | IMPL (getter/setter)                                                                                                                                                                                                         | L405-411      |
+| textTracks           | IMPL (dummy `<video>` TextTrackList populated from Vimeo text tracks)                                                                                                                                                        | L235-251      |
+| requestFullscreen    | IMPL (override, calls `api.requestFullscreen`); also exitFullscreen, requestPictureInPicture, exitPictureInPicture                                                                                                           | L112-127      |
+| Events dispatched    | emptied, loadstart, loadedmetadata, volumechange, durationchange, loadcomplete, error (ErrorEvent), play, waiting, playing, seeking, seeked, pause, ended, ratechange, timeupdate, progress, resize. NOT dispatched: canplay | L146-322      |
 
 ### 2.9 hls-video-element 1.5.12 (`<hls-video>`; `HlsVideoMixin(MediaTracksMixin(CustomVideoElement))`, inner real `<video>`)
 
@@ -238,6 +238,7 @@ All of play, pause, muted, volume, currentTime, duration, paused, playbackRate, 
 ## 3. Provider-side limits (only from a fetched source)
 
 ### Twitch
+
 - Source: https://dev.twitch.tv/docs/embed/video-and-clips/
 - `parent`: "Required. Domain(s) that will be embedding Twitch. You must have one parent key for each domain your site uses." Example iframe: `https://player.twitch.tv/?<channel, video, or collection>&parent=streamernews.example.com`. Multiple domains = multiple `parent` params (clip example uses two `&parent=`).
 - JS embed option `height`: "Minimum: 300" (in the options table of that page; applies to the JS `Twitch.Embed` options, I did not confirm it also applies to a bare iframe).
@@ -245,6 +246,7 @@ All of play, pause, muted, volume, currentTime, duration, paused, playbackRate, 
 - Not found in the sources I read: any stated rule about localhost or autoplay with sound for Twitch. NOT VERIFIED.
 
 ### TikTok
+
 - Source: https://developers.tiktok.com/doc/embed-player
 - Embed URL form: `www.tiktok.com/player/v1/{tiktok_post_id}` (matches the element's `EMBED_BASE` and regex, DIST L1-2).
 - Query params documented include `controls`, `volume_control`, `loop`, `autoplay`, `muted`, `music_info`, `description`, and more (I read controls, volume_control, loop, autoplay, muted, music_info). `muted`: "1: Set the default volume to 0 and prevent the user from changing the volume".
@@ -254,6 +256,7 @@ All of play, pause, muted, volume, currentTime, duration, paused, playbackRate, 
 - Note: the element uses the post id from the URL; the TikTok doc says only post ids work in this URL form. A short `vm.tiktok.com` link would not match the element regex (`MATCH_SRC`, DIST L2): inference from the regex only.
 
 ### Spotify
+
 - Source: https://developer.spotify.com/documentation/embeds/references/iframe-api
 - Controller methods documented: `loadUri`, `loadEntity(spotifyUriOrUrl, preferVideo, startAt)`, `play`, `pause`, `resume`, `togglePlay`, `restart`, `seek(seconds)`, `destroy`, `addListener('ready' | 'playback_started' | 'playback_update' ...)`. NO volume or mute method is documented. This matches the element's volume/muted stubs.
 - `preferVideo`: "An optional parameter to play the video of a podcast episode, if available" (so video exists for some podcast episodes; the element is named "audio" but supports `config.preferVideo`).
@@ -263,12 +266,14 @@ All of play, pause, muted, volume, currentTime, duration, paused, playbackRate, 
 - The script URL in the element (`https://open.spotify.com/embed-podcast/iframe-api/v1`, DIST L3) is not shown in the fetched doc page text; the docs pages I got link to `/documentation/embeds/tutorials/using-the-iframe-api`, which I did not fetch. Whether the element's URL is current: NOT VERIFIED.
 
 ### Wistia
+
 - Source: https://wistia.com/support/developers/player-api (Wistia "Vulcan" player, E-v1.js). Its sidebar lists an "Aurora Player [Modern]" with its own API/React component, i.e. Wistia has a second, newer player. The element targets E-v1.js (DIST L63).
 - Doc says E-v1.js has a built-in API; `window._wq.push({ id, onReady })` yields a video handle. Documented handle methods include `bind/unbind`, `duration()`, `time()`/`time(val)`, `volume()`/`volume(val)`, `mute()`/`unmute()`/`isMuted()`, `playbackRate(r)`, events like `play`, `timechange`, `end`.
 - Sidebar lists "Referrer Policy and Wistia's Domain Restrictions" and "Creating a Wistia-friendly Content Security Policy (CSP)" pages. I did NOT fetch those, so I cannot state the domain-restriction rules. NOT VERIFIED. Treat as a risk to check.
 - Account/API-key requirements: none found on the page. NOT VERIFIED.
 
 ### Cloudflare Stream
+
 - Sources: https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/ and .../using-the-player-api/
 - Docs show the SDK script as `https://embed.cloudflarestream.com/embed/sdk.latest.js`. The element loads `https://embed.videodelivery.net/embed/sdk.latest.js` (DIST L36) and iframe host `iframe.videodelivery.net`. Whether the old host stays valid: NOT VERIFIED.
 - Documented SDK properties include autoplay, currentTime, ended, loop, muted, volume (0.0-1.0), plus an `autoplay` note with `player.play().catch(() => { player.muted = true; ... })` pattern for blocked autoplay.
@@ -282,17 +287,17 @@ All of play, pause, muted, volume, currentTime, duration, paused, playbackRate, 
 
 All checks are static reading; nothing was imported in Node.
 
-| Package | Top-level access seen | Verdict |
-|---|---|---|
-| wistia-video-element | `const templateLightDOM = globalThis.document?.createElement("template")`, guarded by `if (templateLightDOM)`; same for shadow template (DIST L2-30). Class extends `SuperVideoElement`, which is `globalThis.document ? SuperMediaMixin(HTMLElement, {tag:'video'}) : class {}` (SME L439); `SuperMediaMixin` itself does `globalThis.document?.createElement(tag)` (SME L73). Define guarded: `if (globalThis.customElements && !globalThis.customElements.get("wistia-video"))` (DIST L138). `loadScript` uses `document`/`self` only inside functions | guarded (no unguarded `HTMLElement`/`window`/`document` at module top level seen) |
-| twitch-video-element | `class TwitchVideoElement extends (globalThis.HTMLElement ?? class {})` (L86); define guarded (L402). `#paused = !this.autoplay` is an instance field (runs at construction only) | guarded |
-| tiktok-video-element | `extends (globalThis.HTMLElement ?? class {})` (L59); define guarded (L292) | guarded |
-| spotify-audio-element | `extends (globalThis.HTMLElement ?? class {})` (L54); `document` used only inside `loadScript` (L~300); define guarded | guarded |
-| cloudflare-video-element | `extends (globalThis.HTMLElement ?? class {})` (L89); define guarded | guarded |
-| youtube-video-element | `MediaPlayedRangesMixin(globalThis.HTMLElement ?? class {})` (L100); `document` used inside `load()`/`loadScript` only; define guarded (L563). Dependency `media-played-ranges-mixin` dist/index.js: grep for `HTMLElement|window|document|globalThis|self` returned no hits | guarded |
-| vimeo-video-element | same mixin and guard pattern (L72, L563). It statically imports `@vimeo/player/dist/player.es.js` at top level. In that file the window/document uses I found are `typeof window !== 'undefined'` (L653, L658, L782) and `typeof document !== 'undefined'` (L2119). My grep for other top-level `window/document/self/navigator` statements found none. Not executed in Node | guarded by static reading; runtime import in Node NOT VERIFIED |
-| hls-video-element | imports `custom-media-element`, `media-tracks`, `hls.js/dist/hls.mjs`. CME: `globalThis.document?.createElement?.(tag)` (CME L103), `CustomVideoElement = CustomMediaMixin(globalThis.HTMLElement ?? class {}, ...)` (L352, L356). media-tracks mixin.js: `getBaseMediaTracksFn(globalThis.HTMLMediaElement, ...)` returns undefined if absent (L8-9, L88-92) and `MediaTracksMixin` returns early `if (!MediaElementClass?.prototype)` (L11). hls.js: `const optionalSelf = typeof self !== 'undefined' ? self : undefined` (L6777); no other top-level window/self/document line found by grep. Define guarded (L227) | guarded by static reading; runtime import in Node NOT VERIFIED |
-| @mux/mux-video | src/index.ts imports a local `./polyfills` that, when `typeof window === 'undefined' \|\| typeof globalThis.customElements === 'undefined'`, substitutes a shim `globalThis` with stub `document.createElement`, `customElements`, `HTMLElement`, `HTMLVideoElement`, `CustomEvent`, `EventTarget`, `DocumentFragment` (comment: "@github/template-parts requires DocumentFragment to be available on globalThis for SSR"), then calls `globalThis.customElements.define('mux-video', ...)` on the shim. Dependencies castable-video and @mux/playback-core: NOT inspected for top-level browser access | designed for server import; full chain NOT VERIFIED |
+| Package                  | Top-level access seen                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Verdict                                                                           |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| wistia-video-element     | `const templateLightDOM = globalThis.document?.createElement("template")`, guarded by `if (templateLightDOM)`; same for shadow template (DIST L2-30). Class extends `SuperVideoElement`, which is `globalThis.document ? SuperMediaMixin(HTMLElement, {tag:'video'}) : class {}` (SME L439); `SuperMediaMixin` itself does `globalThis.document?.createElement(tag)` (SME L73). Define guarded: `if (globalThis.customElements && !globalThis.customElements.get("wistia-video"))` (DIST L138). `loadScript` uses `document`/`self` only inside functions                                                               | guarded (no unguarded `HTMLElement`/`window`/`document` at module top level seen) |
+| twitch-video-element     | `class TwitchVideoElement extends (globalThis.HTMLElement ?? class {})` (L86); define guarded (L402). `#paused = !this.autoplay` is an instance field (runs at construction only)                                                                                                                                                                                                                                                                                                                                                                                                                                       | guarded                                                                           |
+| tiktok-video-element     | `extends (globalThis.HTMLElement ?? class {})` (L59); define guarded (L292)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | guarded                                                                           |
+| spotify-audio-element    | `extends (globalThis.HTMLElement ?? class {})` (L54); `document` used only inside `loadScript` (L~300); define guarded                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | guarded                                                                           |
+| cloudflare-video-element | `extends (globalThis.HTMLElement ?? class {})` (L89); define guarded                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | guarded                                                                           |
+| youtube-video-element    | `MediaPlayedRangesMixin(globalThis.HTMLElement ?? class {})` (L100); `document` used inside `load()`/`loadScript` only; define guarded (L563). Dependency `media-played-ranges-mixin` dist/index.js: grep for `HTMLElement                                                                                                                                                                                                                                                                                                                                                                                              | window                                                                            | document | globalThis | self` returned no hits | guarded |
+| vimeo-video-element      | same mixin and guard pattern (L72, L563). It statically imports `@vimeo/player/dist/player.es.js` at top level. In that file the window/document uses I found are `typeof window !== 'undefined'` (L653, L658, L782) and `typeof document !== 'undefined'` (L2119). My grep for other top-level `window/document/self/navigator` statements found none. Not executed in Node                                                                                                                                                                                                                                            | guarded by static reading; runtime import in Node NOT VERIFIED                    |
+| hls-video-element        | imports `custom-media-element`, `media-tracks`, `hls.js/dist/hls.mjs`. CME: `globalThis.document?.createElement?.(tag)` (CME L103), `CustomVideoElement = CustomMediaMixin(globalThis.HTMLElement ?? class {}, ...)` (L352, L356). media-tracks mixin.js: `getBaseMediaTracksFn(globalThis.HTMLMediaElement, ...)` returns undefined if absent (L8-9, L88-92) and `MediaTracksMixin` returns early `if (!MediaElementClass?.prototype)` (L11). hls.js: `const optionalSelf = typeof self !== 'undefined' ? self : undefined` (L6777); no other top-level window/self/document line found by grep. Define guarded (L227) | guarded by static reading; runtime import in Node NOT VERIFIED                    |
+| @mux/mux-video           | src/index.ts imports a local `./polyfills` that, when `typeof window === 'undefined' \|\| typeof globalThis.customElements === 'undefined'`, substitutes a shim `globalThis` with stub `document.createElement`, `customElements`, `HTMLElement`, `HTMLVideoElement`, `CustomEvent`, `EventTarget`, `DocumentFragment` (comment: "@github/template-parts requires DocumentFragment to be available on globalThis for SSR"), then calls `globalThis.customElements.define('mux-video', ...)` on the shim. Dependencies castable-video and @mux/playback-core: NOT inspected for top-level browser access                 | designed for server import; full chain NOT VERIFIED                               |
 
 Related: every `dist/react.js` wrapper starts with `"use client"` and imports its element module at top level (so the element module is evaluated during SSR of a client component). That is why the guards above matter.
 

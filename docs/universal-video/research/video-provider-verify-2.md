@@ -1,26 +1,29 @@
 # Video provider verification, round 2 (2026-10-27)
 
-Scratch data: /private/tmp/claude-501/-Users-davidcampbell-Documents-nextapps-reform-next-starter/e6b72631-5a51-408b-8260-f5e0e30420e8/scratchpad/probe-providers/ (headers *.h*, HTML, JSON, images). Nothing downloaded was executed. Parsing used python3 -I.
+Scratch data: /private/tmp/claude-501/-Users-davidcampbell-Documents-nextapps-reform-next-starter/e6b72631-5a51-408b-8260-f5e0e30420e8/scratchpad/probe-providers/ (headers _.h_, HTML, JSON, images). Nothing downloaded was executed. Parsing used python3 -I.
 
 Caveat on doc quotes: WebFetch runs a small model over the page, so some "quotes" are its extraction and may be paraphrased. Items I re-checked against raw page text via curl are marked (raw). Others are "via WebFetch".
 
----------------------------------------------------------------------
+---
+
 ## A. YouTube (jNQXAC9IVRw)
 
 ### A1. HTTP-level headers and cookies
+
 Commands: `curl -s -A <Chrome UA> -D file -o file https://<host>/embed/jNQXAC9IVRw` and the same with `?enablejsapi=1&origin=https://example.com`, plus `curl -sI`. Hosts: www.youtube.com and www.youtube-nocookie.com. All returned HTTP/2 200 text/html.
 
-| | www.youtube.com | www.youtube-nocookie.com |
-|---|---|---|
-| Set-Cookie (GET, plain) | 6 cookies (below) | NONE |
-| Set-Cookie (GET, enablejsapi+origin) | same 6 | NONE |
-| Set-Cookie (HEAD) | 6 (order differs) | NONE |
-| X-Frame-Options | absent | absent |
-| CSP frame-ancestors | absent (3 CSP headers: script-src allowlist, strict nonce script-src + base-uri + object-src, require-trusted-types-for) | absent (same 3) |
-| Permissions-Policy | only `ch-ua-*=*` client hints | same |
-| Other | CORP cross-origin; COOP and COEP report-only (report-to youtube_main) | same, report-to youtube_other |
+|                                      | www.youtube.com                                                                                                          | www.youtube-nocookie.com      |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------- |
+| Set-Cookie (GET, plain)              | 6 cookies (below)                                                                                                        | NONE                          |
+| Set-Cookie (GET, enablejsapi+origin) | same 6                                                                                                                   | NONE                          |
+| Set-Cookie (HEAD)                    | 6 (order differs)                                                                                                        | NONE                          |
+| X-Frame-Options                      | absent                                                                                                                   | absent                        |
+| CSP frame-ancestors                  | absent (3 CSP headers: script-src allowlist, strict nonce script-src + base-uri + object-src, require-trusted-types-for) | absent (same 3)               |
+| Permissions-Policy                   | only `ch-ua-*=*` client hints                                                                                            | same                          |
+| Other                                | CORP cross-origin; COOP and COEP report-only (report-to youtube_main)                                                    | same, report-to youtube_other |
 
 youtube.com cookies observed (all Secure; HttpOnly):
+
 - `__Secure-YNID`: domain .youtube.com, expires 25-Apr-2027, SameSite=none, Partitioned
 - `YSC`: .youtube.com, session (no expiry), SameSite=none, Partitioned
 - `__Secure-YEC`: emptied, Expires 31-Jan-2024 (a deletion), SameSite=lax
@@ -31,11 +34,14 @@ youtube.com cookies observed (all Secure; HttpOnly):
 Finding: at HTTP level the nocookie embed document sets zero cookies, while the standard embed sets six. enablejsapi/origin made no difference to either. Cookies set by JavaScript (base.js, later requests, the ytimg/ad calls, and local/session storage) CANNOT be observed with curl; that is NOT VERIFIED. Also not tested: what happens after a play click, or on the iframe once nested in a page.
 
 ### A2. External hosts in embed HTML (static, regex over the raw HTML)
+
 Distinct hosts: www.youtube.com, support.google.com, www.gstatic.com, ssl.gstatic.com, i.ytimg.com, apis.google.com. The nocookie page additionally names www.youtube-nocookie.com. The only `rel=preconnect` the page emits: `<link rel="preconnect" href="https://i.ytimg.com">` (both hosts). Scripts and CSS are same-origin paths (`/s/player/dce23b30/player_embed_es6.vflset/en_US/base.js`, `/s/player/dce23b30/www-player.css`, `/s/_/ytembeds/...`).
 Suggested preconnect list from this: https://i.ytimg.com (poster) plus the embed host itself. googlevideo.com media hosts, doubleclick, etc. are loaded at runtime by base.js and were NOT observed (NOT VERIFIED).
 
 ### A3. Official docs
+
 Sources: https://developers.google.com/youtube/player_parameters and https://developers.google.com/youtube/iframe_api_reference
+
 - `cc_load_policy`: "Setting the parameter's value to `1` causes closed captions to be shown by default" (via WebFetch, not deprecated).
 - `modestbranding` (raw): "Note: This parameter is deprecated and has no effect." The page intro (raw) also says "some, like modestbranding, showinfo, autohide and theme, have been deprecated and are no longer functional."
 - `rel` (raw): "Note: This parameter is changing on or after September 25, 2018." and "will not be able to disable related videos. Instead, if the rel parameter is set to 0, related videos will come from the same channel as the video that was just played."
@@ -54,7 +60,9 @@ Sources: https://developers.google.com/youtube/player_parameters and https://dev
 - Captions module (raw): "Currently, the only module that you can set options for is the captions module, which handles closed captioning in the player." `player.getOptions()` and `player.getOptions('captions')` are documented. Documented captions options are only `fontSize` and `reload`. `setOption('captions','track', ...)` is NOT documented on this page.
 
 ### A4. youtube-video-element source (read only)
+
 File: /Users/davidcampbell/Documents/nextapps/reform-next-starter/node_modules/.pnpm/youtube-video-element@1.9.0/node_modules/youtube-video-element/dist/youtube-video-element.js
+
 - L3: `const EMBED_BASE_NOCOOKIE = "https://www.youtube-nocookie.com/embed";`
 - L66: `const embedBase = attrs.src.includes("-nocookie") ? EMBED_BASE_NOCOOKIE : EMBED_BASE;` so nocookie is chosen only if the src string contains "-nocookie"; there is no prop for it.
 - L68-84 default params: `controls: attrs.controls === "" ? null : 0`, `autoplay`, `loop: attrs.loop`, `mute: attrs.muted`, `playsinline`, `preload: attrs.preload ?? "metadata"`, `enablejsapi: 1`, `cc_load_policy: 1`, `showinfo: 0`, `rel: 0`, `iv_load_policy: 3`, `modestbranding: 1`, `start: parseStartTime(attrs.src)`, then `...props.config` (L84) so any config key overrides a default.
@@ -66,6 +74,7 @@ File: /Users/davidcampbell/Documents/nextapps/reform-next-starter/node_modules/.
 - Element package.json version 1.9.0 per pnpm folder name.
 
 ### Discrepancies (docs vs observed), YouTube
+
 - Element sends `modestbranding=1` and `showinfo=0`; docs say both are deprecated with no effect (harmless but dead).
 - Element sends `mute=1`; docs do not document a `mute` URL param (whether YouTube honors it was not tested).
 - Element does not send `origin`; docs recommend it as an extra security measure for the JS API (not tested whether the IFrame API fills it in).
@@ -74,16 +83,19 @@ File: /Users/davidcampbell/Documents/nextapps/reform-next-starter/node_modules/.
 - Docs and the user's expectation that nocookie is "privacy enhanced": observed HTTP cookies are none vs six, which matches the intent at HTTP level only.
 
 ### Still NOT VERIFIED, YouTube
+
 - JS-set cookies and storage on both hosts (needs a browser; tried only curl).
 - Runtime hosts loaded by base.js (googlevideo, doubleclick, etc.).
 - Whether `getAvailableQualityLevels`/`setPlaybackQuality` still work at runtime.
 - Whether `mute=1` as URL param is honored.
 - Whether the IFrame API adds `origin` automatically.
 
----------------------------------------------------------------------
+---
+
 ## B. Vimeo (22439234)
 
 ### B1. Public check and live probes
+
 - Public: oembed `https://vimeo.com/api/oembed.json?url=https://vimeo.com/22439234` returned JSON ("The Mountain", TSO Photography, `"is_plus":"0"`, `"account_type":"basic"`, duration 185); `https://vimeo.com/22439234` returned HTTP/2 200. Player config: `video.privacy = "anybody"`, `video.embed_permission = "public"`, `unlisted_hash = null`.
 - All four URLs (`/video/22439234`, `?dnt=1`, `?background=1`, `?controls=0`) returned HTTP/2 200 text/html (23-24 KB).
 - Set-Cookie on ALL four, only one: `__cf_bm=...; HttpOnly; SameSite=None; Secure; Path=/; Domain=vimeo.com; Expires=<about +30 min>` (a Cloudflare bot-management cookie). `?dnt=1` did not remove it.
@@ -92,8 +104,10 @@ File: /Users/davidcampbell/Documents/nextapps/reform-next-starter/node_modules/.
 - Hosts in HTML: f.vimeocdn.com, i.vimeocdn.com, player.vimeo.com, vod-adaptive-ak.vimeocdn.com, skyfire.vimeocdn.com, vimeo.com, arclight.vimeo.com, lensflare.vimeo.com, videoapi-sprites.vimeocdn.com (plus facebook, twitter, plus.google.com, bit.ly, schema.org in share/meta strings). Preconnect-worthy: player.vimeo.com, i.vimeocdn.com, f.vimeocdn.com (matches the Link header), and the CDN hosts vod-adaptive-ak.vimeocdn.com / skyfire.vimeocdn.com (HLS/DASH).
 
 ### Player config JSON (window.playerConfig, parsed from HTML) and differences
+
 Top keys: cdn_url, vimeo_api_url, request, player_url, video, user, view, vimeo_url, embed.
 Observed differences between URLs (fields that changed, ignoring signatures/tokens/CDN URLs):
+
 - `?dnt=1`: `embed.dnt` 0 to 1, `request.flags.dnt` 0 to 1, `request.urls.vuid_js` absent (the vuid script is dropped). Everything else equal to base.
 - `?controls=0`: `embed.settings.controls` 1 to 0; nothing else changed (other chrome flags stay 1, e.g. playbar, volume).
 - `?background=1`: `embed.autoplay` 1, `embed.loop` 1, `embed.muted` 1, new `embed.settings.background = 1`, and these all go to 0: controls, playbar, volume, fullscreen, title, byline, portrait, share, like, watch_later, logo, embed, cc, cc_track_menu, chapters, chromecast, airplay, audio_tracks, quality, transcript, badge (removed).
@@ -103,6 +117,7 @@ Observed differences between URLs (fields that changed, ignoring signatures/toke
 - Plan gating indicators: `user.account_type: "none"` is the viewer; the owner info is in oembed (`account_type: "basic"`, `is_plus: "0"`). There is no explicit "paid" flag in the config. IMPORTANT: this basic-account video still reflected `background=1` and `controls=0` in `embed.settings`, even though the help article says those need a paid plan (see discrepancies). Whether the player actually honors them visually was not tested.
 
 ### B2. Docs
+
 - Help article https://help.vimeo.com/hc/en-us/articles/12426260232977-About-Player-parameters (via WebFetch):
   - background: "Disable all player controls (including play/pause)." / "Set the video to loop." / "Set the video to autoplay." / "Mute the video's audio." Plan: "Video must be hosted by a Starter, Standard, Advanced, Plus, Pro, Business, Premium, or Enterprise account."
   - controls: "Hides or reveals all player elements, such as the playbar and sharing buttons, to create a chromeless experience." Same plan list.
@@ -124,7 +139,9 @@ Observed differences between URLs (fields that changed, ignoring signatures/toke
   - Loop and ended (setLoop note): "when loop is turned on, the `ended` event will not fire."
 
 ### B3. vimeo-video-element source (read only)
+
 File: /Users/davidcampbell/Documents/nextapps/reform-next-starter/node_modules/.pnpm/vimeo-video-element@1.7.2/node_modules/vimeo-video-element/dist/vimeo-video-element.js (uses @vimeo/player 2.29.0 present in .pnpm)
+
 - L3-4: `EMBED_VIDEO_BASE = "https://player.vimeo.com/video"`, `EMBED_EVENT_BASE = "https://vimeo.com/event"`.
 - L15-16: `data-config` attribute = `JSON.stringify(props.config)`; L18-19: `config.referrerpolicy` goes to the iframe attribute.
 - L51-63 URL params: `controls: attrs.controls === "" ? null : 0`, `autoplay`, `loop`, `muted`, `playsinline`, `preload ?? "metadata"`, `transparent: false`, `autopause`, `h: hParam`, then `...props.config` (L63). So `dnt`, `background` and others are not special-cased: any key in `config` becomes a query param, overriding defaults (e.g. `config={{dnt: 1}}` gives `?dnt=1`; `config={{background: 1}}` gives `?background=1`; `config={{controls: 0}}` overrides).
@@ -132,12 +149,14 @@ File: /Users/davidcampbell/Documents/nextapps/reform-next-starter/node_modules/.
 - L329-330: `loop` attribute change calls `this.api.setLoop(this.loop)`.
 
 ### Discrepancies (docs vs observed), Vimeo
+
 - Docs say `background` and `controls=0` need a paid plan; observed on a "basic" account video both appeared in the config exactly as requested (`settings.background=1`, `settings.controls=0`). Either the gating is applied elsewhere (player-side/visual) or is stale; NOT proven which.
 - Docs say DNT blocks session data/analytics but "some essential cookies will still be active"; observed `__cf_bm` still set with `?dnt=1`; only the vuid script disappeared.
 - Docs give no `h` param; the element and Vimeo's unlisted links use it.
 - `quality` docs require a paid plan; config shows `quality: null` by default (untested with param).
 
 ### Still NOT VERIFIED, Vimeo
+
 - CSP `frame-ancestors` (not captured), X-Frame-Options is observed absent.
 - Behavior on a paid vs free video for background/controls/quality/color (only one free-account sample).
 - text_tracks/chapters shapes (sample has none).
@@ -145,22 +164,26 @@ File: /Users/davidcampbell/Documents/nextapps/reform-next-starter/node_modules/.
 - Real-device volume, PiP, remote playback behavior.
 - Cookies set by player JS after load.
 
----------------------------------------------------------------------
+---
+
 ## C. Cloudflare Stream
 
 ### C1. Host probes (`curl -sI`)
-| URL | Result |
-|---|---|
-| https://embed.videodelivery.net/embed/sdk.latest.js | 200, content-type text/javascript, content-length 18653, cf-cache-status HIT, cache-control max-age=180, etag "edf6470a868d091ad92ff9de5fc4d7ca" |
-| https://embed.cloudflarestream.com/embed/sdk.latest.js | 200, identical headers, same etag, same length |
-| https://iframe.videodelivery.net/ | 404 text/plain, access-control-allow-origin *, no-cache |
-| https://iframe.cloudflarestream.com/ | 404 text/plain, identical |
-Body of both SDK URLs downloaded and compared: same size 18653 bytes, same shasum. No redirects. Conclusion: the element's older host `embed.videodelivery.net` still serves the same SDK file as the current host. The iframe roots 404 on both hosts alike (no video UID was in the path, so this is expected and says nothing about a UID path on the videodelivery.net iframe host; a UID path on `iframe.videodelivery.net/<uid>` was NOT TESTED).
+
+| URL                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Result                                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| https://embed.videodelivery.net/embed/sdk.latest.js                                                                                                                                                                                                                                                                                                                                                                                                     | 200, content-type text/javascript, content-length 18653, cf-cache-status HIT, cache-control max-age=180, etag "edf6470a868d091ad92ff9de5fc4d7ca" |
+| https://embed.cloudflarestream.com/embed/sdk.latest.js                                                                                                                                                                                                                                                                                                                                                                                                  | 200, identical headers, same etag, same length                                                                                                   |
+| https://iframe.videodelivery.net/                                                                                                                                                                                                                                                                                                                                                                                                                       | 404 text/plain, access-control-allow-origin *, no-cache                                                                                          |
+| https://iframe.cloudflarestream.com/                                                                                                                                                                                                                                                                                                                                                                                                                    | 404 text/plain, identical                                                                                                                        |
+| Body of both SDK URLs downloaded and compared: same size 18653 bytes, same shasum. No redirects. Conclusion: the element's older host `embed.videodelivery.net` still serves the same SDK file as the current host. The iframe roots 404 on both hosts alike (no video UID was in the path, so this is expected and says nothing about a UID path on the videodelivery.net iframe host; a UID path on `iframe.videodelivery.net/<uid>` was NOT TESTED). |
 
 Element source: /Users/davidcampbell/Documents/nextapps/reform-next-starter/node_modules/.pnpm/cloudflare-video-element@1.3.5/node_modules/cloudflare-video-element/dist/cloudflare-video-element.js L34 `EMBED_BASE = "https://iframe.videodelivery.net"`, L35 `MATCH_SRC` accepts `cloudflarestream.com|videodelivery.net`, L36 `API_URL = "https://embed.videodelivery.net/embed/sdk.latest.js"`, L135 `loadScript(API_URL, API_GLOBAL)`.
 
 ### C2. Docs (via WebFetch)
+
 Pages: https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/using-the-player-api/ , .../using-the-stream-player/ , .../displaying-thumbnails/
+
 - Events: there IS an event API: "We support most of the standardized media element events." (play, pause, ended, timeupdate, error); "Non-standard events are prefixed with `stream-`" (`stream-adstart`, `stream-adend`, `stream-adtimeout`).
 - SDK script per docs: `https://embed.cloudflarestream.com/embed/sdk.latest.js` (the page does not mention videodelivery.net).
 - Player API props: muted "Sets or returns whether the audio should be played with the video"; controls "Sets or returns whether the video should display controls (like play/pause etc.)"; preload "it is a mere hint"; defaultTextTrack "Will initialize the player with the specified language code's text track enabled." (only at init).
@@ -170,6 +193,7 @@ Pages: https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-
 - Thumbnails: `https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg?time=1s&height=270`; docs defaults: time `0s`, height `640`, width `640`, fit `crop` (options crop, clip, scale, fill); animated GIF supports `duration` (5s) and `fps` (8). For signed videos "you must use a signed URL instead of video UIDs."
 
 ### C3. Live probe of docs sample (UID 6b9e68b07dfee8cc2d116e4c51d6a957, code f33zs165nr7gyfy4)
+
 - `.../thumbnails/thumbnail.jpg?time=1s&height=270` with `Origin: https://example.com`: 200, image/jpeg, 40225 bytes, `access-control-allow-origin: *`, `cache-control: public, max-age=864000`. `sips`: 480 x 270.
 - `.../thumbnails/thumbnail.jpg` (no params): 200, 67731 bytes, `sips`: 640 x 360.
 - `...&fit=clip` variant: 200.
@@ -177,19 +201,23 @@ Pages: https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-
 - `.../iframe`: 200 text/html; no Set-Cookie matched in my header filter (set-cookie, x-frame, csp patterns returned nothing).
 
 ### Discrepancies (docs vs observed), Cloudflare
+
 - Docs say default width and height are both 640 with fit=crop (implies 640x640); observed default is 640x360 (aspect preserved) and `height=270` alone gave 480x270.
 - Docs name only embed.cloudflarestream.com for the SDK; observed embed.videodelivery.net serves the identical file (same etag).
 
 ### Still NOT VERIFIED, Cloudflare
+
 - `iframe.videodelivery.net/<uid>` with a real UID.
 - Signed token mechanics ("Securing your Stream" not fetched).
 - Manifest byte size; behavior of `startTime`, `defaultTextTrack` at runtime.
 - Whether the 18653-byte SDK event names match the docs (SDK body saved as cf_new.js but not analyzed).
 
----------------------------------------------------------------------
+---
+
 ## D. Wistia
 
 ### D1. Docs (URLs and quotes, via WebFetch unless marked)
+
 - Domain restrictions: https://docs.wistia.com/docs/using-wistias-domain-restrictions-with-a-referrer-policy
   - "This feature depends on the Wistia player being able to identify the parent document's `referer` value on load" (clipped).
   - "If the `referer` is hidden altogether from the Wistia player, it cannot verify an approved domain and the video player will not load." (the fetch model flagged this as possibly not exact; whitespace)
@@ -217,6 +245,7 @@ Pages: https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-
 - Earlier guessed URLs docs.wistia.com/docs/embed-options and /referrer-policy-and-wistias-domain-restrictions returned 404; the URLs above were found via search.
 
 ### D2. Live probe
+
 - Public sample id: `rbsg3da4jd` ("The Wistia Player - Product Video"), taken from https://docs.wistia.com/docs/player-embed-api, whose demos use `media-id="rbsg3da4jd"`.
 - `https://fast.wistia.com/embed/medias/rbsg3da4jd.json`: 200, application/json, 22305 bytes, `access-control-allow-origin: *`, `cache-control: public, no-cache`, no Set-Cookie.
 - `https://fast.wistia.net/embed/iframe/rbsg3da4jd`: 200 text/html, 25130 bytes; no Set-Cookie, X-Frame-Options, CSP or Referrer-Policy header returned (filter matched none). Hosts in the HTML: embed-ssl.wistia.com, wistia.com, fast.wistia.net, fast.wistia.com, distillery.wistia.net/.com, app.wistia.com. No `rel=preconnect` emitted.
@@ -228,17 +257,21 @@ Pages: https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-
 - Domain restriction: this sample has none in effect for the curl request (no referer sent, 200 OK); a restricted media was not tested.
 
 ### Discrepancies (docs vs observed), Wistia
+
 - Docs say `time` expects an integer seconds string for E-v1; Aurora docs name the same thing `current-time` (decimal seconds): naming differs by player.
 - Docs describe captions API and events; the media JSON exposes caption text only as a transcript string, not caption file URLs.
 - No documented preconnect hosts; observed iframe HTML emits no preconnect.
 
 ### Still NOT VERIFIED, Wistia
+
 - Whether `E-v1.js` is slated for removal (docs silent).
 - Any domain-restricted media behavior and referrer-policy failure mode (needs a restricted account).
 - Caption file URLs/VTT endpoint, chapters shape (sample has none).
 - Runtime cookies set by JS and which hosts the Aurora `player.js` loads (not fetched).
 - Whether `distillery.wistia.net` tracking can be disabled.
 
----------------------------------------------------------------------
+---
+
 ## Request budget
+
 YouTube 6 header/body requests plus 2 doc fetches and 2 raw doc fetches; Vimeo 4 player pages, 1 oembed, 1 page HEAD, 3 doc fetches; Cloudflare 4 HEADs, 2 SDK GETs, 4 thumbnail/manifest/iframe GETs, 1 more thumbnail, 3 doc fetches; Wistia 2 probes, 1 image, about 8 doc fetches and 2 searches. All within 6 per endpoint and 80 total.

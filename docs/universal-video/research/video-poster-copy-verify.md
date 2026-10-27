@@ -9,6 +9,7 @@ Caveat on method: provider pages were fetched through a summarizing fetch tool, 
 Sources: https://developers.google.com/youtube/terms/api-services-terms-of-service ; https://developers.google.com/youtube/terms/developer-policies ; https://developers.google.com/youtube/terms/required-minimum-functionality ; https://www.youtube.com/t/terms ; https://developers.google.com/youtube/terms/branding-guidelines
 
 (1) Storing a copy of a thumbnail
+
 - Verified (API data in general, Developer Policies III.E.4): "API Clients may store all other types of Authorized Data not identified in section (III.E.4.b)" and must keep it "for no longer than 30 calendar days." Also III.E.4.d: "API Clients may temporarily store limited amounts of Non-Authorized Data for as long as is necessary." Also III.E intro: "you and your API Clients have no further permissions or rights to API Data, including to temporarily stored API Data." Also III.E.4.g: "you must then delete it as soon as possible and within 7 calendar days."
 - Verified: the Developer Policies fetch returned no sentence that names "thumbnail image storage" specifically. Thumbnails are mentioned only in III.F.2.a ("playlists, thumbnails, and YouTube players" must identify YouTube as the source) and III.E.4.i (players collect data "to render the video thumbnail and title, determine playability and content restrictions").
 - NOT VERIFIED: whether a thumbnail URL/image from oEmbed or i.ytimg.com counts as "API Data", "Authorized Data" or "Non-Authorized Data". No fetched page classifies it.
@@ -17,11 +18,13 @@ Sources: https://developers.google.com/youtube/terms/api-services-terms-of-servi
 - Verified (general YouTube Terms of Service, Permissions and Restrictions item 1): users may not "access, reproduce, download, distribute, transmit, broadcast, display, sell, license, alter, modify" content except "(a) as expressly authorized by the Service; or (b) with prior written permission from YouTube". The same page: "You may also show YouTube videos through the embeddable YouTube player."
 
 (2) "The video thumbnail must not be altered"
+
 - NOT VERIFIED / NOT FOUND. The exact sentence does not appear on the Developer Policies page, the Required Minimum Functionality page, the API ToS, or the Branding Guidelines as returned by the fetch tool. A web search for the exact phrase found no page containing it. I could not determine what it is about.
 - Closest verified text: Required Minimum Functionality, "Autoplay and scripted playbacks": "Any YouTube thumbnail that initiates a playback must be at least 120 pixels wide and 70 pixels tall." Developer Policies I.4: "modify, interfere with, replace, or otherwise disable any functionality, data, or content made available." Developer Policies III.C.5: "must not modify or replace the text, images, information, or other content of, the search results." Developer Policies I.6: "modify, build upon, or block any portion or functionality of a YouTube player." Branding Guidelines: "You also cannot change YouTube branding images or remove, obstruct, distort, or alter any element of a YouTube trademark." (branding, not thumbnails.)
 - So (b) for YouTube: no verified sentence either permits or forbids resizing/re-encoding a thumbnail; the only on-point resizing text is the 120x70 minimum for thumbnails that initiate playback.
 
 (3) oEmbed vs API terms
+
 - Verified: neither the API ToS nor the Developer Policies contains the word "oEmbed" (fetch results: "The page contains no mention of oEmbed" and "oEmbed: No matches").
 - NOT VERIFIED: whether oEmbed usage (no API key, https://www.youtube.com/oembed) is governed by the API ToS or the general YouTube Terms of Service. The API ToS defines "YouTube API Services" as "(i) the YouTube API services (e.g., YouTube Data API service..." (truncated) and I did not see oEmbed listed.
 
@@ -31,6 +34,7 @@ Sources: https://developers.google.com/youtube/terms/api-services-terms-of-servi
 ### Vimeo
 
 Sources: https://vimeo.com/terms ; https://vimeo.com/legal/service-terms/api (redirect target of developer.vimeo.com/guidelines/terms)
+
 - (a) Verified, Terms of Service 5.4 prohibits: "Access, download, reproduce, redistribute, frame, mirror, create derivative works from" unless the Service expressly authorizes it or Vimeo gives prior written permission. Also prohibits scraping "using any automated means (such as robots, botnets, or scrapers)" except through Vimeo's APIs under the API License Addendum. Whether a thumbnail from oEmbed is "authorized": NOT VERIFIED.
 - API terms (vimeo.com/legal/service-terms/api): Verified, §4.1 allows storing Vimeo Content "as necessary for your Application's legitimate operation"; §8 requires deleting Vimeo Content on termination. The fetch said the page "doesn't address" thumbnails, oEmbed or caching explicitly.
 - (b) Verified: ToS 5.4 "Remove or modify any logo, watermark, or notice of proprietary rights" prohibited. API §3.4: "You may not modify, obscure, or interfere with any element of our embeddable video player". Resizing/re-encoding thumbnails: NOT VERIFIED (not addressed).
@@ -40,11 +44,13 @@ Sources: https://vimeo.com/terms ; https://vimeo.com/legal/service-terms/api (re
 - Note: fetch tool read the API terms section numbers from a summary; direct page read recommended before relying on them.
 
 ### Wistia
+
 - Both https://wistia.com/terms-of-service and https://wistia.com/legal/terms-of-use returned HTTP 404; https://wistia.com/oembed also 404. NOT VERIFIED for (a) to (e). Nothing was learned from a Wistia primary source.
 
 ### Spotify
 
 Sources: https://developer.spotify.com/terms ; https://developer.spotify.com/documentation/design
+
 - (a) Verified, Developer Terms IV.3.2: "Do not locally cache any Spotify Content, except as strictly necessary to enhance the performance of your SDA" (permitted only for metadata, cover art and Conditional Downloads, per the fetch summary). IV.3.1: "you may not store, aggregate or create compilations or databases of Spotify Content" unless strictly necessary to operate your SDA; "Do not store Spotify Content indefinitely." Also IV.2.3(b) prohibits facilitating "stream ripping" or other ways to make permanent copies. Whether the Developer Terms apply to oEmbed (open.spotify.com/oembed) use: NOT VERIFIED (the page "does not mention oEmbed").
 - (b) Verified, IV.2.2(b) prohibits "modifying, editing, altering, creating derivative works" of Spotify Content, with the exception: "You may adjust the size of metadata or cover art as necessary." Re-encoding format: NOT VERIFIED. Design guidelines: "Don't crop the artwork in any way." "Don't animate or distort it in any way." "This includes applying overlays and blurring." "You may only use the artwork provided by Spotify."
 - (c) oEmbed vs API: NOT VERIFIED.
@@ -54,21 +60,25 @@ Sources: https://developer.spotify.com/terms ; https://developer.spotify.com/doc
 ### TikTok
 
 Sources: https://www.tiktok.com/legal/page/global/terms-of-service/en (first 100000 of 185447 chars read) ; https://developers.tiktok.com/doc/embed-videos
+
 - (a) Verified (US ToS section 7): TikTok Content "may not be downloaded, copied, reproduced, distributed" without prior written consent (as summarized by the fetch tool). Thumbnails and oEmbed are not mentioned in the portion read.
 - Embed doc: Verified, "Programmatically, you may convert a TikTok's video URL into embedded video markup by using the oEmbed API." The page did not address thumbnail_url, caching or storage. The TikTok Developer Terms of Service (linked from that page) were not fetched: NOT VERIFIED for (b) to (e).
 
 ### Twitch
+
 - https://www.twitch.com/legal/developer-agreement redirected to https://legal.twitch.com/legal/developer-agreement; the fetch returned only navigation/footer, no agreement body. NOT VERIFIED for (a) to (e). Twitch has no documented oEmbed endpoint verified here either.
 
 ## PART 2: Sanity technical facts
 
 ### 2.1 Custom inputs, patching, useFormValue
+
 - Verified (https://www.sanity.io/docs/studio/form-components): custom components are configured "in your root studio configuration and plugins via `form.components`, and on individual schema types via the `components` property." Example shows `input: MyInput`. Recommends `props.renderDefault(props)`; "if a component in the chain doesn't call `props.renderDefault(props)`, "the chain breaks."
 - Verified (https://www.sanity.io/docs/studio/form-components-reference): "onChange (input components): "Callback to update the field value. Accepts a PatchEvent, a FormPatch, or an array of patches."" and "value: The current value of the field."
 - NOT VERIFIED from docs: `set(...)` usage, `PatchEvent.from(...)` examples, and `useFormValue` semantics. The pages fetched (form-components, custom-input-components, form-api-reference, form-components-reference) did not cover them. studio-hooks returned 404 style no content for these.
 - Verified (installed package): `useClient`, `useFormValue` and `PatchEvent` are exported from /Users/davidcampbell/Documents/nextapps/reform-next-starter/node_modules/sanity/lib/index.d.ts (name occurrences in the export list). Signatures not extracted.
 
 ### 2.2 Asset upload with client.assets.upload and `source`
+
 - Verified (installed @sanity/client 8.11.0, node_modules/@sanity/client/dist/types-Bolhz2XV.d.ts line ~10850 `interface UploadClientConfig`): options include `preserveFilename`, `filename`, `contentType`, `extract?: AssetMetadataType[]`, `label`, `title`, `description`, `creditLine`, and
   `source?: { id: string; name: string; url?: string }` documented as "Source data (when the asset is from an external service)", with `id`: "The (u)id of the asset within the source, i.e. 'i-f323r1E'", `name`: "The name of the source, i.e. 'unsplash'", `url`: "A url to where to find the asset, or get more info about it in the source".
 - Verified (node_modules/@sanity/client/dist/index.js line 1363): `source && !isMediaLibrary && (query.sourceId = source.id, query.sourceName = source.name, query.sourceUrl = source.url)`. So `source` is sent as sourceId/sourceName/sourceUrl query params.
@@ -81,6 +91,7 @@ Sources: https://www.tiktok.com/legal/page/global/terms-of-service/en (first 100
 - `useClient({apiVersion})` requirement: NOT VERIFIED from docs (studio-hooks fetch gave nothing).
 
 ### 2.3 Default extracted metadata and how to request it
+
 - Verified (content-lake/assets): "Included by default: Placeholders (lqip, blurHash) and color palette information." Dimensions and transparency (hasAlpha, isOpaque) always included; exif and location optional. "Your schema defines which metadata is included in the asset document."
 - Verified (HTTP reference): `meta` param: "Array of metadata to extract from asset." default `["palette","lqip","blurhash","thumbhash"]`.
 - Verified (installed client): `type AssetMetadataType = 'location' | 'exif' | 'image' | 'palette' | 'lqip' | 'blurhash' | 'thumbhash' | 'none'`; client option name is `extract`. README example: `{extract: ['palette', 'location']}` with comment "// Extract palette of colors as well as GPS location from exif".
@@ -88,13 +99,16 @@ Sources: https://www.tiktok.com/legal/page/global/terms-of-service/en (first 100
 - NOT VERIFIED: the `groq` projection route for requesting metadata.
 
 ### 2.4 Sanity restriction on uploading images you do not own
+
 - NOT VERIFIED. The assets page "doesn't address" it. The only related text is about access: dataset assets are public on the CDN even in private datasets. Sanity's general Terms of Service were not fetched.
 
 ### 2.5 Image URL resize/re-encode (https://www.sanity.io/docs/image-url)
+
 - Verified: "Set auto=format to automatically return an image in the most optimized format supported by the browser"; format chosen from the Accept header; for non-browser clients use `fm`. `w`: "Width of the image in pixels. Scales the image to be that wide." "Small images get scaled up to the width or height you specify. To avoid this use `&fit=max`." `fit` values: clip, crop, fill, fillmax, max, scale, min. "Sanity will cache the result in the global CDN". `q` defaults to 75 for JPG and WebP. "AVIF transformations are generated asynchronously," so early requests may get WebP or JPG/PNG.
 - Note: the page describes URL parameters, not the `@sanity/image-url` builder API (`.auto('format')` not documented there).
 
 ### 2.6 This repo
+
 - library/sanity/reusables.tsx lines 328 to 378: `video` object has `sourceType` (string list: mux, youtube, vimeo, wistia, spotify, twitch, tiktok, url), `url` (type url), `muxVideo` (mux.video, hidden unless sourceType is mux), and `posterImage = universalImage({ name: "posterImage", title: "Poster Image", description: "Optional. If set, this image is shown in place of the video's default thumbnail.", withAlt: false, hidden: ({parent}) => parent?.sourceType !== "mux" })`. Verified: today posterImage is hidden for every non-mux source.
 - `universalImage` (line 91): `type: "image"` with sub-fields `alt` (text), `willHaveAlt` (hidden readonly string, list ["true"] or ["false"]), `options: { aiAssist..., hotspot: true, ...}`.
 - library/sanity/assetMetadata.ts lines 121 to 133: `imageProjection = { ..., "data": { lqip: asset->metadata.lqip, dominantColor: asset->metadata.palette.dominant.background, originalFilename: asset->originalFilename, size: asset->size, extension: asset->extension, url: asset->url, originalAspectRatio: asset->metadata.dimensions.aspectRatio, aspectRatio: (crop-adjusted) }}` and `videoProjection = { ..., muxVideo ..., posterImage ${imageProjection} }`. `ImageField` type (lines 8 to 22) includes `asset`, `hotspot`, `crop`, `alt`, `willHaveAlt`, `_type:"image"`, `data`.
@@ -102,6 +116,7 @@ Sources: https://www.tiktok.com/legal/page/global/terms-of-service/en (first 100
 - Versions (Verified, package.json): sanity 6.20.0, @sanity/client 8.11.0, next-sanity 13.4.0. `useClient` is in the `sanity` exports (see 2.1). `@sanity/client` is installed at the top level of node_modules.
 
 ### 2.7 Next 16 Route Handlers (node_modules/next/dist/docs/01-app/01-getting-started/15-route-handlers.md and 03-api-reference/03-file-conventions/route.md)
+
 - Verified: "Route Handlers allow you to create custom request handlers for a given route using the Web Request and Response APIs." Supported methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS.
 - Verified: server fetch and JSON return example: `const res = await fetch('https://data.mongodb-api.com/...', {...}); const data = await res.json(); return Response.json({ data })`.
 - Verified: "Route Handlers are not cached by default." GET can opt in to caching with `export const dynamic = 'force-static'`.
@@ -110,6 +125,7 @@ Sources: https://www.tiktok.com/legal/page/global/terms-of-service/en (first 100
 - Verified: a `route.js` cannot coexist with `page.js` at the same route; `app/api/route.js` beside `app/page.js` is valid.
 
 ## Sources
+
 - https://developers.google.com/youtube/terms/api-services-terms-of-service
 - https://developers.google.com/youtube/terms/developer-policies
 - https://developers.google.com/youtube/terms/required-minimum-functionality

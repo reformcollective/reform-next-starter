@@ -7,26 +7,27 @@ Doc caveat: for YouTube, Vimeo, Twitch and Cloudflare (partly) I did NOT re-fetc
 
 ## DISCREPANCIES (claim vs actual)
 
-| # | Provider | Claim (source) | Actual today |
-|---|----------|----------------|--------------|
-| 1 | Vimeo | Doc sample video https://vimeo.com/76979871 is the usual oEmbed example (developer.vimeo.com/api/oembed/videos, not re-fetched) | `404 Not Found` (text/html, 13 bytes) for plain and URL-encoded forms. Another public video (22439234) returns 200. So that sample id is dead; do not use it in tests. |
-| 2 | Vimeo | Without `width`, thumbnail is some default size (not re-fetched) | Without width: thumbnail_url ends `-d_295x166`, 295x166 (measured). With `width=640`: `-d_640`, thumbnail_width 640 x 360. The `width` param changes the thumbnail, not only the iframe. |
-| 3 | Vimeo | Thumbnail URLs might be signed or expiring | No signature or expiry param. Only `?region=us`. Size is a path suffix (`-d_WxH`); swapping to `-d_1280x720` returned a real 1280x720 JPEG (100025 bytes). |
-| 4 | Spotify | Doc example thumbnail_url host is `i.scdn.co/image/...` (https://developer.spotify.com/documentation/embeds/reference/oembed) | Real responses use `image-cdn-fa.spotifycdn.com/image/<id>` (new host, same style of id). Hard-coded `i.scdn.co` allowlists would break. |
-| 5 | Spotify | thumbnail_url/width/height are "Nullable" (same page) | Never null in my 2 samples (track and episode both 300x300). Nullable is documented, not observed. |
-| 6 | TikTok | Docs example has no thumbnail_url, title or author_name (https://developers.tiktok.com/doc/embed-videos) | Confirmed: live response has NO thumbnail_url, NO title, NO author_name. Fields are exactly: version, type, width ("325" string), height ("578" string), html, provider_url, provider_name, embed_product_id, embed_type. Docs and reality agree; this deviates from the oEmbed spec examples and from older TikTok responses. width/height are strings, not numbers. |
-| 7 | YouTube | Common belief that `maxresdefault`/`sddefault` exist for every video | For jNQXAC9IVRw (2005 upload) both return 404 (placeholder JPEG 120x90, 1097 bytes, content-type image/jpeg, cache max-age=30). They exist for dQw4w9WgXcQ (maxres 1280x720). A 404 still has `content-type: image/jpeg`, so `<img>` onerror or a status check is required. |
-| 8 | YouTube | oEmbed thumbnail_url | Always `hqdefault.jpg` 480x360 (4:3 with letterbox bars), regardless of maxwidth/maxheight. maxwidth/maxheight only change iframe width/height (267x200 for 300x200 request, aspect preserved). |
-| 9 | YouTube | oEmbed spec allows `cache_age` (https://oembed.com) | Not returned. No cache-control/expires/etag on YouTube oEmbed. Only `vary: Origin`. |
-| 10 | YouTube | CORS on oEmbed | No `access-control-allow-origin` without an Origin header. With `Origin: https://example.com` it reflects that origin (`access-control-allow-origin: https://example.com`), so it is origin-reflecting, not `*`. Thumbnails (i.ytimg.com) return `*`. |
-| 11 | YouTube | `vi_webp/.../maxresdefault.webp` | 404 for this id (same as jpg). `vi_webp/hqdefault.webp` works but is 480x360 (not larger), 23038 bytes vs 15921 for the jpg, i.e. webp was LARGER here. |
-| 12 | Mux | `time` out of range | Negative `time=-5` and `time=99999` return 200 (clamped to a valid frame), only non-numeric `time=abc` gives 400. `width=32` is honored (32x32), no minimum enforced. |
+| #   | Provider | Claim (source)                                                                                                                  | Actual today                                                                                                                                                                                                                                                                                                                                                          |
+| --- | -------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Vimeo    | Doc sample video https://vimeo.com/76979871 is the usual oEmbed example (developer.vimeo.com/api/oembed/videos, not re-fetched) | `404 Not Found` (text/html, 13 bytes) for plain and URL-encoded forms. Another public video (22439234) returns 200. So that sample id is dead; do not use it in tests.                                                                                                                                                                                                |
+| 2   | Vimeo    | Without `width`, thumbnail is some default size (not re-fetched)                                                                | Without width: thumbnail_url ends `-d_295x166`, 295x166 (measured). With `width=640`: `-d_640`, thumbnail_width 640 x 360. The `width` param changes the thumbnail, not only the iframe.                                                                                                                                                                              |
+| 3   | Vimeo    | Thumbnail URLs might be signed or expiring                                                                                      | No signature or expiry param. Only `?region=us`. Size is a path suffix (`-d_WxH`); swapping to `-d_1280x720` returned a real 1280x720 JPEG (100025 bytes).                                                                                                                                                                                                            |
+| 4   | Spotify  | Doc example thumbnail_url host is `i.scdn.co/image/...` (https://developer.spotify.com/documentation/embeds/reference/oembed)   | Real responses use `image-cdn-fa.spotifycdn.com/image/<id>` (new host, same style of id). Hard-coded `i.scdn.co` allowlists would break.                                                                                                                                                                                                                              |
+| 5   | Spotify  | thumbnail_url/width/height are "Nullable" (same page)                                                                           | Never null in my 2 samples (track and episode both 300x300). Nullable is documented, not observed.                                                                                                                                                                                                                                                                    |
+| 6   | TikTok   | Docs example has no thumbnail_url, title or author_name (https://developers.tiktok.com/doc/embed-videos)                        | Confirmed: live response has NO thumbnail_url, NO title, NO author_name. Fields are exactly: version, type, width ("325" string), height ("578" string), html, provider_url, provider_name, embed_product_id, embed_type. Docs and reality agree; this deviates from the oEmbed spec examples and from older TikTok responses. width/height are strings, not numbers. |
+| 7   | YouTube  | Common belief that `maxresdefault`/`sddefault` exist for every video                                                            | For jNQXAC9IVRw (2005 upload) both return 404 (placeholder JPEG 120x90, 1097 bytes, content-type image/jpeg, cache max-age=30). They exist for dQw4w9WgXcQ (maxres 1280x720). A 404 still has `content-type: image/jpeg`, so `<img>` onerror or a status check is required.                                                                                           |
+| 8   | YouTube  | oEmbed thumbnail_url                                                                                                            | Always `hqdefault.jpg` 480x360 (4:3 with letterbox bars), regardless of maxwidth/maxheight. maxwidth/maxheight only change iframe width/height (267x200 for 300x200 request, aspect preserved).                                                                                                                                                                       |
+| 9   | YouTube  | oEmbed spec allows `cache_age` (https://oembed.com)                                                                             | Not returned. No cache-control/expires/etag on YouTube oEmbed. Only `vary: Origin`.                                                                                                                                                                                                                                                                                   |
+| 10  | YouTube  | CORS on oEmbed                                                                                                                  | No `access-control-allow-origin` without an Origin header. With `Origin: https://example.com` it reflects that origin (`access-control-allow-origin: https://example.com`), so it is origin-reflecting, not `*`. Thumbnails (i.ytimg.com) return `*`.                                                                                                                 |
+| 11  | YouTube  | `vi_webp/.../maxresdefault.webp`                                                                                                | 404 for this id (same as jpg). `vi_webp/hqdefault.webp` works but is 480x360 (not larger), 23038 bytes vs 15921 for the jpg, i.e. webp was LARGER here.                                                                                                                                                                                                               |
+| 12  | Mux      | `time` out of range                                                                                                             | Negative `time=-5` and `time=99999` return 200 (clamped to a valid frame), only non-numeric `time=abc` gives 400. `width=32` is honored (32x32), no minimum enforced.                                                                                                                                                                                                 |
 
 ## 1. YouTube
 
 Doc status: no official docs fetched this run (oEmbed spec https://oembed.com used for comparison; YouTube thumbnail URLs are not formally documented on a page I fetched).
 
 Commands:
+
 - `curl -si "https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=jNQXAC9IVRw&format=json"`
 - same plus `&maxwidth=300&maxheight=200`
 - same with `-H "Origin: https://example.com"`
@@ -40,15 +41,15 @@ Nonexistent id and malformed id: HTTP 400, `content-type: application/json; char
 
 Thumbnail HEADs (jNQXAC9IVRw):
 
-| URL | status | content-length | content-type | cache-control | other |
-|-----|--------|----------------|--------------|---------------|-------|
-| vi/default.jpg | 200 | 4523 | image/jpeg | public, max-age=7200 | ACAO `*`, etag "1702883835", expires +2h |
-| vi/mqdefault.jpg | 200 | 8710 | image/jpeg | public, max-age=7200 | ACAO `*`, age 1308 |
-| vi/hqdefault.jpg | 200 | 15921 | image/jpeg | public, max-age=7200 | ACAO `*`, age 1119 |
-| vi/sddefault.jpg | 404 | 1097 | image/jpeg | public, max-age=30 | ACAO `*` |
-| vi/maxresdefault.jpg | 404 | 1097 | image/jpeg | public, max-age=30 | ACAO `*` |
-| vi_webp/hqdefault.webp | 200 | 23038 | image/webp | public, max-age=7200 | no ACAO header seen |
-| vi_webp/maxresdefault.webp | 404 | 552 | image/webp | public, max-age=30 | |
+| URL                        | status | content-length | content-type | cache-control        | other                                    |
+| -------------------------- | ------ | -------------- | ------------ | -------------------- | ---------------------------------------- |
+| vi/default.jpg             | 200    | 4523           | image/jpeg   | public, max-age=7200 | ACAO `*`, etag "1702883835", expires +2h |
+| vi/mqdefault.jpg           | 200    | 8710           | image/jpeg   | public, max-age=7200 | ACAO `*`, age 1308                       |
+| vi/hqdefault.jpg           | 200    | 15921          | image/jpeg   | public, max-age=7200 | ACAO `*`, age 1119                       |
+| vi/sddefault.jpg           | 404    | 1097           | image/jpeg   | public, max-age=30   | ACAO `*`                                 |
+| vi/maxresdefault.jpg       | 404    | 1097           | image/jpeg   | public, max-age=30   | ACAO `*`                                 |
+| vi_webp/hqdefault.webp     | 200    | 23038          | image/webp   | public, max-age=7200 | no ACAO header seen                      |
+| vi_webp/maxresdefault.webp | 404    | 552            | image/webp   | public, max-age=30   |                                          |
 
 Measured pixel dimensions (sips): hqdefault.jpg 480x360, mqdefault.jpg 320x180, sddefault.jpg (404 body) 120x90, vi_webp/hqdefault.webp 480x360, vi_webp/maxresdefault.webp (404 body) 120x90. default.jpg dimensions not measured (HEAD only; 120x90 is the usual value, NOT measured). Extra: dQw4w9WgXcQ `maxresdefault.jpg` HEAD 200, 65324 bytes, measured 1280x720.
 `https://img.youtube.com/vi/jNQXAC9IVRw/hqdefault.jpg`: HTTP 200 directly, NO redirect, same content-length 15921, same etag, ACAO `*`, `cross-origin-resource-policy: cross-origin`, `timing-allow-origin: *`.
@@ -59,6 +60,7 @@ Nonexistent id thumbnails (hqdefault and maxresdefault of aaaaaaaaaaa): HTTP 404
 Doc status: developer.vimeo.com/api/oembed/videos not re-fetched. Comparisons below are against the widely known doc sample and general behavior only.
 
 Commands:
+
 - `curl -si -H "Origin: https://example.com" "https://vimeo.com/api/oembed.json?url=https://vimeo.com/76979871"` -> 404
 - encoded form `url=https%3A%2F%2Fvimeo.com%2F76979871` -> 404
 - `url=https%3A%2F%2Fvimeo.com%2F22439234` (public "The Mountain") and with `&width=640`
@@ -112,32 +114,33 @@ The docs sample (`customer-f33zs165nr7gyfy4`, UID `6b9e68b07dfee8cc2d116e4c51d6a
 Playback id from Mux docs page https://www.mux.com/docs/guides/get-images-from-a-video: `MECFZgEm102d01XMx5ME1A28pAe34Z02eSL` (found in the page's embedded `stream.mux.com/<id>/high.mp4` demo video; the page also contains `i2601kxZN02xxWWBzkGspI97yO4CjrlX4vunqqtiFsbOw`, not used). Video is square, 674x674.
 Docs say (that page): `time` defaults to thumbnail_time or the middle of the video; `width` defaults to the original width; formats png/jpg/webp.
 
-| Request | status | content-type | content-length | cache-control | measured |
-|---------|--------|--------------|----------------|---------------|----------|
-| thumbnail.webp?time=0 | 200 | image/webp | 12626 | max-age=604800 | 674x674 |
-| thumbnail.jpg?time=0 | 200 | image/jpeg | 49086 | max-age=604800 | 674x674 |
-| thumbnail.png?time=0 | 200 | image/png | 37802 | max-age=604800 | 674x674 |
-| thumbnail.webp?time=2&width=640 | 200 | image/webp | 14148 | max-age=604800 | 640x640 |
-| thumbnail.jpg?time=abc | 400 | application/json | 66 | none | body `{"error":{"code":3,"message":"Invalid time, cannot parse string"}}` |
-| thumbnail.jpg?time=-5 | 200 | image/jpeg | 49086 | max-age=604800 | 674x674, same size as time=0 |
-| thumbnail.jpg?time=99999 | 200 | image/jpeg | 49251 | max-age=604800 | 674x674 (clamped) |
-| thumbnail.jpg?time=0&width=32 | 200 | image/jpeg | 706 | max-age=604800 | 32x32 |
+| Request                         | status | content-type     | content-length | cache-control  | measured                                                                  |
+| ------------------------------- | ------ | ---------------- | -------------- | -------------- | ------------------------------------------------------------------------- |
+| thumbnail.webp?time=0           | 200    | image/webp       | 12626          | max-age=604800 | 674x674                                                                   |
+| thumbnail.jpg?time=0            | 200    | image/jpeg       | 49086          | max-age=604800 | 674x674                                                                   |
+| thumbnail.png?time=0            | 200    | image/png        | 37802          | max-age=604800 | 674x674                                                                   |
+| thumbnail.webp?time=2&width=640 | 200    | image/webp       | 14148          | max-age=604800 | 640x640                                                                   |
+| thumbnail.jpg?time=abc          | 400    | application/json | 66             | none           | body `{"error":{"code":3,"message":"Invalid time, cannot parse string"}}` |
+| thumbnail.jpg?time=-5           | 200    | image/jpeg       | 49086          | max-age=604800 | 674x674, same size as time=0                                              |
+| thumbnail.jpg?time=99999        | 200    | image/jpeg       | 49251          | max-age=604800 | 674x674 (clamped)                                                         |
+| thumbnail.jpg?time=0&width=32   | 200    | image/jpeg       | 706            | max-age=604800 | 32x32                                                                     |
 
 All have `access-control-allow-origin: *`, `x-cache: MISS`, `age: 0`. No etag, ratelimit headers seen. Error response (400) has no cache-control.
 Playlist `https://stream.mux.com/<id>.m3u8`: 200, `application/vnd.apple.mpegurl`, ACAO `*`, `cache-control: no-cache, no-store, must-revalidate`; renditions 674x674, 540, 360, 270; variant URLs are signed (`expires=1793721600` = 2026-11-03 16:00 UTC, `signature=` present).
 
 Color comparison (single video, single frame at t=0, ffmpeg 8-style decode on this machine; one sample only):
+
 - ffprobe of stream (first video stream): codec h264 High, 674x674, pix_fmt yuv420p, color_range tv, color_space bt709, color_transfer bt709, color_primaries bt709.
 - ffprobe tags of the thumbnails: jpg = mjpeg yuvj420p, range pc, space bt470bg, transfer/primaries unknown; png = rgb24, pc, transfer/primaries unknown; webp = yuv420p, range tv, space bt470bg, transfer/primaries unknown. (The stream is tagged bt709 end to end; the thumbnails carry no bt709 transfer/primaries tag.)
 - Frame 0 extracted with `ffmpeg -i https://stream.mux.com/<id>.m3u8 -frames:v 1 frame0.png` (ffmpeg converts to rgb24 itself).
 - signalstats after normalising every image to full-range bt709 yuv444 (`scale=out_color_matrix=bt709:out_range=full,format=yuv444p`):
 
-| image | YMIN | YLOW | YAVG | YHIGH | YMAX | UAVG | VAVG | SATAVG |
-|-------|------|------|------|-------|------|------|------|--------|
-| stream frame 0 (png from ffmpeg) | 0 | 35 | 122.99 | 180 | 185 | 81.24 | 178.14 | 79.76 |
-| thumbnail.jpg | 0 | 38 | 125.20 | 182 | 196 | 81.11 | 177.85 | 79.58 |
-| thumbnail.png | 1 | 37 | 124.65 | 182 | 187 | 80.74 | 178.26 | 80.26 |
-| thumbnail.webp | 0 | 35 | 123.27 | 181 | 192 | 81.49 | 178.05 | 79.52 |
+| image                            | YMIN | YLOW | YAVG   | YHIGH | YMAX | UAVG  | VAVG   | SATAVG |
+| -------------------------------- | ---- | ---- | ------ | ----- | ---- | ----- | ------ | ------ |
+| stream frame 0 (png from ffmpeg) | 0    | 35   | 122.99 | 180   | 185  | 81.24 | 178.14 | 79.76  |
+| thumbnail.jpg                    | 0    | 38   | 125.20 | 182   | 196  | 81.11 | 177.85 | 79.58  |
+| thumbnail.png                    | 1    | 37   | 124.65 | 182   | 187  | 80.74 | 178.26 | 80.26  |
+| thumbnail.webp                   | 0    | 35   | 123.27 | 181   | 192  | 81.49 | 178.05 | 79.52  |
 
 Measured: thumbnail mean luma is 0.3 to 2.2 higher (out of 255) than frame 0; luma 5th-to-95th percentile spread (YHIGH minus YLOW) is 145 (video), 144 (jpg), 145 (png), 146 (webp); mean saturation differs by under 0.7. A second, non-normalised pass (default conversion, which is NOT apples to apples because the PNG/JPEG range and matrix tags differ) gave larger gaps for the jpg (YAVG 129.9 vs 126.2, SATAVG 84.0 vs 73.3) and is shown only because it depends on how a decoder interprets the jpg tags; I did not investigate that further.
 What was NOT measured: how a browser renders the video versus the img (GPU color management, `<video>` tv-range handling), any other video, any time other than 0, difference images or per-pixel error. With these numbers on this one frame, thumbnail luma, contrast and saturation are close to the decoded video frame; I draw no further conclusion.

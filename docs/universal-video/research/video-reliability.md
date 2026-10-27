@@ -46,6 +46,7 @@ Limited research budget: sections 3 (codec budgets, HLS), 4 (state machine) and 
 State machine (UNSURE, recommended design): states `idle` (no src) -> `loading` -> `ready` (first frame presented) -> `playing` <-> `paused`; plus `blocked` (play() NotAllowedError, show poster + play button), `stalled` (waiting/stalled beyond ~3 s, keep poster/last frame, retry), `error`. Drive with one reducer (`useReducer`) from media events: `loadstart`, `loadeddata`, `canplay`, `playing`, `pause`, `waiting`, `stalled`, `error`, `ended`. Keep `Error` terminal after N retries (e.g., 2, exponential backoff by re-setting `src` + `load()`), then show poster only. `stalled` can fire spuriously on idle buffering; only escalate if `readyState < 3` for several seconds.
 
 React specifics:
+
 - `muted` attribute not rendered by React: issue still open (opened Aug 2017, last maintainer comment Apr 2018). CONFIRMED (https://github.com/facebook/react/issues/10389). The `muted` DOM property is set but the HTML attribute is missing from SSR/hydrated markup; iOS historically wants the attribute for autoplay. Workaround confirmed in thread: pass `muted` in JSX AND set `video.muted = true` and `video.defaultMuted = true` in an effect/ref callback. UNSURE whether current React 19 server HTML now emits the attribute; test the actual SSR output. Also set `playsInline` (React prop), `loop`, and for SSR set `autoPlay`.
 - Autoplay attribute vs imperative `play()`: use the attribute for first paint (works before hydration) AND call `play()` imperatively from an effect/IntersectionObserver, always handling the promise. Remove attribute-driven autoplay semantic conflicts by gating with `loading`: if offscreen, don't set `autoPlay`; let the observer play.
 - Cleanup / StrictMode: effects run twice in dev; make setup idempotent: attach listeners and observers in an effect, return cleanup that removes them, `cancelVideoFrameCallback`, `observer.disconnect()`, `video.pause()`, and for unmount of heavy videos `video.removeAttribute("src"); video.load()` to free decoder. Ignore `AbortError` from the aborted first `play()`.
@@ -59,6 +60,7 @@ React specifics:
 ## 5. Carousel of background videos (crossfade)
 
 UNSURE, all engineering recommendations (not sourced):
+
 - Mount at most two `<video>` elements (current + next), never N. Active plays; next gets `src`, `preload="auto"`, stays `muted` and paused (or plays only briefly) and with opacity 0 until swap.
 - Preload next only after current has presented its first frame (rVFC) and is `canplaythrough`/idle, to avoid competing bandwidth with the LCP video. Optionally trigger when current is within ~2 s of end.
 - Crossfade: when next fires `canplay` + first rVFC frame, start `next.play()`, fade next in (CSS transition on opacity via class), then after `transitionend` pause the previous and clear its `src` + `load()` to free the decoder (this is what cuts double-decoding and memory). Reuse the two elements as a ping-pong pair rather than creating new ones.
@@ -69,6 +71,7 @@ UNSURE, all engineering recommendations (not sourced):
 ## 6. React Compiler and Next.js 16 constraints
 
 UNSURE overall (not verified against Next 16 docs this session; project rule says read `node_modules/next/dist/docs/` before coding):
+
 - Component must be a Client Component (`"use client"`) for refs, effects, events; keep the server parent passing serializable props (src URLs, poster data, dimensions, blurDataURL). Poster `<img>`/placeholder can be rendered in the server markup for LCP.
 - Compiler rules: do not read/write `ref.current` during render; do DOM work (play, load, set muted/defaultMuted, observers) in effects, event handlers or ref callbacks; do not mutate props; do not mutate objects after creation in render; compute derived values (`??`, `?.`, ternaries) in variables before any `try`; keep effects' dependencies honest so memoization is not broken; avoid calling setState synchronously in effects (use event callbacks or `useSyncExternalStore`).
 - Prefer a ref callback (React 19 supports cleanup return functions from ref callbacks) to attach/detach observers and listeners to the video element, making StrictMode double-invoke safe.
@@ -77,26 +80,26 @@ UNSURE overall (not verified against Next 16 docs this session; project rule say
 
 ## Recommended defaults
 
-| Concern | Default |
-|---|---|
-| Hero loop attrs | `autoPlay muted loop playsInline`, no `controls`, `disableRemotePlayback`, `aria-hidden` |
-| muted handling | JSX `muted` + set `muted`/`defaultMuted` in ref callback |
-| Hero preload | `auto`, poster `<img priority>` (fetchpriority high) |
-| Below-fold preload | none until within ~300 px, then `auto`; play only when intersecting |
-| Interactive video preload | `metadata` (`none` on Data Saver / slow connection) |
-| Poster removal | on first rVFC frame (fallback `playing`), 200-400 ms opacity fade, then unmount |
-| Poster asset | exact first frame of same encode, same crop, AVIF/WebP, small, plus dominant-color/blur placeholder |
-| Layout | wrapper `aspect-ratio` from CMS dims, `object-fit: cover` |
-| play() failure | catch `NotAllowedError` -> blocked state, poster + play button; one-time gesture retry; ignore `AbortError` |
-| iOS Low Power Mode | no detection API; infer from rejection / no `playing` within ~1-2 s |
-| Reduced motion | poster only (or paused with visible play control) |
-| Data Saver / 2g | poster only, `preload="none"` |
-| Offscreen | IntersectionObserver pause (threshold ~0.1), pause on hidden tab, re-check on bfcache `pageshow` |
-| Concurrency | max 1-3 playing videos; unload src of offscreen ones |
-| Source | H.264 MP4 faststart, no audio track, <=1080p, 24-30 fps, ~1.5-3 MB desktop, smaller mobile file; AV1/VP9 only if measured |
-| HLS | only for long/adaptive videos; native on Safari, dynamic-import hls.js elsewhere |
-| Retry | 2 retries with backoff, then poster-only error state |
-| Carousel | 2 ping-pong video elements, preload next after current first frame, clear previous src after fade |
+| Concern                   | Default                                                                                                                   |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Hero loop attrs           | `autoPlay muted loop playsInline`, no `controls`, `disableRemotePlayback`, `aria-hidden`                                  |
+| muted handling            | JSX `muted` + set `muted`/`defaultMuted` in ref callback                                                                  |
+| Hero preload              | `auto`, poster `<img priority>` (fetchpriority high)                                                                      |
+| Below-fold preload        | none until within ~300 px, then `auto`; play only when intersecting                                                       |
+| Interactive video preload | `metadata` (`none` on Data Saver / slow connection)                                                                       |
+| Poster removal            | on first rVFC frame (fallback `playing`), 200-400 ms opacity fade, then unmount                                           |
+| Poster asset              | exact first frame of same encode, same crop, AVIF/WebP, small, plus dominant-color/blur placeholder                       |
+| Layout                    | wrapper `aspect-ratio` from CMS dims, `object-fit: cover`                                                                 |
+| play() failure            | catch `NotAllowedError` -> blocked state, poster + play button; one-time gesture retry; ignore `AbortError`               |
+| iOS Low Power Mode        | no detection API; infer from rejection / no `playing` within ~1-2 s                                                       |
+| Reduced motion            | poster only (or paused with visible play control)                                                                         |
+| Data Saver / 2g           | poster only, `preload="none"`                                                                                             |
+| Offscreen                 | IntersectionObserver pause (threshold ~0.1), pause on hidden tab, re-check on bfcache `pageshow`                          |
+| Concurrency               | max 1-3 playing videos; unload src of offscreen ones                                                                      |
+| Source                    | H.264 MP4 faststart, no audio track, <=1080p, 24-30 fps, ~1.5-3 MB desktop, smaller mobile file; AV1/VP9 only if measured |
+| HLS                       | only for long/adaptive videos; native on Safari, dynamic-import hls.js elsewhere                                          |
+| Retry                     | 2 retries with backoff, then poster-only error state                                                                      |
+| Carousel                  | 2 ping-pong video elements, preload next after current first frame, clear previous src after fade                         |
 
 ## Sources
 

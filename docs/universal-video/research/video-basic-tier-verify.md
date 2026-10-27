@@ -3,6 +3,7 @@
 Date of checks: 2026-10-27. All "live" checks were curl fetches from this machine (no browser, so no runtime playback was exercised). Raw fetches are in /private/tmp/claude-501/w/ (tt/, twj/, sp_*.js, *.txt).
 
 Legend for "verified how":
+
 - DOC = quote or table from an official docs page I fetched.
 - SRC = read in the live provider script/page I downloaded (so it is what ships today, even if undocumented).
 - ELEM = read in the local media-element package source (node_modules/.pnpm/<pkg>/...).
@@ -11,7 +12,7 @@ Legend for "verified how":
 
 Packages inspected: twitch-video-element 0.1.6, tiktok-video-element 0.1.2, spotify-audio-element 1.0.4 (all in node_modules/.pnpm).
 
----------------------------------------------------------------------
+---
 
 ## 1. TikTok
 
@@ -19,31 +20,31 @@ Official docs: https://developers.tiktok.com/doc/embed-player (fetched, 200). oE
 
 ### 1a. Embed URL
 
-| Item | Value | Verified how |
-|---|---|---|
-| Embed URL | `https://www.tiktok.com/player/v1/{post_id}?{params}` | DOC: "The post URL follows this structure: www.tiktok.com/player/v1/{tiktok_post_id}." CURL: 200 text/html, no X-Frame-Options or frame-ancestors header seen |
-| Post ID source | numeric id from `tiktok.com/@user/video/{id}` | DOC. Short links (`vm.tiktok.com/...`) are NOT resolved by oEmbed: CURL returned `{"message":"Something went wrong","code":400}` for a made-up short code (not a real short link, so weak evidence; treat resolve-short-link as NOT VERIFIED) |
-| Required scripts | none; plain iframe, postMessage | DOC code example |
-| iframe `allow` | oEmbed returns `allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; web-share"` | CURL oEmbed html |
+| Item             | Value                                                                                                                                    | Verified how                                                                                                                                                                                                                                  |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Embed URL        | `https://www.tiktok.com/player/v1/{post_id}?{params}`                                                                                    | DOC: "The post URL follows this structure: www.tiktok.com/player/v1/{tiktok_post_id}." CURL: 200 text/html, no X-Frame-Options or frame-ancestors header seen                                                                                 |
+| Post ID source   | numeric id from `tiktok.com/@user/video/{id}`                                                                                            | DOC. Short links (`vm.tiktok.com/...`) are NOT resolved by oEmbed: CURL returned `{"message":"Something went wrong","code":400}` for a made-up short code (not a real short link, so weak evidence; treat resolve-short-link as NOT VERIFIED) |
+| Required scripts | none; plain iframe, postMessage                                                                                                          | DOC code example                                                                                                                                                                                                                              |
+| iframe `allow`   | oEmbed returns `allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; web-share"` | CURL oEmbed html                                                                                                                                                                                                                              |
 
 ### 1b. URL params (all documented, all 0/1 flags)
 
-| Param | Meaning (DOC) | Default | Applies to |
-|---|---|---|---|
-| controls | show/hide progress bar and all control buttons | 1 | video, image |
-| progress_bar | show progress bar | 1 | video |
-| play_button | show play button | 1 | video |
-| volume_control | show volume button | 1 | video, image |
-| fullscreen_button | show fullscreen button | 1 | video, image |
-| timestamp | show current time and duration | 1 | video |
-| loop | "Play the current video repeatedly" | 0 | video |
-| autoplay | "Automatically play the video when the player loads" | 0 | video |
-| music_info | show music info | 0 | video, image |
-| description | show description | 0 | video, image |
-| rel | 1 recommended videos as related, 0 author's videos | 1 | video |
-| native_context_menu | browser context menu | 1 | video, image |
-| closed_caption | "Display the closed caption icon" (icon only, no caption API) | 1 | video |
-| muted | "Set the default volume to 0 and prevent the user from changing the volume" | 0 | video, image |
+| Param               | Meaning (DOC)                                                               | Default | Applies to   |
+| ------------------- | --------------------------------------------------------------------------- | ------- | ------------ |
+| controls            | show/hide progress bar and all control buttons                              | 1       | video, image |
+| progress_bar        | show progress bar                                                           | 1       | video        |
+| play_button         | show play button                                                            | 1       | video        |
+| volume_control      | show volume button                                                          | 1       | video, image |
+| fullscreen_button   | show fullscreen button                                                      | 1       | video, image |
+| timestamp           | show current time and duration                                              | 1       | video        |
+| loop                | "Play the current video repeatedly"                                         | 0       | video        |
+| autoplay            | "Automatically play the video when the player loads"                        | 0       | video        |
+| music_info          | show music info                                                             | 0       | video, image |
+| description         | show description                                                            | 0       | video, image |
+| rel                 | 1 recommended videos as related, 0 author's videos                          | 1       | video        |
+| native_context_menu | browser context menu                                                        | 1       | video, image |
+| closed_caption      | "Display the closed caption icon" (icon only, no caption API)               | 1       | video        |
+| muted               | "Set the default volume to 0 and prevent the user from changing the volume" | 0       | video, image |
 
 Verified how: DOC table. SRC: the live player bundle (main.aa73e798c5.js) contains strings progress_bar, play_button, volume_control, fullscreen_button, timestamp, closed_caption, native_context_menu, music_info, description, rel, loop, autoplay, muted, controls, so the params are really parsed.
 No start-time param exists in the doc (there is no `t=`/`start`); use `seekTo` after ready. NOT VERIFIED that a `start` param is ignored.
@@ -52,35 +53,35 @@ No start-time param exists in the doc (there is no `t=`/`start`); use `seekTo` a
 
 Envelope (DOC): `{ 'x-tiktok-player': true, type: string, value?: T }`
 
-| Feature | Supported | How | Verified how |
-|---|---|---|---|
-| play | yes | `{type:'play'}` | DOC; SRC (ItemPage chunk: `e.on("play",()=>f.play().catch(()=>{S.Ey(3001)}))`) |
-| pause | yes | `{type:'pause'}` | DOC; SRC |
-| seek | yes | `{type:'seekTo', value:<seconds>}` | DOC ("measured in seconds"); SRC |
-| mute | yes | `{type:'mute'}` | DOC; SRC |
-| unmute | yes | `{type:'unMute'}` | DOC; SRC (also sets volume to 1 if it was 0) |
-| image post navigation | yes | `{type:'navigateTo', value:index}` | DOC only (image posts) |
-| set volume | UNDOCUMENTED but present | `{type:'setVolume', value:0..100}` | SRC: `e.on("setVolume",e=>{let t=N(e);f.volume=t/100,f.muted=0===t})` found in live ItemPage chunk (a_ItemPage.cff9e7e065.js). Not in the docs table. Not tested in a browser (NOT VERIFIED at runtime). tiktok-video-element 0.1.2 does NOT use it: its volume setter only does `console.warn("Volume control is not supported for TikTok videos.")` |
-| fullscreen (programmatic) | no | none. Only the in-player fullscreen button (toggle with `fullscreen_button`); iframe needs `allow="fullscreen"` | DOC (no message), SRC (no handler) |
-| captions on/off | no | only an icon toggle via `closed_caption`; no message | DOC |
-| quality | no | none | DOC |
-| loop at runtime | no | URL param only (`loop=1`), changing it means reloading the iframe | DOC |
-| playback rate | no | none | DOC |
+| Feature                   | Supported                | How                                                                                                             | Verified how                                                                                                                                                                                                                                                                                                                                          |
+| ------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| play                      | yes                      | `{type:'play'}`                                                                                                 | DOC; SRC (ItemPage chunk: `e.on("play",()=>f.play().catch(()=>{S.Ey(3001)}))`)                                                                                                                                                                                                                                                                        |
+| pause                     | yes                      | `{type:'pause'}`                                                                                                | DOC; SRC                                                                                                                                                                                                                                                                                                                                              |
+| seek                      | yes                      | `{type:'seekTo', value:<seconds>}`                                                                              | DOC ("measured in seconds"); SRC                                                                                                                                                                                                                                                                                                                      |
+| mute                      | yes                      | `{type:'mute'}`                                                                                                 | DOC; SRC                                                                                                                                                                                                                                                                                                                                              |
+| unmute                    | yes                      | `{type:'unMute'}`                                                                                               | DOC; SRC (also sets volume to 1 if it was 0)                                                                                                                                                                                                                                                                                                          |
+| image post navigation     | yes                      | `{type:'navigateTo', value:index}`                                                                              | DOC only (image posts)                                                                                                                                                                                                                                                                                                                                |
+| set volume                | UNDOCUMENTED but present | `{type:'setVolume', value:0..100}`                                                                              | SRC: `e.on("setVolume",e=>{let t=N(e);f.volume=t/100,f.muted=0===t})` found in live ItemPage chunk (a_ItemPage.cff9e7e065.js). Not in the docs table. Not tested in a browser (NOT VERIFIED at runtime). tiktok-video-element 0.1.2 does NOT use it: its volume setter only does `console.warn("Volume control is not supported for TikTok videos.")` |
+| fullscreen (programmatic) | no                       | none. Only the in-player fullscreen button (toggle with `fullscreen_button`); iframe needs `allow="fullscreen"` | DOC (no message), SRC (no handler)                                                                                                                                                                                                                                                                                                                    |
+| captions on/off           | no                       | only an icon toggle via `closed_caption`; no message                                                            | DOC                                                                                                                                                                                                                                                                                                                                                   |
+| quality                   | no                       | none                                                                                                            | DOC                                                                                                                                                                                                                                                                                                                                                   |
+| loop at runtime           | no                       | URL param only (`loop=1`), changing it means reloading the iframe                                               | DOC                                                                                                                                                                                                                                                                                                                                                   |
+| playback rate             | no                       | none                                                                                                            | DOC                                                                                                                                                                                                                                                                                                                                                   |
 
 ### 1c-bis. Player to host messages
 
 Posted to `window.parent` as `{type, value, 'x-tiktok-player': true}`.
 
-| Message type | value | Maps to | Verified how |
-|---|---|---|---|
-| onPlayerReady | none | ready | DOC; SRC |
-| onStateChange | -1 init, 0 ended, 1 playing, 2 paused, 3 buffering | ended / play / pause / waiting | DOC table; SRC |
-| onCurrentTime | `{currentTime, duration}` (seconds) | timeupdate + duration | DOC says "currentTime: number, duration: number"; ELEM reads `msg.value.currentTime` and `msg.value.duration` |
-| onMute | boolean | muted | DOC |
-| onVolumeChange | 0..100 | volume | DOC |
-| onError | MediaError.code | error (marked deprecated) | DOC: "(deprecated)"; SRC still emits `onError` with value 1 |
-| onPlayerError | `{errorCode, errorType}` | error | DOC: 1001 INVALID_VIDEO, 2001 SERVER_ERROR, 3001 PLAYBACK_ERROR, 3002 AUTOPLAY_ERROR |
-| onImageChange | index | image posts | DOC |
+| Message type   | value                                              | Maps to                        | Verified how                                                                                                  |
+| -------------- | -------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| onPlayerReady  | none                                               | ready                          | DOC; SRC                                                                                                      |
+| onStateChange  | -1 init, 0 ended, 1 playing, 2 paused, 3 buffering | ended / play / pause / waiting | DOC table; SRC                                                                                                |
+| onCurrentTime  | `{currentTime, duration}` (seconds)                | timeupdate + duration          | DOC says "currentTime: number, duration: number"; ELEM reads `msg.value.currentTime` and `msg.value.duration` |
+| onMute         | boolean                                            | muted                          | DOC                                                                                                           |
+| onVolumeChange | 0..100                                             | volume                         | DOC                                                                                                           |
+| onError        | MediaError.code                                    | error (marked deprecated)      | DOC: "(deprecated)"; SRC still emits `onError` with value 1                                                   |
+| onPlayerError  | `{errorCode, errorType}`                           | error                          | DOC: 1001 INVALID_VIDEO, 2001 SERVER_ERROR, 3001 PLAYBACK_ERROR, 3002 AUTOPLAY_ERROR                          |
+| onImageChange  | index                                              | image posts                    | DOC                                                                                                           |
 
 SRC extras not in the doc (found in live main.js `12675` module): error codes `1002: VIDEO_EMBED_BANNED` and `2005: TOO_MANY_REQUESTS`. The code for 2005 also emits `onPlayerReady`. DOC mentions per-domain usage limits ("the player may become temporarily unavailable") which matches 2005.
 There is no `ended`-specific message; ended = `onStateChange` value 0. There is no `seeked`/`canplay` message.
@@ -88,18 +89,18 @@ Duration/currentTime: readable ONLY from `onCurrentTime` messages (push, not pul
 
 ### 1d. oEmbed, poster, privacy, autoplay
 
-| Item | Result | Verified how |
-|---|---|---|
-| oEmbed endpoint | `https://www.tiktok.com/oembed?url=<video url>` returns JSON (no auth) | CURL 200 |
-| oEmbed fields actually returned today | `version,type,width:"325",height:"578",html,provider_url,provider_name,embed_product_id,embed_type`. NO title, NO author_name, NO thumbnail_url, NO duration | CURL on 2 different public video URLs (scout2015 6718335390845095173; @tiktok 7106594312292453675). The old oEmbed fields (title, author, thumbnail_url) are gone. Older notes that list thumbnail via oEmbed are WRONG today |
-| oEmbed validation | does not validate the id: `@x/video/1` still returns an iframe html | CURL |
-| oEmbed iframe URL | `.../player/v1/{id}?embed_from=oembed&music_info=1&description=1&autoplay=1&muted=1` (oEmbed default turns autoplay and muted ON) | CURL |
-| Poster / thumbnail | none from oEmbed or the player docs. NOT VERIFIED whether a poster can be obtained another way (would need the TikTok Display/Research API or scraping, not official embed) | CURL |
-| Duration via oEmbed | not available | CURL |
-| Cookies | player page sets `tt_chain_token` (Domain=.tiktok.com, Max-Age=15552000 = 180 days, Secure, HttpOnly, SameSite=None). The page loads `tiktok_privacy_protection_framework/loader/.../index.js` and `webmssdk` | CURL headers; page HTML scripts. Whether a consent banner shows in-iframe for EU users: NOT VERIFIED |
-| Autoplay policy | `autoplay=1` honored only when browser permits; failure reports `onPlayerError` 3002 AUTOPLAY_ERROR. Live code also gates autoplay on visibility (`el(p,.8,v)` IntersectionObserver-like, 0.8 threshold) | DOC (3002); SRC ItemPage chunk. oEmbed pairs autoplay with muted, so use `autoplay=1&muted=1` |
-| Fullscreen | in-player button; iframe must allow it | DOC example `allow="fullscreen"` |
-| Rate limits | per-domain limits may apply | DOC "Usage limits" |
+| Item                                  | Result                                                                                                                                                                                                        | Verified how                                                                                                                                                                                                                  |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| oEmbed endpoint                       | `https://www.tiktok.com/oembed?url=<video url>` returns JSON (no auth)                                                                                                                                        | CURL 200                                                                                                                                                                                                                      |
+| oEmbed fields actually returned today | `version,type,width:"325",height:"578",html,provider_url,provider_name,embed_product_id,embed_type`. NO title, NO author_name, NO thumbnail_url, NO duration                                                  | CURL on 2 different public video URLs (scout2015 6718335390845095173; @tiktok 7106594312292453675). The old oEmbed fields (title, author, thumbnail_url) are gone. Older notes that list thumbnail via oEmbed are WRONG today |
+| oEmbed validation                     | does not validate the id: `@x/video/1` still returns an iframe html                                                                                                                                           | CURL                                                                                                                                                                                                                          |
+| oEmbed iframe URL                     | `.../player/v1/{id}?embed_from=oembed&music_info=1&description=1&autoplay=1&muted=1` (oEmbed default turns autoplay and muted ON)                                                                             | CURL                                                                                                                                                                                                                          |
+| Poster / thumbnail                    | none from oEmbed or the player docs. NOT VERIFIED whether a poster can be obtained another way (would need the TikTok Display/Research API or scraping, not official embed)                                   | CURL                                                                                                                                                                                                                          |
+| Duration via oEmbed                   | not available                                                                                                                                                                                                 | CURL                                                                                                                                                                                                                          |
+| Cookies                               | player page sets `tt_chain_token` (Domain=.tiktok.com, Max-Age=15552000 = 180 days, Secure, HttpOnly, SameSite=None). The page loads `tiktok_privacy_protection_framework/loader/.../index.js` and `webmssdk` | CURL headers; page HTML scripts. Whether a consent banner shows in-iframe for EU users: NOT VERIFIED                                                                                                                          |
+| Autoplay policy                       | `autoplay=1` honored only when browser permits; failure reports `onPlayerError` 3002 AUTOPLAY_ERROR. Live code also gates autoplay on visibility (`el(p,.8,v)` IntersectionObserver-like, 0.8 threshold)      | DOC (3002); SRC ItemPage chunk. oEmbed pairs autoplay with muted, so use `autoplay=1&muted=1`                                                                                                                                 |
+| Fullscreen                            | in-player button; iframe must allow it                                                                                                                                                                        | DOC example `allow="fullscreen"`                                                                                                                                                                                              |
+| Rate limits                           | per-domain limits may apply                                                                                                                                                                                   | DOC "Usage limits"                                                                                                                                                                                                            |
 
 ### 1e. What tiktok-video-element 0.1.2 adds or fails to expose (ELEM)
 
@@ -112,7 +113,7 @@ Duration/currentTime: readable ONLY from `onCurrentTime` messages (push, not pul
 
 play, pause, seek, mute/unmute, state events (ready, play, pause, waiting, ended, error), timeupdate + duration (push), volumechange event, controls and other chrome flags via URL, autoplay (muted), loop via URL param. Optional/undocumented: setVolume (flag as unsupported-by-contract). Not possible: quality, captions toggle, fullscreen API, start time, poster/title from oEmbed.
 
----------------------------------------------------------------------
+---
 
 ## 2. Twitch
 
@@ -120,54 +121,54 @@ Official docs: https://dev.twitch.tv/docs/embed/video-and-clips/ (fetched, 200).
 
 ### 2a. Embed URL forms
 
-| Form | URL | Verified how |
-|---|---|---|
-| Live channel | `https://player.twitch.tv/?channel=<login>&parent=<host>` | DOC |
-| VOD | `https://player.twitch.tv/?video=v<id>&parent=<host>` ("the video ID must have a 'v' prefix") | DOC |
-| Collection | `https://player.twitch.tv/?collection=<id>&parent=<host>` (+ optional video) | DOC |
-| Clip | `https://clips.twitch.tv/embed?clip=<slug>&parent=<host>` (non-interactive, no JS API) | DOC: "does not support the JavaScript interactive embed". CURL 200 |
-| `parent` | REQUIRED, one `parent=` per domain; DOC: "Domain(s) that will be embedding Twitch". Enforced server side: response header `Content-Security-Policy: frame-ancestors https://example.com` for `parent=example.com`. Request with NO parent returns `302` (CURL; Location header was empty in my grep, destination NOT VERIFIED). In dev, `parent=localhost` is the host without port | CURL headers |
-| Min size | DOC: embedded window "must be at least 400x300 pixels" (width min 400, height min 300) | DOC |
-| `allow` / sandbox used by the official script | `allow="autoplay; fullscreen"`, `sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"` (+ `allow-storage-access-by-user-activation` if supported); script also adds `referrer=<document.location.href>` and auto-appends `document.domain` to `parent` | SRC (v1.js function `b`) |
+| Form                                          | URL                                                                                                                                                                                                                                                                                                                                                                                 | Verified how                                                       |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Live channel                                  | `https://player.twitch.tv/?channel=<login>&parent=<host>`                                                                                                                                                                                                                                                                                                                           | DOC                                                                |
+| VOD                                           | `https://player.twitch.tv/?video=v<id>&parent=<host>` ("the video ID must have a 'v' prefix")                                                                                                                                                                                                                                                                                       | DOC                                                                |
+| Collection                                    | `https://player.twitch.tv/?collection=<id>&parent=<host>` (+ optional video)                                                                                                                                                                                                                                                                                                        | DOC                                                                |
+| Clip                                          | `https://clips.twitch.tv/embed?clip=<slug>&parent=<host>` (non-interactive, no JS API)                                                                                                                                                                                                                                                                                              | DOC: "does not support the JavaScript interactive embed". CURL 200 |
+| `parent`                                      | REQUIRED, one `parent=` per domain; DOC: "Domain(s) that will be embedding Twitch". Enforced server side: response header `Content-Security-Policy: frame-ancestors https://example.com` for `parent=example.com`. Request with NO parent returns `302` (CURL; Location header was empty in my grep, destination NOT VERIFIED). In dev, `parent=localhost` is the host without port | CURL headers                                                       |
+| Min size                                      | DOC: embedded window "must be at least 400x300 pixels" (width min 400, height min 300)                                                                                                                                                                                                                                                                                              | DOC                                                                |
+| `allow` / sandbox used by the official script | `allow="autoplay; fullscreen"`, `sandbox="allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"` (+ `allow-storage-access-by-user-activation` if supported); script also adds `referrer=<document.location.href>` and auto-appends `document.domain` to `parent`                                                                                | SRC (v1.js function `b`)                                           |
 
 ### 2b. URL params
 
-| Param | Documented? | Meaning | Verified how |
-|---|---|---|---|
-| channel / video / collection | yes | content selector. DOC: if channel plus video/collection, only channel is used | DOC |
-| parent | yes | required | DOC; CURL (frame-ancestors) |
-| autoplay | yes | DOC: "Default: true" for live/VOD, but clips default false. Needs min size and visibility; "on mobile devices ... video cannot be played without user interaction" | DOC |
-| muted | yes | DOC default false. SRC: `muted=true` forces muted, `muted=false` forces unmuted, anything else "restore" (remembers last user setting) | DOC; SRC (module 52722: `initialMuted:{mode:D(p.MUTED,e.muted)?"muted":"false"===e.muted?"unmuted":"restore"}`) |
-| time | yes (VOD only) | start time `1h2m3s` | DOC; SRC also accepts plain integer seconds and the alias `t` (`C(p.TIME,e.time||e.t)` where `/^\d+$/` is parsed as seconds) |
-| controls | NO (undocumented) | `controls=false` hides the control bar (`forceControlVisibility:D(p.CONTROLS,...)?void 0:Hidden`) | SRC. twitch-video-element uses it. Runtime effect NOT VERIFIED in a browser |
-| volume | NO | initial volume 0..1 (values outside 0..1 ignored) | SRC (`initialVolume`), runtime NOT VERIFIED |
-| quality | NO | initial quality (`initialQuality:e.quality||p.QUALITY`) | SRC, runtime NOT VERIFIED |
-| allowfullscreen | NO as a param (it is the iframe attribute) | SRC reads `e.allowfullscreen` param to set `disableFullscreen` | SRC |
-| showMature, promo, debug | NO | misc | SRC |
-| preload | clips only | DOC lists `preload` enum for the clips embed (none, metadata, auto) | DOC |
-| loop | NO | no loop param found in the player param parser; loop is not supported | SRC (not present). DOC silent |
-| captions param | NO | only runtime enable/disable | DOC/SRC |
+| Param                        | Documented?                                | Meaning                                                                                                                                                            | Verified how                                                                                                    |
+| ---------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| channel / video / collection | yes                                        | content selector. DOC: if channel plus video/collection, only channel is used                                                                                      | DOC                                                                                                             |
+| parent                       | yes                                        | required                                                                                                                                                           | DOC; CURL (frame-ancestors)                                                                                     |
+| autoplay                     | yes                                        | DOC: "Default: true" for live/VOD, but clips default false. Needs min size and visibility; "on mobile devices ... video cannot be played without user interaction" | DOC                                                                                                             |
+| muted                        | yes                                        | DOC default false. SRC: `muted=true` forces muted, `muted=false` forces unmuted, anything else "restore" (remembers last user setting)                             | DOC; SRC (module 52722: `initialMuted:{mode:D(p.MUTED,e.muted)?"muted":"false"===e.muted?"unmuted":"restore"}`) |
+| time                         | yes (VOD only)                             | start time `1h2m3s`                                                                                                                                                | DOC; SRC also accepts plain integer seconds and the alias `t` (`C(p.TIME,e.time                                 |             | e.t)`where`/^\d+$/` is parsed as seconds) |
+| controls                     | NO (undocumented)                          | `controls=false` hides the control bar (`forceControlVisibility:D(p.CONTROLS,...)?void 0:Hidden`)                                                                  | SRC. twitch-video-element uses it. Runtime effect NOT VERIFIED in a browser                                     |
+| volume                       | NO                                         | initial volume 0..1 (values outside 0..1 ignored)                                                                                                                  | SRC (`initialVolume`), runtime NOT VERIFIED                                                                     |
+| quality                      | NO                                         | initial quality (`initialQuality:e.quality                                                                                                                         |                                                                                                                 | p.QUALITY`) | SRC, runtime NOT VERIFIED                 |
+| allowfullscreen              | NO as a param (it is the iframe attribute) | SRC reads `e.allowfullscreen` param to set `disableFullscreen`                                                                                                     | SRC                                                                                                             |
+| showMature, promo, debug     | NO                                         | misc                                                                                                                                                               | SRC                                                                                                             |
+| preload                      | clips only                                 | DOC lists `preload` enum for the clips embed (none, metadata, auto)                                                                                                | DOC                                                                                                             |
+| loop                         | NO                                         | no loop param found in the player param parser; loop is not supported                                                                                              | SRC (not present). DOC silent                                                                                   |
+| captions param               | NO                                         | only runtime enable/disable                                                                                                                                        | DOC/SRC                                                                                                         |
 
 ### 2c. JS API (needs `https://player.twitch.tv/js/embed/v1.js` and `new Twitch.Player(divId, options)`; or raw postMessage)
 
 Raw postMessage protocol (SRC, v1.js and live module 381210): message `{namespace:"twitch-embed-player-proxy", eventName:<number>, params}` to `player.twitch.tv`; commands: DisableCaptions 0, EnableCaptions 1, Pause 2, Play 3, Seek 4, SetChannel 5, SetChannelID 6, SetCollection 7, SetQuality 8, SetVideo 9, SetMuted 10, SetVolume 11. The iframe posts back `{namespace:"twitch-embed-player-proxy", eventName:"UPDATE_STATE", params:{...state}}` (state: currentTime, duration, muted, volume, playback, quality, qualitiesAvailable, stats, videoID, channelName, ended) and event messages `{namespace:"twitch-embed", eventName, params}`.
 
-| Feature | Supported | How | Verified how |
-|---|---|---|---|
-| play / pause | yes | `play()`, `pause()` | DOC "Synchronous JavaScript Playback API"; SRC |
-| seek | yes, VOD only | `seek(seconds)` (DOC: "Does not work for live streams") | DOC; SRC |
-| mute / volume | yes | `setMuted(bool)`, `getMuted()`, `setVolume(0..1)`, `getVolume()` | DOC |
-| duration | yes, VOD only | `getDuration()` ("Works only for VODs, not live streams") | DOC |
-| currentTime | yes, VOD only | `getCurrentTime()` | DOC. Poll or derive from `UPDATE_STATE` messages (pushed repeatedly) |
-| ended | yes | `getEnded()`, event ENDED | DOC |
-| paused state | yes | `isPaused()` (buffering and seeking count as playing) | DOC |
-| captions | yes | `enableCaptions()`, `disableCaptions()`; CAPTIONS event delivers caption text | DOC |
-| quality | yes | `getQualities()`, `getQuality()`, `setQuality(q)` with values from getQualities e.g. `chunked` | DOC |
-| playback stats | yes | `getPlaybackStats()`: backendVersion, bufferSize, codecs, displayResolution, fps, hlsLatencyBroadcaster, playbackRate (Kbps), skippedFrames, videoResolution | DOC (SRC also shows `latencyMode`) |
-| change content | yes | `setChannel`, `setVideo(id, time)`, `setCollection`, (SRC also `setChannelId`) | DOC; SRC |
-| fullscreen | in-player button only; no programmatic API | `allowfullscreen` attribute and `allow="fullscreen"` | DOC (iframe attribute only); SRC (no command) |
-| loop | no | none | DOC/SRC |
-| playback rate | no | none | DOC/SRC |
+| Feature        | Supported                                  | How                                                                                                                                                          | Verified how                                                         |
+| -------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| play / pause   | yes                                        | `play()`, `pause()`                                                                                                                                          | DOC "Synchronous JavaScript Playback API"; SRC                       |
+| seek           | yes, VOD only                              | `seek(seconds)` (DOC: "Does not work for live streams")                                                                                                      | DOC; SRC                                                             |
+| mute / volume  | yes                                        | `setMuted(bool)`, `getMuted()`, `setVolume(0..1)`, `getVolume()`                                                                                             | DOC                                                                  |
+| duration       | yes, VOD only                              | `getDuration()` ("Works only for VODs, not live streams")                                                                                                    | DOC                                                                  |
+| currentTime    | yes, VOD only                              | `getCurrentTime()`                                                                                                                                           | DOC. Poll or derive from `UPDATE_STATE` messages (pushed repeatedly) |
+| ended          | yes                                        | `getEnded()`, event ENDED                                                                                                                                    | DOC                                                                  |
+| paused state   | yes                                        | `isPaused()` (buffering and seeking count as playing)                                                                                                        | DOC                                                                  |
+| captions       | yes                                        | `enableCaptions()`, `disableCaptions()`; CAPTIONS event delivers caption text                                                                                | DOC                                                                  |
+| quality        | yes                                        | `getQualities()`, `getQuality()`, `setQuality(q)` with values from getQualities e.g. `chunked`                                                               | DOC                                                                  |
+| playback stats | yes                                        | `getPlaybackStats()`: backendVersion, bufferSize, codecs, displayResolution, fps, hlsLatencyBroadcaster, playbackRate (Kbps), skippedFrames, videoResolution | DOC (SRC also shows `latencyMode`)                                   |
+| change content | yes                                        | `setChannel`, `setVideo(id, time)`, `setCollection`, (SRC also `setChannelId`)                                                                               | DOC; SRC                                                             |
+| fullscreen     | in-player button only; no programmatic API | `allowfullscreen` attribute and `allow="fullscreen"`                                                                                                         | DOC (iframe attribute only); SRC (no command)                        |
+| loop           | no                                         | none                                                                                                                                                         | DOC/SRC                                                              |
+| playback rate  | no                                         | none                                                                                                                                                         | DOC/SRC                                                              |
 
 Events (DOC "JavaScript Events", via `player.addEventListener(Twitch.Player.X, cb)`): CAPTIONS, ENDED, PAUSE, PLAY, PLAYBACK_BLOCKED, PLAYING, OFFLINE, ONLINE, READY, SEEK. DOC quotes: READY = "Player is ready to accept function calls."; PLAYBACK_BLOCKED = "Usually fired after an unmuted autoplay or unmuted programmatic call on play()."; PAUSE "Buffering and seeking is not considered paused."
 UNDOCUMENTED but present in v1.js: `Twitch.Player.ERROR` ("error"), `VIDEO_READY` ("video.ready"), `VIDEO_PLAY`, `VIDEO_PAUSE`, `AUTHENTICATE`, and `Twitch.Player.Errors` table. SRC error codes: GeoBlocked 1, UnsupportedDevice 2, AnonymizerBlocked 3, CellularNetworkProhibited 4, UnauthorizationEntitlements 5, VodRestricted 6, LVSCCUCap 509, Aborted 1000, DRMLicenseServerError 1001, Network 2000, CCUCapReached 2001, Decode 3000, FormatNotSupported 4000, ContentNotAvailable 5000, DRMLicenseNotAvailable 5001, RendererNotAvailable 6000, SafariUnsupportedDevice 7004, CDMNotAuthorized 7005, Fatal 8001, Offline 8002, FatalAuth 8003, WarnAuth 8004. Whether the iframe actually emits the `error` event for each: NOT VERIFIED.
@@ -176,16 +177,16 @@ Important caveat: the docs say `autoplay` default is true, so an embed without `
 
 ### 2d. oEmbed, poster, privacy
 
-| Item | Result | Verified how |
-|---|---|---|
-| oEmbed | NONE. `https://api.twitch.tv/v5/oembed`, `/v4/oembed`, `/oembed` all 404; `https://www.twitch.tv/oembed?...` returns the normal twitch.tv HTML page (not oEmbed). Twitch has no working oEmbed provider | CURL (4 URL variants) |
-| Title / duration / thumbnail for a VOD | Only via Helix `Get Videos` (needs OAuth app token + Client-Id). DOC: "Video information such as duration, view count, and associated Twitch channel is available via the Get Videos API endpoint." | DOC; Helix call NOT VERIFIED (needs credentials) |
-| Live preview thumbnail | `https://static-cdn.jtvnw.net/previews-ttv/live_user_<login>-640x360.jpg` returned 302 to `404_preview-640x360.jpg` for `twitch` (channel offline at test time), so it only works while live. Undocumented pattern | CURL; live success NOT VERIFIED |
-| Cookies | the player response sets `server_session_id` (session), `unique_id` (expires 2027-11-27, ~1 year) and `unique_id_durable` (HttpOnly, ~1 year), all Domain=.twitch.tv, Secure, SameSite=None | CURL on `player.twitch.tv/?video=v2000000000&parent=example.com` |
-| Privacy-enhanced mode | none | no param found |
-| Ads | embedded player runs ads; SRC sets `disablePersonalizedAds` for embed and `disablePixelTracking` for embed, `blockTwitchExclusiveContent` | SRC |
-| Required scripts | none for the iframe; `player.twitch.tv/js/embed/v1.js` only for `Twitch.Player` | DOC |
-| Needs a registered Twitch app | no | DOC (none required) |
+| Item                                   | Result                                                                                                                                                                                                             | Verified how                                                     |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| oEmbed                                 | NONE. `https://api.twitch.tv/v5/oembed`, `/v4/oembed`, `/oembed` all 404; `https://www.twitch.tv/oembed?...` returns the normal twitch.tv HTML page (not oEmbed). Twitch has no working oEmbed provider            | CURL (4 URL variants)                                            |
+| Title / duration / thumbnail for a VOD | Only via Helix `Get Videos` (needs OAuth app token + Client-Id). DOC: "Video information such as duration, view count, and associated Twitch channel is available via the Get Videos API endpoint."                | DOC; Helix call NOT VERIFIED (needs credentials)                 |
+| Live preview thumbnail                 | `https://static-cdn.jtvnw.net/previews-ttv/live_user_<login>-640x360.jpg` returned 302 to `404_preview-640x360.jpg` for `twitch` (channel offline at test time), so it only works while live. Undocumented pattern | CURL; live success NOT VERIFIED                                  |
+| Cookies                                | the player response sets `server_session_id` (session), `unique_id` (expires 2027-11-27, ~1 year) and `unique_id_durable` (HttpOnly, ~1 year), all Domain=.twitch.tv, Secure, SameSite=None                        | CURL on `player.twitch.tv/?video=v2000000000&parent=example.com` |
+| Privacy-enhanced mode                  | none                                                                                                                                                                                                               | no param found                                                   |
+| Ads                                    | embedded player runs ads; SRC sets `disablePersonalizedAds` for embed and `disablePixelTracking` for embed, `blockTwitchExclusiveContent`                                                                          | SRC                                                              |
+| Required scripts                       | none for the iframe; `player.twitch.tv/js/embed/v1.js` only for `Twitch.Player`                                                                                                                                    | DOC                                                              |
+| Needs a registered Twitch app          | no                                                                                                                                                                                                                 | DOC (none required)                                              |
 
 ### 2e. What twitch-video-element 0.1.6 adds or fails to expose (ELEM)
 
@@ -198,7 +199,7 @@ Important caveat: the docs say `autoplay` default is true, so an embed without `
 
 URL: channel / video / collection / clip, `parent` (auto from `location.hostname`), `autoplay`, `muted`, `time` (VOD), `controls` (undocumented, SRC-verified). JS (via postMessage or Twitch.Player): play, pause, seek (VOD), mute, volume, getDuration/getCurrentTime (VOD), ended, captions on/off, quality list/set, events ready, play, pause, playing, seek, ended, offline, online, playbackBlocked, captions. No loop, no playback rate, no programmatic fullscreen. Clips: no JS API at all (iframe only, `autoplay`, `muted`, `preload`). Poster/title/duration need Helix and a token (NOT VERIFIED).
 
----------------------------------------------------------------------
+---
 
 ## 3. Spotify
 
@@ -206,59 +207,59 @@ Official docs fetched (200): https://developer.spotify.com/documentation/embeds/
 
 ### 3a. Embed URL
 
-| Item | Value | Verified how |
-|---|---|---|
-| Iframe URL | `https://open.spotify.com/embed/{type}/{id}` with type track, episode, show, album, playlist, artist (DOC: "podcast, episode, track, playlist, artist, or album") | DOC; CURL oEmbed html |
-| Params | `theme=0` (dark), `t=<seconds>` start, `utm_source`, `si`, `locale`, `referrer`. oEmbed adds `utm_source=oembed` | SRC (iframe_api `appendCommonParams`: appends `t`, `theme=0` when theme is `dark`, `locale`, `referrer`, `utm_source=iframe-api`); only theme/start are meaningful |
-| Video variant | `https://open.spotify.com/embed/{type}/{id}/video` returns 200 (used by spotify-audio-element `preferVideo`). DOC: eligible music-video tracks "use the same Embed code as audio tracks ... You do not need a different URL format". Podcast video: `loadEntity(uri, preferVideo=true)` ("play the video of a podcast episode, if available") | CURL 200; DOC |
-| Size | oEmbed returns 152 high (track/episode, compact) or 352 (playlist, album), width 456 / `100%` | CURL |
-| Required `allow` | `allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"`. DOC troubleshooting: "make sure that you have not removed the allow=\"encrypted-media\" attribute ... without this, the Embed will only allow users to listen to previews." | DOC |
-| Preview-only behavior | DOC: "In some situations the Embed will only stream a preview clip of less than 30 seconds." Full-length play depends on browser DRM support and (not documented) Spotify login state. Login requirement for full tracks: NOT VERIFIED | DOC |
+| Item                  | Value                                                                                                                                                                                                                                                                                                                                         | Verified how                                                                                                                                                       |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Iframe URL            | `https://open.spotify.com/embed/{type}/{id}` with type track, episode, show, album, playlist, artist (DOC: "podcast, episode, track, playlist, artist, or album")                                                                                                                                                                             | DOC; CURL oEmbed html                                                                                                                                              |
+| Params                | `theme=0` (dark), `t=<seconds>` start, `utm_source`, `si`, `locale`, `referrer`. oEmbed adds `utm_source=oembed`                                                                                                                                                                                                                              | SRC (iframe_api `appendCommonParams`: appends `t`, `theme=0` when theme is `dark`, `locale`, `referrer`, `utm_source=iframe-api`); only theme/start are meaningful |
+| Video variant         | `https://open.spotify.com/embed/{type}/{id}/video` returns 200 (used by spotify-audio-element `preferVideo`). DOC: eligible music-video tracks "use the same Embed code as audio tracks ... You do not need a different URL format". Podcast video: `loadEntity(uri, preferVideo=true)` ("play the video of a podcast episode, if available") | CURL 200; DOC                                                                                                                                                      |
+| Size                  | oEmbed returns 152 high (track/episode, compact) or 352 (playlist, album), width 456 / `100%`                                                                                                                                                                                                                                                 | CURL                                                                                                                                                               |
+| Required `allow`      | `allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"`. DOC troubleshooting: "make sure that you have not removed the allow=\"encrypted-media\" attribute ... without this, the Embed will only allow users to listen to previews."                                                                             | DOC                                                                                                                                                                |
+| Preview-only behavior | DOC: "In some situations the Embed will only stream a preview clip of less than 30 seconds." Full-length play depends on browser DRM support and (not documented) Spotify login state. Login requirement for full tracks: NOT VERIFIED                                                                                                        | DOC                                                                                                                                                                |
 
 ### 3b. iFrame API (script `https://open.spotify.com/embed/iframe-api/v1`, global callback `window.onSpotifyIframeApiReady = IFrameAPI => {}`)
 
-| Feature | Supported | How | Verified how |
-|---|---|---|---|
-| create | yes | `IFrameAPI.createController(el, {uri | url, width, height, startAt, theme}, cb)`. DOC: options are "uri, url, width, height"; SRC reads `options.startAt` and `options.theme === 'dark'` too (what the package passes) | DOC; SRC |
-| load other content | yes | `loadEntity(uriOrUrl, preferVideo, startAt)`; `loadUri(uri, preferVideo, startAt, theme)` | DOC |
-| play | yes | `play()` DOC: "begins playing the content that had been previously loaded"; DOC note: "might not be supported in all browsers ... Safari blocks autoplay without user interaction" | DOC |
-| pause | yes | `pause()` | DOC |
-| resume | yes | `resume()` | DOC |
-| toggle | yes | `togglePlay()` | DOC; SRC (`toggle` command) |
-| restart | yes | `restart()` (SRC command `play_from_start`) | DOC; SRC |
-| seek | yes | `seek(seconds)` integer | DOC; SRC |
-| destroy | yes | `destroy()` | DOC |
-| volume | NO | no command exists. SRC IframeCommands are exactly: play_from_start, play, pause, resume, toggle, seek, load_complete_ack, fullscreen_change, fullscreen_error | SRC (enum extraction from iframe_api.b14cb21...js; grep for setVolume/mute: 0 hits) |
-| mute | NO | none (user uses the in-player control) | SRC |
-| fullscreen (drive) | partial | `onFullscreenChange(bool)` and `onFullscreenError(code)` exist on the controller as notify-the-embed hooks; there is no "enter fullscreen" command. The embed sends `uiaction/enterfullscreen` and `uiaction/exitfullscreen` events outward | SRC (undocumented) |
-| loop | NO | none; spotify-audio-element emulates by seeking to 1 near end | ELEM |
-| captions, quality, playback rate | NO | none | DOC/SRC |
-| currentTime / duration read | yes (push) | from `playback_update` event: `{playingURI, isPaused, isBuffering, duration (ms), position (ms)}`. No pull getter | DOC ("duration describes the length ... in milliseconds and position describes the cursor location in milliseconds") |
+| Feature                          | Supported  | How                                                                                                                                                                                                                                         | Verified how                                                                                                                                                                  |
+| -------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| create                           | yes        | `IFrameAPI.createController(el, {uri                                                                                                                                                                                                        | url, width, height, startAt, theme}, cb)`. DOC: options are "uri, url, width, height"; SRC reads `options.startAt`and`options.theme === 'dark'` too (what the package passes) | DOC; SRC |
+| load other content               | yes        | `loadEntity(uriOrUrl, preferVideo, startAt)`; `loadUri(uri, preferVideo, startAt, theme)`                                                                                                                                                   | DOC                                                                                                                                                                           |
+| play                             | yes        | `play()` DOC: "begins playing the content that had been previously loaded"; DOC note: "might not be supported in all browsers ... Safari blocks autoplay without user interaction"                                                          | DOC                                                                                                                                                                           |
+| pause                            | yes        | `pause()`                                                                                                                                                                                                                                   | DOC                                                                                                                                                                           |
+| resume                           | yes        | `resume()`                                                                                                                                                                                                                                  | DOC                                                                                                                                                                           |
+| toggle                           | yes        | `togglePlay()`                                                                                                                                                                                                                              | DOC; SRC (`toggle` command)                                                                                                                                                   |
+| restart                          | yes        | `restart()` (SRC command `play_from_start`)                                                                                                                                                                                                 | DOC; SRC                                                                                                                                                                      |
+| seek                             | yes        | `seek(seconds)` integer                                                                                                                                                                                                                     | DOC; SRC                                                                                                                                                                      |
+| destroy                          | yes        | `destroy()`                                                                                                                                                                                                                                 | DOC                                                                                                                                                                           |
+| volume                           | NO         | no command exists. SRC IframeCommands are exactly: play_from_start, play, pause, resume, toggle, seek, load_complete_ack, fullscreen_change, fullscreen_error                                                                               | SRC (enum extraction from iframe_api.b14cb21...js; grep for setVolume/mute: 0 hits)                                                                                           |
+| mute                             | NO         | none (user uses the in-player control)                                                                                                                                                                                                      | SRC                                                                                                                                                                           |
+| fullscreen (drive)               | partial    | `onFullscreenChange(bool)` and `onFullscreenError(code)` exist on the controller as notify-the-embed hooks; there is no "enter fullscreen" command. The embed sends `uiaction/enterfullscreen` and `uiaction/exitfullscreen` events outward | SRC (undocumented)                                                                                                                                                            |
+| loop                             | NO         | none; spotify-audio-element emulates by seeking to 1 near end                                                                                                                                                                               | ELEM                                                                                                                                                                          |
+| captions, quality, playback rate | NO         | none                                                                                                                                                                                                                                        | DOC/SRC                                                                                                                                                                       |
+| currentTime / duration read      | yes (push) | from `playback_update` event: `{playingURI, isPaused, isBuffering, duration (ms), position (ms)}`. No pull getter                                                                                                                           | DOC ("duration describes the length ... in milliseconds and position describes the cursor location in milliseconds")                                                          |
 
 Events (`controller.addListener(name, ({data}) => ...)`):
 
-| Event | Payload | Verified how |
-|---|---|---|
-| ready | `{}` | DOC: "fires after an Embed has initialized and is ready to stream content" |
-| playback_started | `{playingURI}`; fires per track and on restart after completion | DOC |
-| playback_update | `{playingURI, isPaused, isBuffering, duration, position}` | DOC |
-| error | `{code: 'invalid_uri' or 'playback_error', message, recoverable}` | SRC only (undocumented; emitted for bad/short-link resolution failures; whether the iframe emits runtime playback errors: NOT VERIFIED) |
-| uiaction/enterfullscreen, uiaction/exitfullscreen | `{}` | SRC only (undocumented) |
-| ended | NOT PROVIDED | no ended event in DOC or SRC; spotify-audio-element infers it from position vs duration |
-| volume | NOT PROVIDED | none |
+| Event                                             | Payload                                                           | Verified how                                                                                                                            |
+| ------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| ready                                             | `{}`                                                              | DOC: "fires after an Embed has initialized and is ready to stream content"                                                              |
+| playback_started                                  | `{playingURI}`; fires per track and on restart after completion   | DOC                                                                                                                                     |
+| playback_update                                   | `{playingURI, isPaused, isBuffering, duration, position}`         | DOC                                                                                                                                     |
+| error                                             | `{code: 'invalid_uri' or 'playback_error', message, recoverable}` | SRC only (undocumented; emitted for bad/short-link resolution failures; whether the iframe emits runtime playback errors: NOT VERIFIED) |
+| uiaction/enterfullscreen, uiaction/exitfullscreen | `{}`                                                              | SRC only (undocumented)                                                                                                                 |
+| ended                                             | NOT PROVIDED                                                      | no ended event in DOC or SRC; spotify-audio-element infers it from position vs duration                                                 |
+| volume                                            | NOT PROVIDED                                                      | none                                                                                                                                    |
 
 ### 3c. oEmbed, thumbnail, privacy, autoplay
 
-| Item | Result | Verified how |
-|---|---|---|
-| oEmbed | `https://open.spotify.com/oembed?url=<spotify url or spotify: uri>` (DOC lists base URIs open.spotify.com and spotify.link). Required param only `url`; `maxwidth`, `maxheight`, `format=xml` are IGNORED (still returned 456x152 JSON) | DOC; CURL |
-| Fields returned | `html, iframe_url, width, height, version, provider_name, provider_url, type:"rich", title, thumbnail_url, thumbnail_width:300, thumbnail_height:300` | CURL track (title "Never Gonna Give You Up", thumbnail on `image-cdn-fa.spotifycdn.com`, HTTP 200 image/jpeg); episode; playlist (works today though DOC lists "podcast show, episode, artist, album or track") |
-| Duration | NOT in oEmbed. The embed page HTML contains `"duration":213573` (ms) and `"audioPreview":{"url":"https://p.scdn.co/mp3-preview/..."}` in its embedded JSON | CURL of `/embed/track/4cOdK2wGLETKBW3PvgPWqT` (undocumented, scraping, fragile) |
-| Poster | oEmbed `thumbnail_url` (300x300 square cover art), usable as poster image | CURL |
-| Cookies | embed page sets `sp_t` (Domain=.spotify.com, 1 year, Secure, SameSite=None) and `sp_landing` (24 h, HttpOnly) | CURL headers |
-| Autoplay | none via URL. Only `play()`/`resume()`, which DOC says Safari may block. Browsers also need a user gesture generally | DOC |
-| Privacy mode | none | no param found |
-| Required scripts | none for a plain iframe; the iFrame API script for control | DOC |
+| Item             | Result                                                                                                                                                                                                                                  | Verified how                                                                                                                                                                                                    |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| oEmbed           | `https://open.spotify.com/oembed?url=<spotify url or spotify: uri>` (DOC lists base URIs open.spotify.com and spotify.link). Required param only `url`; `maxwidth`, `maxheight`, `format=xml` are IGNORED (still returned 456x152 JSON) | DOC; CURL                                                                                                                                                                                                       |
+| Fields returned  | `html, iframe_url, width, height, version, provider_name, provider_url, type:"rich", title, thumbnail_url, thumbnail_width:300, thumbnail_height:300`                                                                                   | CURL track (title "Never Gonna Give You Up", thumbnail on `image-cdn-fa.spotifycdn.com`, HTTP 200 image/jpeg); episode; playlist (works today though DOC lists "podcast show, episode, artist, album or track") |
+| Duration         | NOT in oEmbed. The embed page HTML contains `"duration":213573` (ms) and `"audioPreview":{"url":"https://p.scdn.co/mp3-preview/..."}` in its embedded JSON                                                                              | CURL of `/embed/track/4cOdK2wGLETKBW3PvgPWqT` (undocumented, scraping, fragile)                                                                                                                                 |
+| Poster           | oEmbed `thumbnail_url` (300x300 square cover art), usable as poster image                                                                                                                                                               | CURL                                                                                                                                                                                                            |
+| Cookies          | embed page sets `sp_t` (Domain=.spotify.com, 1 year, Secure, SameSite=None) and `sp_landing` (24 h, HttpOnly)                                                                                                                           | CURL headers                                                                                                                                                                                                    |
+| Autoplay         | none via URL. Only `play()`/`resume()`, which DOC says Safari may block. Browsers also need a user gesture generally                                                                                                                    | DOC                                                                                                                                                                                                             |
+| Privacy mode     | none                                                                                                                                                                                                                                    | no param found                                                                                                                                                                                                  |
+| Required scripts | none for a plain iframe; the iFrame API script for control                                                                                                                                                                              | DOC                                                                                                                                                                                                             |
 
 ### 3d. What spotify-audio-element 1.0.4 adds or fails to expose (ELEM)
 
@@ -271,32 +272,32 @@ Events (`controller.addListener(name, ({data}) => ...)`):
 
 play, pause/resume/toggle, restart, seek, load another entity, startAt, theme dark, preferVideo, events ready, playback_started, playback_update (position/duration in ms, isPaused, isBuffering). Derived: timeupdate, durationchange, play/pause/waiting/playing/ended (ended is inferred). Not possible: volume, mute, loop (emulate), captions, quality, programmatic fullscreen. Poster and title from oEmbed (300x300 cover); duration only after the iframe reports it (or scrape the embed page).
 
----------------------------------------------------------------------
+---
 
 ## 4. Cross-provider comparison (quick reference)
 
-| Feature | TikTok | Twitch | Spotify |
-|---|---|---|---|
-| play / pause | yes | yes | yes |
-| seek | yes (seekTo) | yes, VOD only | yes (seek integer s) |
-| mute | yes | yes | no |
-| volume set | undocumented only (`setVolume` 0..100) | yes (0..1) | no |
-| volume read | event `onVolumeChange` | `getVolume()` | no |
-| duration | pushed via onCurrentTime | `getDuration()` VOD only | pushed via playback_update (ms) |
-| currentTime | pushed via onCurrentTime | `getCurrentTime()` VOD only | pushed via playback_update (ms) |
-| ended event | onStateChange 0 | ENDED | none (inferred) |
-| error event | onPlayerError (1001, 1002*, 2001, 2005*, 3001, 3002) | ERROR* (undocumented) | error* (undocumented) |
-| autoplay param | `autoplay=1` | `autoplay=true/false` (default true) | none (JS play() only) |
-| muted param | `muted=1` | `muted=true` | none |
-| loop | `loop=1` param | none | none (emulated) |
-| start time | none (seek after ready) | `time=1h2m3s` (VOD) | `t=<s>` / `startAt` |
-| captions | icon only | enable/disable + CAPTIONS event | none |
-| quality | none | get/set | none |
-| fullscreen API | none | none | none (notify hooks + events only) |
-| oEmbed | works, but NO title/thumbnail/duration | none (404) | works: title, 300x300 thumbnail, no duration |
-| poster source | none official | Helix API (token) or live preview CDN | oEmbed thumbnail_url |
-| cookies set by embed host | tt_chain_token (180 d) | unique_id (1 y), unique_id_durable | sp_t (1 y), sp_landing |
-| required script | none | none (v1.js optional) | iFrame API script for control |
+| Feature                   | TikTok                                               | Twitch                                | Spotify                                      |
+| ------------------------- | ---------------------------------------------------- | ------------------------------------- | -------------------------------------------- |
+| play / pause              | yes                                                  | yes                                   | yes                                          |
+| seek                      | yes (seekTo)                                         | yes, VOD only                         | yes (seek integer s)                         |
+| mute                      | yes                                                  | yes                                   | no                                           |
+| volume set                | undocumented only (`setVolume` 0..100)               | yes (0..1)                            | no                                           |
+| volume read               | event `onVolumeChange`                               | `getVolume()`                         | no                                           |
+| duration                  | pushed via onCurrentTime                             | `getDuration()` VOD only              | pushed via playback_update (ms)              |
+| currentTime               | pushed via onCurrentTime                             | `getCurrentTime()` VOD only           | pushed via playback_update (ms)              |
+| ended event               | onStateChange 0                                      | ENDED                                 | none (inferred)                              |
+| error event               | onPlayerError (1001, 1002*, 2001, 2005*, 3001, 3002) | ERROR* (undocumented)                 | error* (undocumented)                        |
+| autoplay param            | `autoplay=1`                                         | `autoplay=true/false` (default true)  | none (JS play() only)                        |
+| muted param               | `muted=1`                                            | `muted=true`                          | none                                         |
+| loop                      | `loop=1` param                                       | none                                  | none (emulated)                              |
+| start time                | none (seek after ready)                              | `time=1h2m3s` (VOD)                   | `t=<s>` / `startAt`                          |
+| captions                  | icon only                                            | enable/disable + CAPTIONS event       | none                                         |
+| quality                   | none                                                 | get/set                               | none                                         |
+| fullscreen API            | none                                                 | none                                  | none (notify hooks + events only)            |
+| oEmbed                    | works, but NO title/thumbnail/duration               | none (404)                            | works: title, 300x300 thumbnail, no duration |
+| poster source             | none official                                        | Helix API (token) or live preview CDN | oEmbed thumbnail_url                         |
+| cookies set by embed host | tt_chain_token (180 d)                               | unique_id (1 y), unique_id_durable    | sp_t (1 y), sp_landing                       |
+| required script           | none                                                 | none (v1.js optional)                 | iFrame API script for control                |
 
 (* = found in live source, not in the docs.)
 

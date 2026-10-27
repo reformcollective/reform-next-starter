@@ -17,28 +17,28 @@ Legend: CONFIRMED = read in a primary source this session (URL in Sources). UNSU
 
 Notation: Y = supported and reliable, B = best effort / caveats, N = not possible, ? = UNSURE. "Native" column means the standard HTMLMediaElement API.
 
-| Capability | Direct file (mp4/webm) | HLS Safari (native) | HLS hls.js (Chrome/Firefox/etc) | Mux (`mux-video` / Mux Player) | YouTube IFrame API | Vimeo `@vimeo/player` |
-|---|---|---|---|---|---|---|
-| play / pause | Y (play() returns a promise, can reject NotAllowedError) | Y | Y | Y | Y (`playVideo`/`pauseVideo`; `onAutoplayBlocked` event exists) | Y (iOS may refuse play() until tap) |
-| mute / unmute | Y (`muted`) | Y | Y | Y | Y (`mute`, `unMute`, `isMuted`) | Y (`setMuted`) |
-| volume | Y (0..1) | Y desktop; iOS ignores (system volume) | Y desktop; iOS n/a | Y (same as underlying) | Y (`setVolume` 0..100) | Y 0..1, but mobile has no independent volume: `getVolume()` returns 1, `setVolume()` silently no-op (CONFIRMED) |
-| seek | Y (`currentTime`) | Y | Y | Y | Y (`seekTo(sec, allowSeekAhead)`; pass false while dragging a scrubber, true on release) | Y (`setCurrentTime`, resolves with time reached) |
-| duration / currentTime / progress | Y (`duration`, `currentTime`, `buffered`) | Y | Y | Y | B: no timeupdate event. Must poll `getCurrentTime()`; buffered via `getVideoLoadedFraction()` | Y (`timeupdate` event with seconds, percent, duration) |
-| playbackRate | Y | Y | Y | Y | B: `setPlaybackRate` is a suggestion, rounded to supported rates; list via `getAvailablePlaybackRates()` | B: PRO/Business accounts only, range 0..2 |
-| fullscreen | Y (Fullscreen API on element or wrapper; iOS Safari video only via `webkitEnterFullscreen` on the video element, ?) | Y | Y | Y | B: fullscreen the iframe/wrapper via Fullscreen API needs iframe `allow="fullscreen"`; `fs=0` hides YouTube's own button | Y `requestFullscreen()`, `fullscreenchange` event |
-| captions / text tracks | Y (`<track>` + `textTracks`, WebVTT) | Y (native, incl. HLS subtitle renditions) | Y (`hls.subtitleTracks` / media-tracks) | Y (`textTracks`, Mux auto-generated captions as tracks) | B: only the `captions` module (`fontSize`, `reload` via `onApiChange`) plus `cc_load_policy=1`. No supported cue/track enumeration or on/off toggle API; `setOption('captions','track',...)` is undocumented in the page I read (UNSURE, widely used but unofficial) | Y: `getTextTracks`, `enableTextTrack(lang, kind, showing)`, `disableTextTrack`, `cuechange` |
-| quality selection | N (single file; swap sources) | N (OS controls ABR) | Y (`hls.currentLevel`, `autoLevelEnabled`) | Y (`max-resolution`, `min-resolution`, renditions via media-tracks) | B/N: `setPlaybackQuality` is a hint and is not honored reliably; `getAvailableQualityLevels` / `onPlaybackQualityChange` exist (UNSURE re: current behavior; the doc page I read does not describe the setter) | B: `getQualities`/`setQuality`, Plus/PRO/Business only |
-| loop | Y (`loop`) | Y | Y | Y | B: `loop=1` AND `playlist=<same id>`; or `setLoop` only for playlists | Y (`setLoop`; note `ended` does NOT fire while looping) |
-| events: play | Y | Y | Y | Y | via `onStateChange` 1 | Y |
-| pause | Y | Y | Y | Y | via state 2 | Y |
-| ended | Y | Y | Y | Y | via state 0 | Y (not when loop) |
-| timeupdate | Y | Y | Y | Y | N: poll (e.g. 250ms rAF/interval while state=1) | Y |
-| progress (buffer) | Y | Y | Y | Y | N: poll `getVideoLoadedFraction()` | `progress` event (UNSURE; `loaded` event exists) |
-| error | Y | Y | Y (hls.js ERROR event, many are recoverable) | Y | `onError` codes 2, 5, 100, 101, 150, 153 | Y (`error`) |
-| waiting / buffering | Y (`waiting`, `stalled`) | Y | Y | Y | via state 3 (buffering) | `bufferstart` / `bufferend` |
-| canplay | Y | Y | Y | Y | N exact equivalent; `onReady` (API ready) then state -1/5/1 | `loaded` / `play` (no exact canplay) |
-| Muted autoplay / background | Y with `muted autoplay playsinline loop`; MDN: muted autoplay generally allowed, `playsinline` required for Safari | Y | Y | Y; Mux Player `autoplay="muted"` mutes then calls play() | B: `autoplay=1&mute=1&playsinline=1` works; but TOS limits (below) and mobile can block; cannot be truly chromeless | Y with `background=1` (paid plans) or `autoplay=1&muted=1&loop=1&controls=0` (controls=0 paid) |
-| Chromeless (no provider UI) | Y | Y | Y | Y | N: `controls=0` hides the bar but title bar/logo/pause-overlay "more videos" can still appear; branding rules apply | B: needs paid plan for `controls=0` / `background=1` |
+| Capability                        | Direct file (mp4/webm)                                                                                              | HLS Safari (native)                       | HLS hls.js (Chrome/Firefox/etc)              | Mux (`mux-video` / Mux Player)                                      | YouTube IFrame API                                                                                                                                                                                                                                                   | Vimeo `@vimeo/player`                                                                                           |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| play / pause                      | Y (play() returns a promise, can reject NotAllowedError)                                                            | Y                                         | Y                                            | Y                                                                   | Y (`playVideo`/`pauseVideo`; `onAutoplayBlocked` event exists)                                                                                                                                                                                                       | Y (iOS may refuse play() until tap)                                                                             |
+| mute / unmute                     | Y (`muted`)                                                                                                         | Y                                         | Y                                            | Y                                                                   | Y (`mute`, `unMute`, `isMuted`)                                                                                                                                                                                                                                      | Y (`setMuted`)                                                                                                  |
+| volume                            | Y (0..1)                                                                                                            | Y desktop; iOS ignores (system volume)    | Y desktop; iOS n/a                           | Y (same as underlying)                                              | Y (`setVolume` 0..100)                                                                                                                                                                                                                                               | Y 0..1, but mobile has no independent volume: `getVolume()` returns 1, `setVolume()` silently no-op (CONFIRMED) |
+| seek                              | Y (`currentTime`)                                                                                                   | Y                                         | Y                                            | Y                                                                   | Y (`seekTo(sec, allowSeekAhead)`; pass false while dragging a scrubber, true on release)                                                                                                                                                                             | Y (`setCurrentTime`, resolves with time reached)                                                                |
+| duration / currentTime / progress | Y (`duration`, `currentTime`, `buffered`)                                                                           | Y                                         | Y                                            | Y                                                                   | B: no timeupdate event. Must poll `getCurrentTime()`; buffered via `getVideoLoadedFraction()`                                                                                                                                                                        | Y (`timeupdate` event with seconds, percent, duration)                                                          |
+| playbackRate                      | Y                                                                                                                   | Y                                         | Y                                            | Y                                                                   | B: `setPlaybackRate` is a suggestion, rounded to supported rates; list via `getAvailablePlaybackRates()`                                                                                                                                                             | B: PRO/Business accounts only, range 0..2                                                                       |
+| fullscreen                        | Y (Fullscreen API on element or wrapper; iOS Safari video only via `webkitEnterFullscreen` on the video element, ?) | Y                                         | Y                                            | Y                                                                   | B: fullscreen the iframe/wrapper via Fullscreen API needs iframe `allow="fullscreen"`; `fs=0` hides YouTube's own button                                                                                                                                             | Y `requestFullscreen()`, `fullscreenchange` event                                                               |
+| captions / text tracks            | Y (`<track>` + `textTracks`, WebVTT)                                                                                | Y (native, incl. HLS subtitle renditions) | Y (`hls.subtitleTracks` / media-tracks)      | Y (`textTracks`, Mux auto-generated captions as tracks)             | B: only the `captions` module (`fontSize`, `reload` via `onApiChange`) plus `cc_load_policy=1`. No supported cue/track enumeration or on/off toggle API; `setOption('captions','track',...)` is undocumented in the page I read (UNSURE, widely used but unofficial) | Y: `getTextTracks`, `enableTextTrack(lang, kind, showing)`, `disableTextTrack`, `cuechange`                     |
+| quality selection                 | N (single file; swap sources)                                                                                       | N (OS controls ABR)                       | Y (`hls.currentLevel`, `autoLevelEnabled`)   | Y (`max-resolution`, `min-resolution`, renditions via media-tracks) | B/N: `setPlaybackQuality` is a hint and is not honored reliably; `getAvailableQualityLevels` / `onPlaybackQualityChange` exist (UNSURE re: current behavior; the doc page I read does not describe the setter)                                                       | B: `getQualities`/`setQuality`, Plus/PRO/Business only                                                          |
+| loop                              | Y (`loop`)                                                                                                          | Y                                         | Y                                            | Y                                                                   | B: `loop=1` AND `playlist=<same id>`; or `setLoop` only for playlists                                                                                                                                                                                                | Y (`setLoop`; note `ended` does NOT fire while looping)                                                         |
+| events: play                      | Y                                                                                                                   | Y                                         | Y                                            | Y                                                                   | via `onStateChange` 1                                                                                                                                                                                                                                                | Y                                                                                                               |
+| pause                             | Y                                                                                                                   | Y                                         | Y                                            | Y                                                                   | via state 2                                                                                                                                                                                                                                                          | Y                                                                                                               |
+| ended                             | Y                                                                                                                   | Y                                         | Y                                            | Y                                                                   | via state 0                                                                                                                                                                                                                                                          | Y (not when loop)                                                                                               |
+| timeupdate                        | Y                                                                                                                   | Y                                         | Y                                            | Y                                                                   | N: poll (e.g. 250ms rAF/interval while state=1)                                                                                                                                                                                                                      | Y                                                                                                               |
+| progress (buffer)                 | Y                                                                                                                   | Y                                         | Y                                            | Y                                                                   | N: poll `getVideoLoadedFraction()`                                                                                                                                                                                                                                   | `progress` event (UNSURE; `loaded` event exists)                                                                |
+| error                             | Y                                                                                                                   | Y                                         | Y (hls.js ERROR event, many are recoverable) | Y                                                                   | `onError` codes 2, 5, 100, 101, 150, 153                                                                                                                                                                                                                             | Y (`error`)                                                                                                     |
+| waiting / buffering               | Y (`waiting`, `stalled`)                                                                                            | Y                                         | Y                                            | Y                                                                   | via state 3 (buffering)                                                                                                                                                                                                                                              | `bufferstart` / `bufferend`                                                                                     |
+| canplay                           | Y                                                                                                                   | Y                                         | Y                                            | Y                                                                   | N exact equivalent; `onReady` (API ready) then state -1/5/1                                                                                                                                                                                                          | `loaded` / `play` (no exact canplay)                                                                            |
+| Muted autoplay / background       | Y with `muted autoplay playsinline loop`; MDN: muted autoplay generally allowed, `playsinline` required for Safari  | Y                                         | Y                                            | Y; Mux Player `autoplay="muted"` mutes then calls play()            | B: `autoplay=1&mute=1&playsinline=1` works; but TOS limits (below) and mobile can block; cannot be truly chromeless                                                                                                                                                  | Y with `background=1` (paid plans) or `autoplay=1&muted=1&loop=1&controls=0` (controls=0 paid)                  |
+| Chromeless (no provider UI)       | Y                                                                                                                   | Y                                         | Y                                            | Y                                                                   | N: `controls=0` hides the bar but title bar/logo/pause-overlay "more videos" can still appear; branding rules apply                                                                                                                                                  | B: needs paid plan for `controls=0` / `background=1`                                                            |
 
 ### 1.1 Direct file and HLS
 
@@ -53,6 +53,7 @@ Notation: Y = supported and reliable, B = best effort / caveats, N = not possibl
 What works (CONFIRMED from IFrame API reference): `playVideo/pauseVideo` (UNSURE names not on the fetched excerpt but standard), `mute/unMute/isMuted`, `setVolume(0..100)`, `seekTo`, `setPlaybackRate` (hint, rounded), `getAvailablePlaybackRates`, events `onReady`, `onStateChange` (-1, 0, 1, 2, 3, 5), `onPlaybackRateChange`, `onPlaybackQualityChange`, `onError`, `onApiChange`, `onAutoplayBlocked`. `enablejsapi=1` and `origin` recommended.
 
 What is impossible or unreliable:
+
 - `modestbranding`: "deprecated and has no effect" since 2023-08-15 (CONFIRMED, player parameters page). The player decides branding by player size and other params.
 - `rel`: since 2018 it can only restrict related videos to the same channel; cannot disable them (CONFIRMED: "changing on or after September 25, 2018", related videos come from the same channel). End-screen/pause-screen suggestions cannot be fully hidden.
 - `showinfo` removed/deprecated since 2018 (title bar). `autohide`, `theme` deprecated.
@@ -71,6 +72,7 @@ What is impossible or unreliable:
 ### 1.3 Vimeo (`@vimeo/player`, npm latest 2.30.4, MIT)
 
 CONFIRMED (player.js README / Vimeo help):
+
 - Methods: `play`, `pause`, `setVolume` (0..1), `setMuted`, `setCurrentTime`, `setPlaybackRate` (0..2, PRO and Business only), `requestFullscreen`, `enableTextTrack(language, kind?, showing?)`, `getQualities`/`setQuality` (Plus/PRO/Business), `setLoop`.
 - Events modeled after HTML5: `play`, `pause`, `ended`, `timeupdate`, `seeking`, `seeked`, `volumechange`, `playbackratechange`, `texttrackchange`, `cuechange`, `qualitychange`, `fullscreenchange`, `error`.
 - `play()` may not work on iOS until the viewer taps. Mobile volume = system volume.
@@ -142,12 +144,13 @@ CONFIRMED (player.js README / Vimeo help):
 ### 2.7 Recommendation
 
 Option A (recommended): hand-roll a small `<UniversalVideo>` that renders one of a few provider elements and exposes a single `MediaController`-like ref/hook, but import the heavy lifting from `media-elements`:
+
 - file: native `<video>`
 - HLS and Mux: `hls-video-element` or `mux-video` (Mux gets Mux Data, tuned hls.js; `mux-video` also falls back to native HLS on Safari)
 - YouTube: `youtube-video-element`
 - Vimeo: `vimeo-video-element`
-Because they all implement HTMLMediaElement, your custom controls code is written once against the standard API; provider choice is just which tag you mount. Optionally use Media Chrome for the control UI, or write your own controls (our repo prefers styled components and tokens, so a hand-written control bar bound to the standard API may fit house style better than Media Chrome's shadow-DOM styling; UNSURE).
-Tradeoffs: you own the adapter glue, the lazy loading, and the YouTube policy constraints; but dependencies are small, MIT, maintained (releases 2026-10-23 for Mux packages), and avoid vendor lock to a full player UI.
+  Because they all implement HTMLMediaElement, your custom controls code is written once against the standard API; provider choice is just which tag you mount. Optionally use Media Chrome for the control UI, or write your own controls (our repo prefers styled components and tokens, so a hand-written control bar bound to the standard API may fit house style better than Media Chrome's shadow-DOM styling; UNSURE).
+  Tradeoffs: you own the adapter glue, the lazy loading, and the YouTube policy constraints; but dependencies are small, MIT, maintained (releases 2026-10-23 for Mux packages), and avoid vendor lock to a full player UI.
 
 Option B: Video.js 10 `@videojs/react`. Least code, one API across all five, headless primitives and skins. Choose if you value upstream a11y/keyboard work and accept a young major version and unknown license/bundle numbers. Verify license, bundle size and SSR before committing.
 
@@ -162,35 +165,61 @@ Avoid: Vidstack (maintenance), Plyr (superseded, fixed UI), classic video.js 8 w
 Smallest interface every provider can honor, modeled on HTMLMediaElement (TypeScript sketch):
 
 ```ts
-type Capability = 'supported' | 'bestEffort' | 'unsupported';
+type Capability = "supported" | "bestEffort" | "unsupported"
 
 interface MediaController {
-  // commands
-  play(): Promise<void>;            // rejects/resolves 'blocked' on autoplay policy
-  pause(): void;
-  setMuted(muted: boolean): void;
-  setVolume(v: number): void;       // 0..1, adapter scales (YouTube 0..100)
-  seek(seconds: number): void;
-  setPlaybackRate(rate: number): void;
-  requestFullscreen(): Promise<void>; // fullscreens OUR wrapper
-  setTextTrack(id: string | null): void;
-  // state (readonly, reactive)
-  paused: boolean; ended: boolean; muted: boolean; volume: number;
-  currentTime: number; duration: number; bufferedEnd: number;
-  playbackRate: number; waiting: boolean; ready: boolean;
-  error: { code: string; message: string; fatal: boolean } | null;
-  textTracks: { id: string; label: string; language: string }[];
-  activeTextTrack: string | null;
-  capabilities: {
-    volume: Capability; playbackRate: Capability; textTracks: Capability;
-    quality: Capability; fullscreen: Capability; seek: Capability;
-  };
-  // events (normalized)
-  on(e: 'play'|'pause'|'ended'|'timeupdate'|'progress'|'volumechange'|'ratechange'|'waiting'|'canplay'|'error'|'blocked', cb): () => void;
+	// commands
+	play(): Promise<void> // rejects/resolves 'blocked' on autoplay policy
+	pause(): void
+	setMuted(muted: boolean): void
+	setVolume(v: number): void // 0..1, adapter scales (YouTube 0..100)
+	seek(seconds: number): void
+	setPlaybackRate(rate: number): void
+	requestFullscreen(): Promise<void> // fullscreens OUR wrapper
+	setTextTrack(id: string | null): void
+	// state (readonly, reactive)
+	paused: boolean
+	ended: boolean
+	muted: boolean
+	volume: number
+	currentTime: number
+	duration: number
+	bufferedEnd: number
+	playbackRate: number
+	waiting: boolean
+	ready: boolean
+	error: { code: string; message: string; fatal: boolean } | null
+	textTracks: { id: string; label: string; language: string }[]
+	activeTextTrack: string | null
+	capabilities: {
+		volume: Capability
+		playbackRate: Capability
+		textTracks: Capability
+		quality: Capability
+		fullscreen: Capability
+		seek: Capability
+	}
+	// events (normalized)
+	on(
+		e:
+			| "play"
+			| "pause"
+			| "ended"
+			| "timeupdate"
+			| "progress"
+			| "volumechange"
+			| "ratechange"
+			| "waiting"
+			| "canplay"
+			| "error"
+			| "blocked",
+		cb,
+	): () => void
 }
 ```
 
 Per-provider marks:
+
 - volume: file/HLS/Mux/YouTube/Vimeo-desktop supported; mobile (iOS, Vimeo mobile) unsupported: report `capabilities.volume='unsupported'` and hide the slider; keep mute.
 - playbackRate: YouTube best effort (rounded); Vimeo best effort (PRO/Business only, otherwise hide); others supported.
 - textTracks: file/HLS/Mux/Vimeo supported; YouTube unsupported (only `cc_load_policy` default on, or open YouTube's own CC button which is only visible if `controls=1`); document the limitation.
@@ -202,6 +231,7 @@ Per-provider marks:
 - background mode (muted, loop, autoplay, no controls): supported for file/HLS/Mux; Vimeo needs paid plan; YouTube best effort and policy constrained (do not use YouTube for decorative background; document it).
 
 Quirks the adapter must hide:
+
 1. Async readiness (YouTube `onReady`, Vimeo `ready()`): queue commands until ready.
 2. Scale and promise differences (YouTube volume 0..100, Vimeo promises).
 3. No `timeupdate`/`progress` on YouTube: polling loop that runs only while playing and tab visible.

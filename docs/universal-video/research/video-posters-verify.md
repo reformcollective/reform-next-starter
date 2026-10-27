@@ -16,6 +16,7 @@ Note: WebFetch summarises pages with a small model, so quotes marked "(summary)"
 ## 2. Vimeo
 
 Source: https://developer.vimeo.com/api/oembed/videos (read from the page's JS bundle, literal).
+
 - VERIFIED: endpoint `https://vimeo.com/api/oembed.json?url=<url-encoded video URL>&width=480&height=360`.
 - VERIFIED: sample response includes `thumbnail_url` ("https://i.vimeocdn.com/video/721904228_295x166"), `thumbnail_width` 295, `thumbnail_height` 221, `thumbnail_url_with_play_button` (an `i.vimeocdn.com/filter/overlay?...crawler_play.png` URL). Note the sample's 295x166 URL vs height 221 is as published.
 - VERIFIED: other request params listed include `width`, `height`, `maxwidth`, `thumbnail_id` ("The ID of the thumbnail to load from the video's available thumbnail set" , this is a player/embed option table entry).
@@ -53,6 +54,7 @@ Source: https://developer.vimeo.com/api/oembed/videos (read from the page's JS b
 - Wistia, Twitch, TikTok, Spotify: NOT VERIFIED (I did not read their ToS/developer policy pages for thumbnail storage).
 
 ## Sources
+
 - https://developers.google.com/youtube/v3/docs/videos
 - https://developers.google.com/youtube/v3/docs/thumbnails
 - https://developers.google.com/youtube/v3/docs/videos/list
