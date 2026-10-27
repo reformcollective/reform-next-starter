@@ -29,6 +29,9 @@ importers:
       '@sanity/icons':
         specifier: ^5.2.3
         version: 5.2.3(react@19.3.1)
+      '@sanity/types':
+        specifier: ^6.20.0
+        version: 6.20.0(@types/react@19.3.0)(vitest@4.1.9(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.0)))
       '@sanity/ui':
         specifier: ^3.2.0
         version: 3.2.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.3.1(react@19.3.1))(react-is@19.3.1)(react@19.3.1)(styled-components@6.3.8(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
@@ -156,9 +159,9 @@ importers:
       '@eslint/css-tree':
         specifier: ^4.1.2
         version: 4.1.2
-      '@mux/mux-video-react':
-        specifier: ^0.31.6
-        version: 0.31.6(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@mux/mux-video':
+        specifier: 0.31.6
+        version: 0.31.6
       '@plutotcool/fsv':
         specifier: 0.5.1
         version: 0.5.1(@types/node@26.6.5)(supports-color@8.1.1)
@@ -189,6 +192,12 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
+      cloudflare-video-element:
+        specifier: 1.3.6
+        version: 1.3.6
+      hls-video-element:
+        specifier: 1.5.12
+        version: 1.5.12
       lenis:
         specifier: ^1.3.27
         version: 1.3.27(@nuxt/kit@4.6.2(@nuxt/schema@4.6.2)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.0)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(rolldown@1.2.15)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.15)(rollup@4.60.1)(vite@8.3.5(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.0))(webpack@5.106.0(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.31))))(react@19.3.1)(vue@3.5.44(typescript@6.0.3))
@@ -207,9 +216,27 @@ importers:
       sonner:
         specifier: ^2.0.8
         version: 2.0.8(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      spotify-audio-element:
+        specifier: 1.0.5
+        version: 1.0.5
+      tiktok-video-element:
+        specifier: 0.1.2
+        version: 0.1.2
+      twitch-video-element:
+        specifier: 0.2.0
+        version: 0.2.0
       use-deep-compare:
         specifier: ^1.3.0
         version: 1.3.0(react@19.3.1)
+      vimeo-video-element:
+        specifier: 1.7.4
+        version: 1.7.4
+      wistia-video-element:
+        specifier: 1.4.0
+        version: 1.4.0
+      youtube-video-element:
+        specifier: 1.9.1
+        version: 1.9.1
       zod:
         specifier: ^4.6.7
         version: 4.6.7
@@ -2400,19 +2427,6 @@ packages:
 
   '@mux/mux-player@3.14.1':
     resolution: {integrity: sha512-kn7xxbLLnVOxmXG0KT+DG05zuYMNL99fw9Mbl3hxo5Ug62pCBDUzw4YvOHYh21ZxQF1kBmdfS8vuc3RfXWNufA==}
-
-  '@mux/mux-video-react@0.31.6':
-    resolution: {integrity: sha512-wfX3R9R8JmQvNF9H+XyQDEV66zfZh5P4FxaO+lQhSM7gBz66KeteKI2/uhPHhHgMktVH57SZ3pQdK/iH9okS+Q==}
-    peerDependencies:
-      '@types/react': ^17.0.0 || ^17.0.0-0 || ^18 || ^18.0.0-0 || ^19 || ^19.0.0-0
-      '@types/react-dom': '*'
-      react: ^17.0.2 || ^17.0.0-0 || ^18 || ^18.0.0-0 || ^19 || ^19.0.0-0
-      react-dom: ^17.0.2 || ^17.0.2-0 || ^18 || ^18.0.0-0 || ^19 || ^19.0.0-0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
 
   '@mux/mux-video@0.31.0':
     resolution: {integrity: sha512-DvO2GynIJhPDc0LMuWvC144lCF+E07NI+chrg/vcRQlCf2fPdNNqCSMoaRdWu2S2v/Orsc85giT9K6GRbjbzgA==}
@@ -5769,9 +5783,6 @@ packages:
     resolution: {integrity: sha512-JSr5eOgoEymtYHBjNWyjrMqet9Am2miJhlfKNdqLp6zoeAh0KN5dRAcxlecj5mAJrmQomgiOBj35xHLrFjqBpw==}
     hasBin: true
 
-  castable-video@1.1.16:
-    resolution: {integrity: sha512-wBhe2dZu2afhewL3EaGgVYTyDsa9HvNhY98clMZkNzDrLelOValSrTaoMos9YX7PPBCrgpd1j6YmNyyI2Vbq3w==}
-
   castable-video@1.1.17:
     resolution: {integrity: sha512-mq633z1RlDyGyTcqnyz/yLVQxAoqI1J7adyiEmXORcv7D9jUIVCn9OjZPcgul7oCK4VAdcHsA2ZP9psKlXf2VQ==}
 
@@ -5906,6 +5917,9 @@ packages:
 
   cloudflare-video-element@1.3.5:
     resolution: {integrity: sha512-zj9gjJa6xW8MNrfc4oKuwgGS0njRLpOlQjdifbuNxvy8k4Y3pKCyKCMG2XIsjd2iQGhgjS57b1P5VWdJlxcXBw==}
+
+  cloudflare-video-element@1.3.6:
+    resolution: {integrity: sha512-ZK9O6/J8fQnHSQ/JND+UKrN5o+FCfU5G4OYe1A7EiS7uarBQIuOX95iCTP9v1/FTdODI9EMJK/6DP0gO/GOsiQ==}
 
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
@@ -6111,9 +6125,6 @@ packages:
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
-
-  custom-media-element@1.4.6:
-    resolution: {integrity: sha512-/HRYqJOa1ob5ik4q7FIJVYxTJCFs/FL3+cQPAJjUf2uiqrDEzbTgB315gQ2rG8oK3w094W9m5tcB8S5Qah+caA==}
 
   custom-media-element@1.4.7:
     resolution: {integrity: sha512-rNBpnzkTAWPhE3cSajteAvg9qfFTsTd0b6dt33y9Q0Pq8afMvxL7SbvxzbUCqIRk/raIJHbJrHheCPADdK9+Ww==}
@@ -6985,6 +6996,9 @@ packages:
 
   hls-video-element@1.5.11:
     resolution: {integrity: sha512-tJJ65/52CDxj8XFyIve6zT9nVVdUIc6mqvKR25X0ycPKHk07rpjp4xxVteeCefDUBSf/tFLhlICFmn3KWj37xA==}
+
+  hls-video-element@1.5.12:
+    resolution: {integrity: sha512-VV2F/uP7ntW3WFWtxjTA5kT+4+azfhc4H1GUhPOGHubpcRWuwxddMZ60ujxOTZODmbNdSimySSloJOJjPuw1OQ==}
 
   hls.js@1.6.16:
     resolution: {integrity: sha512-VSIRpLfRwlAAdGL4wiTucx2ScRipo0ed1FBatWkyt832jC4CReKstga6yIhYVwGu9LOBjuX9wzmRMeQdBJtzEA==}
@@ -9442,6 +9456,9 @@ packages:
   spotify-audio-element@1.0.4:
     resolution: {integrity: sha512-QdKrJPkYCzaNwwz2vN2eDGyoW0KmQFmnwVprB41mpMzj4qujbqr6pegEchQeTn0b5PceKiLoVu0pp2QDpTcWnw==}
 
+  spotify-audio-element@1.0.5:
+    resolution: {integrity: sha512-Zt6HRHxwnnW3FifbNlkvzCtChAChzSgK45oUsyUDUzj/1ec+8UAbaP8lR1TRe8dHnwnEYK9XeIh/OpwPiLbVxA==}
+
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
@@ -9853,6 +9870,9 @@ packages:
 
   twitch-video-element@0.1.6:
     resolution: {integrity: sha512-X7l8gy+DEFKJ/EztUwaVnAYwQN9fUJxPkOVJj2sE62sGvGU4DNLyvmOsmVulM+8Plc5dMg6hYIMNRAPaH+39Uw==}
+
+  twitch-video-element@0.2.0:
+    resolution: {integrity: sha512-SbZVeaFpLdsndG2DwVfxideP9tfnnEl3F9kkeAtmgNH4gKjW1c/pfveiqMXVblsENNOF9o4v0Bckv7IwbcJ5yA==}
 
   type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
@@ -10299,6 +10319,9 @@ packages:
 
   vimeo-video-element@1.7.2:
     resolution: {integrity: sha512-7QM7fvSZvTTSq4igxBuO6Gc+0u3Exgk4IaLNixVzilCPzHEf7SN8b6YLXSM5QCs0ineTJI4XjiUCSoIbabHvwg==}
+
+  vimeo-video-element@1.7.4:
+    resolution: {integrity: sha512-m6MCx9ljXw2AjCPvJfaE06AO1YU64aizlHzY8PpvsbQcqIwyX8bEv28VcboVnjCiKHvCuZ/IPY0+rumdBBMWLw==}
 
   vite-node@6.0.0:
     resolution: {integrity: sha512-oj4PVrT+pDh6GYf5wfUXkcZyekYS8kKPfLPXVl8qe324Ec6l4K2DUKNadRbZ3LQl0qGcDz+PyOo7ZAh00Y+JjQ==}
@@ -10762,6 +10785,9 @@ packages:
 
   youtube-video-element@1.9.0:
     resolution: {integrity: sha512-Hh0dbQM+FVlUaYUbpYkZNUvdKxTNcSNvTGzkQKYShltnX+LRHEp2eYvC2Zm43eU8Np+CBZuoNR2i+seCYzzAyg==}
+
+  youtube-video-element@1.9.1:
+    resolution: {integrity: sha512-qk5fLKe1Pf+NViSQTyb0YZ9o5ku3yXryjEWEhhu4xbgsZLY+ShCz16FdSHmE+zcFXOWWVMtvu2gCOsa2c/+9aQ==}
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
@@ -13002,22 +13028,12 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  '@mux/mux-video-react@0.31.6(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
-    dependencies:
-      '@mux/playback-core': 0.36.1
-      prop-types: 15.8.1
-      react: 19.3.1
-      react-dom: 19.3.1(react@19.3.1)
-    optionalDependencies:
-      '@types/react': 19.3.0
-      '@types/react-dom': 19.3.0(@types/react@19.3.0)
-
   '@mux/mux-video@0.31.0':
     dependencies:
       '@mux/mux-data-google-ima': 0.3.17
       '@mux/playback-core': 0.35.0
-      castable-video: 1.1.16
-      custom-media-element: 1.4.6
+      castable-video: 1.1.17
+      custom-media-element: 1.4.7
       media-tracks: 0.3.5
 
   '@mux/mux-video@0.31.6':
@@ -17150,7 +17166,7 @@ snapshots:
 
   babel-plugin-react-compiler@1.0.0:
     dependencies:
-      '@babel/types': 7.29.7
+      '@babel/types': 7.29.11
 
   balanced-match@1.0.2: {}
 
@@ -17334,10 +17350,6 @@ snapshots:
       ansicolors: 0.3.2
       redeyed: 2.1.1
 
-  castable-video@1.1.16:
-    dependencies:
-      custom-media-element: 1.4.6
-
   castable-video@1.1.17:
     dependencies:
       custom-media-element: 1.4.7
@@ -17475,6 +17487,8 @@ snapshots:
       shallow-clone: 3.0.1
 
   cloudflare-video-element@1.3.5: {}
+
+  cloudflare-video-element@1.3.6: {}
 
   clsx@2.1.1: {}
 
@@ -17680,13 +17694,11 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  custom-media-element@1.4.6: {}
-
   custom-media-element@1.4.7: {}
 
   dash-video-element@0.3.2(@svta/cml-cta@1.0.6(@svta/cml-structured-field-values@1.1.3(@svta/cml-utils@1.5.0))(@svta/cml-utils@1.5.0))(@svta/cml-structured-field-values@1.1.3(@svta/cml-utils@1.5.0))(@svta/cml-utils@1.5.0):
     dependencies:
-      custom-media-element: 1.4.6
+      custom-media-element: 1.4.7
       dashjs: 5.2.0(@svta/cml-cta@1.0.6(@svta/cml-structured-field-values@1.1.3(@svta/cml-utils@1.5.0))(@svta/cml-utils@1.5.0))(@svta/cml-structured-field-values@1.1.3(@svta/cml-utils@1.5.0))(@svta/cml-utils@1.5.0)
       media-tracks: 0.3.5
     transitivePeerDependencies:
@@ -18668,8 +18680,14 @@ snapshots:
 
   hls-video-element@1.5.11:
     dependencies:
-      custom-media-element: 1.4.6
+      custom-media-element: 1.4.7
       hls.js: 1.6.16
+      media-tracks: 0.3.5
+
+  hls-video-element@1.5.12:
+    dependencies:
+      custom-media-element: 1.4.7
+      hls.js: 1.7.3
       media-tracks: 0.3.5
 
   hls.js@1.6.16: {}
@@ -21260,6 +21278,8 @@ snapshots:
 
   spotify-audio-element@1.0.4: {}
 
+  spotify-audio-element@1.0.5: {}
+
   sprintf-js@1.0.3: {}
 
   stackback@0.0.2: {}
@@ -21686,6 +21706,8 @@ snapshots:
   tweetnacl@1.0.3: {}
 
   twitch-video-element@0.1.6: {}
+
+  twitch-video-element@0.2.0: {}
 
   type-fest@0.21.3: {}
 
@@ -22162,6 +22184,11 @@ snapshots:
       '@vimeo/player': 2.29.0
       media-played-ranges-mixin: 0.1.0
 
+  vimeo-video-element@1.7.4:
+    dependencies:
+      '@vimeo/player': 2.29.0
+      media-played-ranges-mixin: 0.1.0
+
   vite-node@6.0.0(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.0):
     dependencies:
       cac: 7.1.0
@@ -22594,6 +22621,10 @@ snapshots:
   yoctocolors@2.2.0: {}
 
   youtube-video-element@1.9.0:
+    dependencies:
+      media-played-ranges-mixin: 0.1.0
+
+  youtube-video-element@1.9.1:
     dependencies:
       media-played-ranges-mixin: 0.1.0
 

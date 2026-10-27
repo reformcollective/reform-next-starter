@@ -34,6 +34,7 @@ import { blogAuthorType } from "sanity/schemas/blog/authorType"
 import { blogBlockContentType } from "sanity/schemas/blog/blockContentType"
 import { blogCategoryType } from "sanity/schemas/blog/categoryType"
 import { logoSet } from "sanity/schemas/documents/logoSet"
+import { videoTestCase } from "sanity/schemas/documents/videoTestCase"
 import page from "sanity/schemas/sanityPage"
 import footer from "sanity/schemas/singletons/footer"
 import header from "sanity/schemas/singletons/header"
@@ -149,6 +150,9 @@ export default defineConfig({
 			// shared content, referenced from sections rather than owned by one
 			logoSet,
 
+			// fixtures for /visual-tests/universal-video
+			videoTestCase,
+
 			// project schemas
 			page,
 		],
@@ -260,6 +264,7 @@ export default defineConfig({
 									.title("Shared Content")
 									.items([
 										S.documentTypeListItem("logoSet").title("Logo Sets"),
+										S.documentTypeListItem("videoTestCase").title("Video Test Cases"),
 										S.divider(),
 										S.listItem()
 											.title("Blog")
@@ -273,7 +278,7 @@ export default defineConfig({
 											),
 									]),
 							),
-					hiddenTypes: ["blogAuthor", "blogCategory", "logoSet"],
+					hiddenTypes: ["blogAuthor", "blogCategory", "logoSet", "videoTestCase"],
 				},
 				{
 					item: (S) =>

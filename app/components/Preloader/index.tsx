@@ -46,6 +46,7 @@ import { colors } from "app/styles/colors.css"
 import { usePreloader } from "library/link/usePreloader"
 import { css, f, styled } from "library/styled"
 import { useHeaderMode } from "library/useSectionTheme"
+import { usePathname } from "next/navigation"
 import { useRef, useState } from "react"
 
 import { preloaderExit, logoPulse, logoOutro } from "./animations.css"
@@ -57,6 +58,7 @@ export function Preloader() {
 	// match the page we're about to reveal. the theme is seeded from the page's first
 	// section by app/lib/InitialHeaderMode, so there's no need to sniff the DOM for it.
 	const mode = useHeaderMode()
+	const skip = usePathname().startsWith("/visual-tests")
 
 	// hold the preloader until fonts and subresources are in, or it lifts onto a page
 	// that is still swapping fonts and decoding images
@@ -73,17 +75,23 @@ export function Preloader() {
 	})
 
 	const { ready, completed, devKey } = usePreloader({
-		minDuration: 2000,
+		minDuration: skip ? 0 : 2000,
 		scope: scopeRef,
 		// waits for .logo pulse animation to finish its current cycle before setting ready, ensuring a smooth transition
 		stopAnimations: ".logo",
-		customAnimation: { beforeReady: resourcesReady },
+		customAnimation: { beforeReady: skip ? undefined : resourcesReady },
 	})
 
 	if (completed) return null
 
 	return (
-		<Wrapper key={devKey} ref={scopeRef} data-mode={mode} data-ready={ready || undefined}>
+		<Wrapper
+			key={devKey}
+			ref={scopeRef}
+			data-mode={mode}
+			data-ready={ready || undefined}
+			data-skip={skip || undefined}
+		>
 			<Logo className="logo" aria-hidden="true" />
 		</Wrapper>
 	)
@@ -99,6 +107,10 @@ const Wrapper = styled("div", [
 		background: ${colors.black};
 		transition: background 0.3s ease-out;
 		pointer-events: auto;
+
+		&[data-skip] {
+			display: none;
+		}
 
 		&[data-mode="light"] {
 			background: ${colors.surfaceLight};
