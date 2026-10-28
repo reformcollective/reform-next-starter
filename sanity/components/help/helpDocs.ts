@@ -484,13 +484,82 @@ const media: HelpDoc = {
 		{ type: "h2", text: "Videos" },
 		{
 			type: "p",
-			text: "Choose a **Source**: **Upload or Select a File** (the default), YouTube, Vimeo, Wistia, Spotify, Twitch, TikTok or **Video URL**.",
+			text: "Choose a **Source**: **Upload or Select a File** (the default), YouTube, Vimeo, Wistia, Spotify, Twitch, TikTok, Cloudflare Stream or **Video URL**.",
 		},
 		{
 			type: "ul",
 			items: [
-				"For an uploaded file, use **Mux Video** to upload or pick a video. You can also set a **Poster Image**, which is shown in place of the video's default thumbnail.",
-				"For any other source, paste the address into **Video URL**. For YouTube, Vimeo, Wistia, Spotify, Twitch and TikTok the Studio checks that the address looks right. A plain **Video URL** is not checked.",
+				"For an uploaded file, use **Mux Video** to upload or pick a video.",
+				"For any other source, paste the full address into **Video URL**. The Studio checks that the address matches the chosen source. A plain **Video URL** accepts an MP4 file, an HLS (`.m3u8`) address or a pasted provider address. DASH (`.mpd`) is not supported.",
+				"**Playback mode** is **Play on click**, **Autoplay** (muted, starts when scrolled into view) or **Background** (muted loop with no controls). Options a source cannot do are hidden or rejected.",
+				"**Generate from source** reads the title, description, upload date, duration and thumbnail from the source and shows them in a list. Nothing is written until you tick rows and apply. Rows marked best effort come from unofficial sources and start unticked.",
+				"Set **Main content of the page** only for the page's primary video. It loads eagerly and adds structured data for search engines.",
+			],
+		},
+		{ type: "h3", text: "Posters" },
+		{
+			type: "ul",
+			items: [
+				"An uploaded **Poster Image** always wins, for every source.",
+				"YouTube, Vimeo, Wistia, Cloudflare Stream and Spotify get an automatic poster from the source. Use **Refresh thumbnail** to fetch it again, or **Save a copy to Sanity** to keep your own copy as the poster. Check the source's terms before saving a copy.",
+				"Twitch and TikTok have no automatic poster. Upload one, or an empty box with a play button is shown.",
+				"For hero videos from Mux, upload a poster. Without one, the automatic poster from Mux may differ in brightness from the video.",
+			],
+		},
+		{ type: "h3", text: "Mux poster looks lighter than the video" },
+		{
+			type: "p",
+			text: "Mux expects limited-range bt709 video. A full-range file without colour tags can get an automatic poster that looks lighter or washed out. Either upload a poster image, or re-encode the file before uploading:",
+		},
+		{
+			type: "ol",
+			items: [
+				"Check the file with `ffprobe`. If `color_range` is `unknown` and the brightest values are near 252, it is full-range and untagged.",
+				'Re-encode with `ffmpeg -i in.mp4 -vf "scale=in_range=full:out_range=limited:out_color_matrix=bt709,format=yuv420p" -c:v libx264 -colorspace bt709 -color_primaries bt709 -color_trc bt709 -color_range tv out.mp4`.',
+				"Upload `out.mp4`. Whether this makes the automatic poster match exactly has not been confirmed, so an uploaded poster is the safe choice.",
+			],
+		},
+		{ type: "h3", text: "Limits by source" },
+		{
+			type: "table",
+			columns: ["Source", "Things to know"],
+			rows: [
+				[
+					"**Uploaded file (Mux)**",
+					"Free-plan assets show a Mux logo. The automatic poster can look lighter than the video.",
+				],
+				[
+					"**Video URL (file)**",
+					"MP4 needs fast-start and range requests. No DASH. No automatic poster, so upload one.",
+				],
+				[
+					"**YouTube**",
+					"Playback rate is not guaranteed. Controls overlay the video by default; YouTube discourages overlaying its player, so controlsPlacement below is available. Background mode is discouraged by YouTube.",
+				],
+				[
+					"**Vimeo**",
+					"Background, hidden controls, playback rate and quality may need a paid plan. No volume on mobile. Unlisted videos need their hash in the address.",
+				],
+				[
+					"**Wistia**",
+					"Loads Wistia's older player script. Domain-restricted media needs the site address to be allowed.",
+				],
+				[
+					"**Twitch**",
+					"The site's hostname must be allowed as the embed parent. Minimum size 400x300. No loop, playback rate or background mode. No automatic poster.",
+				],
+				[
+					"**TikTok**",
+					"No volume control, start time or automatic poster. Use the full video address, not a short link. Per-domain limits can make the player unavailable. Loop is set at load only.",
+				],
+				[
+					"**Spotify**",
+					"Audio embed: no mute, volume, loop, autoplay or background mode. Plays a preview only without login.",
+				],
+				[
+					"**Cloudflare Stream**",
+					"Needs the full Stream address including the customer code. Start time and default captions are read only when the player loads. Mobile autoplay is generally unsupported.",
+				],
 			],
 		},
 		{ type: "h2", text: "Links" },

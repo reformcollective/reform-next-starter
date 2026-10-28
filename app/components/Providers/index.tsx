@@ -10,6 +10,7 @@ import { ScreenProvider } from "library/ScreenContext"
 import { SmoothScrollStyle } from "library/Scroll"
 import { HMRProvider } from "library/useHMR"
 import { SectionThemeProvider } from "library/useSectionTheme"
+import { VideoConfigProvider } from "library/videos/config"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -34,11 +35,13 @@ export default function GlobalProviders({ children }: { children: React.ReactNod
 				<ScreenProvider>
 					<SectionThemeProvider>
 						<PageTransitionProvider>
-							<SmoothScrollStyle allowNestedScroll />
-							<ProjectStyles />
-							<ResetStyles />
+							<VideoConfigProvider>
+								<SmoothScrollStyle allowNestedScroll />
+								<ProjectStyles />
+								<ResetStyles />
 
-							{children}
+								{children}
+							</VideoConfigProvider>
 						</PageTransitionProvider>
 					</SectionThemeProvider>
 				</ScreenProvider>
