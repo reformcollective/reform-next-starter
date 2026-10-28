@@ -271,7 +271,6 @@ function Rig({ def, scenario, cases, near, select }: RigProps) {
 			<StickyStage
 				key={key}
 				video={stageVideo}
-				trigger={mergedTrigger}
 				handle={handle}
 				onHandle={setHandle}
 				onScene={setScene}

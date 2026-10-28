@@ -1,6 +1,6 @@
 "use client"
 
-import type { UniversalVideoHandle, UniversalVideoProps } from "library/videos/types"
+import type { UniversalVideoHandle } from "library/videos/types"
 
 import { createVar } from "@vanilla-extract/css"
 import textStyles from "app/styles/text"
@@ -11,15 +11,6 @@ import { useEffect, useRef, useState } from "react"
 
 import type { StickyScene } from "./observe"
 import type { StageVideoProps } from "./types"
-
-import { Tabs } from "./Fields"
-
-type Driver = StickyScene["driver"]
-
-const DRIVERS: { value: Driver; label: string }[] = [
-	{ value: "builtin", label: "Built-in trigger (IntersectionObserver)" },
-	{ value: "controller", label: "Recommended: useVideoScrollTrigger on the cover" },
-]
 
 const POLL_MS = 100
 const FULL_COVER = 0.98
@@ -68,8 +59,6 @@ function createTally(): Tally {
 
 interface StickyStageProps {
 	video: StageVideoProps
-	/** The trigger the scenario's options describe; used by the built-in driver. */
-	trigger: UniversalVideoProps["trigger"]
 	handle: UniversalVideoHandle | null
 	onHandle: (handle: UniversalVideoHandle | null) => void
 	onScene: (scene: StickyScene) => void
@@ -77,37 +66,24 @@ interface StickyStageProps {
 
 /**
  * A full-viewport cover scrolls up over a video that is pinned with position: sticky. The video is inside the viewport the whole time
- * but hidden, which is what an IntersectionObserver cannot tell. The switcher compares the built-in trigger with a
- * ScrollTrigger on the cover that drives the controller.
+ * but hidden, which is what an IntersectionObserver cannot tell, so a ScrollTrigger on the cover drives the controller.
  */
-export function StickyStage(props: StickyStageProps) {
-	const [driver, setDriver] = useState<Driver>("builtin")
-
-	return (
-		<Wrap>
-			<Tabs value={driver} options={DRIVERS} onChange={setDriver} />
-			<StickyInner key={driver} driver={driver} {...props} />
-		</Wrap>
-	)
-}
-
-function StickyInner({
-	driver,
-	video,
-	trigger,
-	handle,
-	onHandle,
-	onScene,
-}: StickyStageProps & { driver: Driver }) {
+export function StickyStage({ video, handle, onHandle, onScene }: StickyStageProps) {
 	const [cover, setCover] = useState<HTMLDivElement | null>(null)
 	const [trackEl, setTrackEl] = useState<HTMLDivElement | null>(null)
+	const [layer, setLayer] = useState<HTMLDivElement | null>(null)
 	const [aspect, setAspect] = useState(16 / 9)
 	const tally = useRef<Tally>(createTally())
 
 	useVideoScrollTrigger({
-		handle: driver === "controller" ? handle : null,
+		handle,
 		trigger: cover,
-		start: "bottom 45%",
+		// Plays as soon as the cover's bottom edge rises above the video's bottom edge, so only a fully covered video is paused.
+		start: () => {
+			const box = handle ? handle.container : null
+			if (!box || !layer) return "bottom 45%"
+			return `bottom ${box.getBoundingClientRect().bottom - layer.getBoundingClientRect().top}px`
+		},
 		endTrigger: trackEl,
 		end: "bottom 50%",
 	})
@@ -162,7 +138,7 @@ function StickyInner({
 
 			const scene: StickyScene = {
 				kind: "sticky",
-				driver,
+				driver: "controller",
 				coverage,
 				geometric,
 				coveredMs: t.coveredMs,
@@ -180,13 +156,13 @@ function StickyInner({
 		}
 		const interval = setInterval(poll, POLL_MS)
 		return () => clearInterval(interval)
-	}, [handle, cover, driver, onScene])
+	}, [handle, cover, onScene])
 
 	return (
 		<Track ref={setTrackEl} data-scroll-anchor="">
-			<VideoLayer>
+			<VideoLayer ref={setLayer}>
 				<VideoBox aspect={aspect}>
-					<UniversalVideo {...video} trigger={trigger} ref={onHandle} />
+					<UniversalVideo {...video} trigger="custom" ref={onHandle} />
 				</VideoBox>
 			</VideoLayer>
 			<Cover ref={setCover}>
@@ -199,15 +175,6 @@ function StickyInner({
 		</Track>
 	)
 }
-
-const Wrap = styled("div", [
-	f.responsive(css`
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-		min-width: 0;
-	`),
-])
 
 const Track = styled("div", [
 	f.responsive(css`

@@ -462,7 +462,7 @@ function CarouselSlide({ number, track, video }: SlideProps) {
 
 	return (
 		<Slide ref={registerElement}>
-			<UniversalVideo {...video} eager trigger={false} ref={registerHandle} />
+			<UniversalVideo {...video} eager trigger="custom" ref={registerHandle} />
 			<Tag>{number}</Tag>
 		</Slide>
 	)

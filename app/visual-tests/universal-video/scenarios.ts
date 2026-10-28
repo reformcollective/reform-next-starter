@@ -631,7 +631,7 @@ export const SCENARIOS: Scenario[] = [
 			},
 		],
 		notes:
-			"Uses the real library/InfiniteSideScroll (GSAP horizontalLoop) with five slides, three in view at a time (31% wide each), repeated to fill the track. Supports MP4 and Mux only; HLS and iframe players (YouTube, Vimeo, Wistia, Cloudflare, Twitch, TikTok, Spotify) cannot be loaded, paused or hidden reliably inside a looping carousel. Recipe for slides in a looping carousel: put each video inside its own fixed-width wrapper element (the Slide here, 31% of the track), never sized by UniversalVideo itself; render every slide with `eager` (the player mounts and decodes before the slide arrives), `trigger={false}` and an uploaded poster (the poster stays until the video has painted a frame while playing, so nothing pops in), then play only the centred slide with handle.playFromTrigger() and pause the rest with handle.pauseFromTrigger(). The stage picks the centred element every 100 ms and keeps the current one until another is 12 px nearer, so it does not flap at the midpoint and also follows dragging. Use Prev and Next, drag, or press Cycle 20 slides.",
+			'Uses the real library/InfiniteSideScroll (GSAP horizontalLoop) with five slides, three in view at a time (31% wide each), repeated to fill the track. Supports MP4 and Mux only; HLS and iframe players (YouTube, Vimeo, Wistia, Cloudflare, Twitch, TikTok, Spotify) cannot be loaded, paused or hidden reliably inside a looping carousel. Recipe for slides in a looping carousel: put each video inside its own fixed-width wrapper element (the Slide here, 31% of the track), never sized by UniversalVideo itself; render every slide with `eager` (the player mounts and decodes before the slide arrives) and an uploaded poster, set `trigger="custom"` (not `trigger={false}`, which also switches on the player\'s own autoplay so every slide would start playing on mount) (the poster stays until the video has painted a frame while playing, so nothing pops in), then play only the centred slide with handle.playFromTrigger() and pause the rest with handle.pauseFromTrigger(). The stage picks the centred element every 100 ms and keeps the current one until another is 12 px nearer, so it does not flap at the midpoint and also follows dragging. Use Prev and Next, drag, or press Cycle 20 slides.',
 	},
 	{
 		id: "sticky-cover",
@@ -670,12 +670,8 @@ export const SCENARIOS: Scenario[] = [
 					const scene = stickyOf(observed)
 					if (!scene) return pending("not mounted")
 					if (scene.maxCoveredPlayMs > 300) {
-						const reason =
-							scene.driver === "builtin"
-								? "known limitation: IntersectionObserver ignores overlap, so the built-in trigger plays under the cover. "
-								: ""
 						return fail(
-							`${reason}still playing ${seconds(scene.maxCoveredPlayMs)} after the 0.5 s grace while hidden`,
+							`still playing ${seconds(scene.maxCoveredPlayMs)} after the 0.5 s grace while hidden`,
 						)
 					}
 					return scene.coveredMs >= 3000
@@ -710,7 +706,7 @@ export const SCENARIOS: Scenario[] = [
 			},
 		],
 		notes:
-			"A full-viewport cover (position: relative, above) scrolls up over a video pinned with position: sticky, so the video is in the viewport the whole time but hidden. Start on the Built-in trigger tab: the library observes the video's own box with an IntersectionObserver, which ignores overlap, so it plays under the cover and the second check FAILS. That is a real limitation, not a bug in the showcase. The Recommended tab uses useVideoScrollTrigger: a GSAP ScrollTrigger on the cover plays the video once the cover's bottom edge passes 45% of the viewport and pauses it when the cover comes back or the section leaves. The hook claims the trigger, so the built-in observer stays idle for that video and the trigger prop can stay at its default; it passes. Use Scroll to cover, Scroll half uncovered and Scroll to uncovered.",
+			"A full-viewport cover (position: relative, above) scrolls up over a video pinned with position: sticky, so the video is in the viewport the whole time but hidden. An IntersectionObserver ignores overlap, so this stage uses useVideoScrollTrigger: a GSAP ScrollTrigger on the cover plays the video as soon as the cover's bottom edge rises above the video's bottom edge (any part uncovered) and pauses it only when the cover covers it fully again or the section leaves. The video uses trigger=\"custom\", so the built-in observer never exists for it and nothing plays it before the hook attaches. Use Scroll to cover, Scroll half uncovered and Scroll to uncovered.",
 	},
 	{
 		id: "error",
