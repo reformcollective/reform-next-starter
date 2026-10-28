@@ -18,7 +18,7 @@ type Driver = StickyScene["driver"]
 
 const DRIVERS: { value: Driver; label: string }[] = [
 	{ value: "builtin", label: "Built-in trigger (IntersectionObserver)" },
-	{ value: "controller", label: "Recommended: trigger off + ScrollTrigger on the cover" },
+	{ value: "controller", label: "Recommended: useVideoScrollTrigger on the cover" },
 ]
 
 const POLL_MS = 100

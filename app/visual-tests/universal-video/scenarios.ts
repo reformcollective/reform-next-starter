@@ -710,7 +710,7 @@ export const SCENARIOS: Scenario[] = [
 			},
 		],
 		notes:
-			"A full-viewport cover (position: relative, above) scrolls up over a video pinned with position: sticky, so the video is in the viewport the whole time but hidden. Start on the Built-in trigger tab: the library observes the video's own box with an IntersectionObserver, which ignores overlap, so it plays under the cover and the second check FAILS. That is a real limitation, not a bug in the showcase. The Recommended tab turns the trigger off and a GSAP ScrollTrigger on the cover calls handle.play() once the cover's bottom edge passes 45% of the viewport and handle.pause() when it comes back or the section leaves; it passes. Use Scroll to cover, Scroll half uncovered and Scroll to uncovered.",
+			"A full-viewport cover (position: relative, above) scrolls up over a video pinned with position: sticky, so the video is in the viewport the whole time but hidden. Start on the Built-in trigger tab: the library observes the video's own box with an IntersectionObserver, which ignores overlap, so it plays under the cover and the second check FAILS. That is a real limitation, not a bug in the showcase. The Recommended tab uses useVideoScrollTrigger: a GSAP ScrollTrigger on the cover plays the video once the cover's bottom edge passes 45% of the viewport and pauses it when the cover comes back or the section leaves. The hook claims the trigger, so the built-in observer stays idle for that video and the trigger prop can stay at its default; it passes. Use Scroll to cover, Scroll half uncovered and Scroll to uncovered.",
 	},
 	{
 		id: "error",
