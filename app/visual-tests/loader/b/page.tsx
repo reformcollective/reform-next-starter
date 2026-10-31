@@ -1,3 +1,4 @@
+import { createVar } from "@vanilla-extract/css"
 import { sleep } from "library/functions"
 import UniversalLink from "library/link"
 import { PageCommitSignal } from "library/link/usePageTransition"
@@ -17,16 +18,16 @@ export default async function LoaderB() {
 			<UniversalLink href="/visual-tests/loader/a?query=true#content-21">
 				with query parameter
 			</UniversalLink>
-			<p style={{ viewTransitionName: "thing-1" }}>content 1</p>
-			<p style={{ viewTransitionName: "thing-2" }}>content 2</p>
-			<p style={{ viewTransitionName: "thing-3" }}>content 3</p>
-			<p style={{ viewTransitionName: "thing-4" }}>content 4</p>
-			<p style={{ viewTransitionName: "thing-6" }}>content 6</p>
-			<p style={{ viewTransitionName: "thing-5" }}>content 5</p>
-			<p style={{ viewTransitionName: "thing-7" }}>content 7</p>
-			<p style={{ viewTransitionName: "thing-8" }}>content 8</p>
-			<p style={{ viewTransitionName: "thing-9" }}>content 9</p>
-			<p style={{ viewTransitionName: "thing-10" }}>content 10</p>
+			<TransitionItem transitionName="thing-1">content 1</TransitionItem>
+			<TransitionItem transitionName="thing-2">content 2</TransitionItem>
+			<TransitionItem transitionName="thing-3">content 3</TransitionItem>
+			<TransitionItem transitionName="thing-4">content 4</TransitionItem>
+			<TransitionItem transitionName="thing-6">content 6</TransitionItem>
+			<TransitionItem transitionName="thing-5">content 5</TransitionItem>
+			<TransitionItem transitionName="thing-7">content 7</TransitionItem>
+			<TransitionItem transitionName="thing-8">content 8</TransitionItem>
+			<TransitionItem transitionName="thing-9">content 9</TransitionItem>
+			<TransitionItem transitionName="thing-10">content 10</TransitionItem>
 		</Wrapper>
 	)
 }
@@ -47,3 +48,10 @@ const Wrapper = styled(
 		}
 	`),
 )
+
+const transitionName = createVar()
+
+const TransitionItem = styled("p", {
+	base: [{ viewTransitionName: transitionName }],
+	tokens: { transitionName },
+})

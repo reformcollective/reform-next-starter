@@ -53,3 +53,6 @@ public/studio
 
 # wireit
 .wireit
+
+# personal agent handoff
+STATE.local.md

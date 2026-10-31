@@ -1,6 +1,65 @@
 {
 	"permissions": {
-		"allow": ["Bash(WIREIT_LOGGER=metrics pnpm lint)", "Bash(pnpm exec *)", "Bash(pnpm sanity *)"],
-		"ask": ["Bash(git commit *)", "Bash(git push *)", "Bash(git merge *)", "Bash(git rebase *)"]
-	}
+		"allow": [
+			"Bash(WIREIT_LOGGER=metrics pnpm lint)",
+			"Bash(pnpm exec *)",
+			"Bash(pnpm sanity *)",
+			"Bash(pnpm check:comments)",
+			"Bash(pnpm check:compiler)",
+			"Bash(git add *)",
+			"Bash(git commit *)"
+		],
+		"ask": ["Bash(git push *)", "Bash(gh pr create *)"],
+		"deny": [
+			"Bash(git push --force*)",
+			"Bash(git push -f*)",
+			"Bash(git push * main*)",
+			"Bash(git push * staging*)",
+			"Bash(git reset --hard*)",
+			"Bash(git checkout *)",
+			"Bash(git restore *)",
+			"Bash(git stash*)",
+			"Bash(git merge *)",
+			"Bash(git rebase *)",
+			"Bash(git commit --amend*)",
+			"Bash(gh pr merge*)",
+			"Bash(vercel *)",
+			"Bash(*rule-changes*)",
+			"Read(./.env)",
+			"Read(./.env.*)",
+			"Edit(./library/agent/**)",
+			"Edit(./.claude/**)",
+			"Edit(./CLAUDE.md)"
+		]
+	},
+	"attribution": { "commit": "", "pr": "", "sessionUrl": false },
+	"hooks": {
+		"PreToolUse": [
+			{
+				"matcher": "Read",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/library/agent/hooks/no-big-reads.mjs\""
+					}
+				]
+			}
+		],
+		"PostToolUse": [
+			{
+				"matcher": "Edit|Write",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "cd \"$CLAUDE_PROJECT_DIR\" && node library/agent/hooks/check-comments.mjs --hook"
+					},
+					{
+						"type": "command",
+						"command": "cd \"$CLAUDE_PROJECT_DIR\" && node library/agent/hooks/check-compiler.mjs --hook"
+					}
+				]
+			}
+		]
+	},
+	"statusLine": { "type": "command", "command": "bash library/agent/statusline.sh" }
 }
