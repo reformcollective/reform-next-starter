@@ -28,14 +28,14 @@ App projects (business logic) use the NEXT Ensemble model instead. This spec cov
 
 ## Layers
 
-| Layer | Holds | Who changes it |
-|---|---|---|
-| Claude org managed settings | short deny list, attribution off | David, in the claude.ai console |
-| GitHub org rulesets + CODEOWNERS | required checks, no force push, review rules | David |
-| Library `agent/` | rulebook, skills, agent role files, check scripts, lint rules | PR to the library, David reviews |
-| Project `CLAUDE.md` | imports the library rulebook, plus project-only notes (20 lines max) | PR, David reviews |
-| Project `.claude/settings.json` | allow rules, comment hook, status line | PR, David reviews |
-| Personal `STATE.local.md` (gitignored) | one developer's handoff between sessions | that developer |
+| Layer                                  | Holds                                                                | Who changes it                   |
+| -------------------------------------- | -------------------------------------------------------------------- | -------------------------------- |
+| Claude org managed settings            | short deny list, attribution off                                     | David, in the claude.ai console  |
+| GitHub org rulesets + CODEOWNERS       | required checks, no force push, review rules                         | David                            |
+| Library `agent/`                       | rulebook, skills, agent role files, check scripts, lint rules        | PR to the library, David reviews |
+| Project `CLAUDE.md`                    | imports the library rulebook, plus project-only notes (20 lines max) | PR, David reviews                |
+| Project `.claude/settings.json`        | allow rules, comment hook, status line                               | PR, David reviews                |
+| Personal `STATE.local.md` (gitignored) | one developer's handoff between sessions                             | that developer                   |
 
 Managed settings reach everyone in the Claude org who uses Claude Code, designers included. Plain deny rules never show them anything. Hooks and status lines would show an approval dialog to everyone, so those stay in the repo.
 
@@ -45,15 +45,15 @@ External developers are not in the Claude org. CI, rulesets and CODEOWNERS are w
 
 The page is the unit of work. Each developer drives their own session; there is no orchestrator except in QA.
 
-| Phase | Skill | Output | Who decides it is right |
-|---|---|---|---|
-| 0. New project | `/new-project` | set-up repo, design tokens from Figma | checks, then developer checklist |
-| 1. Page spec | `/page-spec` | `specs/<page>.md` | developer approves |
-| 2. Schema | `/schema` | schema, projection, preview, seed, typegen | checks |
-| 3. Static build | `/figma-match` | layout matched to Figma | measurements, sweep, screenshots |
-| 4. Motion | `/motion` | motion map, motion spec, code | developer |
-| 5. QA rounds | `/qa-intake`, `/qa-round` | `qa/round-N/<page>.md`, one commit per card | checks for match cards, developer for motion |
-| 6. Launch | `/launch-<integration>` | integration done, recipe updated | recipe checklist, developer |
+| Phase           | Skill                     | Output                                      | Who decides it is right                      |
+| --------------- | ------------------------- | ------------------------------------------- | -------------------------------------------- |
+| 0. New project  | `/new-project`            | set-up repo, design tokens from Figma       | checks, then developer checklist             |
+| 1. Page spec    | `/page-spec`              | `specs/<page>.md`                           | developer approves                           |
+| 2. Schema       | `/schema`                 | schema, projection, preview, seed, typegen  | checks                                       |
+| 3. Static build | `/figma-match`            | layout matched to Figma                     | measurements, sweep, screenshots             |
+| 4. Motion       | `/motion`                 | motion map, motion spec, code               | developer                                    |
+| 5. QA rounds    | `/qa-intake`, `/qa-round` | `qa/round-N/<page>.md`, one commit per card | checks for match cards, developer for motion |
+| 6. Launch       | `/launch-<integration>`   | integration done, recipe updated            | recipe checklist, developer                  |
 
 ### 0. New project
 
@@ -126,6 +126,7 @@ One skill per integration done more than once, each a checklist plus known pitfa
 
 ```md
 ## Comments
+
 Write a comment only when the code cannot say it: a non-obvious why, a browser bug
 workaround, where a magic number comes from. One line, two at most.
 Never write: what the code does, how you got here, what changed, options you rejected,
@@ -133,11 +134,11 @@ notes to the reader or to yourself. Never mention AI or Claude.
 JSDoc only on exported library functions: one sentence, plus params if not obvious.
 
 Good:
-  // Safari reports 0 height until the video's metadata loads
-  const TABLET = 768 // Figma "Tablet" frame width
+// Safari reports 0 height until the video's metadata loads
+const TABLET = 768 // Figma "Tablet" frame width
 Bad:
-  // We use a ref here instead of state because state would trigger a re-render,
-  // which previously caused the animation to restart. This ensures that...
+// We use a ref here instead of state because state would trigger a re-render,
+// which previously caused the animation to restart. This ensures that...
 ```
 
 ## Round 1: Foundation
@@ -195,19 +196,30 @@ Plain deny rules only, so designers never see a dialog. Deny rules match command
 
 ```json
 {
-  "permissions": {
-    "deny": [
-      "Bash(git push --force*)", "Bash(git push -f*)", "Bash(git push * main*)", "Bash(git push * staging*)",
-      "Bash(git reset --hard*)", "Bash(git checkout *)", "Bash(git restore *)", "Bash(git stash*)",
-      "Bash(git merge *)", "Bash(git rebase *)", "Bash(git commit --amend*)", "Bash(gh pr merge*)",
-      "Bash(vercel *)", "Bash(*rule-changes*)",
-      "Read(./.env)", "Read(./.env.*)",
-      "Edit(./library/agent/**)",
-      "Edit(./.claude/**)",
-      "Edit(./CLAUDE.md)"
-    ]
-  },
-  "attribution": { "commit": "", "pr": "", "sessionUrl": false }
+	"permissions": {
+		"deny": [
+			"Bash(git push --force*)",
+			"Bash(git push -f*)",
+			"Bash(git push * main*)",
+			"Bash(git push * staging*)",
+			"Bash(git reset --hard*)",
+			"Bash(git checkout *)",
+			"Bash(git restore *)",
+			"Bash(git stash*)",
+			"Bash(git merge *)",
+			"Bash(git rebase *)",
+			"Bash(git commit --amend*)",
+			"Bash(gh pr merge*)",
+			"Bash(vercel *)",
+			"Bash(*rule-changes*)",
+			"Read(./.env)",
+			"Read(./.env.*)",
+			"Edit(./library/agent/**)",
+			"Edit(./.claude/**)",
+			"Edit(./CLAUDE.md)"
+		]
+	},
+	"attribution": { "commit": "", "pr": "", "sessionUrl": false }
 }
 ```
 
