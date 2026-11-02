@@ -7,9 +7,14 @@
 			"Bash(pnpm check:comments)",
 			"Bash(pnpm check:compiler)",
 			"Bash(git add *)",
-			"Bash(git commit *)"
+			"Bash(git commit *)",
+			"Bash(git worktree add *)",
+			"Bash(git worktree list*)",
+			"Bash(git worktree remove *)",
+			"Bash(git branch -d *)",
+			"Bash(git switch *)"
 		],
-		"ask": ["Bash(git push *)", "Bash(gh pr create *)"],
+		"ask": ["Bash(git push *)", "Bash(gh pr create *)", "Bash(git merge --no-ff *)"],
 		"deny": [
 			"Bash(git push --force*)",
 			"Bash(git push -f*)",
@@ -19,8 +24,13 @@
 			"Bash(git checkout *)",
 			"Bash(git restore *)",
 			"Bash(git stash*)",
-			"Bash(git merge *)",
 			"Bash(git rebase *)",
+			"Bash(git branch -D*)",
+			"Bash(git worktree remove --force*)",
+			"Bash(git worktree remove -f*)",
+			"Bash(git switch --discard-changes*)",
+			"Bash(git switch -f*)",
+			"Bash(git switch --force*)",
 			"Bash(git commit --amend*)",
 			"Bash(gh pr merge*)",
 			"Bash(vercel *)",
@@ -29,11 +39,25 @@
 			"Read(./.env.*)",
 			"Edit(./library/agent/**)",
 			"Edit(./.claude/**)",
-			"Edit(./CLAUDE.md)"
-		]
+			"Edit(./CLAUDE.md)",
+			"Edit(../worktrees/*/*/library/agent/**)",
+			"Edit(../worktrees/*/*/.claude/**)",
+			"Edit(../worktrees/*/*/CLAUDE.md)"
+		],
+		"additionalDirectories": ["../worktrees/"]
 	},
 	"attribution": { "commit": "", "pr": "", "sessionUrl": false },
 	"hooks": {
+		"SessionStart": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/library/agent/hooks/sweep.mjs\""
+					}
+				]
+			}
+		],
 		"PreToolUse": [
 			{
 				"matcher": "Read",

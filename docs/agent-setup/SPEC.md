@@ -43,7 +43,7 @@ External developers are not in the Claude org. CI, rulesets and CODEOWNERS are w
 
 ## The workflow
 
-The page is the unit of work. Each developer drives their own session; there is no orchestrator except in QA.
+The page is the unit of work. Each developer drives their own session; the main session starts builders only in the static build's parallel pass and in QA.
 
 | Phase           | Skill                     | Output                                      | Who decides it is right                      |
 | --------------- | ------------------------- | ------------------------------------------- | -------------------------------------------- |
@@ -79,11 +79,13 @@ Per section, at each Figma breakpoint (desktop, tablet, mobile):
 
 Browser rule, replacing the full ban: agents may start their own `next dev` on a scratch port (4100-4199), never the developer's port, and stop it when done. Headless Playwright only. Never Claude in Chrome, never the developer's browser. Never more screenshots than these.
 
+Parallel pass. `/schema` runs for the whole page first, and the main session sets up the page shell and every shared file (page file, schema, projection, tokens). Then it starts up to 3 builders at once (4 on a machine with plenty of memory), one per section. Each gets its own worktree at `../worktrees/<project>/<section>/` on branch `<page>-<section>`, with `.env` copied in and `pnpm install` run, and its own port. A builder changes only its section's files; a shared change goes back to the main session. Each builder writes its report to a file and replies with one line, so twelve sections do not fill the main session. When a builder's checks pass, the main session runs the reviewer (Sonnet) on that section, fixes or sends back what it finds, merges the branch into the page branch with `git merge --no-ff` (the developer approves), and removes the worktree and branch. Motion is not part of this pass.
+
 ### 4. Motion
 
 `pnpm motion:extract <video> --kind scroll|section|asset [--section <name>] [--fidelity exact|loose]` runs once per video:
 
-- Frames at the video's own rate, stored outside the repo in `~/.reform/motion/<project>/<video>/` so every worktree and developer finds them. They can always be regenerated.
+- Frames at the video's own rate, stored outside the repo in `~/.reform/motion/<project>/<video>/` so every worktree and developer finds them. They can always be regenerated. The main session deletes a video's frames once the developer approves its motion spec.
 - Motion boundaries per region, and an activity timeline in text.
 - Contact sheets of 16 to 25 frames per range.
 - For `--kind scroll`: settled frames are matched to the Figma section exports, giving a section timeline. Whole-page movement is scroll; movement relative to the page is animation. Scroll-driven events are recorded in scroll terms ("starts when Hero's top reaches 70% of the viewport, ends at 40%"), time-based events in seconds.
@@ -98,6 +100,8 @@ Fidelity, set per video or section:
 - `exact`: timings and scroll mapping must match. For section clips, and for eased stylized scroll that must match a scrubbed asset.
 
 Agents read in this order: map text, then one contact sheet, then only the frames they need (`pnpm motion:frame <section> <time>`). They write the motion spec for the section (element, property, from, to, start, end, ease, kind), the developer corrects the spec, then the agent codes to it. The agent never judges how motion looks.
+
+Motion runs one section at a time, in the main session, with the developer. No parallel builders.
 
 ### 5. QA rounds
 
@@ -175,13 +179,14 @@ Verified when:
 
 ## Round 2: Workflow skills
 
-Library PR: `/page-spec`, `/schema`, `/figma-match` with `pnpm match`, `/motion` with `motion:extract`, `motion:view` and `motion:frame`, `/qa-intake` with `qa:pull`, `/qa-round`, and the first launch recipes. Playwright added as a dev dependency. ffmpeg is a machine requirement (present on David's machine).
+Library PR: `/page-spec`, `/schema`, `/figma-match` with `pnpm match`, `/motion` with `motion:extract`, `motion:view` and `motion:frame`, `/qa-intake` with `qa:pull`, `/qa-round`, and the first launch recipes. Playwright added as a dev dependency; tests make temp folders only through one helper that deletes them when the test ends, under `$TMPDIR/reform-<project>-*`. ffmpeg is a machine requirement (present on David's machine).
 
 Verified when:
 
 - `pnpm match` on one finished starter section reports the right numbers, and catches a deliberate 8px gap error and a deliberate overflow.
 - `motion:extract` on one real scroll-through builds a map that David approves with only small fixes, and `motion:frame` returns the right frame.
 - `/qa-round` on a real Userback round of one page produces one commit per card and a PR, and leaves motion cards with the developer.
+- A parallel pass of 3 builders on a 6-section page merges cleanly into the page branch, the main session's context stays under 40%, and the next session start removes the merged worktrees and keeps one with uncommitted work.
 - Tokens: one section built the old way and one the new way, compared from session usage.
 
 ## Round 3: Setup
@@ -193,6 +198,8 @@ Library and starter PRs: `pnpm setup-project` and `/new-project`, README split. 
 Needs the Owner or Primary Owner role in the Claude org (requested 2026-10-31). Until then the same deny list ships in the starter's `.claude/settings.json`, where a developer could override it locally; it moves to the console once access is granted, with no other change.
 
 Plain deny rules only, so designers never see a dialog. Deny rules match command text and can be worked around; GitHub rulesets are the backstop.
+
+`git merge` is not denied here. The starter's settings ask for `git merge --no-ff`, so a developer approves each merge of a builder's branch in the parallel pass; pushing to `main` and `gh pr merge` stay denied.
 
 ```json
 {
@@ -206,8 +213,13 @@ Plain deny rules only, so designers never see a dialog. Deny rules match command
 			"Bash(git checkout *)",
 			"Bash(git restore *)",
 			"Bash(git stash*)",
-			"Bash(git merge *)",
 			"Bash(git rebase *)",
+			"Bash(git branch -D*)",
+			"Bash(git worktree remove --force*)",
+			"Bash(git worktree remove -f*)",
+			"Bash(git switch --discard-changes*)",
+			"Bash(git switch -f*)",
+			"Bash(git switch --force*)",
 			"Bash(git commit --amend*)",
 			"Bash(gh pr merge*)",
 			"Bash(vercel *)",
