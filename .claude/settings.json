@@ -231,6 +231,15 @@
 						"command": "node \"$CLAUDE_PROJECT_DIR/library/agent/hooks/no-big-reads.mjs\""
 					}
 				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/library/agent/hooks/env-ask.mjs\""
+					}
+				]
 			}
 		],
 		"PostToolUse": [
