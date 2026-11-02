@@ -12,7 +12,8 @@
 			"Bash(git worktree list*)",
 			"Bash(git worktree remove *)",
 			"Bash(git branch -d *)",
-			"Bash(git switch *)"
+			"Bash(git switch *)",
+			"Read(./.env.example)"
 		],
 		"ask": [
 			"Bash(git push *)",
@@ -155,7 +156,16 @@
 			"mcp__claude_ai_Vercel__upload_file",
 			"mcp__claude_ai_Vercel__upsert_connector_project_connection",
 			"mcp__claude_ai_Vercel__verify_project_domain",
-			"mcp__claude_ai_Vercel__write_session_files"
+			"mcp__claude_ai_Vercel__write_session_files",
+			"Read(./.env)",
+			"Read(./.env.local)",
+			"Read(./.env.development)",
+			"Read(./.env.development.local)",
+			"Read(./.env.production)",
+			"Read(./.env.production.local)",
+			"Read(./.env.test)",
+			"Read(./.env.test.local)",
+			"Read(./.vercel/.env*)"
 		],
 		"deny": [
 			"Bash(git push --force*)",
@@ -177,8 +187,6 @@
 			"Bash(gh pr merge*)",
 			"Bash(vercel *)",
 			"Bash(*rule-changes*)",
-			"Read(./.env)",
-			"Read(./.env.*)",
 			"Edit(./library/agent/**)",
 			"Edit(./.claude/**)",
 			"Edit(./CLAUDE.md)",
