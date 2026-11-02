@@ -89,4 +89,4 @@ Built with Next. Install dependencies with `pnpm i` and run with `pnpm dev`
 
 ---
 
-See [CONVENTIONS.md](CONVENTIONS.md) for code and project structure conventions.
+Code conventions and agent rules: [library/agent/RULES.md](library/agent/RULES.md). Styling: [library/styled/README.md](library/styled/README.md).

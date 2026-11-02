@@ -17,3 +17,8 @@ pre-commit:
 
     - name: stage workflow hashes
       run: git add ./.github/workflows
+
+commit-msg:
+  jobs:
+    - name: no AI attribution
+      run: node ./library/agent/hooks/check-attribution.mjs {1}

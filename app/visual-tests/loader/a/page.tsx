@@ -1,5 +1,6 @@
 "use client"
 
+import { createVar } from "@vanilla-extract/css"
 import UniversalLink from "library/link"
 import { loader } from "library/link/loader"
 import { PageCommitSignal } from "library/link/usePageTransition"
@@ -34,16 +35,16 @@ export default function Loader() {
 			<h3>{delayedLoad ? "delayed load" : "waiting for load"}</h3>
 			<UniversalLink href="/visual-tests/loader/a#content-21">scroll to content 21</UniversalLink>
 			<UniversalLink href="#content-21">scroll to content 21 (bare hash)</UniversalLink>
-			<p style={{ viewTransitionName: "thing-1" }}>content 1</p>
-			<p style={{ viewTransitionName: "thing-2" }}>content 2</p>
-			<p style={{ viewTransitionName: "thing-3" }}>content 3</p>
-			<p style={{ viewTransitionName: "thing-4" }}>content 4</p>
-			<p style={{ viewTransitionName: "thing-5" }}>content 5</p>
-			<p style={{ viewTransitionName: "thing-6" }}>content 6</p>
-			<p style={{ viewTransitionName: "thing-7" }}>content 7</p>
-			<p style={{ viewTransitionName: "thing-8" }}>content 8</p>
-			<p style={{ viewTransitionName: "thing-9" }}>content 9</p>
-			<p style={{ viewTransitionName: "thing-10" }}>content 10</p>
+			<TransitionItem transitionName="thing-1">content 1</TransitionItem>
+			<TransitionItem transitionName="thing-2">content 2</TransitionItem>
+			<TransitionItem transitionName="thing-3">content 3</TransitionItem>
+			<TransitionItem transitionName="thing-4">content 4</TransitionItem>
+			<TransitionItem transitionName="thing-5">content 5</TransitionItem>
+			<TransitionItem transitionName="thing-6">content 6</TransitionItem>
+			<TransitionItem transitionName="thing-7">content 7</TransitionItem>
+			<TransitionItem transitionName="thing-8">content 8</TransitionItem>
+			<TransitionItem transitionName="thing-9">content 9</TransitionItem>
+			<TransitionItem transitionName="thing-10">content 10</TransitionItem>
 			<UniversalLink href="/visual-tests/loader/b">go to b</UniversalLink>
 			<p>content 11</p>
 			<p>content 12</p>
@@ -89,3 +90,10 @@ const Wrapper = styled(
 		}
 	`),
 )
+
+const transitionName = createVar()
+
+const TransitionItem = styled("p", {
+	base: [{ viewTransitionName: transitionName }],
+	tokens: { transitionName },
+})

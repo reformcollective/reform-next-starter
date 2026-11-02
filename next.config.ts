@@ -5,6 +5,9 @@ import { withVanillaSplit } from "./library/vanilla/withVanillaSplit"
 const nextConfig: NextConfig = {
 	redirects: async () => [{ source: "/home", destination: "/", permanent: false }],
 
+	// the agent rulebook in library/agent/RULES.md carries the Next.js docs instruction
+	agentRules: false,
+
 	// type-aware linting checks this separately from next build
 	typescript: { ignoreBuildErrors: true },
 

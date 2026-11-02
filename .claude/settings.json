@@ -1,6 +1,265 @@
 {
 	"permissions": {
-		"allow": ["Bash(WIREIT_LOGGER=metrics pnpm lint)", "Bash(pnpm exec *)", "Bash(pnpm sanity *)"],
-		"ask": ["Bash(git commit *)", "Bash(git push *)", "Bash(git merge *)", "Bash(git rebase *)"]
+		"allow": [
+			"Bash(WIREIT_LOGGER=metrics pnpm lint)",
+			"Bash(pnpm exec *)",
+			"Bash(pnpm sanity *)",
+			"Bash(pnpm check:comments)",
+			"Bash(pnpm check:compiler)",
+			"Bash(git add *)",
+			"Bash(git commit *)",
+			"Bash(git worktree add *)",
+			"Bash(git worktree list*)",
+			"Bash(git worktree remove *)",
+			"Bash(git branch -d *)",
+			"Bash(git switch *)",
+			"Read(./.env.example)"
+		],
+		"ask": [
+			"Bash(git push *)",
+			"Bash(gh pr create *)",
+			"Bash(git merge --no-ff *)",
+			"mcp__claude_ai_Notion__notion-calendar-cancel-events",
+			"mcp__claude_ai_Notion__notion-calendar-create-events",
+			"mcp__claude_ai_Notion__notion-calendar-update-events",
+			"mcp__claude_ai_Notion__notion-convert-page-to-skill",
+			"mcp__claude_ai_Notion__notion-create-attachment",
+			"mcp__claude_ai_Notion__notion-create-comment",
+			"mcp__claude_ai_Notion__notion-create-database",
+			"mcp__claude_ai_Notion__notion-create-file-upload",
+			"mcp__claude_ai_Notion__notion-create-folder",
+			"mcp__claude_ai_Notion__notion-create-pages",
+			"mcp__claude_ai_Notion__notion-create-suggested-edit",
+			"mcp__claude_ai_Notion__notion-create-view",
+			"mcp__claude_ai_Notion__notion-delete-comment",
+			"mcp__claude_ai_Notion__notion-delete-databases",
+			"mcp__claude_ai_Notion__notion-delete-pages",
+			"mcp__claude_ai_Notion__notion-duplicate-page",
+			"mcp__claude_ai_Notion__notion-move-pages",
+			"mcp__claude_ai_Notion__notion-resolve-suggested-edit",
+			"mcp__claude_ai_Notion__notion-restore-pages",
+			"mcp__claude_ai_Notion__notion-send-message-to-session",
+			"mcp__claude_ai_Notion__notion-set-comment-reaction",
+			"mcp__claude_ai_Notion__notion-set-discussion-resolved",
+			"mcp__claude_ai_Notion__notion-spawn-session",
+			"mcp__claude_ai_Notion__notion-stop-session",
+			"mcp__claude_ai_Notion__notion-update-comment",
+			"mcp__claude_ai_Notion__notion-update-data-source",
+			"mcp__claude_ai_Notion__notion-update-enabled-skills",
+			"mcp__claude_ai_Notion__notion-update-folder",
+			"mcp__claude_ai_Notion__notion-update-page",
+			"mcp__claude_ai_Notion__notion-update-view",
+			"mcp__claude_ai_Notion__notion-upload-skill",
+			"mcp__claude_ai_Slack__slack_add_list_record",
+			"mcp__claude_ai_Slack__slack_add_reaction",
+			"mcp__claude_ai_Slack__slack_complete_file_upload",
+			"mcp__claude_ai_Slack__slack_create_canvas",
+			"mcp__claude_ai_Slack__slack_create_conversation",
+			"mcp__claude_ai_Slack__slack_create_list",
+			"mcp__claude_ai_Slack__slack_schedule_message",
+			"mcp__claude_ai_Slack__slack_send_message",
+			"mcp__claude_ai_Slack__slack_update_canvas",
+			"mcp__claude_ai_Slack__slack_update_list",
+			"mcp__claude_ai_Slack__slack_update_list_record",
+			"mcp__claude_ai_Vercel__accept_project_transfer_request",
+			"mcp__claude_ai_Vercel__activate_kms_signing_key",
+			"mcp__claude_ai_Vercel__add_project_domain",
+			"mcp__claude_ai_Vercel__add_route",
+			"mcp__claude_ai_Vercel__add_toolbar_reaction",
+			"mcp__claude_ai_Vercel__approve_rolling_release_stage",
+			"mcp__claude_ai_Vercel__assign_alias",
+			"mcp__claude_ai_Vercel__authorize_team_access",
+			"mcp__claude_ai_Vercel__authorize_team_sso",
+			"mcp__claude_ai_Vercel__buy_domain",
+			"mcp__claude_ai_Vercel__cancel_deployment",
+			"mcp__claude_ai_Vercel__change_toolbar_thread_resolve_status",
+			"mcp__claude_ai_Vercel__complete_rolling_release",
+			"mcp__claude_ai_Vercel__create_deployment",
+			"mcp__claude_ai_Vercel__create_drain",
+			"mcp__claude_ai_Vercel__create_edge_config",
+			"mcp__claude_ai_Vercel__create_edge_config_token",
+			"mcp__claude_ai_Vercel__create_flag",
+			"mcp__claude_ai_Vercel__create_flags_project_connection",
+			"mcp__claude_ai_Vercel__create_git_project",
+			"mcp__claude_ai_Vercel__create_kms_issuer",
+			"mcp__claude_ai_Vercel__create_kms_issuer_policy",
+			"mcp__claude_ai_Vercel__create_kms_signing_key",
+			"mcp__claude_ai_Vercel__create_or_transfer_domain",
+			"mcp__claude_ai_Vercel__create_project",
+			"mcp__claude_ai_Vercel__create_project_env",
+			"mcp__claude_ai_Vercel__create_record",
+			"mcp__claude_ai_Vercel__create_sandboxes_sessions_by_session_id_snapshot_v2",
+			"mcp__claude_ai_Vercel__create_sandboxes_sessions_by_session_id_snapshot_v3",
+			"mcp__claude_ai_Vercel__create_sandboxes_v2",
+			"mcp__claude_ai_Vercel__create_sandboxes_v3",
+			"mcp__claude_ai_Vercel__create_sandboxes_v4",
+			"mcp__claude_ai_Vercel__create_sdk_key",
+			"mcp__claude_ai_Vercel__create_session_directory",
+			"mcp__claude_ai_Vercel__create_storage_stores_blob",
+			"mcp__claude_ai_Vercel__edit_project_env",
+			"mcp__claude_ai_Vercel__edit_route",
+			"mcp__claude_ai_Vercel__edit_toolbar_message",
+			"mcp__claude_ai_Vercel__extend_session_timeout",
+			"mcp__claude_ai_Vercel__get_access_to_vercel_url",
+			"mcp__claude_ai_Vercel__get_edge_config_token",
+			"mcp__claude_ai_Vercel__get_edge_config_tokens",
+			"mcp__claude_ai_Vercel__get_project_env",
+			"mcp__claude_ai_Vercel__get_shared_env_var",
+			"mcp__claude_ai_Vercel__import-claude-dashboard-from-url",
+			"mcp__claude_ai_Vercel__import-claude-design-from-url",
+			"mcp__claude_ai_Vercel__import-claude-motion-from-url",
+			"mcp__claude_ai_Vercel__invalidate_by_src_images",
+			"mcp__claude_ai_Vercel__invalidate_by_tags",
+			"mcp__claude_ai_Vercel__issue_cert",
+			"mcp__claude_ai_Vercel__kill_session_command",
+			"mcp__claude_ai_Vercel__patch_edge_config_items",
+			"mcp__claude_ai_Vercel__patch_url_protection_bypass",
+			"mcp__claude_ai_Vercel__pause_project",
+			"mcp__claude_ai_Vercel__put_firewall_config",
+			"mcp__claude_ai_Vercel__record_events",
+			"mcp__claude_ai_Vercel__replace_domain_dns_records",
+			"mcp__claude_ai_Vercel__reply_to_toolbar_thread",
+			"mcp__claude_ai_Vercel__request_promote",
+			"mcp__claude_ai_Vercel__request_rollback",
+			"mcp__claude_ai_Vercel__rerequest_check",
+			"mcp__claude_ai_Vercel__restore_edge_config_backup",
+			"mcp__claude_ai_Vercel__restore_redirects",
+			"mcp__claude_ai_Vercel__retry_vercel_ci_invocation",
+			"mcp__claude_ai_Vercel__revoke_kms_signing_key",
+			"mcp__claude_ai_Vercel__run_session_command",
+			"mcp__claude_ai_Vercel__stage_redirects",
+			"mcp__claude_ai_Vercel__stage_routes",
+			"mcp__claude_ai_Vercel__start_rolling_release",
+			"mcp__claude_ai_Vercel__stop_session",
+			"mcp__claude_ai_Vercel__submit_feedback",
+			"mcp__claude_ai_Vercel__test_drain",
+			"mcp__claude_ai_Vercel__unpause_project",
+			"mcp__claude_ai_Vercel__update_attack_challenge_mode",
+			"mcp__claude_ai_Vercel__update_bulk_redirect_version",
+			"mcp__claude_ai_Vercel__update_connector",
+			"mcp__claude_ai_Vercel__update_drain",
+			"mcp__claude_ai_Vercel__update_edge_config",
+			"mcp__claude_ai_Vercel__update_firewall_config",
+			"mcp__claude_ai_Vercel__update_flag",
+			"mcp__claude_ai_Vercel__update_flag_segment",
+			"mcp__claude_ai_Vercel__update_flag_settings",
+			"mcp__claude_ai_Vercel__update_kms_issuer",
+			"mcp__claude_ai_Vercel__update_kms_issuer_policy",
+			"mcp__claude_ai_Vercel__update_project",
+			"mcp__claude_ai_Vercel__update_project_protection_bypass",
+			"mcp__claude_ai_Vercel__update_record",
+			"mcp__claude_ai_Vercel__update_rolling_release_config",
+			"mcp__claude_ai_Vercel__update_route_versions",
+			"mcp__claude_ai_Vercel__update_sandbox",
+			"mcp__claude_ai_Vercel__update_session_network_policy",
+			"mcp__claude_ai_Vercel__upload_artifact",
+			"mcp__claude_ai_Vercel__upload_file",
+			"mcp__claude_ai_Vercel__upsert_connector_project_connection",
+			"mcp__claude_ai_Vercel__verify_project_domain",
+			"mcp__claude_ai_Vercel__write_session_files",
+			"Read(./.env)",
+			"Read(./.env.local)",
+			"Read(./.env.development)",
+			"Read(./.env.development.local)",
+			"Read(./.env.production)",
+			"Read(./.env.production.local)",
+			"Read(./.env.test)",
+			"Read(./.env.test.local)",
+			"Read(./.vercel/.env*)"
+		],
+		"deny": [
+			"Bash(git push --force*)",
+			"Bash(git push -f*)",
+			"Bash(git push * main*)",
+			"Bash(git push * staging*)",
+			"Bash(git reset --hard*)",
+			"Bash(git checkout *)",
+			"Bash(git restore *)",
+			"Bash(git stash*)",
+			"Bash(git rebase *)",
+			"Bash(git branch -D*)",
+			"Bash(git worktree remove --force*)",
+			"Bash(git worktree remove -f*)",
+			"Bash(git switch --discard-changes*)",
+			"Bash(git switch -f*)",
+			"Bash(git switch --force*)",
+			"Bash(git commit --amend*)",
+			"Bash(gh pr merge*)",
+			"Bash(vercel *)",
+			"Bash(*rule-changes*)",
+			"Edit(./library/agent/**)",
+			"Edit(./.claude/**)",
+			"Edit(./CLAUDE.md)",
+			"Edit(../worktrees/*/*/library/agent/**)",
+			"Edit(../worktrees/*/*/.claude/**)",
+			"Edit(../worktrees/*/*/CLAUDE.md)"
+		],
+		"additionalDirectories": ["../worktrees/"]
+	},
+	"attribution": {
+		"commit": "",
+		"pr": "",
+		"sessionUrl": false
+	},
+	"hooks": {
+		"UserPromptSubmit": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/library/agent/hooks/context.mjs\""
+					}
+				]
+			}
+		],
+		"SessionStart": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/library/agent/hooks/sweep.mjs\""
+					}
+				]
+			}
+		],
+		"PreToolUse": [
+			{
+				"matcher": "Read",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/library/agent/hooks/no-big-reads.mjs\""
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/library/agent/hooks/env-ask.mjs\""
+					}
+				]
+			}
+		],
+		"PostToolUse": [
+			{
+				"matcher": "Edit|Write",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "cd \"$CLAUDE_PROJECT_DIR\" && node library/agent/hooks/check-comments.mjs --hook"
+					},
+					{
+						"type": "command",
+						"command": "cd \"$CLAUDE_PROJECT_DIR\" && node library/agent/hooks/check-compiler.mjs --hook"
+					}
+				]
+			}
+		]
+	},
+	"statusLine": {
+		"type": "command",
+		"command": "bash library/agent/statusline.sh"
 	}
 }

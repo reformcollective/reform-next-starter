@@ -105,7 +105,7 @@ export default function InfiniteSideScrollTests() {
 			</p>
 			<InfiniteSideScroll marqueeSpeed={1}>
 				{ITEMS.map((label) => (
-					<SizeShiftItem key={label} style={{ width: big ? 300 : 150, height: big ? 200 : 120 }}>
+					<SizeShiftItem key={label} size={big ? "big" : "small"}>
 						{label}
 					</SizeShiftItem>
 				))}
@@ -117,10 +117,7 @@ export default function InfiniteSideScrollTests() {
 				{ITEMS.map((label, i) => {
 					const isBig = i % 2 === 0 ? big : !big
 					return (
-						<SizeShiftItem
-							key={label}
-							style={{ width: isBig ? 300 : 150, height: isBig ? 200 : 120 }}
-						>
+						<SizeShiftItem key={label} size={isBig ? "big" : "small"}>
 							{label}
 						</SizeShiftItem>
 					)
@@ -277,15 +274,32 @@ const Spacer = styled(
 	`),
 )
 
-const SizeShiftItem = styled(
-	Item,
-	f.responsive(css`
-		background: steelblue;
-		transition:
-			width 0.6s ease,
-			height 0.6s ease;
-	`),
-)
+const SizeShiftItem = styled(Item, {
+	base: [
+		f.responsive(css`
+			background: steelblue;
+			transition:
+				width 0.6s ease,
+				height 0.6s ease;
+		`),
+	],
+	variants: {
+		size: {
+			big: [
+				f.unresponsive(css`
+					width: 300px;
+					height: 200px;
+				`),
+			],
+			small: [
+				f.unresponsive(css`
+					width: 150px;
+					height: 120px;
+				`),
+			],
+		},
+	},
+})
 
 const Divider = styled(
 	"div",
